@@ -123,7 +123,7 @@
     UIPanGestureRecognizer *mainViewPan=[[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(handleMainPan:)];
     [self.view addGestureRecognizer: mainViewPan];
     
-//    self.delegate=birthdayGiftController;
+    self.delegate=[self birthdayGiftController];
 }
 
 
@@ -348,17 +348,13 @@
 {
     CategoryCell *cell = (CategoryCell*)[categoryTableView cellForRowAtIndexPath:indexPath];
 
-//    BirthdayGiftController *birthdayGiftController=[[BirthdayGiftController alloc] initWithNibName:@"BirthdayGiftController" bundle:[NSBundle mainBundle]];
-
     //第一次运行BirthdayGiftController传递的GiftTypeTitle
-    NSUserDefaults *mydefault = [NSUserDefaults standardUserDefaults];
-    [mydefault setObject:cell.nameLabel.text forKey:@"giftTypeTitle"];
+//    NSUserDefaults *mydefault = [NSUserDefaults standardUserDefaults];
+//    [mydefault setObject:cell.nameLabel.text forKey:@"giftTypeTitle"];
     
-//    [self.delegate sendGiftTypeTitle:cell.nameLabel.text];
+    [self.delegate sendGiftTypeTitle:cell.nameLabel.text];
     
-//    TestViewController *testViewController=[[TestViewController alloc]init];
-    BirthdayGiftControllerNew *birthdayGiftControllerNew=[[BirthdayGiftControllerNew alloc]init];
-    [self.navigationController pushViewController:birthdayGiftControllerNew animated:YES];
+    [self.navigationController pushViewController:[self birthdayGiftController] animated:YES];
     
     cell.labelImage.image = [UIImage imageNamed:@"selected.png"];
     cell.nextImage.image = [UIImage imageNamed:@"pointerselect.png"];
@@ -372,8 +368,4 @@
     cell.labelImage.image = [UIImage imageNamed:@"unselected.png"];
     cell.nextImage.image = [UIImage imageNamed:@"pointerunselect.png"];
 }
-
-
-//leo123456
-
 @end

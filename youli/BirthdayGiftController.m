@@ -416,6 +416,9 @@ int iConstellationIndex=0;
 -(void)sendGiftTypeTitle:(NSString *)GiftTypeTitle
 {}
 
+-(void)changeGiftListByType:(int)GiftType
+{}
+
 //清空scrollview里面的内容
 -(void)clearGiftScrollView
 {

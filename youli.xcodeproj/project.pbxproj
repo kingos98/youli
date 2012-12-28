@@ -47,6 +47,7 @@
 		1559F4A1167EF29900F16634 /* BirthdayGiftController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1559F49F167EF29800F16634 /* BirthdayGiftController.m */; };
 		1559F4A6167EF2F400F16634 /* BirthdayGiftControllerItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 1559F4A4167EF2F300F16634 /* BirthdayGiftControllerItem.m */; };
 		1559F4AA167EF36600F16634 /* NMRangeSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 1559F4A9167EF36600F16634 /* NMRangeSlider.m */; };
+		15815809168D8DDB00FB0E0B /* DatabaseOper.m in Sources */ = {isa = PBXBuildFile; fileRef = 15815808168D8DDB00FB0E0B /* DatabaseOper.m */; };
 		158326AF168439EF00E7410B /* BirthdayGiftControllerNew.m in Sources */ = {isa = PBXBuildFile; fileRef = 158326AE168439EF00E7410B /* BirthdayGiftControllerNew.m */; };
 		158326B3168445C800E7410B /* TestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 158326B1168445C700E7410B /* TestViewController.m */; };
 		158326B4168445C800E7410B /* TestViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 158326B2168445C800E7410B /* TestViewController.xib */; };
@@ -228,6 +229,8 @@
 		1559F4A4167EF2F300F16634 /* BirthdayGiftControllerItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = BirthdayGiftControllerItem.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		1559F4A8167EF36600F16634 /* NMRangeSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NMRangeSlider.h; sourceTree = "<group>"; };
 		1559F4A9167EF36600F16634 /* NMRangeSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NMRangeSlider.m; sourceTree = "<group>"; };
+		15815807168D8DDB00FB0E0B /* DatabaseOper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DatabaseOper.h; sourceTree = "<group>"; };
+		15815808168D8DDB00FB0E0B /* DatabaseOper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DatabaseOper.m; sourceTree = "<group>"; };
 		158326AD168439EF00E7410B /* BirthdayGiftControllerNew.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BirthdayGiftControllerNew.h; sourceTree = "<group>"; };
 		158326AE168439EF00E7410B /* BirthdayGiftControllerNew.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BirthdayGiftControllerNew.m; sourceTree = "<group>"; };
 		158326B0168445C700E7410B /* TestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestViewController.h; sourceTree = "<group>"; };
@@ -513,6 +516,15 @@
 			children = (
 			);
 			name = GiftList;
+			sourceTree = "<group>";
+		};
+		15815805168D8D1100FB0E0B /* DBOper */ = {
+			isa = PBXGroup;
+			children = (
+				15815807168D8DDB00FB0E0B /* DatabaseOper.h */,
+				15815808168D8DDB00FB0E0B /* DatabaseOper.m */,
+			);
+			name = DBOper;
 			sourceTree = "<group>";
 		};
 		15BB708D167F0D9300CC3043 /* Common */ = {
@@ -826,6 +838,7 @@
 		E5D827C416081EC400969EE2 /* youli */ = {
 			isa = PBXGroup;
 			children = (
+				15815805168D8D1100FB0E0B /* DBOper */,
 				15BB70BA1680364F00CC3043 /* Delegate */,
 				15D7CE901648E6250088E49F /* Models */,
 				15D7CE8F1648E6180088E49F /* Views */,
@@ -1188,6 +1201,7 @@
 				158326B3168445C800E7410B /* TestViewController.m in Sources */,
 				15CE7B021689A63300707588 /* BirthdayGiftDetail.m in Sources */,
 				15CE7B051689A85600707588 /* BirthdayGiftDetailItem.m in Sources */,
+				15815809168D8DDB00FB0E0B /* DatabaseOper.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

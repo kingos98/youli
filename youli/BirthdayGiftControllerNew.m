@@ -8,6 +8,7 @@
 
 #define DBNAME      @"youli.sqlite"
 #define TABLENAME   @"BIRTHDAYGIFT"
+#define GIFTID      @"giftid"
 #define GIFTTYPE    @"gifttype"
 #define TITLE       @"title"
 #define DETAIL      @"detail"
@@ -55,7 +56,6 @@
 @synthesize db;
 
 
-
 #pragma mark -
 #pragma mark Initial
 //- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -91,6 +91,8 @@
     [self initConstellation];
     
     [self initPriceSlider];
+    
+    databaseOper=[[DatabaseOper alloc]init];
 }
 
 -(void) viewDidAppear:(BOOL)animated
@@ -113,16 +115,9 @@
     
     giftScrollView.delegate=self;
     
-    
-
-    
-    NSString *sql1 = [NSString stringWithFormat:
-                      @"INSERT INTO %@ (%@,%@,%@,%@,%@,%@) VALUES (%d,'%@','%@','%@','%@',%f)",
-                      TABLENAME, GIFTTYPE, TITLE, DETAIL,IMAGEURL,TAOBAOURL,PRICE ,1,
-                      @"TestTitle", @"TestDetail",@"TestImageUrl",@"TestTaobaoUrl",999.0f];
 //    [self execSql:sql1];
     
-    [self dbOpen];
+//    [self dbOpen];
 }
 
 //初始化view控件
@@ -144,6 +139,8 @@
     //获取选中的礼品分类名称(第一次运行BirthdayGiftController传递的GiftTypeTitle)
     NSUserDefaults *mydefault = [NSUserDefaults standardUserDefaults];
     self.lblGiftTypeTitle.text=[mydefault objectForKey:@"giftTypeTitle"];
+    
+    NSLog(@"NSUserDefaults");
 
     
     self.btnConstellation=[[UIButton alloc]initWithFrame:CGRectMake(92, 51, 62, 32)];
@@ -311,8 +308,15 @@
                                                                                                 
                                                                                                 iGiftScrollViewHeight+=284;
                                                                                                 
-                                                                                                [indicator stopAnimating];
+                                                                                                
+                                                                                                
+[self AddPhotoInfoToDB:[item objectForKey:@"account_url"] photodetail:[NSString stringWithFormat:@"%@",[item objectForKey:@"title"]] photourl:birthdayGiftControllerItem.PhotoURL];
+
+                                                                                                
+//                                                                                                [self AddPhotoInfoToDB:@"1" photodetail:@"2" photourl:@"3"];
+
                                                                                             }
+                                                                                                                                                                                        [indicator stopAnimating];
                                                                                         }failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
                                                                                             NSLog(@"error: %@", error);
                                                                                         }];
@@ -459,6 +463,8 @@
 -(void) sendGiftTypeTitle:(NSString *)GiftTypeTitle
 {
     self.lblGiftTypeTitle.text=GiftTypeTitle;
+    
+    NSLog(@"sendGiftTypeTitle");
 }
 
 -(void)changeGiftListByType:(int)GiftType
@@ -482,79 +488,90 @@
     }
 }
 
-#pragma mark - sqlite oper
--(void)dbOpen
-{
-//    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-//    NSString *documents = [paths objectAtIndex:0];
-//    NSString *database_path = [documents stringByAppendingPathComponent:DBNAME];
-    
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    NSString *database_path = [[[NSBundle mainBundle] resourcePath]
-                         stringByAppendingPathComponent:DBNAME];
+#pragma mark - data oper
 
-    NSLog(database_path);
-    BOOL success = [fileManager fileExistsAtPath:database_path];
+-(void)AddPhotoInfoToDB:(NSString *)tmpPhotoTitle photodetail:(NSString*)tmpPhotoDetail photourl:(NSString *)tmpPhotoURL
+{
+    NSString *sql = [NSString stringWithFormat:
+                     @"INSERT INTO %@ (%@,%@,%@,%@,%@,%@,%@) VALUES (%d,%d,'%@','%@','%@','%@',%f)",
+                     TABLENAME,GIFTID, GIFTTYPE, TITLE, DETAIL,IMAGEURL,TAOBAOURL,PRICE ,1,1,
+                     tmpPhotoTitle, tmpPhotoDetail,tmpPhotoURL,tmpPhotoURL,999.0f];
     
-    if (!success)
-    {
-        NSLog(@"Failed to find database file '%@'.", database_path);
-    }
-    
-    if (!(sqlite3_open([database_path UTF8String], &db) == SQLITE_OK))
-    {
-        NSLog(@"An error opening database, normally handle error here.");
-    }
-    
-    const char *sql = "insert into TestTable (Name) VALUES('test1')";
-    sqlite3_stmt *addStmt = nil;
-    if (sqlite3_prepare_v2(db, sql, -1, &addStmt, NULL) != SQLITE_OK)
-    {
-        NSLog(@"Error, failed to prepare statement, normally handle error here.");
-    }
-    
-    sqlite3_bind_int(addStmt, 1, 10);
-    sqlite3_step(addStmt);
-    if(sqlite3_finalize(addStmt) != SQLITE_OK)
-    {
-        NSLog(@"Failed to finalize data statement, normally error handling here.");
-    }
-    if (sqlite3_close(db) != SQLITE_OK)
-    {
-        NSLog(@"Failed to close database, normally error handling here.");
-    }
-    
-//    if (sqlite3_open([database_path UTF8String], &db) != SQLITE_OK)
+    [databaseOper ExecSql:sql];
+}
+
+//-(void)dbOpen
+//{
+////    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+////    NSString *documents = [paths objectAtIndex:0];
+////    NSString *database_path = [documents stringByAppendingPathComponent:DBNAME];
+//    
+//    NSFileManager *fileManager = [NSFileManager defaultManager];
+//    NSString *database_path = [[[NSBundle mainBundle] resourcePath]
+//                         stringByAppendingPathComponent:DBNAME];
+//
+//    NSLog(database_path);
+//    BOOL success = [fileManager fileExistsAtPath:database_path];
+//    
+//    if (!success)
 //    {
+//        NSLog(@"Failed to find database file '%@'.", database_path);
+//    }
+//    
+//    if (!(sqlite3_open([database_path UTF8String], &db) == SQLITE_OK))
+//    {
+//        NSLog(@"An error opening database, normally handle error here.");
+//    }
+//    
+//    const char *sql = "insert into TestTable (Name) VALUES('test1')";
+//    sqlite3_stmt *addStmt = nil;
+//    if (sqlite3_prepare_v2(db, sql, -1, &addStmt, NULL) != SQLITE_OK)
+//    {
+//        NSLog(@"Error, failed to prepare statement, normally handle error here.");
+//    }
+//    
+//    sqlite3_bind_int(addStmt, 1, 10);
+//    sqlite3_step(addStmt);
+//    if(sqlite3_finalize(addStmt) != SQLITE_OK)
+//    {
+//        NSLog(@"Failed to finalize data statement, normally error handling here.");
+//    }
+//    if (sqlite3_close(db) != SQLITE_OK)
+//    {
+//        NSLog(@"Failed to close database, normally error handling here.");
+//    }
+//    
+////    if (sqlite3_open([database_path UTF8String], &db) != SQLITE_OK)
+////    {
+////        [self dbClose];
+////        NSLog(@"db open fail"); 
+////    }
+////    else
+////    {
+////        NSLog(@"opened");
+////    }
+//}
+//
+//-(void)dbClose
+//{
+//    sqlite3_close(db);
+//}
+//
+//-(void)execSql:(NSString *)sql
+//{
+//    [self dbOpen];
+//    
+//    NSString *strSql=@"insert into TestTable (serial,Name) VALUES(1,'test1')";
+//    
+//    char *err;
+//    
+//    if (sqlite3_exec(db, [strSql UTF8String], NULL, NULL, &err) != SQLITE_OK) {
 //        [self dbClose];
-//        NSLog(@"db open fail"); 
+//        NSLog(@"数据库操作数据失败!");
 //    }
 //    else
 //    {
-//        NSLog(@"opened");
+//        NSLog(@"insert success!");
 //    }
-}
-
--(void)dbClose
-{
-    sqlite3_close(db);
-}
-
--(void)execSql:(NSString *)sql
-{
-    [self dbOpen];
-    
-    NSString *strSql=@"insert into TestTable (serial,Name) VALUES(1,'test1')";
-    
-    char *err;
-    
-    if (sqlite3_exec(db, [strSql UTF8String], NULL, NULL, &err) != SQLITE_OK) {
-        [self dbClose];
-        NSLog(@"数据库操作数据失败!");
-    }
-    else
-    {
-        NSLog(@"insert success!");
-    }
-}
+//}
 @end

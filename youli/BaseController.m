@@ -75,6 +75,8 @@
         [mainView addGestureRecognizer: mainViewPan];
 
         isPopCategoryView=false;
+        
+        self.youliDelegate=self;
     }
     return self;
 }

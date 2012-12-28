@@ -16,6 +16,7 @@
     UILabel *lblGiftPrice;
 }
 
+@property(strong,nonatomic) NSString;
 @property(strong,nonatomic) NSString *PhotoURL;
 @property(nonatomic,retain) NSMutableArray *items;
 @property(retain,nonatomic) NSMutableArray *photoURLItems;

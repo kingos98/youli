@@ -12,11 +12,11 @@
 #import "YouliDelegate.h"
 #import "BaseController.h"
 #import "sqlite3.h"
-
+#import "DatabaseOper.h"
 @interface BirthdayGiftControllerNew : BaseController<UIScrollViewDelegate,YouliDelegate>
 {
     NMRangeSlider *priceSlider;
-    
+    DatabaseOper *databaseOper;
 }
 
 
@@ -47,5 +47,6 @@
 
 @property sqlite3 *db;
 
+-(void)AddPhotoInfoToDB:(NSString *)tmpPhotoTitle photodetail:(NSString*)tmpPhotoDetail photourl:(NSString *)tmpPhotoURL;
 
 @end
