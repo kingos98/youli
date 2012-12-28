@@ -1,0 +1,131 @@
+K 25
+svn:wc:ra_dav:version-url
+V 40
+/svn/youli/!svn/ver/1/youli/AFNetworking
+END
+AFHTTPClient.m
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/youli/!svn/ver/1/youli/AFNetworking/AFHTTPClient.m
+END
+AFNetworking.h
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/youli/!svn/ver/1/youli/AFNetworking/AFNetworking.h
+END
+AFXMLRequestOperation.h
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/youli/!svn/ver/1/youli/AFNetworking/AFXMLRequestOperation.h
+END
+AFNetworkActivityIndicatorManager.h
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/youli/!svn/ver/1/youli/AFNetworking/AFNetworkActivityIndicatorManager.h
+END
+UIImageView+AFNetworking.h
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/youli/!svn/ver/1/youli/AFNetworking/UIImageView+AFNetworking.h
+END
+AFXMLRequestOperation.m
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/youli/!svn/ver/1/youli/AFNetworking/AFXMLRequestOperation.m
+END
+AFURLConnectionOperation.h
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/youli/!svn/ver/1/youli/AFNetworking/AFURLConnectionOperation.h
+END
+AFNetworkActivityIndicatorManager.m
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/youli/!svn/ver/1/youli/AFNetworking/AFNetworkActivityIndicatorManager.m
+END
+AFJSONRequestOperation.h
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/youli/!svn/ver/1/youli/AFNetworking/AFJSONRequestOperation.h
+END
+UIImageView+AFNetworking.m
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/youli/!svn/ver/1/youli/AFNetworking/UIImageView+AFNetworking.m
+END
+AFJSONUtilities.h
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/youli/!svn/ver/1/youli/AFNetworking/AFJSONUtilities.h
+END
+AFJSONRequestOperation.m
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/youli/!svn/ver/1/youli/AFNetworking/AFJSONRequestOperation.m
+END
+AFURLConnectionOperation.m
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/youli/!svn/ver/1/youli/AFNetworking/AFURLConnectionOperation.m
+END
+AFHTTPRequestOperation.h
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/youli/!svn/ver/1/youli/AFNetworking/AFHTTPRequestOperation.h
+END
+AFPropertyListRequestOperation.h
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/youli/!svn/ver/1/youli/AFNetworking/AFPropertyListRequestOperation.h
+END
+AFJSONUtilities.m
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/youli/!svn/ver/1/youli/AFNetworking/AFJSONUtilities.m
+END
+AFImageRequestOperation.h
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/youli/!svn/ver/1/youli/AFNetworking/AFImageRequestOperation.h
+END
+AFHTTPRequestOperation.m
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/youli/!svn/ver/1/youli/AFNetworking/AFHTTPRequestOperation.m
+END
+AFHTTPClient.h
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/youli/!svn/ver/1/youli/AFNetworking/AFHTTPClient.h
+END
+AFPropertyListRequestOperation.m
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/youli/!svn/ver/1/youli/AFNetworking/AFPropertyListRequestOperation.m
+END
+AFImageRequestOperation.m
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/youli/!svn/ver/1/youli/AFNetworking/AFImageRequestOperation.m
+END

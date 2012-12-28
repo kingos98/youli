@@ -1,0 +1,23 @@
+//
+//  ViewController.h
+//  youli
+//
+//  Created by jun on 9/18/12.
+//  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
+//
+
+#import <UIKit/UIKit.h>
+#import "CategoryTableView.h"
+
+@interface IndexController : UIViewController<UIScrollViewDelegate>{
+    bool isPopCategoryView;
+    UIScrollView *mainScrollView;
+    UIView *categoryView;
+    CategoryTableView *categoryTableView;
+    UIImageView *categoryBgImage;
+}
+
+@property(nonatomic,retain)NSMutableArray *items; 
+@property(nonatomic,retain)NSArray *templateForIphone4;
+
+@end

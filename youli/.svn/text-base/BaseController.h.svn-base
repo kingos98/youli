@@ -1,0 +1,22 @@
+//
+//  BaseController.h
+//  youli
+//
+//  Created by apple on 11/19/12.
+//
+//
+
+#import <UIKit/UIKit.h>
+#import "CategoryTableView.h"
+
+@interface BaseController : UIViewController{
+    UIView *mainView;
+    UIView *categoryView;
+    CategoryTableView *categoryTableView;
+    UIImageView *categoryBgImage;
+    UIImageView *tabBarBgImage;
+    UIButton *tabBarLeftButton;
+    UIButton *tabBarBoxButton;
+    UIButton *tabBarRightButton;
+}
+@end
