@@ -33,12 +33,6 @@
 @property (nonatomic, strong) Category *category;
 @property(nonatomic,strong) BirthdayGiftControllerNew *birthdayGiftController;
 
-
-//    [self.view addSubview:tabBarBgView];
-//    [self.view addSubview:tabBarLeftButton];
-//    [self.view addSubview:tabBarBoxButton];
-//    [self.view addSubview:tabBarRightButton];
-
 @property id<YouliDelegate> delegate;
 
 @end

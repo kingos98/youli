@@ -131,8 +131,7 @@
             if(isPopCategoryView)
             {
                 [self hideCategoryView];
-            }
-            
+            }  
         }
         else
         {
@@ -151,8 +150,6 @@
     CategoryCell *cell = (CategoryCell*)[categoryTableView cellForRowAtIndexPath:indexPath];
     
     [self.youliDelegate sendGiftTypeTitle:cell.nameLabel.text];
-    
-//    [self.navigationController pushViewController:self.birthdayGiftController animated:YES];
     
     cell.labelImage.image = [UIImage imageNamed:@"selected.png"];
     cell.nextImage.image = [UIImage imageNamed:@"pointerselect.png"];

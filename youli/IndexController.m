@@ -110,10 +110,6 @@
     //加到父view中的子view是按顺序加载的，需注意加载子view的顺序！
     [self.view addSubview:categoryView];
     [self.view addSubview:mainScrollView];
-//    [mainScrollView addSubview:tabBarBgView];
-//    [mainScrollView addSubview:tabBarLeftButton];
-//    [mainScrollView addSubview:tabBarBoxButton];
-//    [mainScrollView addSubview:tabBarRightButton];
     [self.view addSubview:tabBarBgView];
     [self.view addSubview:tabBarLeftButton];
     [self.view addSubview:tabBarBoxButton];
@@ -131,19 +127,7 @@
 {
     [UIView beginAnimations:nil context:NULL];
     [UIView setAnimationDuration:0.3];
-    CGPoint point = mainScrollView.center;
-//    if(isPopCategoryView)
-//    {
-//        mainScrollView.center = CGPointMake(point.x-212,point.y);
-//        isPopCategoryView = false;
-//    }
-//    else
-//    {
-//        mainScrollView.center = CGPointMake(point.x+212,point.y);
-//        isPopCategoryView = true;
-//    }
-    
-//    mainScrollView.center = CGPointMake(point.x+212,point.y);
+//    CGPoint point = mainScrollView.center;
     
     if(isPopCategoryView)
     {
@@ -170,17 +154,6 @@
     CGPoint pointRightButton=tabBarRightButton.center;
 
     
-//    if(isPopCategoryView)
-//    {
-//        mainScrollView.center=CGPointMake(point.x-212,point.y);
-//        isPopCategoryView=false;
-//    }
-//    else
-//    {
-//        mainScrollView.center=CGPointMake(point.x+212,point.y);
-//        isPopCategoryView=true;
-//    }
-    
     mainScrollView.center=CGPointMake(point.x-212,point.y);
     tabBarBgView.center=CGPointMake(pointBgView.x-212,pointBgView.y);
     tabBarLeftButton.center=CGPointMake(pointLeftButton.x-212,pointLeftButton.y);
@@ -188,18 +161,6 @@
     tabBarRightButton.center=CGPointMake(pointRightButton.x-212,pointRightButton.y);
 
     isPopCategoryView = false;
-    
-    
-//    [self.view addSubview:tabBarBgView];
-//    [self.view addSubview:tabBarLeftButton];
-//    [self.view addSubview:tabBarBoxButton];
-//    [self.view addSubview:tabBarRightButton];
-
-//    NSIndexPath *indexPath = [categoryTableView indexPathForSelectedRow];
-//    if (indexPath != nil)
-//    {
-//        CategoryCell *cell=(CategoryCell*)[categoryTableView cellForRowAtIndexPath:indexPath];
-//    }
     
     [UIView commitAnimations];
 }

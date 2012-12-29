@@ -15,14 +15,6 @@
     UIView *categoryView;
     CategoryTableView *categoryTableView;
     UIImageView *categoryBgImage;
-//    UIImageView *tabBarBgImage;
-//    UIButton *tabBarLeftButton;
-//    UIButton *tabBarBoxButton;
-//    UIButton *tabBarRightButton;
-    
-//    UIImage *tabBarLeftImage;
-//    UIImage *tabBarBoxImage;
-//    UIImage *tabBarRightImage;
 }
 
 
