@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "BirthdayGiftControllerItem.h"
+#import "BirthdayGiftItem.h"
 #import "NMRangeSlider.h"
 #import "YouliDelegate.h"
 #import "BaseController.h"

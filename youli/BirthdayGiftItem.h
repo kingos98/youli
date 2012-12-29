@@ -8,19 +8,21 @@
 
 #import <UIKit/UIKit.h>
 
-@interface BirthdayGiftControllerItem : UIViewController
+@interface BirthdayGiftItem : UIView
 {
     UIImageView *imgBackground;
     UIImageView *imgGiftPhoto;
     UILabel *lblMoneySymbol;
-    UILabel *lblGiftPrice;
+    UILabel *lblGiftPrice;    
 }
 
-@property(strong,nonatomic) NSString;
 @property(strong,nonatomic) NSString *PhotoURL;
 @property(nonatomic,retain) NSMutableArray *items;
 @property(retain,nonatomic) NSMutableArray *photoURLItems;
 
 @property(retain,nonatomic) UIViewController *RootViewController;
+
+-(id)initWithUrl:(NSString *)PhotoURL;
+
 
 @end

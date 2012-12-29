@@ -9,7 +9,7 @@
 #import "TestViewController.h"
 #import "AFJSONRequestOperation.h"
 #import "UIImageView+WebCache.h"
-#import "BirthdayGiftControllerItem.h"
+#import "BirthdayGiftItem.h"
 #import "NMRangeSlider.h"
 #import "BaseController.h"
 
@@ -19,7 +19,7 @@
     int iGiftDisplayCount;
     int iGiftScrollViewHeight;
     
-    __strong BirthdayGiftControllerItem *birthdayGiftControllerItem;
+    __strong BirthdayGiftItem *birthdayGiftItem;
 }
 @end
 
@@ -62,18 +62,18 @@
                                                                                             self.items = [JSON objectForKey:@"data"];
                                                                                             for (int i=iGiftDisplayCount; i<iGiftDisplayCount+10; i++) {                                                                                                NSDictionary *item = [self.items objectAtIndex:i];
                                                                                                 
-                                                                                                birthdayGiftControllerItem=[[BirthdayGiftControllerItem alloc] init];
+                                                                                                birthdayGiftItem=[[BirthdayGiftItem alloc] init];
                                                                                                 
-                                                                                                birthdayGiftControllerItem.view.frame=CGRectMake(8, iGiftScrollViewHeight, 308, 270);
+                                                                                                birthdayGiftItem.frame=CGRectMake(8, iGiftScrollViewHeight, 308, 270);
                                                                                                 
-                                                                                                birthdayGiftControllerItem.PhotoURL=[NSString stringWithFormat:@"http://imgur.com/%@%@",[item objectForKey:@"hash"], [item objectForKey:@"ext"]];
+                                                                                                birthdayGiftItem.PhotoURL=[NSString stringWithFormat:@"http://imgur.com/%@%@",[item objectForKey:@"hash"], [item objectForKey:@"ext"]];
                                                                                                 
                                                                                                 
                                                                                                 //                                                                                                NSLog(@"%@",birthdayGiftControllerItem.PhotoURL);
                                                                                                 
                                                                                                 CGSize size = giftScrollView.frame.size;
                                                                                                 [giftScrollView setContentSize:CGSizeMake(size.width, size.height +iGiftScrollViewHeight)];
-                                                                                                [self.giftScrollView addSubview:birthdayGiftControllerItem.view];
+                                                                                                [self.giftScrollView addSubview:birthdayGiftItem];
                                                                                                 
                                                                                                 iGiftScrollViewHeight+=284;
                                                                                             }

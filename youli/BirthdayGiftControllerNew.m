@@ -19,7 +19,7 @@
 #import "BirthdayGiftControllerNew.h"
 #import "AFJSONRequestOperation.h"
 #import "UIImageView+WebCache.h"
-#import "BirthdayGiftControllerItem.h"
+#import "BirthdayGiftItem.h"
 #import "NMRangeSlider.h"
 #import "BaseController.h"
 
@@ -29,7 +29,7 @@
     int iGiftDisplayCount;            //当前显示的礼品数量
     int iGiftScrollViewHeight;        //当前礼品scrollview的高度
     
-    __strong BirthdayGiftControllerItem *birthdayGiftControllerItem;
+    __strong BirthdayGiftItem *birthdayGiftItem;
 }
 @end
 
@@ -66,7 +66,7 @@
 //    }
 //    return self;
 //}
-
+//无法刷新内容
 
 - (void)viewDidLoad
 {
@@ -292,19 +292,17 @@
                                                                                             self.items = [JSON objectForKey:@"data"];
                                                                                             for (int i=iGiftDisplayCount; i<iGiftDisplayCount+10; i++) {                                                                                                NSDictionary *item = [self.items objectAtIndex:i];
                                                                                                 
-                                                                                                birthdayGiftControllerItem=[[BirthdayGiftControllerItem alloc] init];
+                                                                                                birthdayGiftItem=[[BirthdayGiftItem alloc] initWithUrl:[NSString stringWithFormat:@"http://imgur.com/%@%@",[item objectForKey:@"hash"], [item objectForKey:@"ext"]]];
                                                                                                 
-                                                                                                birthdayGiftControllerItem.view.frame=CGRectMake(8, iGiftScrollViewHeight, 308, 270);
-                                                                                                
-                                                                                                birthdayGiftControllerItem.PhotoURL=[NSString stringWithFormat:@"http://imgur.com/%@%@",[item objectForKey:@"hash"], [item objectForKey:@"ext"]];          
+                                                                                                birthdayGiftItem.frame=CGRectMake(8, iGiftScrollViewHeight, 308, 270);
                                                                                                 
                                                                                                 CGSize size = giftScrollView.frame.size;
                                                                                                 [giftScrollView setContentSize:CGSizeMake(size.width, size.height +iGiftScrollViewHeight)];
-                                                                                                [self.giftScrollView addSubview:birthdayGiftControllerItem.view];
+                                                                                                [self.giftScrollView addSubview:birthdayGiftItem];
                                                                                                 
                                                                                                 iGiftScrollViewHeight+=284;
                                                                                                                               
-                                                                                                [self AddPhotoInfoToDB:[item objectForKey:@"account_url"] photodetail:[item objectForKey:@"title"] photourl:birthdayGiftControllerItem.PhotoURL];
+                                                                                                [self AddPhotoInfoToDB:[item objectForKey:@"account_url"] photodetail:[item objectForKey:@"title"] photourl:birthdayGiftItem.PhotoURL];
                                                                                                 
                                                                                                 NSLog([item objectForKey:@"title"]);
                                                                                             }
