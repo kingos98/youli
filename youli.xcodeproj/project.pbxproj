@@ -47,7 +47,7 @@
 		1559F4A6167EF2F400F16634 /* BirthdayGiftItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 1559F4A4167EF2F300F16634 /* BirthdayGiftItem.m */; };
 		1559F4AA167EF36600F16634 /* NMRangeSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 1559F4A9167EF36600F16634 /* NMRangeSlider.m */; };
 		15815809168D8DDB00FB0E0B /* DatabaseOper.m in Sources */ = {isa = PBXBuildFile; fileRef = 15815808168D8DDB00FB0E0B /* DatabaseOper.m */; };
-		158326AF168439EF00E7410B /* BirthdayGiftControllerNew.m in Sources */ = {isa = PBXBuildFile; fileRef = 158326AE168439EF00E7410B /* BirthdayGiftControllerNew.m */; };
+		158326AF168439EF00E7410B /* BirthdayGiftController.m in Sources */ = {isa = PBXBuildFile; fileRef = 158326AE168439EF00E7410B /* BirthdayGiftController.m */; };
 		158326B3168445C800E7410B /* TestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 158326B1168445C700E7410B /* TestViewController.m */; };
 		158326B4168445C800E7410B /* TestViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 158326B2168445C800E7410B /* TestViewController.xib */; };
 		15BB70A6167F0F9C00CC3043 /* cancel_click.png in Resources */ = {isa = PBXBuildFile; fileRef = 15BB709E167F0F9C00CC3043 /* cancel_click.png */; };
@@ -62,7 +62,7 @@
 		15C3DFB4164618000006183D /* BirthdayCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 15C3DFB3164618000006183D /* BirthdayCell.m */; };
 		15CE7AFD1689A41A00707588 /* share_click.png in Resources */ = {isa = PBXBuildFile; fileRef = 15CE7AFB1689A41A00707588 /* share_click.png */; };
 		15CE7AFE1689A41A00707588 /* share_unclick.png in Resources */ = {isa = PBXBuildFile; fileRef = 15CE7AFC1689A41A00707588 /* share_unclick.png */; };
-		15CE7B021689A63300707588 /* BirthdayGiftDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = 15CE7B011689A63300707588 /* BirthdayGiftDetail.m */; };
+		15CE7B021689A63300707588 /* BirthdayGiftDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 15CE7B011689A63300707588 /* BirthdayGiftDetailController.m */; };
 		15CE7B051689A85600707588 /* BirthdayGiftDetailItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 15CE7B041689A85600707588 /* BirthdayGiftDetailItem.m */; };
 		15CE7B07168A94FB00707588 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 15CE7B06168A94FB00707588 /* libsqlite3.dylib */; };
 		15CE7B0C168A9D4300707588 /* buy_click.png in Resources */ = {isa = PBXBuildFile; fileRef = 15CE7B0A168A9D4300707588 /* buy_click.png */; };
@@ -237,8 +237,8 @@
 		1559F4A9167EF36600F16634 /* NMRangeSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NMRangeSlider.m; sourceTree = "<group>"; };
 		15815807168D8DDB00FB0E0B /* DatabaseOper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DatabaseOper.h; sourceTree = "<group>"; };
 		15815808168D8DDB00FB0E0B /* DatabaseOper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DatabaseOper.m; sourceTree = "<group>"; };
-		158326AD168439EF00E7410B /* BirthdayGiftControllerNew.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BirthdayGiftControllerNew.h; sourceTree = "<group>"; };
-		158326AE168439EF00E7410B /* BirthdayGiftControllerNew.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BirthdayGiftControllerNew.m; sourceTree = "<group>"; };
+		158326AD168439EF00E7410B /* BirthdayGiftController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BirthdayGiftController.h; sourceTree = "<group>"; };
+		158326AE168439EF00E7410B /* BirthdayGiftController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BirthdayGiftController.m; sourceTree = "<group>"; };
 		158326B0168445C700E7410B /* TestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestViewController.h; sourceTree = "<group>"; };
 		158326B1168445C700E7410B /* TestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestViewController.m; sourceTree = "<group>"; };
 		158326B2168445C800E7410B /* TestViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TestViewController.xib; sourceTree = "<group>"; };
@@ -256,8 +256,8 @@
 		15C3DFB3164618000006183D /* BirthdayCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BirthdayCell.m; sourceTree = "<group>"; };
 		15CE7AFB1689A41A00707588 /* share_click.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = share_click.png; sourceTree = "<group>"; };
 		15CE7AFC1689A41A00707588 /* share_unclick.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = share_unclick.png; sourceTree = "<group>"; };
-		15CE7B001689A63300707588 /* BirthdayGiftDetail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BirthdayGiftDetail.h; sourceTree = "<group>"; };
-		15CE7B011689A63300707588 /* BirthdayGiftDetail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BirthdayGiftDetail.m; sourceTree = "<group>"; };
+		15CE7B001689A63300707588 /* BirthdayGiftDetailController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BirthdayGiftDetailController.h; sourceTree = "<group>"; };
+		15CE7B011689A63300707588 /* BirthdayGiftDetailController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BirthdayGiftDetailController.m; sourceTree = "<group>"; };
 		15CE7B031689A85600707588 /* BirthdayGiftDetailItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BirthdayGiftDetailItem.h; sourceTree = "<group>"; };
 		15CE7B041689A85600707588 /* BirthdayGiftDetailItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BirthdayGiftDetailItem.m; sourceTree = "<group>"; };
 		15CE7B06168A94FB00707588 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
@@ -585,7 +585,7 @@
 		15D7CE8D1648E5870088E49F /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				186AEFF4165CBAB9008372B4 /* Category */,
+				18E24E9E168EBCBE000D2172 /* Birthday */,
 				15D7CE911648E7870088E49F /* Gifts */,
 				15D7CE941648E8030088E49F /* Personal */,
 				18C7F705165A765900B709AE /* BaseController.h */,
@@ -618,18 +618,12 @@
 		15D7CE911648E7870088E49F /* Gifts */ = {
 			isa = PBXGroup;
 			children = (
-				E50002EA162E979B00434976 /* BirthdayController.h */,
-				E50002EB162E979B00434976 /* BirthdayController.m */,
-				158326AD168439EF00E7410B /* BirthdayGiftControllerNew.h */,
-				158326AE168439EF00E7410B /* BirthdayGiftControllerNew.m */,
-				15CE7B001689A63300707588 /* BirthdayGiftDetail.h */,
-				15CE7B011689A63300707588 /* BirthdayGiftDetail.m */,
-				15CE7B031689A85600707588 /* BirthdayGiftDetailItem.h */,
-				15CE7B041689A85600707588 /* BirthdayGiftDetailItem.m */,
+				158326AD168439EF00E7410B /* BirthdayGiftController.h */,
+				158326AE168439EF00E7410B /* BirthdayGiftController.m */,
+				15CE7B001689A63300707588 /* BirthdayGiftDetailController.h */,
+				15CE7B011689A63300707588 /* BirthdayGiftDetailController.m */,
 				151295641671CF4B00C6AE49 /* BirthdayGiftListView.h */,
 				151295651671CF4B00C6AE49 /* BirthdayGiftListView.m */,
-				188100EF1654870500E7B66B /* GiftListController.h */,
-				188100F01654870500E7B66B /* GiftListController.m */,
 				158326B0168445C700E7410B /* TestViewController.h */,
 				158326B1168445C700E7410B /* TestViewController.m */,
 				158326B2168445C800E7410B /* TestViewController.xib */,
@@ -653,6 +647,8 @@
 				15C3DFB3164618000006183D /* BirthdayCell.m */,
 				1559F4A3167EF2F300F16634 /* BirthdayGiftItem.h */,
 				1559F4A4167EF2F300F16634 /* BirthdayGiftItem.m */,
+				15CE7B031689A85600707588 /* BirthdayGiftDetailItem.h */,
+				15CE7B041689A85600707588 /* BirthdayGiftDetailItem.m */,
 			);
 			name = Gifts;
 			sourceTree = "<group>";
@@ -693,13 +689,6 @@
 				186AEFF9165CBB37008372B4 /* CategoryCell.m */,
 				18DBE8C71664643B006631FD /* CategoryTableView.h */,
 				18DBE8C81664643B006631FD /* CategoryTableView.m */,
-			);
-			name = Category;
-			sourceTree = "<group>";
-		};
-		186AEFF4165CBAB9008372B4 /* Category */ = {
-			isa = PBXGroup;
-			children = (
 			);
 			name = Category;
 			sourceTree = "<group>";
@@ -751,6 +740,17 @@
 				18E24E93168E93E8000D2172 /* Friend.m */,
 			);
 			name = Personal;
+			sourceTree = "<group>";
+		};
+		18E24E9E168EBCBE000D2172 /* Birthday */ = {
+			isa = PBXGroup;
+			children = (
+				E50002EA162E979B00434976 /* BirthdayController.h */,
+				E50002EB162E979B00434976 /* BirthdayController.m */,
+				188100EF1654870500E7B66B /* GiftListController.h */,
+				188100F01654870500E7B66B /* GiftListController.m */,
+			);
+			name = Birthday;
 			sourceTree = "<group>";
 		};
 		18FAA60C16560C720060BCEA /* Images */ = {
@@ -1258,9 +1258,9 @@
 				151295661671CF4B00C6AE49 /* BirthdayGiftListView.m in Sources */,
 				1559F4A6167EF2F400F16634 /* BirthdayGiftItem.m in Sources */,
 				1559F4AA167EF36600F16634 /* NMRangeSlider.m in Sources */,
-				158326AF168439EF00E7410B /* BirthdayGiftControllerNew.m in Sources */,
+				158326AF168439EF00E7410B /* BirthdayGiftController.m in Sources */,
 				158326B3168445C800E7410B /* TestViewController.m in Sources */,
-				15CE7B021689A63300707588 /* BirthdayGiftDetail.m in Sources */,
+				15CE7B021689A63300707588 /* BirthdayGiftDetailController.m in Sources */,
 				15CE7B051689A85600707588 /* BirthdayGiftDetailItem.m in Sources */,
 				15815809168D8DDB00FB0E0B /* DatabaseOper.m in Sources */,
 				18E24E76168E9177000D2172 /* JSONKit.m in Sources */,

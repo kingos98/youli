@@ -19,7 +19,6 @@
 @property(strong,nonatomic) NSString *PhotoURL;
 @property(nonatomic,retain) NSMutableArray *items;
 @property(retain,nonatomic) NSMutableArray *photoURLItems;
-
 @property(retain,nonatomic) UIViewController *RootViewController;
 
 -(id)initWithUrl:(NSString *)PhotoURL;

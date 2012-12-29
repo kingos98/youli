@@ -21,21 +21,6 @@
 @synthesize photoURLItems;
 //@synthesize iCount;
 
-
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-
-        
-        
-
-        
-    }
-    return self;
-}
-
 -(id)initWithUrl:(NSString *)PhotoURL
 {
     self=[super init];
@@ -106,13 +91,6 @@
     [self addSubview:imgGiftPhoto];
     [self addSubview:lblMoneySymbol];
     [self addSubview:lblGiftPrice];
-    
-}
-
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
     
 }
 

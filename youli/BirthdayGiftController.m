@@ -16,14 +16,14 @@
 #define TAOBAOURL   @"taobaourl"
 #define PRICE       @"price"
 
-#import "BirthdayGiftControllerNew.h"
+#import "BirthdayGiftController.h"
 #import "AFJSONRequestOperation.h"
 #import "UIImageView+WebCache.h"
 #import "BirthdayGiftItem.h"
 #import "NMRangeSlider.h"
 #import "BaseController.h"
 
-@interface BirthdayGiftControllerNew ()
+@interface BirthdayGiftController ()
 {
     @private
     int iGiftDisplayCount;            //当前显示的礼品数量
@@ -33,7 +33,7 @@
 }
 @end
 
-@implementation BirthdayGiftControllerNew
+@implementation BirthdayGiftController
 
 @synthesize items;
 @synthesize PhotoURL;

@@ -13,7 +13,7 @@
 #import "PersonalController.h"
 #import "CategoryCell.h"
 #import "TestViewController.h"
-#import "BirthdayGiftControllerNew.h"
+#import "BirthdayGiftController.h"
 
 @interface IndexController ()
 
@@ -81,7 +81,7 @@
 //    }
 
     
-    self.birthdayGiftController=[[BirthdayGiftControllerNew alloc]init];
+    self.birthdayGiftController=[[BirthdayGiftController alloc]init];
     
     tabBarBgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 422, 320, 38)];
     [tabBarBgView setImage:[UIImage imageNamed:@"tabbar_bg.png"]];

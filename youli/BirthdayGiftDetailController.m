@@ -6,13 +6,13 @@
 //
 //
 
-#import "BirthdayGiftDetail.h"
+#import "BirthdayGiftDetailController.h"
 
-@interface BirthdayGiftDetail ()
+@interface BirthdayGiftDetailController ()
 
 @end
 
-@implementation BirthdayGiftDetail
+@implementation BirthdayGiftDetailController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {

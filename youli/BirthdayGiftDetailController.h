@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "BaseController.h"
 
-@interface BirthdayGiftDetail : BaseController
+@interface BirthdayGiftDetailController : BaseController
 
 
 @end

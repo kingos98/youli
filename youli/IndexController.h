@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "Category.h"
-#import "BirthdayGiftControllerNew.h"
+#import "BirthdayGiftController.h"
 #import "YouliDelegate.h"
 #import "PersonalController.h"
 #import "BirthdayController.h"
@@ -32,7 +32,7 @@
 @property(nonatomic,retain)NSMutableArray *giftTypeItems;
 @property(nonatomic,retain)NSArray *templateForIphone4;
 @property (nonatomic, strong)Category *category;
-@property(nonatomic,strong)BirthdayGiftControllerNew *birthdayGiftController;
+@property(nonatomic,strong)BirthdayGiftController *birthdayGiftController;
 @property(nonatomic,strong)PersonalController *personalController;
 @property(nonatomic,strong)BirthdayController *birthdayController;
 

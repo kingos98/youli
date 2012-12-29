@@ -13,7 +13,7 @@
 #import "BaseController.h"
 #import "sqlite3.h"
 #import "DatabaseOper.h"
-@interface BirthdayGiftControllerNew : BaseController<UIScrollViewDelegate,YouliDelegate>
+@interface BirthdayGiftController : BaseController<UIScrollViewDelegate,YouliDelegate>
 {
     NMRangeSlider *priceSlider;
     DatabaseOper *databaseOper;
@@ -26,22 +26,22 @@
 @property(retain,nonatomic) NSArray *constellationArrary;
 @property(retain,nonatomic) NSString *giftListTitle;
 
-@property (retain, nonatomic) IBOutlet UIScrollView *giftScrollView;
-@property (strong, nonatomic) IBOutlet UIScrollView *constellationScrollView;
-@property (strong, nonatomic) IBOutlet UIView *constellationSelectView;
+@property (retain, nonatomic)UIScrollView *giftScrollView;
+@property (strong, nonatomic)UIScrollView *constellationScrollView;
+@property (strong, nonatomic)UIView *constellationSelectView;
 
-@property (strong, nonatomic) IBOutlet UIImageView *imgConstellation;
-@property (strong, nonatomic) IBOutlet UIImageView *imgPrice;
+@property (strong, nonatomic)UIImageView *imgConstellation;
+@property (strong, nonatomic)UIImageView *imgPrice;
 
-@property (strong, nonatomic) IBOutlet UIButton *btnConstellation;
-@property (strong, nonatomic) IBOutlet UIButton *btnPrice;
+@property (strong, nonatomic)UIButton *btnConstellation;
+@property (strong, nonatomic)UIButton *btnPrice;
 
-@property (strong, nonatomic) IBOutlet UILabel *lowerPrice;
-@property (strong, nonatomic) IBOutlet UILabel *upperPrice;
+@property (strong, nonatomic)UILabel *lowerPrice;
+@property (strong, nonatomic)UILabel *upperPrice;
 
-@property (strong, nonatomic) IBOutlet UILabel *lblGiftTypeTitle;
+@property (strong, nonatomic)UILabel *lblGiftTypeTitle;
 
-@property (strong, nonatomic) IBOutlet UIButton *btnReturn;
+@property (strong, nonatomic)UIButton *btnReturn;
 
 @property (strong,nonatomic) UIActivityIndicatorView *indicator;                //菊花
 

@@ -9,16 +9,15 @@
 #import <UIKit/UIKit.h>
 #import "sqlite3.h"
 
-@interface BirthdayGiftDetailItem : UIViewController
+@interface BirthdayGiftDetailItem : UIView
 {
     sqlite3 *db;
 }
 
-
-@property(retain,nonatomic) IBOutlet UILabel *lblTitle;
-@property(retain,nonatomic) IBOutlet UIImageView *imgPhoto;
-@property(retain,nonatomic) IBOutlet UILabel *lblDetail;
-@property(retain,nonatomic) IBOutlet UILabel *lblPrice;
-@property(retain,nonatomic) IBOutlet UIButton *btnBuy;
+@property(retain,nonatomic)UILabel *lblTitle;
+@property(retain,nonatomic)UIImageView *imgPhoto;
+@property(retain,nonatomic)UILabel *lblDetail;
+@property(retain,nonatomic)UILabel *lblPrice;
+@property(retain,nonatomic)UIButton *btnBuy;
 
 @end
