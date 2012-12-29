@@ -49,7 +49,7 @@
 - (void)addButton{
     UIButton *nextButton = [UIButton buttonWithType:UIButtonTypeCustom];
     UIImage *nextImage = [[UIImage imageNamed:@"next.png"] stretchableImageWithLeftCapWidth:0 topCapHeight:0];
-    nextButton.frame = CGRectMake(260,2,26,26);
+    nextButton.frame = CGRectMake(260,2,26,27);
     [nextButton setBackgroundImage:nextImage forState:UIControlStateNormal];
     [self.contentView addSubview:nextButton];
 }
