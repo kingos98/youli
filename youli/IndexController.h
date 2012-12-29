@@ -21,11 +21,11 @@
     UITextField *_value;
 }
 
-@property(nonatomic, retain)IBOutlet UITextField *value;
-@property(nonatomic, retain)IBOutlet UIImageView *tabBarBgView;
-@property(nonatomic, retain)IBOutlet UIButton *tabBarLeftButton;
-@property(nonatomic, retain)IBOutlet UIButton *tabBarBoxButton;
-@property(nonatomic, retain)IBOutlet UIButton *tabBarRightButton;
+@property(nonatomic, retain)UITextField *value;
+@property(nonatomic, retain)UIImageView *tabBarBgView;
+@property(nonatomic, retain)UIButton *tabBarLeftButton;
+@property(nonatomic, retain)UIButton *tabBarBoxButton;
+@property(nonatomic, retain)UIButton *tabBarRightButton;
 
 @property(nonatomic,retain)NSMutableArray *items;
 @property(nonatomic,retain)NSMutableArray *giftTypeItems;
