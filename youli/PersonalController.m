@@ -13,7 +13,6 @@
 #import "FriendInfoController.h"
 #import "Friend.h"
 #import "AppDelegate.h"
-#import "AFJSONRequestOperation.h"
 
 @interface PersonalController ()
 
@@ -168,7 +167,6 @@ NSMutableArray *items ;
 
 - (void)sinaweiboDidLogIn:(SinaWeibo *)sinaweibo
 {
-    NSLog(@"userID = %@ accesstoken = %@ expirationDate = %@", sinaweibo.userID, sinaweibo.accessToken, sinaweibo.expirationDate);
     [sinaweibo requestWithURL:@"friendships/friends/bilateral.json"
                        params:[NSMutableDictionary dictionaryWithObject:sinaweibo.userID forKey:@"uid"]
                    httpMethod:@"GET"
