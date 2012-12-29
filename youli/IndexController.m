@@ -51,8 +51,6 @@
     categoryView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 212, 460)];
     
     //添加分类页面
-//    categoryTableView = [[CategoryTableView alloc] initWithFrame:CGRectMake(0, 0, 212, 460)];
-//    [categoryView addSubview:categoryTableView];
     categoryTableView=[[UITableView alloc] initWithFrame:CGRectMake(0, 0, 212, 460)];
     categoryTableView.backgroundView=[self backgroundView];
     categoryTableView.backgroundColor=[UIColor clearColor];
@@ -81,7 +79,6 @@
 //    }
 
     
-//    self.birthdayGiftController=[[BirthdayGiftController alloc] initWithNibName:@"BirthdayGiftController" bundle:[NSBundle mainBundle]];
     self.birthdayGiftController=[[BirthdayGiftControllerNew alloc]init];
     
     tabBarBgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 422, 320, 38)];
