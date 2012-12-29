@@ -12,7 +12,6 @@
 #import "BirthdayController.h"
 #import "PersonalController.h"
 #import "CategoryCell.h"
-#import "BirthdayGiftController.h"
 #import "TestViewController.h"
 #import "BirthdayGiftControllerNew.h"
 
