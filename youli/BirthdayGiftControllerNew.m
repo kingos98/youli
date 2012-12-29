@@ -136,11 +136,10 @@
     self.lblGiftTypeTitle.backgroundColor=[UIColor colorWithHue:0 saturation:0 brightness:0 alpha:0];
     self.lblGiftTypeTitle.font=[UIFont fontWithName:@"System" size:17.0f];
     self.lblGiftTypeTitle.text=@"生日礼物";
-    //获取选中的礼品分类名称(第一次运行BirthdayGiftController传递的GiftTypeTitle)
-    NSUserDefaults *mydefault = [NSUserDefaults standardUserDefaults];
-    self.lblGiftTypeTitle.text=[mydefault objectForKey:@"giftTypeTitle"];
+//    //获取选中的礼品分类名称(第一次运行BirthdayGiftController传递的GiftTypeTitle)
+//    NSUserDefaults *mydefault = [NSUserDefaults standardUserDefaults];
+//    self.lblGiftTypeTitle.text=[mydefault objectForKey:@"giftTypeTitle"];
     
-    NSLog(@"NSUserDefaults");
 
     
     self.btnConstellation=[[UIButton alloc]initWithFrame:CGRectMake(92, 51, 62, 32)];
@@ -297,33 +296,23 @@
                                                                                                 
                                                                                                 birthdayGiftControllerItem.view.frame=CGRectMake(8, iGiftScrollViewHeight, 308, 270);
                                                                                                 
-                                                                                                birthdayGiftControllerItem.PhotoURL=[NSString stringWithFormat:@"http://imgur.com/%@%@",[item objectForKey:@"hash"], [item objectForKey:@"ext"]];
-                                                                                                
-                                                                                                
-                                                                                                //                                                                                                NSLog(@"%@",birthdayGiftControllerItem.PhotoURL);
+                                                                                                birthdayGiftControllerItem.PhotoURL=[NSString stringWithFormat:@"http://imgur.com/%@%@",[item objectForKey:@"hash"], [item objectForKey:@"ext"]];          
                                                                                                 
                                                                                                 CGSize size = giftScrollView.frame.size;
                                                                                                 [giftScrollView setContentSize:CGSizeMake(size.width, size.height +iGiftScrollViewHeight)];
                                                                                                 [self.giftScrollView addSubview:birthdayGiftControllerItem.view];
                                                                                                 
                                                                                                 iGiftScrollViewHeight+=284;
+                                                                                                                              
+                                                                                                [self AddPhotoInfoToDB:[item objectForKey:@"account_url"] photodetail:[item objectForKey:@"title"] photourl:birthdayGiftControllerItem.PhotoURL];
                                                                                                 
-                                                                                                
-                                                                                                
-[self AddPhotoInfoToDB:[item objectForKey:@"account_url"] photodetail:[NSString stringWithFormat:@"%@",[item objectForKey:@"title"]] photourl:birthdayGiftControllerItem.PhotoURL];
-
-                                                                                                
-//                                                                                                [self AddPhotoInfoToDB:@"1" photodetail:@"2" photourl:@"3"];
-
+                                                                                                NSLog([item objectForKey:@"title"]);
                                                                                             }
                                                                                                                                                                                         [indicator stopAnimating];
                                                                                         }failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
                                                                                             NSLog(@"error: %@", error);
                                                                                         }];
     [operation start];
-    
-    
-    //    [giftScrollView setBackgroundColor:[UIColor colorWithRed:0 green:0 blue:0 alpha:0]];
     
     iGiftDisplayCount+=10;
 }
@@ -386,10 +375,6 @@
         [lowerPrice setHidden:NO];
         [upperPrice setHidden:NO];
         btnPrice.tag=1;
-        
-        //        NSString * path = [[NSBundle mainBundle]pathForResource:@"gift_btn_push_up" ofType:@"png"];
-        //        UIImage *image = [[UIImage alloc] initWithContentsOfFile:path];
-        //        [btnPrice setBackgroundImage:image forState:UIControlStateNormal];
     }
     else
     {
@@ -400,13 +385,8 @@
         [upperPrice setHidden:YES];
         
         btnPrice.tag=0;
-        //        NSString * path = [[NSBundle mainBundle]pathForResource:@"gift_btn_push_down" ofType:@"png"];
-        //        UIImage *image = [[UIImage alloc] initWithContentsOfFile:path];
-        //        [btnPrice setBackgroundImage:image forState:UIControlStateNormal];
-        
     }
     [self setButtonState:sender:btnPrice.tag];
-    
 }
 
 -(void)setButtonState:(UIButton *)btn:(int)state
@@ -436,13 +416,11 @@
     CGPoint lowerCenter;
     lowerCenter.x = (priceSlider.lowerCenter.x + priceSlider.frame.origin.x);
     lowerCenter.y = (priceSlider.center.y - 20.0f);
-    //    self.lowerPrice.center = lowerCenter;
     self.lowerPrice.text = [strMoneySymble stringByAppendingString:[NSString stringWithFormat:@"%d", (int)priceSlider.lowerCenter.x]];
     
     CGPoint upperCenter;
     upperCenter.x = (priceSlider.upperCenter.x + priceSlider.frame.origin.x);
     upperCenter.y = (priceSlider.center.y - 20.0f);
-    //    self.upperPrice.center = upperCenter;
     self.upperPrice.text = [strMoneySymble stringByAppendingString:[NSString stringWithFormat:@"%d", (int)priceSlider.upperValue]];
 }
 
@@ -463,8 +441,6 @@
 -(void) sendGiftTypeTitle:(NSString *)GiftTypeTitle
 {
     self.lblGiftTypeTitle.text=GiftTypeTitle;
-    
-    NSLog(@"sendGiftTypeTitle");
 }
 
 -(void)changeGiftListByType:(int)GiftType
@@ -489,7 +465,6 @@
 }
 
 #pragma mark - data oper
-
 -(void)AddPhotoInfoToDB:(NSString *)tmpPhotoTitle photodetail:(NSString*)tmpPhotoDetail photourl:(NSString *)tmpPhotoURL
 {
     NSString *sql = [NSString stringWithFormat:
@@ -499,79 +474,4 @@
     
     [databaseOper ExecSql:sql];
 }
-
-//-(void)dbOpen
-//{
-////    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-////    NSString *documents = [paths objectAtIndex:0];
-////    NSString *database_path = [documents stringByAppendingPathComponent:DBNAME];
-//    
-//    NSFileManager *fileManager = [NSFileManager defaultManager];
-//    NSString *database_path = [[[NSBundle mainBundle] resourcePath]
-//                         stringByAppendingPathComponent:DBNAME];
-//
-//    NSLog(database_path);
-//    BOOL success = [fileManager fileExistsAtPath:database_path];
-//    
-//    if (!success)
-//    {
-//        NSLog(@"Failed to find database file '%@'.", database_path);
-//    }
-//    
-//    if (!(sqlite3_open([database_path UTF8String], &db) == SQLITE_OK))
-//    {
-//        NSLog(@"An error opening database, normally handle error here.");
-//    }
-//    
-//    const char *sql = "insert into TestTable (Name) VALUES('test1')";
-//    sqlite3_stmt *addStmt = nil;
-//    if (sqlite3_prepare_v2(db, sql, -1, &addStmt, NULL) != SQLITE_OK)
-//    {
-//        NSLog(@"Error, failed to prepare statement, normally handle error here.");
-//    }
-//    
-//    sqlite3_bind_int(addStmt, 1, 10);
-//    sqlite3_step(addStmt);
-//    if(sqlite3_finalize(addStmt) != SQLITE_OK)
-//    {
-//        NSLog(@"Failed to finalize data statement, normally error handling here.");
-//    }
-//    if (sqlite3_close(db) != SQLITE_OK)
-//    {
-//        NSLog(@"Failed to close database, normally error handling here.");
-//    }
-//    
-////    if (sqlite3_open([database_path UTF8String], &db) != SQLITE_OK)
-////    {
-////        [self dbClose];
-////        NSLog(@"db open fail"); 
-////    }
-////    else
-////    {
-////        NSLog(@"opened");
-////    }
-//}
-//
-//-(void)dbClose
-//{
-//    sqlite3_close(db);
-//}
-//
-//-(void)execSql:(NSString *)sql
-//{
-//    [self dbOpen];
-//    
-//    NSString *strSql=@"insert into TestTable (serial,Name) VALUES(1,'test1')";
-//    
-//    char *err;
-//    
-//    if (sqlite3_exec(db, [strSql UTF8String], NULL, NULL, &err) != SQLITE_OK) {
-//        [self dbClose];
-//        NSLog(@"数据库操作数据失败!");
-//    }
-//    else
-//    {
-//        NSLog(@"insert success!");
-//    }
-//}
 @end
