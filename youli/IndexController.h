@@ -10,7 +10,8 @@
 #import "Category.h"
 #import "BirthdayGiftControllerNew.h"
 #import "YouliDelegate.h"
-
+#import "PersonalController.h"
+#import "BirthdayController.h"
 
 @interface IndexController : UIViewController<UIScrollViewDelegate,UITableViewDataSource,UITableViewDelegate>{
     bool isPopCategoryView;
@@ -30,8 +31,10 @@
 @property(nonatomic,retain)NSMutableArray *items;
 @property(nonatomic,retain)NSMutableArray *giftTypeItems;
 @property(nonatomic,retain)NSArray *templateForIphone4;
-@property (nonatomic, strong) Category *category;
-@property(nonatomic,strong) BirthdayGiftControllerNew *birthdayGiftController;
+@property (nonatomic, strong)Category *category;
+@property(nonatomic,strong)BirthdayGiftControllerNew *birthdayGiftController;
+@property(nonatomic,strong)PersonalController *personalController;
+@property(nonatomic,strong)BirthdayController *birthdayController;
 
 @property id<YouliDelegate> delegate;
 

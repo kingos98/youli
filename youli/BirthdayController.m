@@ -47,6 +47,7 @@
     [birthdayTableView setBackgroundColor:[UIColor clearColor]];
     [birthdayTableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     [birthdayTableView setBackgroundView:tableBgView];
+    birthdayTableView.scrollEnabled=false;
     
     [self.view addSubview:mainBgView];
     [self.view addSubview:birthdayTableView];

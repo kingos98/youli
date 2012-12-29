@@ -33,6 +33,9 @@
 @synthesize tabBarLeftButton;
 @synthesize tabBarRightButton;
 
+@synthesize personalController;
+@synthesize birthdayController;
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -115,6 +118,9 @@
     UIPanGestureRecognizer *mainViewPan=[[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(handleMainPan:)];
     [self.view addGestureRecognizer: mainViewPan];
     
+    personalController=[[PersonalController alloc] init];
+    birthdayController=[[BirthdayController alloc] init];
+    
     self.delegate=[self birthdayGiftController];
 }
 
@@ -187,13 +193,11 @@
 
 - (void)birthdayButtonPressed
 {
-    BirthdayController *birthdayController = [[BirthdayController alloc] init];
     [self.navigationController pushViewController:birthdayController animated:NO];
 }
 
 - (void)personalButtonPressed
 {
-    PersonalController *personalController = [[PersonalController alloc] init];
     [self.navigationController pushViewController:personalController animated:NO];
 }
 
