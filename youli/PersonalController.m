@@ -118,15 +118,16 @@ NSMutableArray *items ;
     [mainView addSubview:personalPromptBgView];
     [mainView addSubview:tableView];
     
-    SinaWeibo *sinaweibo = [self sinaweibo];
-    [sinaweibo logIn];
-    sinaweibo.delegate = self;
     self.items = [NSMutableArray arrayWithCapacity:24];
     
 }
 
 -(void)viewDidAppear:(BOOL)animated
 {
+    SinaWeibo *sinaweibo = [self sinaweibo];
+    [sinaweibo logIn];
+    sinaweibo.delegate = self;
+    
     [self.navigationController setNavigationBarHidden:NO animated:NO];
 }
 
