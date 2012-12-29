@@ -8,12 +8,34 @@
 
 #import <UIKit/UIKit.h>
 
-@class IndexController;
+#define kAppKey             @"3967452029"
+#define kAppSecret          @"207640bd3c7f1e5d13fee2149e07d561"
+#define kAppRedirectURI     @"http://www.sina.com"
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate>
+#ifndef kAppKey
+#error
+#endif
+
+#ifndef kAppSecret
+#error
+#endif
+
+#ifndef kAppRedirectURI
+#error
+#endif
+
+@class IndexController;
+@class PersonalController;
+@class SinaWeibo;
+
+@interface AppDelegate : UIResponder <UIApplicationDelegate>{
+    SinaWeibo *sinaweibo;
+}
 
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic) UINavigationController *navigationController;
 @property (strong, nonatomic) IndexController *indexController;
+@property (strong, nonatomic) PersonalController *personalController;
+@property (readonly, nonatomic) SinaWeibo *sinaweibo;
 
 @end

@@ -8,8 +8,15 @@
 
 #import <UIKit/UIKit.h>
 #import "BaseController.h"
+#import "SinaWeibo.h"
+#import "SinaWeiboRequest.h"
 
-@interface PersonalController : BaseController<UITableViewDelegate, UITableViewDataSource>{
+@interface PersonalController : BaseController<UITableViewDelegate, UITableViewDataSource,SinaWeiboDelegate,SinaWeiboRequestDelegate>{
     NSMutableArray *data;
+    NSDictionary *friendDic;
+    UITableView *tableView;
 }
+
+@property(nonatomic,retain)NSMutableArray *items;
+
 @end

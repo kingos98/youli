@@ -7,7 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Friend.h"
 
 @interface PersonalCell : UITableViewCell
+
+@property (nonatomic, strong) Friend *friend;
+
+- (id)initCell:(NSString *)reuseIdentifier;
 
 @end

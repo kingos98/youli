@@ -11,12 +11,17 @@
 #import "BirthdayController.h"
 #import "PersonalController.h"
 #import "FriendInfoController.h"
+#import "Friend.h"
+#import "AppDelegate.h"
+#import "AFJSONRequestOperation.h"
 
 @interface PersonalController ()
 
 @end
 
 @implementation PersonalController
+
+NSMutableArray *items ;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -25,6 +30,12 @@
         
     }
     return self;
+}
+
+- (SinaWeibo *)sinaweibo
+{
+    AppDelegate *delegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    return delegate.sinaweibo;
 }
 
 - (void)viewDidLoad
@@ -71,9 +82,9 @@
     birthdayLabel.backgroundColor = [UIColor clearColor];
     
     UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    UIImage *tabBarLeftImageTmp = [[UIImage imageNamed:@"collect_unselect.png"] stretchableImageWithLeftCapWidth:0 topCapHeight:0];
+    UIImage *tabBarLeftImage = [[UIImage imageNamed:@"collect_unselect.png"] stretchableImageWithLeftCapWidth:0 topCapHeight:0];
     leftButton.frame = CGRectMake(10,78,100,41);
-    [leftButton setBackgroundImage:tabBarLeftImageTmp forState:UIControlStateNormal];
+    [leftButton setBackgroundImage:tabBarLeftImage forState:UIControlStateNormal];
     
     UIButton *middleButton = [UIButton buttonWithType:UIButtonTypeCustom];
     UIImage *tabBarMiddleImage = [[UIImage imageNamed:@"cart_unselect.png"] stretchableImageWithLeftCapWidth:0 topCapHeight:0];
@@ -81,15 +92,14 @@
     [middleButton setBackgroundImage:tabBarMiddleImage forState:UIControlStateNormal];
     
     UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    UIImage *tabBarRightImageTmp = [[UIImage imageNamed:@"friend_button_select.png"] stretchableImageWithLeftCapWidth:0 topCapHeight:0];
+    UIImage *tabBarRightImage = [[UIImage imageNamed:@"friend_button_select.png"] stretchableImageWithLeftCapWidth:0 topCapHeight:0];
     rightButton.frame = CGRectMake(210,78,100,41);
-    [rightButton setBackgroundImage:tabBarRightImageTmp forState:UIControlStateNormal];
+    [rightButton setBackgroundImage:tabBarRightImage forState:UIControlStateNormal];
     
     UIImageView *personalPromptBgView = [[UIImageView alloc] initWithFrame:CGRectMake(10,121,300,31)];
     [personalPromptBgView setImage:[UIImage imageNamed:@"personal_prompt_bg.png"]];
     
-    UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(10, 160, 300, 220)];
-    
+    tableView = [[UITableView alloc] initWithFrame:CGRectMake(10, 160, 300, 220)];
     [tableView setDelegate:self];
     [tableView setDataSource:self];
     [tableView setBackgroundColor:[UIColor whiteColor]];
@@ -108,6 +118,12 @@
     [mainView addSubview:rightButton];
     [mainView addSubview:personalPromptBgView];
     [mainView addSubview:tableView];
+    
+    SinaWeibo *sinaweibo = [self sinaweibo];
+    [sinaweibo logIn];
+    sinaweibo.delegate = self;
+    self.items = [NSMutableArray arrayWithCapacity:24];
+    
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -135,15 +151,71 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 10;
+    return 24;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"CellIdentifier";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    cell = [[PersonalCell alloc] init];
+    PersonalCell *cell = [[PersonalCell alloc] initCell:CellIdentifier];
+    if (self.items.count>0) {
+        cell.friend =  [self.items objectAtIndex:indexPath.row];
+    }
     return cell;
+}
+
+#pragma mark - SinaWeibo Delegate
+
+- (void)sinaweiboDidLogIn:(SinaWeibo *)sinaweibo
+{
+    NSLog(@"userID = %@ accesstoken = %@ expirationDate = %@", sinaweibo.userID, sinaweibo.accessToken, sinaweibo.expirationDate);
+    [sinaweibo requestWithURL:@"friendships/friends/bilateral.json"
+                       params:[NSMutableDictionary dictionaryWithObject:sinaweibo.userID forKey:@"uid"]
+                   httpMethod:@"GET"
+                     delegate:self];
+    [tableView reloadData];
+}
+
+#pragma mark - SinaWeiboRequest Delegate
+
+- (void)request:(SinaWeiboRequest *)request didFailWithError:(NSError *)error
+{
+    [tableView reloadData];
+}
+
+- (void)request:(SinaWeiboRequest *)request didFinishLoadingWithResult:(id)result
+{
+    NSDictionary *usersDict = [[result objectForKey:@"users"] retain];
+    self.items = [NSMutableArray arrayWithCapacity:24];
+    int count = 0;
+    for (NSDictionary *user in usersDict) {
+        Friend *friend = [Friend alloc];
+        friend.name = [user objectForKey:@"screen_name"];
+        friend.profileUrl = [user objectForKey:@"profile_image_url"];
+        [self.items addObject:friend];
+        count++;
+        if (count > 40) {
+            break;
+        }
+    }
+    [tableView reloadData];
+}
+
+- (void)removeAuthData
+{
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"SinaWeiboAuthData"];
+}
+
+- (void)storeAuthData
+{
+    SinaWeibo *sinaweibo = [self sinaweibo];
+    NSDictionary *authData = [NSDictionary dictionaryWithObjectsAndKeys:
+                              sinaweibo.accessToken, @"AccessTokenKey",
+                              sinaweibo.expirationDate, @"ExpirationDateKey",
+                              sinaweibo.userID, @"UserIDKey",
+                              sinaweibo.refreshToken, @"refresh_token", nil];
+    [[NSUserDefaults standardUserDefaults] setObject:authData forKey:@"SinaWeiboAuthData"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 - (void)viewDidUnload

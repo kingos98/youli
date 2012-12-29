@@ -118,6 +118,16 @@
 		18CAD292165DCB75008CCF37 /* friend_info_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 18CAD28C165DCB75008CCF37 /* friend_info_bg.png */; };
 		18CAD293165DCB75008CCF37 /* friend_info_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 18CAD28D165DCB75008CCF37 /* friend_info_bg@2x.png */; };
 		18DBE8C91664643B006631FD /* CategoryTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DBE8C81664643B006631FD /* CategoryTableView.m */; };
+		18E24E76168E9177000D2172 /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E24E6C168E9177000D2172 /* JSONKit.m */; };
+		18E24E77168E9177000D2172 /* SinaWeibo.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 18E24E6E168E9177000D2172 /* SinaWeibo.bundle */; };
+		18E24E78168E9177000D2172 /* SinaWeibo.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E24E70168E9177000D2172 /* SinaWeibo.m */; };
+		18E24E79168E9177000D2172 /* SinaWeiboAuthorizeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E24E72168E9177000D2172 /* SinaWeiboAuthorizeView.m */; };
+		18E24E7A168E9177000D2172 /* SinaWeiboRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E24E75168E9177000D2172 /* SinaWeiboRequest.m */; };
+		18E24E88168E9324000D2172 /* add@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 18E24E84168E9324000D2172 /* add@2x.png */; };
+		18E24E89168E9324000D2172 /* add1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 18E24E85168E9324000D2172 /* add1@2x.png */; };
+		18E24E8A168E9324000D2172 /* add.png in Resources */ = {isa = PBXBuildFile; fileRef = 18E24E86168E9324000D2172 /* add.png */; };
+		18E24E8B168E9324000D2172 /* add1.png in Resources */ = {isa = PBXBuildFile; fileRef = 18E24E87168E9324000D2172 /* add1.png */; };
+		18E24E94168E93E8000D2172 /* Friend.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E24E93168E93E8000D2172 /* Friend.m */; };
 		18FAA61316560E480060BCEA /* next.png in Resources */ = {isa = PBXBuildFile; fileRef = 18FAA61116560E480060BCEA /* next.png */; };
 		18FAA61416560E480060BCEA /* next@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 18FAA61216560E480060BCEA /* next@2x.png */; };
 		18FAA61716561AAF0060BCEA /* face_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 18FAA61516561AAF0060BCEA /* face_bg.png */; };
@@ -312,6 +322,22 @@
 		18CAD28D165DCB75008CCF37 /* friend_info_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "friend_info_bg@2x.png"; path = "images/personal/friend_info_bg@2x.png"; sourceTree = "<group>"; };
 		18DBE8C71664643B006631FD /* CategoryTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategoryTableView.h; sourceTree = "<group>"; };
 		18DBE8C81664643B006631FD /* CategoryTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CategoryTableView.m; sourceTree = "<group>"; };
+		18E24E6B168E9177000D2172 /* JSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONKit.h; sourceTree = "<group>"; };
+		18E24E6C168E9177000D2172 /* JSONKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONKit.m; sourceTree = "<group>"; };
+		18E24E6E168E9177000D2172 /* SinaWeibo.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SinaWeibo.bundle; sourceTree = "<group>"; };
+		18E24E6F168E9177000D2172 /* SinaWeibo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SinaWeibo.h; sourceTree = "<group>"; };
+		18E24E70168E9177000D2172 /* SinaWeibo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SinaWeibo.m; sourceTree = "<group>"; };
+		18E24E71168E9177000D2172 /* SinaWeiboAuthorizeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SinaWeiboAuthorizeView.h; sourceTree = "<group>"; };
+		18E24E72168E9177000D2172 /* SinaWeiboAuthorizeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SinaWeiboAuthorizeView.m; sourceTree = "<group>"; };
+		18E24E73168E9177000D2172 /* SinaWeiboConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SinaWeiboConstants.h; sourceTree = "<group>"; };
+		18E24E74168E9177000D2172 /* SinaWeiboRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SinaWeiboRequest.h; sourceTree = "<group>"; };
+		18E24E75168E9177000D2172 /* SinaWeiboRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SinaWeiboRequest.m; sourceTree = "<group>"; };
+		18E24E84168E9324000D2172 /* add@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "add@2x.png"; path = "images/personal/add@2x.png"; sourceTree = "<group>"; };
+		18E24E85168E9324000D2172 /* add1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "add1@2x.png"; path = "images/personal/add1@2x.png"; sourceTree = "<group>"; };
+		18E24E86168E9324000D2172 /* add.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = add.png; path = images/personal/add.png; sourceTree = "<group>"; };
+		18E24E87168E9324000D2172 /* add1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = add1.png; path = images/personal/add1.png; sourceTree = "<group>"; };
+		18E24E92168E93E8000D2172 /* Friend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Friend.h; sourceTree = "<group>"; };
+		18E24E93168E93E8000D2172 /* Friend.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Friend.m; sourceTree = "<group>"; };
 		18FAA61116560E480060BCEA /* next.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = next.png; path = images/personal/next.png; sourceTree = "<group>"; };
 		18FAA61216560E480060BCEA /* next@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "next@2x.png"; path = "images/personal/next@2x.png"; sourceTree = "<group>"; };
 		18FAA61516561AAF0060BCEA /* face_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = face_bg.png; path = images/personal/face_bg.png; sourceTree = "<group>"; };
@@ -584,6 +610,7 @@
 			children = (
 				186AEFF1165CBA95008372B4 /* Category */,
 				15D7CE921648E7C90088E49F /* Gifts */,
+				18E24E91168E9396000D2172 /* Personal */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -693,6 +720,39 @@
 			name = Category;
 			sourceTree = "<group>";
 		};
+		18E24E6A168E9177000D2172 /* JSONKit */ = {
+			isa = PBXGroup;
+			children = (
+				18E24E6B168E9177000D2172 /* JSONKit.h */,
+				18E24E6C168E9177000D2172 /* JSONKit.m */,
+			);
+			path = JSONKit;
+			sourceTree = "<group>";
+		};
+		18E24E6D168E9177000D2172 /* SinaWeibo */ = {
+			isa = PBXGroup;
+			children = (
+				18E24E6E168E9177000D2172 /* SinaWeibo.bundle */,
+				18E24E6F168E9177000D2172 /* SinaWeibo.h */,
+				18E24E70168E9177000D2172 /* SinaWeibo.m */,
+				18E24E71168E9177000D2172 /* SinaWeiboAuthorizeView.h */,
+				18E24E72168E9177000D2172 /* SinaWeiboAuthorizeView.m */,
+				18E24E73168E9177000D2172 /* SinaWeiboConstants.h */,
+				18E24E74168E9177000D2172 /* SinaWeiboRequest.h */,
+				18E24E75168E9177000D2172 /* SinaWeiboRequest.m */,
+			);
+			path = SinaWeibo;
+			sourceTree = "<group>";
+		};
+		18E24E91168E9396000D2172 /* Personal */ = {
+			isa = PBXGroup;
+			children = (
+				18E24E92168E93E8000D2172 /* Friend.h */,
+				18E24E93168E93E8000D2172 /* Friend.m */,
+			);
+			name = Personal;
+			sourceTree = "<group>";
+		};
 		18FAA60C16560C720060BCEA /* Images */ = {
 			isa = PBXGroup;
 			children = (
@@ -751,6 +811,10 @@
 		18FAA61016560DEB0060BCEA /* Personal */ = {
 			isa = PBXGroup;
 			children = (
+				18E24E84168E9324000D2172 /* add@2x.png */,
+				18E24E85168E9324000D2172 /* add1@2x.png */,
+				18E24E86168E9324000D2172 /* add.png */,
+				18E24E87168E9324000D2172 /* add1.png */,
 				18CAD288165DCB75008CCF37 /* control_bg.png */,
 				18CAD289165DCB75008CCF37 /* firend_info_bg.png */,
 				18CAD28A165DCB75008CCF37 /* friend_collect_bg.png */,
@@ -847,6 +911,8 @@
 		E5D827C516081EC400969EE2 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				18E24E6A168E9177000D2172 /* JSONKit */,
+				18E24E6D168E9177000D2172 /* SinaWeibo */,
 				15CE7B14168AD71700707588 /* DB */,
 				1559F45C167ECB1100F16634 /* NMRangeSlider */,
 				E5EC43E616241BF70055D63B /* AFNetworking */,
@@ -1117,6 +1183,11 @@
 				15CE7B0C168A9D4300707588 /* buy_click.png in Resources */,
 				15CE7B0D168A9D4300707588 /* buy_unclick.png in Resources */,
 				15CE7B17168AD71700707588 /* youli.sqlite in Resources */,
+				18E24E77168E9177000D2172 /* SinaWeibo.bundle in Resources */,
+				18E24E88168E9324000D2172 /* add@2x.png in Resources */,
+				18E24E89168E9324000D2172 /* add1@2x.png in Resources */,
+				18E24E8A168E9324000D2172 /* add.png in Resources */,
+				18E24E8B168E9324000D2172 /* add1.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1192,6 +1263,11 @@
 				15CE7B021689A63300707588 /* BirthdayGiftDetail.m in Sources */,
 				15CE7B051689A85600707588 /* BirthdayGiftDetailItem.m in Sources */,
 				15815809168D8DDB00FB0E0B /* DatabaseOper.m in Sources */,
+				18E24E76168E9177000D2172 /* JSONKit.m in Sources */,
+				18E24E78168E9177000D2172 /* SinaWeibo.m in Sources */,
+				18E24E79168E9177000D2172 /* SinaWeiboAuthorizeView.m in Sources */,
+				18E24E7A168E9177000D2172 /* SinaWeiboRequest.m in Sources */,
+				18E24E94168E93E8000D2172 /* Friend.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1283,6 +1359,7 @@
 		E5D827F116081EC400969EE2 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "youli/youli-Prefix.pch";
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
@@ -1298,6 +1375,7 @@
 				);
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				VALIDATE_PRODUCT = YES;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1305,6 +1383,7 @@
 		E5D827F216081EC400969EE2 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "youli/youli-Prefix.pch";
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
@@ -1320,6 +1399,7 @@
 				);
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				VALIDATE_PRODUCT = YES;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

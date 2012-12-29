@@ -7,22 +7,31 @@
 //
 
 #import "PersonalCell.h"
+#import "Friend.h"
+#import "UIImageView+WebCache.h"
 
-@implementation PersonalCell
+@implementation PersonalCell{
+@private
+    __strong Friend *_friend;
+}
 
-- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
-{
-    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
+@synthesize friend = _friend;
+
+- (id)initCell:(NSString *)reuseIdentifier{
+    self = [super initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier];
     if (self) {
         UIView *cellbgView = [[UIView alloc] initWithFrame:self.frame];
         cellbgView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"personal_cell_bg.png"]];
         self.backgroundView = cellbgView;
         self.selectionStyle = UITableViewCellSelectionStyleNone;
-        [self addPhoto];
-        [self addNameLabel];
         [self addButton];
     }
     return self;
+}
+
+- (void)setFriend:(Friend *)friend {
+    [self addPhoto:friend];
+    [self addNameLabel:friend];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
@@ -30,15 +39,20 @@
     [super setSelected:selected animated:animated];
 }
 
-- (void)addPhoto{
-    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(9,6,24,24)];
-    [imageView setImage:[UIImage imageNamed:@"icon.jpeg"]];
+- (void)addPhoto:(Friend *)friend{
+    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(5,4,28,28)];
+    if (friend) {
+        if (friend.profileUrl) {
+            NSURL *URL = [NSURL URLWithString:friend.profileUrl];
+            [imageView setImageWithURL:URL];
+        }
+    }
     [self.contentView addSubview:imageView];
 }
 
-- (void)addNameLabel{
-    UILabel *friendLabel = [[UILabel alloc] initWithFrame:CGRectMake(47, 11, 150, 15)];
-    friendLabel.text = @"天空之城 Fenng";
+- (void)addNameLabel:(Friend *)friend{
+    UILabel *friendLabel = [[UILabel alloc] initWithFrame:CGRectMake(49, 11, 150, 15)];
+    friendLabel.text = friend.name;
     friendLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:14];
     friendLabel.textColor = [UIColor colorWithRed:0.6 green:0.6 blue:0.6 alpha:1];
     friendLabel.textAlignment = UITextAlignmentLeft;
@@ -47,11 +61,19 @@
 }
 
 - (void)addButton{
-    UIButton *nextButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    UIImage *nextImage = [[UIImage imageNamed:@"next.png"] stretchableImageWithLeftCapWidth:0 topCapHeight:0];
-    nextButton.frame = CGRectMake(260,2,26,27);
-    [nextButton setBackgroundImage:nextImage forState:UIControlStateNormal];
-    [self.contentView addSubview:nextButton];
+    UIButton *addButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    addButton.frame = CGRectMake(268,6,26,27);
+    UIImage *addImage = [[UIImage imageNamed:@"add1.png"] stretchableImageWithLeftCapWidth:0 topCapHeight:0];
+    [addButton setBackgroundImage:addImage forState:UIControlStateNormal];
+    [addButton addTarget:self action:@selector(addButtonPressed) forControlEvents:UIControlEventTouchUpInside];
+    [self.contentView addSubview:addButton];
 }
+
+- (void)addButtonPressed
+{
+    
+}
+
+
 
 @end
