@@ -22,7 +22,7 @@
     NSString *database_path = [[[NSBundle mainBundle] resourcePath]
                                stringByAppendingPathComponent:DBNAME];
     
-//    NSLog(database_path);
+//    NSLog(database_path); 
     BOOL success = [fileManager fileExistsAtPath:database_path];
     
     if (!success)

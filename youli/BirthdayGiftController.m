@@ -309,7 +309,10 @@
                                                                                                 
                                                                                                 iGiftScrollViewHeight+=284;
                                                                                                                               
-                                                                                                [self AddPhotoInfoToDB:[item objectForKey:@"account_url"] photodetail:[item objectForKey:@"title"] photourl:strPhotoURL];
+//                                                                                                [self AddPhotoInfoToDB:[item objectForKey:@"account_url"] photodetail:[item objectForKey:@"title"] photourl:strPhotoURL];
+                                                                                                
+                                                                                                //把搜索的数据保存到sqlite
+                                                                                                [self AddPhotoInfoToDB:[[item objectForKey:@"score"] intValue] tmpPhotoTitle:[item objectForKey:@"account_url"] photodetail:[item objectForKey:@"title"] photourl:strPhotoURL];
                                                                                                 
                                                                                                 NSLog([item objectForKey:@"title"]);
                                                                                             }
@@ -469,8 +472,8 @@
     }
 }
 
-#pragma mark - data oper
--(void)AddPhotoInfoToDB:(NSString *)tmpPhotoTitle photodetail:(NSString*)tmpPhotoDetail photourl:(NSString *)tmpPhotoURL
+#pragma mark - Data Oper
+-(void)AddPhotoInfoToDB:(NSInteger)PhotoID tmpPhotoTitle:(NSString *)tmpPhotoTitle photodetail:(NSString*)tmpPhotoDetail photourl:(NSString *)tmpPhotoURL
 {
     NSString *sql = [NSString stringWithFormat:
                      @"INSERT INTO %@ (%@,%@,%@,%@,%@,%@,%@) VALUES (%d,%d,'%@','%@','%@','%@',%f)",
