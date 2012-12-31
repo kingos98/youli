@@ -47,8 +47,6 @@
 		1559F4AA167EF36600F16634 /* NMRangeSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 1559F4A9167EF36600F16634 /* NMRangeSlider.m */; };
 		15815809168D8DDB00FB0E0B /* DatabaseOper.m in Sources */ = {isa = PBXBuildFile; fileRef = 15815808168D8DDB00FB0E0B /* DatabaseOper.m */; };
 		158326AF168439EF00E7410B /* BirthdayGiftController.m in Sources */ = {isa = PBXBuildFile; fileRef = 158326AE168439EF00E7410B /* BirthdayGiftController.m */; };
-		158326B3168445C800E7410B /* TestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 158326B1168445C700E7410B /* TestViewController.m */; };
-		158326B4168445C800E7410B /* TestViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 158326B2168445C800E7410B /* TestViewController.xib */; };
 		15BB70A6167F0F9C00CC3043 /* cancel_click.png in Resources */ = {isa = PBXBuildFile; fileRef = 15BB709E167F0F9C00CC3043 /* cancel_click.png */; };
 		15BB70A7167F0F9C00CC3043 /* cancel_unclick.png in Resources */ = {isa = PBXBuildFile; fileRef = 15BB709F167F0F9C00CC3043 /* cancel_unclick.png */; };
 		15BB70A8167F0F9C00CC3043 /* home_click.png in Resources */ = {isa = PBXBuildFile; fileRef = 15BB70A0167F0F9C00CC3043 /* home_click.png */; };
@@ -236,9 +234,6 @@
 		15815808168D8DDB00FB0E0B /* DatabaseOper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DatabaseOper.m; sourceTree = "<group>"; };
 		158326AD168439EF00E7410B /* BirthdayGiftController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BirthdayGiftController.h; sourceTree = "<group>"; };
 		158326AE168439EF00E7410B /* BirthdayGiftController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BirthdayGiftController.m; sourceTree = "<group>"; };
-		158326B0168445C700E7410B /* TestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestViewController.h; sourceTree = "<group>"; };
-		158326B1168445C700E7410B /* TestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestViewController.m; sourceTree = "<group>"; };
-		158326B2168445C800E7410B /* TestViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TestViewController.xib; sourceTree = "<group>"; };
 		15BB709E167F0F9C00CC3043 /* cancel_click.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cancel_click.png; sourceTree = "<group>"; };
 		15BB709F167F0F9C00CC3043 /* cancel_unclick.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cancel_unclick.png; sourceTree = "<group>"; };
 		15BB70A0167F0F9C00CC3043 /* home_click.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = home_click.png; sourceTree = "<group>"; };
@@ -611,9 +606,6 @@
 				158326AE168439EF00E7410B /* BirthdayGiftController.m */,
 				15CE7B001689A63300707588 /* BirthdayGiftDetailController.h */,
 				15CE7B011689A63300707588 /* BirthdayGiftDetailController.m */,
-				158326B0168445C700E7410B /* TestViewController.h */,
-				158326B1168445C700E7410B /* TestViewController.m */,
-				158326B2168445C800E7410B /* TestViewController.xib */,
 			);
 			name = Gifts;
 			sourceTree = "<group>";
@@ -1164,7 +1156,6 @@
 				15BB70AC167F0F9C00CC3043 /* setting_click.png in Resources */,
 				15BB70AD167F0F9C00CC3043 /* setting_unclick.png in Resources */,
 				15BB70B91680157800CC3043 /* gift_bg.png in Resources */,
-				158326B4168445C800E7410B /* TestViewController.xib in Resources */,
 				15CE7AFD1689A41A00707588 /* share_click.png in Resources */,
 				15CE7AFE1689A41A00707588 /* share_unclick.png in Resources */,
 				15CE7B0C168A9D4300707588 /* buy_click.png in Resources */,
@@ -1245,7 +1236,6 @@
 				1559F4A6167EF2F400F16634 /* BirthdayGiftItem.m in Sources */,
 				1559F4AA167EF36600F16634 /* NMRangeSlider.m in Sources */,
 				158326AF168439EF00E7410B /* BirthdayGiftController.m in Sources */,
-				158326B3168445C800E7410B /* TestViewController.m in Sources */,
 				15CE7B021689A63300707588 /* BirthdayGiftDetailController.m in Sources */,
 				15CE7B051689A85600707588 /* BirthdayGiftDetailItem.m in Sources */,
 				15815809168D8DDB00FB0E0B /* DatabaseOper.m in Sources */,

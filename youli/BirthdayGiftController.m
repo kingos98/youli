@@ -140,12 +140,9 @@
 //    NSUserDefaults *mydefault = [NSUserDefaults standardUserDefaults];
 //    self.lblGiftTypeTitle.text=[mydefault objectForKey:@"giftTypeTitle"];
     
-
-    
     self.btnConstellation=[[UIButton alloc]initWithFrame:CGRectMake(92, 51, 62, 32)];
     [self.btnConstellation setBackgroundImage:[UIImage imageNamed:@"gift_btn_push_down.png"] forState:UIControlStateNormal];
     [self.btnConstellation addTarget:self action:@selector(showConstellation:) forControlEvents:UIControlEventTouchUpInside];
-    
     
     self.btnPrice=[[UIButton alloc] initWithFrame:CGRectMake(245, 51, 62, 32)];
     [self.btnPrice setBackgroundImage:[UIImage imageNamed:@"gift_btn_push_down.png"] forState:UIControlStateNormal];
@@ -292,17 +289,27 @@
                                                                                             self.items = [JSON objectForKey:@"data"];
                                                                                             for (int i=iGiftDisplayCount; i<iGiftDisplayCount+10; i++) {                                                                                                NSDictionary *item = [self.items objectAtIndex:i];
                                                                                                 
-                                                                                                birthdayGiftItem=[[BirthdayGiftItem alloc] initWithUrl:[NSString stringWithFormat:@"http://imgur.com/%@%@",[item objectForKey:@"hash"], [item objectForKey:@"ext"]]];
+                                                                                                NSString *strPhotoURL=[NSString stringWithFormat:@"http://imgur.com/%@%@",[item objectForKey:@"hash"], [item objectForKey:@"ext"]];
                                                                                                 
+                                                                                                birthdayGiftItem=[[BirthdayGiftItem alloc]initWithUrl:strPhotoURL GiftTitle:[item objectForKey:@"title"]];
+                                                                                                
+                                                                                                birthdayGiftItem.tag=[[item objectForKey:@"score"] intValue];
+
+                                                                                                UITapGestureRecognizer *photoTap=[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapPhoto:)];
+                                                                                                [birthdayGiftItem setUserInteractionEnabled:YES];
+                                                                                                [birthdayGiftItem addGestureRecognizer:photoTap];
+
+
                                                                                                 birthdayGiftItem.frame=CGRectMake(8, iGiftScrollViewHeight, 308, 270);
                                                                                                 
                                                                                                 CGSize size = giftScrollView.frame.size;
                                                                                                 [giftScrollView setContentSize:CGSizeMake(size.width, size.height +iGiftScrollViewHeight)];
+                                                                                                
                                                                                                 [self.giftScrollView addSubview:birthdayGiftItem];
                                                                                                 
                                                                                                 iGiftScrollViewHeight+=284;
                                                                                                                               
-                                                                                                [self AddPhotoInfoToDB:[item objectForKey:@"account_url"] photodetail:[item objectForKey:@"title"] photourl:birthdayGiftItem.PhotoURL];
+                                                                                                [self AddPhotoInfoToDB:[item objectForKey:@"account_url"] photodetail:[item objectForKey:@"title"] photourl:strPhotoURL];
                                                                                                 
                                                                                                 NSLog([item objectForKey:@"title"]);
                                                                                             }
@@ -471,5 +478,11 @@
                      tmpPhotoTitle, tmpPhotoDetail,tmpPhotoURL,tmpPhotoURL,999.0f];
     
     [databaseOper ExecSql:sql];
+}
+
+#pragma mark -GestureRecognizer
+-(void) tapPhoto:(UITapGestureRecognizer*) sender
+{
+    NSLog([NSString stringWithFormat:@"%d",[(UIGestureRecognizer *)sender view].tag]);
 }
 @end

@@ -12,7 +12,6 @@
 #import "BirthdayController.h"
 #import "PersonalController.h"
 #import "CategoryCell.h"
-#import "TestViewController.h"
 #import "BirthdayGiftController.h"
 
 @interface IndexController ()

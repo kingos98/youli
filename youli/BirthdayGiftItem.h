@@ -13,15 +13,15 @@
     UIImageView *imgBackground;
     UIImageView *imgGiftPhoto;
     UILabel *lblMoneySymbol;
-    UILabel *lblGiftPrice;    
+    UILabel *lblGiftPrice;
+    UILabel *lblGiftTitle;
 }
 
-@property(strong,nonatomic) NSString *PhotoURL;
 @property(nonatomic,retain) NSMutableArray *items;
 @property(retain,nonatomic) NSMutableArray *photoURLItems;
 @property(retain,nonatomic) UIViewController *RootViewController;
 
--(id)initWithUrl:(NSString *)PhotoURL;
+-(id)initWithUrl:(NSString *)PhotoURL GiftTitle:(NSString *)GiftTitle;
 
 
 @end

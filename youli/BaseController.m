@@ -122,6 +122,8 @@
     [self.navigationController pushViewController:personalController animated:NO];
 }
 
+#pragma mark -GestureRecognizer
+
 -(void) handleMainPan:(UIPanGestureRecognizer *) gestureRecognizer{
     if([gestureRecognizer state]==UIGestureRecognizerStateBegan||[gestureRecognizer state]==UIGestureRecognizerStateChanged)
     {
