@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		151295661671CF4B00C6AE49 /* BirthdayGiftListView.m in Sources */ = {isa = PBXBuildFile; fileRef = 151295651671CF4B00C6AE49 /* BirthdayGiftListView.m */; };
 		1530E5341675D0D70010FDB0 /* birthday_gift_constellation_select.png in Resources */ = {isa = PBXBuildFile; fileRef = 1530E52F1675D0D70010FDB0 /* birthday_gift_constellation_select.png */; };
 		1530E5351675D0D70010FDB0 /* birthday_gift_price_select.png in Resources */ = {isa = PBXBuildFile; fileRef = 1530E5301675D0D70010FDB0 /* birthday_gift_price_select.png */; };
 		1530E5361675D0D70010FDB0 /* birthday_gift_top.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1530E5311675D0D70010FDB0 /* birthday_gift_top.jpg */; };
@@ -193,8 +192,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		151295641671CF4B00C6AE49 /* BirthdayGiftListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BirthdayGiftListView.h; sourceTree = "<group>"; };
-		151295651671CF4B00C6AE49 /* BirthdayGiftListView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BirthdayGiftListView.m; sourceTree = "<group>"; };
 		1530E52F1675D0D70010FDB0 /* birthday_gift_constellation_select.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = birthday_gift_constellation_select.png; path = images/gifts/birthday_gift_constellation_select.png; sourceTree = "<group>"; };
 		1530E5301675D0D70010FDB0 /* birthday_gift_price_select.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = birthday_gift_price_select.png; path = images/gifts/birthday_gift_price_select.png; sourceTree = "<group>"; };
 		1530E5311675D0D70010FDB0 /* birthday_gift_top.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = birthday_gift_top.jpg; path = images/gifts/birthday_gift_top.jpg; sourceTree = "<group>"; };
@@ -532,13 +529,6 @@
 			path = YellowTheme;
 			sourceTree = "<group>";
 		};
-		157CCA4C1670963F00ECEF2C /* GiftList */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = GiftList;
-			sourceTree = "<group>";
-		};
 		15815805168D8D1100FB0E0B /* DBOper */ = {
 			isa = PBXGroup;
 			children = (
@@ -597,7 +587,6 @@
 		15D7CE8F1648E6180088E49F /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				157CCA4C1670963F00ECEF2C /* GiftList */,
 				186AEFF3165CBAA7008372B4 /* Category */,
 				15D7CE931648E7D60088E49F /* Gifts */,
 				15D7CE951648E86F0088E49F /* Personal */,
@@ -622,8 +611,6 @@
 				158326AE168439EF00E7410B /* BirthdayGiftController.m */,
 				15CE7B001689A63300707588 /* BirthdayGiftDetailController.h */,
 				15CE7B011689A63300707588 /* BirthdayGiftDetailController.m */,
-				151295641671CF4B00C6AE49 /* BirthdayGiftListView.h */,
-				151295651671CF4B00C6AE49 /* BirthdayGiftListView.m */,
 				158326B0168445C700E7410B /* TestViewController.h */,
 				158326B1168445C700E7410B /* TestViewController.m */,
 				158326B2168445C800E7410B /* TestViewController.xib */,
@@ -1255,7 +1242,6 @@
 				186AEFFA165CBB37008372B4 /* CategoryCell.m in Sources */,
 				186AEFFD165CBB5F008372B4 /* Category.m in Sources */,
 				18DBE8C91664643B006631FD /* CategoryTableView.m in Sources */,
-				151295661671CF4B00C6AE49 /* BirthdayGiftListView.m in Sources */,
 				1559F4A6167EF2F400F16634 /* BirthdayGiftItem.m in Sources */,
 				1559F4AA167EF36600F16634 /* NMRangeSlider.m in Sources */,
 				158326AF168439EF00E7410B /* BirthdayGiftController.m in Sources */,
