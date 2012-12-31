@@ -36,6 +36,7 @@
         NSLog(@"An error opening database, normally handle error here.");
         return false;
     }
+    return true;
 }
 
 -(void)ExecSql:(NSString *)sql
