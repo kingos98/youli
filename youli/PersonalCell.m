@@ -9,6 +9,7 @@
 #import "PersonalCell.h"
 #import "Friend.h"
 #import "UIImageView+WebCache.h"
+#import "BirthdayView.h"
 
 @implementation PersonalCell{
 @private
@@ -71,9 +72,8 @@
 
 - (void)addButtonPressed
 {
-    
+    BirthdayView *birthdayView = [[BirthdayView alloc] initWithFrame:CGRectMake(0, 50, 320, 500)];
+    [birthdayView show];
 }
-
-
 
 @end
