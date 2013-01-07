@@ -9,14 +9,14 @@
 #define DBNAME      @"youli.sqlite"
 
 #import "DatabaseOper.h"
-
+#import "BirthdayGiftDetailItem.h"
 
 @implementation DatabaseOper
 
 @synthesize db;
 
 
--(BOOL)OpenDB
+-(BOOL)openDB
 {
     NSFileManager *fileManager = [NSFileManager defaultManager];
     NSString *database_path = [[[NSBundle mainBundle] resourcePath]
@@ -42,7 +42,7 @@
 -(void)ExecSql:(NSString *)sql
 {
     
-    if(![self OpenDB])
+    if(![self openDB])
     {
         return;
     }
@@ -60,13 +60,88 @@
         NSLog(@"Failed to finalize  data statement, normally error handling here.");
     }
     
-    [self CloseDB];
+    [self closeDB];
 }
 
--(void)CloseDB
+
+-(NSArray *)getGiftDetail:(NSInteger) PhotoID
+{
+    if(![self openDB])
+    {
+        return nil;
+    }
+
+    NSArray *GiftArray=nil;
+    
+    NSString *strSql= [NSString stringWithFormat:@"select * from birthdaygift where giftid=%d",PhotoID];
+    sqlite3_stmt *statement;
+    if (sqlite3_prepare_v2(db, [strSql UTF8String] , -1, &statement, NULL) == SQLITE_OK)
+    {
+        while (sqlite3_step(statement)==SQLITE_ROW) {
+            GiftArray=[NSArray arrayWithObjects:PhotoID,sqlite3_column_int(statement, 1),sqlite3_column_text(statement, 2),sqlite3_column_text(statement, 3),sqlite3_column_text(statement, 4),sqlite3_column_text(statement, 5),sqlite3_column_double(statement, 6),nil];
+        }
+    }
+    
+    [self closeDB];
+    
+    return GiftArray;
+}
+
+
+-(NSMutableArray *)getGiftDetailList:(NSInteger)PhotoType
+{
+    if(![self openDB])
+    {
+        return nil;
+    }
+    
+    NSMutableArray *GiftArray=[[NSMutableArray alloc] init];
+    NSArray *GiftData=nil;
+
+    NSString *strSql= [NSString stringWithFormat:@"select * from birthdaygift where gifttype=1"];
+    sqlite3_stmt *statement;
+
+    if (sqlite3_prepare_v2(db, [strSql UTF8String] , -1, &statement, NULL) == SQLITE_OK)
+    {
+        while (sqlite3_step(statement)==SQLITE_ROW) {
+            char *giftID = (char *) sqlite3_column_text(statement, 0);
+            NSString *strGiftID = [[NSString alloc] initWithUTF8String: giftID];
+            
+            char *giftType = (char *) sqlite3_column_text(statement, 1);
+            NSString *strGiftType = [[NSString alloc] initWithUTF8String: giftType];
+            
+            char *giftTitle = (char *) sqlite3_column_text(statement, 2);
+            NSString *strGiftTitle = [[NSString alloc] initWithUTF8String: giftTitle];
+            
+            char *giftDetail = (char *) sqlite3_column_text(statement, 3);
+            NSString *strGiftDetail = [[NSString alloc] initWithUTF8String: giftDetail];
+            
+            char *imageURL= (char *) sqlite3_column_text(statement, 4);
+            NSString *strImageURL = [[NSString alloc] initWithUTF8String: imageURL];
+
+            char *taobaoURL= (char *) sqlite3_column_text(statement, 5);
+            NSString *strTaobaoURL = [[NSString alloc] initWithUTF8String: taobaoURL];
+            
+            char *price= (char *) sqlite3_column_text(statement, 6);
+            NSString *strPrice = [[NSString alloc] initWithUTF8String: price];
+
+            
+            GiftData=[[NSArray alloc]  initWithObjects:strGiftID,strGiftType,strGiftTitle,strGiftDetail,strImageURL,strTaobaoURL, strPrice,nil];
+            
+            [GiftArray addObject: GiftData];
+        }
+    }
+    
+    [self closeDB];
+    
+    return GiftArray;
+}
+
+-(void)closeDB
 {
     if (sqlite3_close(db) != SQLITE_OK)
     {
         NSLog(@"Failed to close database, normally error handling here.");
-    }}
+    }
+}
 @end

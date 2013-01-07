@@ -45,7 +45,7 @@
         UIImage *tabBarLeftImage = [UIImage imageNamed:@"tabbar_left.png"];
         tabBarLeftButton.frame = CGRectMake(0, 378, 78, 38);
         [self.tabBarLeftButton setBackgroundImage:tabBarLeftImage forState:UIControlStateNormal];
-        [tabBarLeftButton addTarget:self action:@selector(showCategoryViewPressed) forControlEvents:UIControlEventTouchUpInside];
+        [tabBarLeftButton addTarget:self action:@selector(CategoryViewOper) forControlEvents:UIControlEventTouchUpInside];
                 
         tabBarBoxButton = [UIButton buttonWithType:UIButtonTypeCustom];
         UIImage *tabBarBoxImage = [UIImage imageNamed:@"tabbar_box.png"];
@@ -69,7 +69,6 @@
         
         categoryTableView.delegate=self;
 
-        isPopCategoryView=NO;
         //为mainScrollView添加手势操作
         UIPanGestureRecognizer *mainViewPan=[[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(handleMainPan:)];
         [mainView addGestureRecognizer: mainViewPan];
@@ -81,8 +80,24 @@
     return self;
 }
 
-- (void)showCategoryViewPressed
+-(void)CategoryViewOper
 {
+    if(isPopCategoryView)
+    {
+        [self hideCategoryView];
+    }
+    else
+    {
+        [self showCategoryView];
+    }
+}
+
+- (void)showCategoryView
+{
+    if (isPopCategoryView) {
+        return;
+    }
+    
     [UIView beginAnimations:nil context:NULL];
     [UIView setAnimationDuration:0.3];
 
@@ -97,6 +112,10 @@
 
 -(void)hideCategoryView
 {
+    if (!isPopCategoryView) {
+        return;
+    }
+    
     [UIView beginAnimations:nil context:NULL];
     [UIView setAnimationDuration:0.3];
     
@@ -130,17 +149,11 @@
         CGPoint cgpoint=[gestureRecognizer translationInView:self.view];
         if(cgpoint.x<0)
         {
-            if(isPopCategoryView)
-            {
-                [self hideCategoryView];
-            }  
+            [self hideCategoryView];
         }
         else
         {
-            if(!isPopCategoryView)
-            {
-                [self showCategoryViewPressed];
-            }
+            [self showCategoryView];
         }
     }
 }

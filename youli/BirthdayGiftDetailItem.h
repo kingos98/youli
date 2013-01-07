@@ -7,17 +7,25 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "sqlite3.h"
+#import "DatabaseOper.h"
 
 @interface BirthdayGiftDetailItem : UIView
 {
-    sqlite3 *db;
+    DatabaseOper *dataOper;
+    
+    UILabel *lblTitle;
+    UIImageView *imgPhoto;
+    UILabel *lblDetail;
+    UILabel *lblMoneySymbol;
+    UILabel *lblPrice;
+    UIButton *btnCollect;        //收藏
+    UIButton *btnBuy;
 }
 
-@property(retain,nonatomic)UILabel *lblTitle;
-@property(retain,nonatomic)UIImageView *imgPhoto;
-@property(retain,nonatomic)UILabel *lblDetail;
-@property(retain,nonatomic)UILabel *lblPrice;
-@property(retain,nonatomic)UIButton *btnBuy;
+@property(retain,nonatomic)NSString *taobaoURL;
+@property(retain,nonatomic)NSArray *arrGiftDetail;
+
+-(id)initWithPhotoID:(NSInteger)GiftID;
+-(id)initWithGiftInfo:(NSString *)GiftID GiftTitle:(NSString *)GiftTitle GiftDetail:(NSString *)GiftDetail ImageURL:(NSString *)ImageURL TaobaoURL:(NSString *)TaobaoURL Price:(NSString *) Price;
 
 @end

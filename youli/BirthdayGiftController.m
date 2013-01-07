@@ -53,6 +53,8 @@
 @synthesize indicator;
 @synthesize lblGiftTypeTitle;
 
+@synthesize birthdayGiftDetailController;
+
 @synthesize db;
 
 
@@ -92,23 +94,22 @@
     
     [self initPriceSlider];
     
+    [self loadDataSource];
+    
     databaseOper=[[DatabaseOper alloc]init];
+    
+    birthdayGiftDetailController=[[BirthdayGiftDetailController alloc]init];
 }
 
 -(void) viewDidAppear:(BOOL)animated
 {
     [self.navigationController setNavigationBarHidden:YES animated:NO];
     
-    
-    [self loadDataSource];
-    
-    
     btnConstellation.tag=0;                 //tag为0表示没有被点击
     btnPrice.tag=0;                         //tag为0表示没有被点击
     
     [constellationScrollView setShowsHorizontalScrollIndicator:false];
     [giftScrollView setShowsVerticalScrollIndicator:false];
-    
     
     //设置返回按钮点击时的图片
     [self.btnReturn setImage:[UIImage imageNamed:@"return_click.png"] forState:UIControlStateHighlighted];
@@ -216,7 +217,6 @@
     super.tabBarBoxButton.frame=r;
 }
 
-
 - (void)viewDidUnload {
     //    [self setLblGiftListTitle:nil];
     //    [self setBtnReturn:nil];
@@ -293,7 +293,7 @@
                                                                                                 
                                                                                                 birthdayGiftItem=[[BirthdayGiftItem alloc]initWithUrl:strPhotoURL GiftTitle:[item objectForKey:@"title"]];
                                                                                                 
-                                                                                                birthdayGiftItem.tag=[[item objectForKey:@"score"] intValue];
+                                                                                                birthdayGiftItem.tag=[[item objectForKey:@"size"] intValue];
 
                                                                                                 UITapGestureRecognizer *photoTap=[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapPhoto:)];
                                                                                                 [birthdayGiftItem setUserInteractionEnabled:YES];
@@ -305,16 +305,14 @@
                                                                                                 CGSize size = giftScrollView.frame.size;
                                                                                                 [giftScrollView setContentSize:CGSizeMake(size.width, size.height +iGiftScrollViewHeight)];
                                                                                                 
-                                                                                                [self.giftScrollView addSubview:birthdayGiftItem];
+                                                                                                [self.giftScrollView addSubview:birthdayGiftItem];                                                                                        
                                                                                                 
                                                                                                 iGiftScrollViewHeight+=284;
-                                                                                                                              
-//                                                                                                [self AddPhotoInfoToDB:[item objectForKey:@"account_url"] photodetail:[item objectForKey:@"title"] photourl:strPhotoURL];
                                                                                                 
                                                                                                 //把搜索的数据保存到sqlite
-                                                                                                [self AddPhotoInfoToDB:[[item objectForKey:@"score"] intValue] tmpPhotoTitle:[item objectForKey:@"account_url"] photodetail:[item objectForKey:@"title"] photourl:strPhotoURL];
+                                                                                                [self AddPhotoInfoToDB:[[item objectForKey:@"score"] intValue] tmpPhotoTitle:[item objectForKey:@"title"] photodetail:[item objectForKey:@"title"] photourl:strPhotoURL];
                                                                                                 
-                                                                                                NSLog([item objectForKey:@"title"]);
+//                                                                                                NSLog([item objectForKey:@"title"]);
                                                                                             }
                                                                                                                                                                                         [indicator stopAnimating];
                                                                                         }failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
@@ -477,7 +475,7 @@
 {
     NSString *sql = [NSString stringWithFormat:
                      @"INSERT INTO %@ (%@,%@,%@,%@,%@,%@,%@) VALUES (%d,%d,'%@','%@','%@','%@',%f)",
-                     TABLENAME,GIFTID, GIFTTYPE, TITLE, DETAIL,IMAGEURL,TAOBAOURL,PRICE ,1,1,
+                     TABLENAME,GIFTID, GIFTTYPE, TITLE, DETAIL,IMAGEURL,TAOBAOURL,PRICE ,PhotoID,1,
                      tmpPhotoTitle, tmpPhotoDetail,tmpPhotoURL,tmpPhotoURL,999.0f];
     
     [databaseOper ExecSql:sql];
@@ -487,5 +485,8 @@
 -(void) tapPhoto:(UITapGestureRecognizer*) sender
 {
     NSLog([NSString stringWithFormat:@"%d",[(UIGestureRecognizer *)sender view].tag]);
+    
+    [self.navigationController pushViewController:birthdayGiftDetailController animated:YES];
+
 }
 @end

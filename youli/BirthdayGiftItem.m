@@ -18,7 +18,6 @@
 
 @synthesize items;
 @synthesize photoURLItems;
-//@synthesize iCount;
 
 -(id)initWithUrl:(NSString *)PhotoURL GiftTitle:(NSString *)GiftTitle
 {

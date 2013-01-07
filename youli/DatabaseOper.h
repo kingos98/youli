@@ -14,5 +14,6 @@
 @property sqlite3 *db;
 
 -(void)ExecSql:(NSString *)sql;
-
+-(NSArray *)getGiftDetail:(NSInteger) PhotoID;
+-(NSMutableArray *)getGiftDetailList:(NSInteger)PhotoType;
 @end

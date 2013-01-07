@@ -7,12 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "BirthdayGiftItem.h"
 #import "NMRangeSlider.h"
 #import "YouliDelegate.h"
 #import "BaseController.h"
 #import "sqlite3.h"
 #import "DatabaseOper.h"
+#import "BirthdayGiftDetailController.h"
+
 @interface BirthdayGiftController : BaseController<UIScrollViewDelegate,YouliDelegate>
 {
     NMRangeSlider *priceSlider;
@@ -44,6 +45,8 @@
 @property (strong, nonatomic)UIButton *btnReturn;
 
 @property (strong,nonatomic) UIActivityIndicatorView *indicator;                //菊花
+
+@property(strong,nonatomic) BirthdayGiftDetailController *birthdayGiftDetailController;
 
 @property sqlite3 *db;
 
