@@ -97,6 +97,7 @@
     [self loadDataSource];
     
     databaseOper=[[DatabaseOper alloc]init];
+    fmdataOper=[[FMDatabaseOper alloc]init];
     
     birthdayGiftDetailController=[[BirthdayGiftDetailController alloc]init];
 }
@@ -478,14 +479,14 @@
                      TABLENAME,GIFTID, GIFTTYPE, TITLE, DETAIL,IMAGEURL,TAOBAOURL,PRICE ,PhotoID,1,
                      tmpPhotoTitle, tmpPhotoDetail,tmpPhotoURL,tmpPhotoURL,999.0f];
     
-    [databaseOper ExecSql:sql];
+//    [databaseOper ExecSql:sql];
+    [fmdataOper ExecSql:sql];
 }
 
 #pragma mark -GestureRecognizer
 -(void) tapPhoto:(UITapGestureRecognizer*) sender
 {
-    NSLog([NSString stringWithFormat:@"%d",[(UIGestureRecognizer *)sender view].tag]);
-    
+//    NSLog([NSString stringWithFormat:@"%d",[(UIGestureRecognizer *)sender view].tag]);
     [self.navigationController pushViewController:birthdayGiftDetailController animated:YES];
 
 }

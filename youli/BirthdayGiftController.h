@@ -12,11 +12,13 @@
 #import "BaseController.h"
 #import "sqlite3.h"
 #import "DatabaseOper.h"
+#import "FMDatabaseOper.h"
 #import "BirthdayGiftDetailController.h"
 
 @interface BirthdayGiftController : BaseController<UIScrollViewDelegate,YouliDelegate>
 {
     NMRangeSlider *priceSlider;
+    FMDatabaseOper *fmdataOper;
     DatabaseOper *databaseOper;
 }
 

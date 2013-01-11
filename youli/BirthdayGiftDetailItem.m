@@ -111,8 +111,13 @@
 -(void) showGiftDetail:(NSInteger)PhotoID
 {
     dataOper=[[DatabaseOper alloc]init];
+    
+    fmdataOper=[[FMDatabaseOper alloc]init];
 
-    arrGiftDetail=[dataOper getGiftDetail:PhotoID];
+//    arrGiftDetail=[dataOper getGiftDetail:PhotoID];
+
+    arrGiftDetail=[fmdataOper getGiftDetail:PhotoID];
+    
     
     if(arrGiftDetail!=nil)
     {

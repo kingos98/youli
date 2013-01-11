@@ -50,6 +50,7 @@
 - (void)initView
 {
     dataOper=[[DatabaseOper alloc]init];
+    fmdataOper=[[FMDatabaseOper alloc]init];
     
     UIImageView *imgTitle = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
     imgTitle.image = [UIImage imageNamed:@"head.jpg"];
@@ -107,7 +108,8 @@
 
 -(void)showGiftListByGiftType:(NSInteger)GiftType
 {
-    NSMutableArray *giftArray=[dataOper getGiftDetailList:GiftType];
+//    NSMutableArray *giftArray=[dataOper getGiftDetailList:GiftType];
+    NSMutableArray *giftArray=[fmdataOper getGiftDetailList:GiftType];
     
     if(giftArray!=nil)
     {

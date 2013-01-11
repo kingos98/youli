@@ -8,10 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import "DatabaseOper.h"
+#import "FMDatabaseOper.h"
 
 @interface BirthdayGiftDetailItem : UIView
 {
     DatabaseOper *dataOper;
+    FMDatabaseOper *fmdataOper;
     
     UIImageView *imgBg;
     UILabel *lblTitle;

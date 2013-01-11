@@ -122,7 +122,7 @@
 
     NSString *strSql= [NSString stringWithFormat:@"select * from birthdaygift where gifttype=1"];
     sqlite3_stmt *statement;
-
+    
     if (sqlite3_prepare_v2(db, [strSql UTF8String] , -1, &statement, NULL) == SQLITE_OK)
     {
         while (sqlite3_step(statement)==SQLITE_ROW) {

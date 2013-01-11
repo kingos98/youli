@@ -47,6 +47,12 @@
 		1559F4AA167EF36600F16634 /* NMRangeSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 1559F4A9167EF36600F16634 /* NMRangeSlider.m */; };
 		15815809168D8DDB00FB0E0B /* DatabaseOper.m in Sources */ = {isa = PBXBuildFile; fileRef = 15815808168D8DDB00FB0E0B /* DatabaseOper.m */; };
 		158326AF168439EF00E7410B /* BirthdayGiftController.m in Sources */ = {isa = PBXBuildFile; fileRef = 158326AE168439EF00E7410B /* BirthdayGiftController.m */; };
+		158B0EA9169FE85C0098B8E6 /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 158B0EA0169FE85C0098B8E6 /* FMDatabase.m */; };
+		158B0EAA169FE85C0098B8E6 /* FMDatabaseAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 158B0EA2169FE85C0098B8E6 /* FMDatabaseAdditions.m */; };
+		158B0EAB169FE85C0098B8E6 /* FMDatabasePool.m in Sources */ = {isa = PBXBuildFile; fileRef = 158B0EA4169FE85C0098B8E6 /* FMDatabasePool.m */; };
+		158B0EAC169FE85C0098B8E6 /* FMDatabaseQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 158B0EA6169FE85C0098B8E6 /* FMDatabaseQueue.m */; };
+		158B0EAD169FE85C0098B8E6 /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 158B0EA8169FE85C0098B8E6 /* FMResultSet.m */; };
+		158B0EB1169FE9400098B8E6 /* FMDatabaseOper.m in Sources */ = {isa = PBXBuildFile; fileRef = 158B0EB0169FE9400098B8E6 /* FMDatabaseOper.m */; };
 		15BB70A6167F0F9C00CC3043 /* cancel_click.png in Resources */ = {isa = PBXBuildFile; fileRef = 15BB709E167F0F9C00CC3043 /* cancel_click.png */; };
 		15BB70A7167F0F9C00CC3043 /* cancel_unclick.png in Resources */ = {isa = PBXBuildFile; fileRef = 15BB709F167F0F9C00CC3043 /* cancel_unclick.png */; };
 		15BB70A8167F0F9C00CC3043 /* home_click.png in Resources */ = {isa = PBXBuildFile; fileRef = 15BB70A0167F0F9C00CC3043 /* home_click.png */; };
@@ -240,6 +246,18 @@
 		15815808168D8DDB00FB0E0B /* DatabaseOper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DatabaseOper.m; sourceTree = "<group>"; };
 		158326AD168439EF00E7410B /* BirthdayGiftController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BirthdayGiftController.h; sourceTree = "<group>"; };
 		158326AE168439EF00E7410B /* BirthdayGiftController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BirthdayGiftController.m; sourceTree = "<group>"; };
+		158B0E9F169FE85C0098B8E6 /* FMDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabase.h; sourceTree = "<group>"; };
+		158B0EA0169FE85C0098B8E6 /* FMDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabase.m; sourceTree = "<group>"; };
+		158B0EA1169FE85C0098B8E6 /* FMDatabaseAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabaseAdditions.h; sourceTree = "<group>"; };
+		158B0EA2169FE85C0098B8E6 /* FMDatabaseAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabaseAdditions.m; sourceTree = "<group>"; };
+		158B0EA3169FE85C0098B8E6 /* FMDatabasePool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabasePool.h; sourceTree = "<group>"; };
+		158B0EA4169FE85C0098B8E6 /* FMDatabasePool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabasePool.m; sourceTree = "<group>"; };
+		158B0EA5169FE85C0098B8E6 /* FMDatabaseQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabaseQueue.h; sourceTree = "<group>"; };
+		158B0EA6169FE85C0098B8E6 /* FMDatabaseQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabaseQueue.m; sourceTree = "<group>"; };
+		158B0EA7169FE85C0098B8E6 /* FMResultSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMResultSet.h; sourceTree = "<group>"; };
+		158B0EA8169FE85C0098B8E6 /* FMResultSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMResultSet.m; sourceTree = "<group>"; };
+		158B0EAF169FE9400098B8E6 /* FMDatabaseOper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabaseOper.h; sourceTree = "<group>"; };
+		158B0EB0169FE9400098B8E6 /* FMDatabaseOper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabaseOper.m; sourceTree = "<group>"; };
 		15BB709E167F0F9C00CC3043 /* cancel_click.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cancel_click.png; sourceTree = "<group>"; };
 		15BB709F167F0F9C00CC3043 /* cancel_unclick.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cancel_unclick.png; sourceTree = "<group>"; };
 		15BB70A0167F0F9C00CC3043 /* home_click.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = home_click.png; sourceTree = "<group>"; };
@@ -543,8 +561,27 @@
 			children = (
 				15815807168D8DDB00FB0E0B /* DatabaseOper.h */,
 				15815808168D8DDB00FB0E0B /* DatabaseOper.m */,
+				158B0EAF169FE9400098B8E6 /* FMDatabaseOper.h */,
+				158B0EB0169FE9400098B8E6 /* FMDatabaseOper.m */,
 			);
 			name = DBOper;
+			sourceTree = "<group>";
+		};
+		158B0E9E169FE85C0098B8E6 /* fmdb */ = {
+			isa = PBXGroup;
+			children = (
+				158B0E9F169FE85C0098B8E6 /* FMDatabase.h */,
+				158B0EA0169FE85C0098B8E6 /* FMDatabase.m */,
+				158B0EA1169FE85C0098B8E6 /* FMDatabaseAdditions.h */,
+				158B0EA2169FE85C0098B8E6 /* FMDatabaseAdditions.m */,
+				158B0EA3169FE85C0098B8E6 /* FMDatabasePool.h */,
+				158B0EA4169FE85C0098B8E6 /* FMDatabasePool.m */,
+				158B0EA5169FE85C0098B8E6 /* FMDatabaseQueue.h */,
+				158B0EA6169FE85C0098B8E6 /* FMDatabaseQueue.m */,
+				158B0EA7169FE85C0098B8E6 /* FMResultSet.h */,
+				158B0EA8169FE85C0098B8E6 /* FMResultSet.m */,
+			);
+			path = fmdb;
 			sourceTree = "<group>";
 		};
 		15BB708D167F0D9300CC3043 /* Common */ = {
@@ -912,6 +949,7 @@
 		E5D827C516081EC400969EE2 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				158B0E9E169FE85C0098B8E6 /* fmdb */,
 				18E24E6A168E9177000D2172 /* JSONKit */,
 				18E24E6D168E9177000D2172 /* SinaWeibo */,
 				15CE7B14168AD71700707588 /* DB */,
@@ -1272,6 +1310,12 @@
 				18E24E7A168E9177000D2172 /* SinaWeiboRequest.m in Sources */,
 				18E24E94168E93E8000D2172 /* Friend.m in Sources */,
 				18EF449116913DCA00D0DFF6 /* BirthdayView.m in Sources */,
+				158B0EA9169FE85C0098B8E6 /* FMDatabase.m in Sources */,
+				158B0EAA169FE85C0098B8E6 /* FMDatabaseAdditions.m in Sources */,
+				158B0EAB169FE85C0098B8E6 /* FMDatabasePool.m in Sources */,
+				158B0EAC169FE85C0098B8E6 /* FMDatabaseQueue.m in Sources */,
+				158B0EAD169FE85C0098B8E6 /* FMResultSet.m in Sources */,
+				158B0EB1169FE9400098B8E6 /* FMDatabaseOper.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
