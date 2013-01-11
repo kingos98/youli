@@ -64,7 +64,7 @@
 }
 
 
--(NSArray *)getGiftDetail:(NSInteger) PhotoID
+-(NSArray *)getGiftDetail:(NSInteger) GiftID
 {
     if(![self openDB])
     {
@@ -73,12 +73,34 @@
 
     NSArray *GiftArray=nil;
     
-    NSString *strSql= [NSString stringWithFormat:@"select * from birthdaygift where giftid=%d",PhotoID];
+    NSString *strSql= [NSString stringWithFormat:@"select * from birthdaygift where giftid=%d",GiftID];
     sqlite3_stmt *statement;
     if (sqlite3_prepare_v2(db, [strSql UTF8String] , -1, &statement, NULL) == SQLITE_OK)
     {
         while (sqlite3_step(statement)==SQLITE_ROW) {
-            GiftArray=[NSArray arrayWithObjects:PhotoID,sqlite3_column_int(statement, 1),sqlite3_column_text(statement, 2),sqlite3_column_text(statement, 3),sqlite3_column_text(statement, 4),sqlite3_column_text(statement, 5),sqlite3_column_double(statement, 6),nil];
+            
+            char *giftID = (char *) sqlite3_column_text(statement, 0);
+            NSString *strGiftID = [[NSString alloc] initWithUTF8String: giftID];
+            
+            char *giftType = (char *) sqlite3_column_text(statement, 1);
+            NSString *strGiftType = [[NSString alloc] initWithUTF8String: giftType];
+            
+            char *giftTitle = (char *) sqlite3_column_text(statement, 2);
+            NSString *strGiftTitle = [[NSString alloc] initWithUTF8String: giftTitle];
+            
+            char *giftDetail = (char *) sqlite3_column_text(statement, 3);
+            NSString *strGiftDetail = [[NSString alloc] initWithUTF8String: giftDetail];
+            
+            char *imageURL= (char *) sqlite3_column_text(statement, 4);
+            NSString *strImageURL = [[NSString alloc] initWithUTF8String: imageURL];
+            
+            char *taobaoURL= (char *) sqlite3_column_text(statement, 5);
+            NSString *strTaobaoURL = [[NSString alloc] initWithUTF8String: taobaoURL];
+            
+            char *price= (char *) sqlite3_column_text(statement, 6);
+            NSString *strPrice = [[NSString alloc] initWithUTF8String: price];
+            
+            GiftArray=[[NSArray alloc]  initWithObjects:strGiftID,strGiftType,strGiftTitle,strGiftDetail,strImageURL,strTaobaoURL, strPrice,nil];
         }
     }
     
@@ -124,7 +146,6 @@
             
             char *price= (char *) sqlite3_column_text(statement, 6);
             NSString *strPrice = [[NSString alloc] initWithUTF8String: price];
-
             
             GiftData=[[NSArray alloc]  initWithObjects:strGiftID,strGiftType,strGiftTitle,strGiftDetail,strImageURL,strTaobaoURL, strPrice,nil];
             

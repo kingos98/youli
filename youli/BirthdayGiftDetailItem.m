@@ -50,8 +50,6 @@
         lblPrice.text=[NSString stringWithFormat: @"%@", Price];
         
         taobaoURL=TaobaoURL;
-        
-        self.backgroundColor=[UIColor whiteColor];
     }
     
     return self;
@@ -59,6 +57,9 @@
 
 -(void) initView
 {
+    imgBg=[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 277, 353)];
+    [imgBg setImage:[UIImage imageNamed:@"gift_detail_bg.png"]];
+    
     lblTitle=[[UILabel alloc] initWithFrame:CGRectMake(13, 14, 254, 21)];
     lblTitle.font=[UIFont systemFontOfSize:14];
     lblTitle.textColor=[UIColor colorWithRed:0.9 green:0.6 blue:0.17 alpha:1];
@@ -73,14 +74,14 @@
     lblDetail.lineBreakMode=UILineBreakModeWordWrap;
     lblDetail.numberOfLines=0;
         
-    lblMoneySymbol=[[UILabel alloc] initWithFrame:CGRectMake(26, 318, 20, 21)];
-    lblMoneySymbol.font=[UIFont systemFontOfSize:14];
+    lblMoneySymbol=[[UILabel alloc] initWithFrame:CGRectMake(26, 314, 20, 21)];
+    lblMoneySymbol.font=[UIFont systemFontOfSize:15];
     lblMoneySymbol.textColor=[UIColor redColor];
     lblMoneySymbol.backgroundColor=[UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.0];
     lblMoneySymbol.text=@"￥";
     
-    lblPrice=[[UILabel alloc] initWithFrame:CGRectMake(40, 318, 96, 21)];
-    lblPrice.font=[UIFont systemFontOfSize:14];
+    lblPrice=[[UILabel alloc] initWithFrame:CGRectMake(40, 314, 96, 21)];
+    lblPrice.font=[UIFont systemFontOfSize:15];
     lblPrice.textColor=[UIColor redColor];
     lblPrice.backgroundColor=[UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.0];
     
@@ -96,6 +97,7 @@
     [btnBuy setBackgroundImage:imgBuyButtonUnSelect forState:UIControlStateNormal];
     [btnBuy setBackgroundImage:imgBuyButtonSelect forState:UIControlStateHighlighted];
     
+    [self addSubview:imgBg];
     [self addSubview:lblTitle];
     [self addSubview:imgPhoto];
     [self addSubview:lblDetail];
@@ -121,9 +123,11 @@
         
         lblDetail.text= [arrGiftDetail objectAtIndex:3];
         
-        lblPrice.text=[NSString stringWithFormat: @"%f", [arrGiftDetail objectAtIndex:6]];
+        lblPrice.text=[NSString stringWithFormat: @"%@", [arrGiftDetail objectAtIndex:6]];
         
         self.TaobaoURL=[arrGiftDetail objectAtIndex:5];
     }
 }
+
+
 @end

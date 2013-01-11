@@ -13,6 +13,7 @@
 {
     DatabaseOper *dataOper;
     
+    UIImageView *imgBg;
     UILabel *lblTitle;
     UIImageView *imgPhoto;
     UILabel *lblDetail;

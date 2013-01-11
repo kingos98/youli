@@ -39,7 +39,6 @@
 
 -(void)viewDidAppear:(BOOL)animated
 {
-//    [self showTmpPic];
     [self showGiftListByGiftType:1];
 }
 
@@ -73,15 +72,20 @@
     [self.btnShare setBackgroundImage:[UIImage imageNamed:@"share_click.png"] forState:UIControlStateHighlighted];
     [self.btnShare addTarget:self action:@selector(shareClick) forControlEvents:UIControlEventTouchUpInside];
 
+    
+
     giftDetailScrollView=[[UIScrollView alloc]initWithFrame:CGRectMake(0, 44, 320, 370)];
+//    giftDetailScrollView.pagingEnabled=true;
     [giftDetailScrollView setShowsHorizontalScrollIndicator:false];
 
+    
     [mainView addSubview:imgTitle];
     [mainView addSubview:imgGiftScrollView];
     [mainView addSubview:lblGiftTypeTitle];
     [mainView addSubview:btnReturn];
     [mainView addSubview:btnShare];
     [mainView addSubview:giftDetailScrollView];
+
     
     //修改super组件位置
     CGRect r=super.tabBarLeftButton.frame;
@@ -101,34 +105,12 @@
     super.tabBarBoxButton.frame=r;
 }
 
--(void)showTmpPic
-{
-    UIImageView *imgTmp;
-    
-    int iGiftScrollViewWidth=0;        //当前礼品scrollview的高度
-
-    for(NSInteger i=0;i<10;i++)
-    {
-        imgTmp=[[UIImageView alloc]initWithFrame:CGRectMake(13+iGiftScrollViewWidth, 14, 276, 354)];
-        [imgTmp setImage:[UIImage imageNamed:@"3.jpg"]];
-        [self.giftDetailScrollView addSubview:imgTmp];
-        
-        iGiftScrollViewWidth=iGiftScrollViewWidth+276+13;
-    }
-    
-    iGiftScrollViewWidth=iGiftScrollViewWidth+26;
-    CGSize size = giftDetailScrollView.frame.size;
-    [giftDetailScrollView setContentSize:CGSizeMake(iGiftScrollViewWidth, size.height)];
-}
-
 -(void)showGiftListByGiftType:(NSInteger)GiftType
 {
     NSMutableArray *giftArray=[dataOper getGiftDetailList:GiftType];
     
     if(giftArray!=nil)
     {
-        
-//        NSLog(@"%d",giftArray.count);
         if(giftArray.count>0)
         {
             NSString *GiftID;
@@ -137,9 +119,6 @@
             NSString *strImageURL;
             NSString *strTaobaoURL;
             NSString *Price;
-            
-//            NSLog(@"%@",[giftArray objectAtIndex:0]);
-//            NSLog(@"%@",[giftArray objectAtIndex:1]);
             
             int iGiftScrollViewWidth=0;        //当前礼品scrollview的高度
 
@@ -154,7 +133,7 @@
                 
                 birthdayGiftDetailItem=[[BirthdayGiftDetailItem alloc]initWithGiftInfo:GiftID GiftTitle:strGiftTitle GiftDetail:strGiftDetail ImageURL:strImageURL TaobaoURL:strTaobaoURL Price:Price];
                 
-                birthdayGiftDetailItem.frame=CGRectMake(9 + i+iGiftScrollViewWidth, 14, 276, 354);
+                birthdayGiftDetailItem.frame=CGRectMake(21 + i+iGiftScrollViewWidth, 14, 277, 353);
                 
                 [self.giftDetailScrollView addSubview:birthdayGiftDetailItem];
                 
@@ -179,10 +158,53 @@
 }
 
 #pragma mark - Scrollview Delegate
+int start;
 
--(void)scrollViewDidScroll:(UIScrollView *)scrollView
+int end;
+
+int k=0;
+
+-(void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
 {
-    
+    start = scrollView.contentOffset.x;
 }
 
+-(void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+{
+    end = scrollView.contentOffset.x;
+}
+
+-(void)scrollViewWillBeginDecelerating:(UIScrollView *)scrollView
+{
+    int diff = end-start;
+    
+    if (diff>0)
+    {
+        float tmp=giftDetailScrollView.contentSize.width-giftDetailScrollView.contentOffset.x;
+        if(tmp>giftDetailScrollView.frame.size.width)
+        {
+            k=k+276+14;
+            [scrollView setContentOffset:CGPointMake(k, 0) animated:YES];
+        }
+    }
+    else {
+        if(k>0)
+        {
+            k=k-276-14;
+            [scrollView setContentOffset:CGPointMake(k, 0) animated:YES];
+        }
+    }
+}
+
+-(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
+    CGPoint offset=self.giftDetailScrollView.contentOffset;
+//    NSLog(@"x:%f",offset.x);
+}
+//
+//-(void)scrollViewDidScroll:(UIScrollView *)scrollView
+//{
+//    CGPoint offset=self.giftDetailScrollView.contentOffset;
+//    NSLog(@"x:%f",offset.x);    
+//}
 @end
