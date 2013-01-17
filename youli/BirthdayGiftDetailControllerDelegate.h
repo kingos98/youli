@@ -10,4 +10,5 @@
 
 @protocol BirthdayGiftDetailControllerDelegate <NSObject>
 -(void)showGiftListByGiftType:(NSInteger) GiftType;
+-(void)sendGiftID:(NSInteger) GiftID;
 @end

@@ -20,11 +20,11 @@
     BirthdayGiftDetailItem *birthdayGiftDetailItem;
 }
 
+-(id)initwithGiftID:(NSInteger)GiftID;
+
 @property(retain,nonatomic) UIScrollView *giftDetailScrollView;
 @property(retain,nonatomic) UIButton *btnReturn;
 @property(retain,nonatomic) UIButton *btnShare;
 @property (strong, nonatomic)UILabel *lblGiftTypeTitle;
-
-
 
 @end

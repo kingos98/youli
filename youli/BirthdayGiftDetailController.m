@@ -7,6 +7,9 @@
 //
 
 #import "BirthdayGiftDetailController.h"
+#import "BlockAlertView.h"
+#import "BlockActionSheet.h"
+#import "BlockTextPromptAlertView.h"
 
 @interface BirthdayGiftDetailController ()
 
@@ -106,9 +109,34 @@
     super.tabBarBoxButton.frame=r;
 }
 
+- (void)returnClick
+{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void)shareClick
+{
+    [self showActionSheet];
+}
+
+
+- (void)showActionSheet
+{
+    BlockActionSheet *sheet = [BlockActionSheet sheetWithTitle:@"分享给朋友"];
+    [sheet addButtonWithTitle:@"新浪微博" block:nil];
+    [sheet addButtonWithTitle:@"腾讯微博" block:nil];
+    [sheet addButtonWithTitle:@"人人网" block:nil];
+    [sheet setCancelButtonWithTitle:@"取消" block:nil];
+
+//    [sheet addButtonWithTitle:@"Show another alert" block:^{
+//        [self showAlert:nil];
+//    }];
+    [sheet showInView:self.view];
+}
+
+#pragma mark - BirthdayGiftDetailControllerDelegate
 -(void)showGiftListByGiftType:(NSInteger)GiftType
 {
-//    NSMutableArray *giftArray=[dataOper getGiftDetailList:GiftType];
     NSMutableArray *giftArray=[fmdataOper getGiftDetailList:GiftType];
     
     if(giftArray!=nil)
@@ -149,14 +177,15 @@
     }
 }
 
-- (void)returnClick
+-(void)sendGiftID:(NSInteger)GiftID
 {
-    [self.navigationController popViewControllerAnimated:YES];
-}
-
-- (void)shareClick
-{
-
+//    NSLog(@"GiftID:%d",GiftID);
+    NSInteger index=[fmdataOper getSelectedGiftIndex:GiftID];
+    
+//    NSLog(@"GiftIndex:%d",index);
+    
+    k=k+(276+14)*index;
+    [self.giftDetailScrollView setContentOffset:CGPointMake(k, 0) animated:YES];
 }
 
 #pragma mark - Scrollview Delegate
@@ -164,7 +193,7 @@ int start;
 
 int end;
 
-int k=0;
+int k=0;        //giftDetailScrollView位移值
 
 -(void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
 {
@@ -197,16 +226,4 @@ int k=0;
         }
     }
 }
-
--(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
-{
-    CGPoint offset=self.giftDetailScrollView.contentOffset;
-//    NSLog(@"x:%f",offset.x);
-}
-//
-//-(void)scrollViewDidScroll:(UIScrollView *)scrollView
-//{
-//    CGPoint offset=self.giftDetailScrollView.contentOffset;
-//    NSLog(@"x:%f",offset.x);    
-//}
 @end

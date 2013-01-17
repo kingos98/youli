@@ -27,6 +27,8 @@
 
 @property(retain,nonatomic)NSString *taobaoURL;
 @property(retain,nonatomic)NSArray *arrGiftDetail;
+@property Boolean isCollect;
+@property NSInteger currentGiftID;
 
 -(id)initWithPhotoID:(NSInteger)GiftID;
 -(id)initWithGiftInfo:(NSString *)GiftID GiftTitle:(NSString *)GiftTitle GiftDetail:(NSString *)GiftDetail ImageURL:(NSString *)ImageURL TaobaoURL:(NSString *)TaobaoURL Price:(NSString *) Price;

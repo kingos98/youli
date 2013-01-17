@@ -9,6 +9,7 @@
 #import "BirthdayGiftDetailItem.h"
 #import "UIImageView+WebCache.h"
 
+
 @interface BirthdayGiftDetailItem ()
 
 @end
@@ -17,7 +18,8 @@
 
 @synthesize taobaoURL;
 @synthesize arrGiftDetail;
-
+@synthesize isCollect;
+@synthesize currentGiftID;
 
 -(id)initWithGiftID:(NSInteger)GiftID
 {
@@ -37,6 +39,8 @@
     
     if(self)
     {
+        currentGiftID=[GiftID intValue];
+        
         [self initView];
         
         lblTitle.tag= [GiftID intValue];
@@ -85,11 +89,28 @@
     lblPrice.textColor=[UIColor redColor];
     lblPrice.backgroundColor=[UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.0];
     
-    UIImage *imgCollectButtonSelect=[[UIImage imageNamed:@"collect_click.png"] stretchableImageWithLeftCapWidth:0 topCapHeight:0];
-    UIImage *imgCollectButtonUnSelect=[[UIImage imageNamed:@"collect_unclick.png"] stretchableImageWithLeftCapWidth:0 topCapHeight:0];
+    UIImage *imgCollectButtonSelect;
+    UIImage *imgCollectButtonUnSelect;
+    if(![fmdataOper checkIsCollect:currentGiftID])
+    {
+        imgCollectButtonSelect=[[UIImage imageNamed:@"collect_click.png"] stretchableImageWithLeftCapWidth:0 topCapHeight:0];
+        imgCollectButtonUnSelect=[[UIImage imageNamed:@"collect_unclick.png"] stretchableImageWithLeftCapWidth:0 topCapHeight:0];
+        isCollect=false;
+    }
+    else
+    {
+        imgCollectButtonSelect=[[UIImage imageNamed:@"cancel_collect_click.png"] stretchableImageWithLeftCapWidth:0 topCapHeight:0];
+        imgCollectButtonUnSelect=[[UIImage imageNamed:@"cancel_collect_unclick.png"] stretchableImageWithLeftCapWidth:0 topCapHeight:0];
+        isCollect=true;
+    }
+    
+//    UIImage *imgCollectButtonSelect=[[UIImage imageNamed:@"collect_click.png"] stretchableImageWithLeftCapWidth:0 topCapHeight:0];
+//    UIImage *imgCollectButtonUnSelect=[[UIImage imageNamed:@"collect_unclick.png"] stretchableImageWithLeftCapWidth:0 topCapHeight:0];
     btnCollect=[[UIButton alloc] initWithFrame:CGRectMake(124, 312, 65, 25)];
     [btnCollect setBackgroundImage:imgCollectButtonUnSelect forState:UIControlStateNormal];
     [btnCollect setBackgroundImage:imgCollectButtonSelect forState:UIControlStateHighlighted];
+    [btnCollect addTarget:self action:@selector(operGift) forControlEvents:UIControlEventTouchUpInside];
+
 
     UIImage *imgBuyButtonSelect=[[UIImage imageNamed:@"buy_click.png"] stretchableImageWithLeftCapWidth:0 topCapHeight:0];
     UIImage *imgBuyButtonUnSelect=[[UIImage imageNamed:@"buy_unclick.png"] stretchableImageWithLeftCapWidth:0 topCapHeight:0];
@@ -110,11 +131,7 @@
 
 -(void) showGiftDetail:(NSInteger)PhotoID
 {
-    dataOper=[[DatabaseOper alloc]init];
-    
     fmdataOper=[[FMDatabaseOper alloc]init];
-
-//    arrGiftDetail=[dataOper getGiftDetail:PhotoID];
 
     arrGiftDetail=[fmdataOper getGiftDetail:PhotoID];
     
@@ -132,7 +149,36 @@
         
         self.TaobaoURL=[arrGiftDetail objectAtIndex:5];
     }
+    
+    [fmdataOper release];
 }
 
+-(void)operGift
+{
+    UIImage *imgCollectButtonSelect;
+    UIImage *imgCollectButtonUnSelect;
+
+    fmdataOper=[[FMDatabaseOper alloc]init];
+    
+    if(!isCollect)
+    {
+        [fmdataOper operGiftToCollection:true GiftID:currentGiftID];
+        imgCollectButtonSelect=[[UIImage imageNamed:@"cancel_collect_click.png"] stretchableImageWithLeftCapWidth:0 topCapHeight:0];
+        imgCollectButtonUnSelect=[[UIImage imageNamed:@"cancel_collect_unclick.png"] stretchableImageWithLeftCapWidth:0 topCapHeight:0];
+    }
+    else
+    {
+        [fmdataOper operGiftToCollection:false GiftID:currentGiftID];
+        imgCollectButtonSelect=[[UIImage imageNamed:@"collect_click.png"] stretchableImageWithLeftCapWidth:0 topCapHeight:0];
+        imgCollectButtonUnSelect=[[UIImage imageNamed:@"collect_unclick.png"] stretchableImageWithLeftCapWidth:0 topCapHeight:0];
+    }
+    
+    isCollect=!isCollect;
+    
+    [btnCollect setBackgroundImage:imgCollectButtonUnSelect forState:UIControlStateNormal];
+    [btnCollect setBackgroundImage:imgCollectButtonSelect forState:UIControlStateHighlighted];
+    
+    [fmdataOper release];
+}
 
 @end

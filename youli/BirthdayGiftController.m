@@ -52,24 +52,13 @@
 @synthesize btnReturn;
 @synthesize indicator;
 @synthesize lblGiftTypeTitle;
-
 @synthesize birthdayGiftDetailController;
-
+@synthesize birthdayGiftDetailControllerDelegate;
 @synthesize db;
 
 
 #pragma mark -
 #pragma mark Initial
-//- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-//{
-//    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-//    if (self) {
-//
-//    }
-//    return self;
-//}
-//无法刷新内容
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -87,19 +76,19 @@
                          @"aquarius.png",
                          @"pisces.png",
                          nil];
+
+    [fmdataOper cleanGiftList];
     
     [self initView];
     
     [self initConstellation];
     
     [self initPriceSlider];
-    
-    [self loadDataSource];
-    
-    databaseOper=[[DatabaseOper alloc]init];
+        
     fmdataOper=[[FMDatabaseOper alloc]init];
     
     birthdayGiftDetailController=[[BirthdayGiftDetailController alloc]init];
+    self.BirthdayGiftDetailControllerDelegate=birthdayGiftDetailController;
 }
 
 -(void) viewDidAppear:(BOOL)animated
@@ -117,9 +106,7 @@
     
     giftScrollView.delegate=self;
     
-//    [self execSql:sql1];
-    
-//    [self dbOpen];
+    [self loadDataSource];
 }
 
 //初始化view控件
@@ -311,7 +298,7 @@
                                                                                                 iGiftScrollViewHeight+=284;
                                                                                                 
                                                                                                 //把搜索的数据保存到sqlite
-                                                                                                [self AddPhotoInfoToDB:[[item objectForKey:@"score"] intValue] tmpPhotoTitle:[item objectForKey:@"title"] photodetail:[item objectForKey:@"title"] photourl:strPhotoURL];
+                                                                                                [self AddPhotoInfoToDB:[[item objectForKey:@"size"] intValue] tmpPhotoTitle:[item objectForKey:@"title"] photodetail:[item objectForKey:@"title"] photourl:strPhotoURL];
                                                                                                 
 //                                                                                                NSLog([item objectForKey:@"title"]);
                                                                                             }
@@ -467,7 +454,7 @@
     
     if(currentOffset==maximumOffset)
     {
-        [self loadDataSource];      //load next group data when scroll the end
+        [self loadDataSource];      //当滚到最底时自动更新内容
     }
 }
 
@@ -479,14 +466,14 @@
                      TABLENAME,GIFTID, GIFTTYPE, TITLE, DETAIL,IMAGEURL,TAOBAOURL,PRICE ,PhotoID,1,
                      tmpPhotoTitle, tmpPhotoDetail,tmpPhotoURL,tmpPhotoURL,999.0f];
     
-//    [databaseOper ExecSql:sql];
     [fmdataOper ExecSql:sql];
 }
 
-#pragma mark -GestureRecognizer
+#pragma mark - GestureRecognizer
 -(void) tapPhoto:(UITapGestureRecognizer*) sender
 {
 //    NSLog([NSString stringWithFormat:@"%d",[(UIGestureRecognizer *)sender view].tag]);
+    [self.birthdayGiftDetailController sendGiftID:[(UIGestureRecognizer *)sender view].tag];
     [self.navigationController pushViewController:birthdayGiftDetailController animated:YES];
 
 }

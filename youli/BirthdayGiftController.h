@@ -14,12 +14,12 @@
 #import "DatabaseOper.h"
 #import "FMDatabaseOper.h"
 #import "BirthdayGiftDetailController.h"
+#import "BirthdayGiftDetailControllerDelegate.h"
 
 @interface BirthdayGiftController : BaseController<UIScrollViewDelegate,YouliDelegate>
 {
     NMRangeSlider *priceSlider;
     FMDatabaseOper *fmdataOper;
-    DatabaseOper *databaseOper;
 }
 
 
@@ -49,6 +49,9 @@
 @property (strong,nonatomic) UIActivityIndicatorView *indicator;                //菊花
 
 @property(strong,nonatomic) BirthdayGiftDetailController *birthdayGiftDetailController;
+
+@property (strong,nonatomic) id<BirthdayGiftDetailControllerDelegate> birthdayGiftDetailControllerDelegate;
+
 
 @property sqlite3 *db;
 
