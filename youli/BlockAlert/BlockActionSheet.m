@@ -84,7 +84,7 @@ static UIFont *buttonFont = nil;
     return _blocks.count;
 }
 
-- (void)addButtonWithTitle:(NSString *)title color:(NSString*)color block:(void (^)())block atIndex:(NSInteger)index
+- (void)addButtonWithTitle:(NSString *)title color:(NSString*)color block:(void (^)())block atIndex:(NSInteger)index textColor:(NSString *)textColor
 {
     if (index >= 0)
     {
@@ -92,6 +92,7 @@ static UIFont *buttonFont = nil;
                                block ? [[block copy] autorelease] : [NSNull null],
                                title,
                                color,
+                               textColor,
                                nil]
                       atIndex:index];
     }
@@ -101,39 +102,40 @@ static UIFont *buttonFont = nil;
                             block ? [[block copy] autorelease] : [NSNull null],
                             title,
                             color,
+                            textColor,
                             nil]];
     }
 }
 
 - (void)setDestructiveButtonWithTitle:(NSString *)title block:(void (^)())block
 {
-    [self addButtonWithTitle:title color:@"red" block:block atIndex:-1];
+    [self addButtonWithTitle:title color:@"red" block:block atIndex:-1 textColor:@"white"];
 }
 
 - (void)setCancelButtonWithTitle:(NSString *)title block:(void (^)())block
 {
-    [self addButtonWithTitle:title color:@"black" block:block atIndex:-1];
+    [self addButtonWithTitle:title color:@"black" block:block atIndex:-1 textColor:@"white"];
 }
 
 - (void)addButtonWithTitle:(NSString *)title block:(void (^)())block 
 {
 //    [self addButtonWithTitle:title color:@"gray" block:block atIndex:-1];
-    [self addButtonWithTitle:title color:@"white" block:block atIndex:-1];
+    [self addButtonWithTitle:title color:@"white" block:block atIndex:-1 textColor:@"black"];
 }
 
 - (void)setDestructiveButtonWithTitle:(NSString *)title atIndex:(NSInteger)index block:(void (^)())block
 {
-    [self addButtonWithTitle:title color:@"red" block:block atIndex:index];
+    [self addButtonWithTitle:title color:@"red" block:block atIndex:index textColor:@"white"];
 }
 
 - (void)setCancelButtonWithTitle:(NSString *)title atIndex:(NSInteger)index block:(void (^)())block
 {
-    [self addButtonWithTitle:title color:@"black" block:block atIndex:index];
+    [self addButtonWithTitle:title color:@"black" block:block atIndex:index textColor:@"white"];
 }
 
-- (void)addButtonWithTitle:(NSString *)title atIndex:(NSInteger)index block:(void (^)())block 
+- (void)addButtonWithTitle:(NSString *)title atIndex:(NSInteger)index block:(void (^)())block
 {
-    [self addButtonWithTitle:title color:@"gray" block:block atIndex:index];
+    [self addButtonWithTitle:title color:@"gray" block:block atIndex:index textColor:@"white"];
 }
 
 - (void)showInView:(UIView *)view
@@ -143,6 +145,8 @@ static UIFont *buttonFont = nil;
     {
         NSString *title = [block objectAtIndex:1];
         NSString *color = [block objectAtIndex:2];
+        NSString *textColor=[block objectAtIndex:3];
+//        Boolean *isWithWhiteTextColor=(Boolean)[block objectAtIndex:3];
         
         UIImage *image = [UIImage imageNamed:[NSString stringWithFormat:@"action-%@-button.png", color]];
         image = [image stretchableImageWithLeftCapWidth:(int)(image.size.width)>>1 topCapHeight:0];
@@ -154,14 +158,24 @@ static UIFont *buttonFont = nil;
         button.titleLabel.adjustsFontSizeToFitWidth = YES;
         button.titleLabel.textAlignment = UITextAlignmentCenter;
         button.titleLabel.shadowOffset = kActionSheetButtonShadowOffset;
+        
         button.backgroundColor = [UIColor clearColor];
         button.tag = i++;
         
         [button setBackgroundImage:image forState:UIControlStateNormal];
-        [button setTitleColor:kActionSheetButtonTextColor forState:UIControlStateNormal];
-        [button setTitleShadowColor:kActionSheetButtonShadowColor forState:UIControlStateNormal];
+//        [button setTitleColor:kActionSheetButtonTextColor forState:UIControlStateNormal];
+//        [button setTitleShadowColor:kActionSheetButtonShadowColor forState:UIControlStateNormal];
         [button setTitle:title forState:UIControlStateNormal];
         button.accessibilityLabel = title;
+        
+        if(textColor==@"black")
+        {
+            button.titleLabel.textColor=[UIColor blackColor];
+        }
+        else
+        {
+            button.titleLabel.textColor=[UIColor whiteColor];
+        }
         
         [button addTarget:self action:@selector(buttonClicked:) forControlEvents:UIControlEventTouchUpInside];
         
