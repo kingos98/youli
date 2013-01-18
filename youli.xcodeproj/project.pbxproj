@@ -144,11 +144,6 @@
 		189022BC16633B710096D464 /* selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 189022B316633B710096D464 /* selected.png */; };
 		189022BD16633B710096D464 /* splitbar.png in Resources */ = {isa = PBXBuildFile; fileRef = 189022B416633B710096D464 /* splitbar.png */; };
 		189022BE16633B710096D464 /* unselected.png in Resources */ = {isa = PBXBuildFile; fileRef = 189022B516633B710096D464 /* unselected.png */; };
-		1897B73C16A8E128001C810D /* FolderCoverView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1897B73716A8E128001C810D /* FolderCoverView.m */; };
-		1897B73D16A8E128001C810D /* UIFolderTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1897B73916A8E128001C810D /* UIFolderTableView.m */; };
-		1897B73E16A8E128001C810D /* UIView+screenshot.m in Sources */ = {isa = PBXBuildFile; fileRef = 1897B73B16A8E128001C810D /* UIView+screenshot.m */; };
-		1897B74316A8E157001C810D /* SubCateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1897B74116A8E157001C810D /* SubCateViewController.m */; };
-		1897B74416A8E157001C810D /* SubCateViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1897B74216A8E157001C810D /* SubCateViewController.xib */; };
 		18C7F707165A765900B709AE /* BaseController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18C7F706165A765900B709AE /* BaseController.m */; };
 		18CAD28E165DCB75008CCF37 /* control_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 18CAD288165DCB75008CCF37 /* control_bg.png */; };
 		18CAD28F165DCB75008CCF37 /* firend_info_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 18CAD289165DCB75008CCF37 /* firend_info_bg.png */; };
@@ -396,15 +391,6 @@
 		189022B316633B710096D464 /* selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = selected.png; path = images/category/selected.png; sourceTree = "<group>"; };
 		189022B416633B710096D464 /* splitbar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = splitbar.png; path = images/category/splitbar.png; sourceTree = "<group>"; };
 		189022B516633B710096D464 /* unselected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = unselected.png; path = images/category/unselected.png; sourceTree = "<group>"; };
-		1897B73616A8E128001C810D /* FolderCoverView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FolderCoverView.h; sourceTree = "<group>"; };
-		1897B73716A8E128001C810D /* FolderCoverView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FolderCoverView.m; sourceTree = "<group>"; };
-		1897B73816A8E128001C810D /* UIFolderTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIFolderTableView.h; sourceTree = "<group>"; };
-		1897B73916A8E128001C810D /* UIFolderTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIFolderTableView.m; sourceTree = "<group>"; };
-		1897B73A16A8E128001C810D /* UIView+screenshot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+screenshot.h"; sourceTree = "<group>"; };
-		1897B73B16A8E128001C810D /* UIView+screenshot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+screenshot.m"; sourceTree = "<group>"; };
-		1897B74016A8E157001C810D /* SubCateViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubCateViewController.h; sourceTree = "<group>"; };
-		1897B74116A8E157001C810D /* SubCateViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubCateViewController.m; sourceTree = "<group>"; };
-		1897B74216A8E157001C810D /* SubCateViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SubCateViewController.xib; sourceTree = "<group>"; };
 		18C7F705165A765900B709AE /* BaseController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseController.h; sourceTree = "<group>"; };
 		18C7F706165A765900B709AE /* BaseController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = BaseController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		18CAD288165DCB75008CCF37 /* control_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = control_bg.png; path = images/personal/control_bg.png; sourceTree = "<group>"; };
@@ -823,10 +809,6 @@
 		15D7CE951648E86F0088E49F /* Personal */ = {
 			isa = PBXGroup;
 			children = (
-				1897B73516A8E128001C810D /* Floder */,
-				1897B74016A8E157001C810D /* SubCateViewController.h */,
-				1897B74116A8E157001C810D /* SubCateViewController.m */,
-				1897B74216A8E157001C810D /* SubCateViewController.xib */,
 				15F413F31647952500AA6FB3 /* PersonalCell.h */,
 				15F413F41647952500AA6FB3 /* PersonalCell.m */,
 				18EF448F16913DCA00D0DFF6 /* BirthdayView.h */,
@@ -853,19 +835,6 @@
 				18DBE8C81664643B006631FD /* CategoryTableView.m */,
 			);
 			name = Category;
-			sourceTree = "<group>";
-		};
-		1897B73516A8E128001C810D /* Floder */ = {
-			isa = PBXGroup;
-			children = (
-				1897B73616A8E128001C810D /* FolderCoverView.h */,
-				1897B73716A8E128001C810D /* FolderCoverView.m */,
-				1897B73816A8E128001C810D /* UIFolderTableView.h */,
-				1897B73916A8E128001C810D /* UIFolderTableView.m */,
-				1897B73A16A8E128001C810D /* UIView+screenshot.h */,
-				1897B73B16A8E128001C810D /* UIView+screenshot.m */,
-			);
-			path = Floder;
 			sourceTree = "<group>";
 		};
 		18CAD29D165DF478008CCF37 /* Category */ = {
@@ -1398,7 +1367,6 @@
 				152CCBE016A7D7B400B0B578 /* alert-red-button@2x.png in Resources */,
 				152CCBE116A7D7B400B0B578 /* alert-window.png in Resources */,
 				152CCBE216A7D7B400B0B578 /* alert-window@2x.png in Resources */,
-				1897B74416A8E157001C810D /* SubCateViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1488,10 +1456,6 @@
 				152CCBB016A7D5D000B0B578 /* BlockAlertView.m in Sources */,
 				152CCBB116A7D5D000B0B578 /* BlockBackground.m in Sources */,
 				152CCBB216A7D5D000B0B578 /* BlockTextPromptAlertView.m in Sources */,
-				1897B73C16A8E128001C810D /* FolderCoverView.m in Sources */,
-				1897B73D16A8E128001C810D /* UIFolderTableView.m in Sources */,
-				1897B73E16A8E128001C810D /* UIView+screenshot.m in Sources */,
-				1897B74316A8E157001C810D /* SubCateViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
