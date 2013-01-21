@@ -29,6 +29,9 @@
     int iGiftDisplayCount;            //当前显示的礼品数量
     int iGiftScrollViewHeight;        //当前礼品scrollview的高度
     
+    NSString *strOldGiftType;
+    NSString *strNewGiftType;
+    
     __strong BirthdayGiftItem *birthdayGiftItem;
 }
 @end
@@ -55,6 +58,7 @@
 @synthesize birthdayGiftDetailController;
 @synthesize birthdayGiftDetailControllerDelegate;
 @synthesize db;
+
 
 
 #pragma mark -
@@ -89,6 +93,9 @@
     
     birthdayGiftDetailController=[[BirthdayGiftDetailController alloc]init];
     self.BirthdayGiftDetailControllerDelegate=birthdayGiftDetailController;
+    
+    strOldGiftType=nil;
+    strNewGiftType=nil;
 }
 
 -(void) viewDidAppear:(BOOL)animated
@@ -106,7 +113,7 @@
     
     giftScrollView.delegate=self;
     
-    [self loadDataSource];
+//    [self loadDataSource];
 }
 
 //初始化view控件
@@ -185,7 +192,6 @@
     [mainView addSubview:upperPrice];
     [mainView addSubview:btnReturn];
     [mainView addSubview:indicator];
-    
     
     //修改super组件位置
     CGRect r=super.tabBarLeftButton.frame;
@@ -435,6 +441,14 @@
 -(void) sendGiftTypeTitle:(NSString *)GiftTypeTitle
 {
     self.lblGiftTypeTitle.text=GiftTypeTitle;
+    
+    strNewGiftType=GiftTypeTitle;
+    
+    if(strOldGiftType!=strNewGiftType)
+    {
+        [self loadDataSource];
+        strOldGiftType=strNewGiftType;
+    }
 }
 
 -(void)changeGiftListByType:(int)GiftType

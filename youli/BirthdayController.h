@@ -8,11 +8,18 @@
 
 #import <UIKit/UIKit.h>
 #import "Birthday.h"
+#import "BirthdayGiftController.h"
+#import "YouliDelegate.h"
 
-@interface BirthdayController : UIViewController<UITableViewDelegate, UITableViewDataSource>{
+@interface BirthdayController : UIViewController<UITableViewDelegate, UITableViewDataSource,YouliDelegate>{
     NSMutableArray *data;
 }
 
+@property (nonatomic,strong)UITableView *birthdayTableView;
+
 @property (nonatomic, strong) Birthday *birthday;
+@property(nonatomic,strong)BirthdayGiftController *birthdayGiftController;
+
+@property id<YouliDelegate> delegate;
 
 @end

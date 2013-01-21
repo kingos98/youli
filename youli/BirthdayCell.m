@@ -19,6 +19,10 @@
 }
 
 @synthesize birthday = _birthday;
+@synthesize nameLabel;
+@synthesize dateLabel;
+@synthesize countDownLabel;
+@synthesize typeLabel;
 
 - (id)initCell:(NSString *)reuseIdentifier{
     self = [super initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier];
@@ -43,7 +47,7 @@
 }
 
 - (void)addNameLabel:(Birthday *)birthday{
-    UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(75, 26, 90, 15)];
+    nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(75, 26, 90, 15)];
     nameLabel.text = birthday.name;
     nameLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:15];
     nameLabel.textColor = [UIColor colorWithRed:0.31 green:0.30 blue:0.30 alpha:1];
@@ -53,7 +57,7 @@
 }
 
 - (void)addDateLabel{
-    UILabel *dateLabel = [[UILabel alloc] initWithFrame:CGRectMake(75, 46, 150, 15)];
+    dateLabel = [[UILabel alloc] initWithFrame:CGRectMake(75, 46, 150, 15)];
     dateLabel.text = @"2012年12月25日 星期三";
     dateLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:11];
     dateLabel.textColor = [UIColor colorWithRed:0.52 green:0.52 blue:0.52 alpha:1];
@@ -63,7 +67,7 @@
 }
 
 - (void)addCountDownLabel{
-    UILabel *countDownLabel = [[UILabel alloc] initWithFrame:CGRectMake(252, 41, 100, 25)];
+    countDownLabel = [[UILabel alloc] initWithFrame:CGRectMake(252, 41, 100, 25)];
     countDownLabel.text = @"13";
     countDownLabel.font = [UIFont fontWithName:@"Helvetica" size:30];
     countDownLabel.textColor = [UIColor colorWithRed:0.30 green:0.30 blue:0.30 alpha:1];
@@ -73,7 +77,7 @@
 }
 
 - (void)addTypeLabel{
-    UILabel *typeLabel = [[UILabel alloc] initWithFrame:CGRectMake(260, 8, 100, 25)];
+    typeLabel = [[UILabel alloc] initWithFrame:CGRectMake(260, 8, 100, 25)];
     typeLabel.text = @"节日";
     typeLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:11];
     typeLabel.textColor = [UIColor whiteColor];

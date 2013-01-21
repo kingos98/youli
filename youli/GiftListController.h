@@ -8,7 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "BaseController.h"
+#import "YouliDelegate.h"
 
-@interface GiftListController : BaseController
+@interface GiftListController : BaseController<YouliDelegate>
 
 @end
