@@ -71,7 +71,7 @@
         
         for (int LunarCount=0 ; LunarCount<LunarArray.count; LunarCount++)
         {
-            //判断当天是不是农历节日
+            //判断当天是不是农历节日       参考getChineseCalendarWithDate
             dayLunarToGregorina=[NSString stringWithFormat:@"%@%@",[self updateLunarFormat:localeComp.month],[self updateLunarFormat:localeComp.day]];
             if([dayLunarToGregorina isEqualToString:[[LunarArray objectAtIndex:LunarCount] objectAtIndex:1]])
             {
