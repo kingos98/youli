@@ -63,10 +63,17 @@
 
 - (void)addButton{
     UIButton *addButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    addButton.frame = CGRectMake(240,7,50,23);
+    addButton.frame = CGRectMake(268,6,26,27);
     UIImage *addImage = [[UIImage imageNamed:@"add1.png"] stretchableImageWithLeftCapWidth:0 topCapHeight:0];
     [addButton setBackgroundImage:addImage forState:UIControlStateNormal];
+    [addButton addTarget:self action:@selector(addButtonPressed) forControlEvents:UIControlEventTouchUpInside];
     [self.contentView addSubview:addButton];
+}
+
+- (void)addButtonPressed
+{
+    BirthdayView *birthdayView = [[BirthdayView alloc] initWithFrame:CGRectMake(0, 50, 320, 500)];
+    [birthdayView show];
 }
 
 @end

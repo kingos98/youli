@@ -14,9 +14,11 @@
 - (UIImage *)screenshot 
 {	
     UIGraphicsBeginImageContextWithOptions(self.frame.size, NO, 0.0);
+    
     [self.layer renderInContext:UIGraphicsGetCurrentContext()];
     UIImage *screenshot = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
+
     return screenshot;
 }
 
@@ -29,6 +31,7 @@
     [self.layer renderInContext:ctx];
     UIImage *screenshot = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
+    
     return screenshot;
 }
 

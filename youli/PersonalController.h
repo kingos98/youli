@@ -14,10 +14,9 @@
 @interface PersonalController : BaseController<UITableViewDelegate, UITableViewDataSource,SinaWeiboDelegate,SinaWeiboRequestDelegate>{
     NSMutableArray *data;
     NSDictionary *friendDic;
+    UITableView *tableView;
 }
 
 @property(nonatomic,retain)NSMutableArray *items;
-
-@property(strong, nonatomic)UITableView *friendTable;
 
 @end

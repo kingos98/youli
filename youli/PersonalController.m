@@ -13,9 +13,6 @@
 #import "FriendInfoController.h"
 #import "Friend.h"
 #import "AppDelegate.h"
-#import "SubTableCellView.h"
-#import "UIFolderTableView.h"
-#import "FriendAddController.h"
 
 @interface PersonalController ()
 
@@ -23,9 +20,16 @@
 
 @implementation PersonalController
 
-@synthesize friendTable = _friendTable;
-
 NSMutableArray *items ;
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        
+    }
+    return self;
+}
 
 - (SinaWeibo *)sinaweibo
 {
@@ -91,16 +95,13 @@ NSMutableArray *items ;
     rightButton.frame = CGRectMake(210,78,100,41);
     [rightButton setBackgroundImage:tabBarRightImage forState:UIControlStateNormal];
     
-    UIButton *addButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    UIImage *personalPromptBgView = [[UIImage imageNamed:@"add_friend.png"] stretchableImageWithLeftCapWidth:0 topCapHeight:0];
-    addButton.frame = CGRectMake(10,121,300,31);
-    [addButton setBackgroundImage:personalPromptBgView forState:UIControlStateNormal];
-    [addButton addTarget:self action:@selector(addButtonPressed) forControlEvents:UIControlEventTouchUpInside];
+    UIImageView *personalPromptBgView = [[UIImageView alloc] initWithFrame:CGRectMake(10,121,300,31)];
+    [personalPromptBgView setImage:[UIImage imageNamed:@"personal_prompt_bg.png"]];
     
-    self.friendTable = [[UIFolderTableView alloc] initWithFrame:CGRectMake(10, 160, 300, 220)];
-    [self.friendTable setDelegate:self];
-    [self.friendTable setDataSource:self];
-    [self.friendTable setBackgroundColor:[UIColor whiteColor]];
+    tableView = [[UITableView alloc] initWithFrame:CGRectMake(10, 160, 300, 220)];
+    [tableView setDelegate:self];
+    [tableView setDataSource:self];
+    [tableView setBackgroundColor:[UIColor whiteColor]];
     
     [mainView addSubview:mainBgView];
     [mainView addSubview:personalInfoBgView];
@@ -114,8 +115,8 @@ NSMutableArray *items ;
     [mainView addSubview:leftButton];
     [mainView addSubview:middleButton];
     [mainView addSubview:rightButton];
-    [mainView addSubview:addButton];
-    [mainView addSubview:self.friendTable];
+    [mainView addSubview:personalPromptBgView];
+    [mainView addSubview:tableView];
     
     self.items = [NSMutableArray arrayWithCapacity:24];
     
@@ -130,16 +131,11 @@ NSMutableArray *items ;
     [self.navigationController setNavigationBarHidden:NO animated:NO];
 }
 
-- (void)addButtonPressed
-{
-    FriendAddController *friendAddController = [[FriendAddController alloc] init];
-    [self.navigationController pushViewController:friendAddController animated:NO];
-}
-
 #pragma mark - UITableViewDelegate Methods
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-
+    FriendInfoController *friendInfoController = [[FriendInfoController alloc] init];
+    [self.navigationController pushViewController:friendInfoController animated:NO];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -176,14 +172,14 @@ NSMutableArray *items ;
                        params:[NSMutableDictionary dictionaryWithObject:sinaweibo.userID forKey:@"uid"]
                    httpMethod:@"GET"
                      delegate:self];
-    [self.friendTable reloadData];
+    [tableView reloadData];
 }
 
 #pragma mark - SinaWeiboRequest Delegate
 
 - (void)request:(SinaWeiboRequest *)request didFailWithError:(NSError *)error
 {
-    [self.friendTable reloadData];
+    [tableView reloadData];
 }
 
 - (void)request:(SinaWeiboRequest *)request didFinishLoadingWithResult:(id)result
@@ -201,7 +197,7 @@ NSMutableArray *items ;
             break;
         }
     }
-    [self.friendTable reloadData];
+    [tableView reloadData];
 }
 
 - (void)removeAuthData

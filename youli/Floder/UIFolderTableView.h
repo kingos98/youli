@@ -20,6 +20,7 @@ typedef void (^FolderOpenBlock)(UIView *subClassView, CFTimeInterval duration, C
 
 @optional
 - (CGFloat)tableView:(UIFolderTableView *)tableView xForRowAtIndexPath:(NSIndexPath *)indexPath;
+
 @end
 
 @interface UIFolderTableView : UITableView
@@ -28,7 +29,6 @@ typedef void (^FolderOpenBlock)(UIView *subClassView, CFTimeInterval duration, C
 @property (assign, nonatomic) IBOutlet id<UIFolderTableViewDelegate> folderDelegate;
 
 - (void)openFolderAtIndexPath:(NSIndexPath *)indexPath
-                   parentView:(UIView *)parentView
               WithContentView:(UIView *)subClassContentView
                     openBlock:(FolderOpenBlock)openBlock 
                    closeBlock:(FolderCloseBlock)closeBlock
