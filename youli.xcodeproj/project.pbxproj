@@ -158,6 +158,7 @@
 		1897B73D16A8E128001C810D /* UIFolderTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1897B73916A8E128001C810D /* UIFolderTableView.m */; };
 		1897B73E16A8E128001C810D /* UIView+screenshot.m in Sources */ = {isa = PBXBuildFile; fileRef = 1897B73B16A8E128001C810D /* UIView+screenshot.m */; };
 		1897B75316A92185001C810D /* SubTableCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1897B75216A92184001C810D /* SubTableCellView.m */; };
+		18B4E0AF16B8FA1B00F72D01 /* IZValueSelectorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 18B4E0AE16B8FA1B00F72D01 /* IZValueSelectorView.m */; };
 		18C7F707165A765900B709AE /* BaseController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18C7F706165A765900B709AE /* BaseController.m */; };
 		18CAD28E165DCB75008CCF37 /* control_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 18CAD288165DCB75008CCF37 /* control_bg.png */; };
 		18CAD28F165DCB75008CCF37 /* firend_info_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 18CAD289165DCB75008CCF37 /* firend_info_bg.png */; };
@@ -425,6 +426,8 @@
 		1897B73B16A8E128001C810D /* UIView+screenshot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+screenshot.m"; sourceTree = "<group>"; };
 		1897B75116A92183001C810D /* SubTableCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubTableCellView.h; sourceTree = "<group>"; };
 		1897B75216A92184001C810D /* SubTableCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubTableCellView.m; sourceTree = "<group>"; };
+		18B4E0AD16B8FA1B00F72D01 /* IZValueSelectorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IZValueSelectorView.h; sourceTree = "<group>"; };
+		18B4E0AE16B8FA1B00F72D01 /* IZValueSelectorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IZValueSelectorView.m; sourceTree = "<group>"; };
 		18C7F705165A765900B709AE /* BaseController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseController.h; sourceTree = "<group>"; };
 		18C7F706165A765900B709AE /* BaseController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = BaseController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		18CAD288165DCB75008CCF37 /* control_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = control_bg.png; path = images/personal/control_bg.png; sourceTree = "<group>"; };
@@ -790,6 +793,7 @@
 		15D7CE8F1648E6180088E49F /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				18B4E0AC16B8FA1B00F72D01 /* IZValueSelector */,
 				186AEFF3165CBAA7008372B4 /* Category */,
 				15D7CE931648E7D60088E49F /* Gifts */,
 				15D7CE951648E86F0088E49F /* Personal */,
@@ -898,6 +902,15 @@
 				1897B73B16A8E128001C810D /* UIView+screenshot.m */,
 			);
 			path = Floder;
+			sourceTree = "<group>";
+		};
+		18B4E0AC16B8FA1B00F72D01 /* IZValueSelector */ = {
+			isa = PBXGroup;
+			children = (
+				18B4E0AD16B8FA1B00F72D01 /* IZValueSelectorView.h */,
+				18B4E0AE16B8FA1B00F72D01 /* IZValueSelectorView.m */,
+			);
+			path = IZValueSelector;
 			sourceTree = "<group>";
 		};
 		18CAD29D165DF478008CCF37 /* Category */ = {
@@ -1437,7 +1450,6 @@
 				152CCBE016A7D7B400B0B578 /* alert-red-button@2x.png in Resources */,
 				152CCBE116A7D7B400B0B578 /* alert-window.png in Resources */,
 				152CCBE216A7D7B400B0B578 /* alert-window@2x.png in Resources */,
-				1897B74416A8E157001C810D /* SubCateViewController.xib in Resources */,
 				152CCC0816A935C500B0B578 /* action-white-button.png in Resources */,
 				152CCC0F16A93F9100B0B578 /* action-white-button@2x.png in Resources */,
 				1843C50616AE610800557B84 /* sub_cell_title@2x.png in Resources */,
@@ -1538,10 +1550,10 @@
 				1897B73C16A8E128001C810D /* FolderCoverView.m in Sources */,
 				1897B73D16A8E128001C810D /* UIFolderTableView.m in Sources */,
 				1897B73E16A8E128001C810D /* UIView+screenshot.m in Sources */,
-				1897B74316A8E157001C810D /* SubCateViewController.m in Sources */,
 				15680CA916AFD14C0086693E /* FestivalMethod.m in Sources */,
 				1897B75316A92185001C810D /* SubTableCellView.m in Sources */,
 				1881E48516AFC5FC00857D7C /* FriendAddController.m in Sources */,
+				18B4E0AF16B8FA1B00F72D01 /* IZValueSelectorView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
