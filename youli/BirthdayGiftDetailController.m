@@ -119,7 +119,6 @@
     [self showActionSheet];
 }
 
-
 - (void)showActionSheet
 {
     BlockActionSheet *sheet = [BlockActionSheet sheetWithTitle:@"分享给朋友"];

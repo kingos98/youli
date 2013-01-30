@@ -42,6 +42,8 @@
     }
 }
 
+#pragma mark - Birthday Gift Mothed
+
 -(NSArray *)getGiftDetail:(NSInteger) GiftID
 {
     if(![self openDB])
@@ -66,10 +68,10 @@
          
         GiftArray=[[NSArray alloc]  initWithObjects:giftID,giftType,giftTitle,giftDetail,imageURL,taobaoURL, price,nil];
     }
+    
+    [self closeDB];
     return GiftArray;
 }
-
-#pragma mark - BirthdayGiftMothed
 
 //每次启动该APP就自动清空birthday list
 -(void)cleanGiftList
@@ -107,7 +109,7 @@
         [GiftArray addObject: GiftData];
     }
     
-    [db close];
+    [self closeDB];
     return  GiftArray;
 }
 
@@ -178,5 +180,77 @@
     [self ExecSql:strSql];
 }
 
+
+#pragma mark - Festival Info Method
+//获取节日信息
+-(NSMutableArray *)getFeFestivalInfo:(NSString *)Sql
+{
+    if(![self openDB])
+    {
+        return nil;
+    }
+    
+    NSMutableArray *FestivalArray=[[NSMutableArray alloc]init];
+    NSArray *FestivalData=nil;
+
+    FMResultSet *rs = [db executeQuery:Sql];
+    
+    while ([rs next]) {
+        FestivalData=[[NSArray alloc]  initWithObjects:[rs stringForColumn:@"FestivalName"],
+                                                        [rs stringForColumn:@"FestivalDate"],
+                                                        nil];
+        [FestivalArray addObject: FestivalData];
+    }
+    
+    [self closeDB];
+    
+    return  FestivalArray;
+}
+
+//获取FestivalListDate里最大的GiftID
+-(NSInteger)getMaxFestivalIDFromFestivalListDate
+{
+    if(![self openDB])
+    {
+        return 0;
+    }
+    
+    NSInteger maxFestivalID=0;
+    FMResultSet *rs = [db executeQuery:@"select top 1 FestivalID from FestivalListDate order by FestivalID desc"];
+
+    while ([rs next]) {
+        maxFestivalID=[rs intForColumnIndex:0];
+    }
+    
+    [self closeDB];
+    
+    return  maxFestivalID;
+}
+
+#pragma mark - Friend Info Method
+-(NSMutableArray *)getFriendInfo
+{
+    if(![self openDB])
+    {
+        return 0;
+    }
+
+    NSMutableArray *FriendArray=[[NSMutableArray alloc]init];
+    NSArray *FriendData=nil;
+    
+    FMResultSet *rs = [db executeQuery:@"select * from FriendInfo"];
+    
+    while ([rs next]) {
+        FriendData=[[NSArray alloc]  initWithObjects:[rs stringForColumn:@"FriendName"],
+                        [rs stringForColumn:@"FriendBirthday"],
+                        [rs stringForColumn:@"Constellation]"],
+                        nil];
+        [FriendArray addObject: FriendData];
+    }
+    
+    [self closeDB];
+        
+    return FriendArray;
+}
 
 @end

@@ -73,6 +73,7 @@
 		1559F484167ECB1200F16634 /* slider-yellow-track.png in Resources */ = {isa = PBXBuildFile; fileRef = 1559F472167ECB1200F16634 /* slider-yellow-track.png */; };
 		1559F4A6167EF2F400F16634 /* BirthdayGiftItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 1559F4A4167EF2F300F16634 /* BirthdayGiftItem.m */; };
 		1559F4AA167EF36600F16634 /* NMRangeSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 1559F4A9167EF36600F16634 /* NMRangeSlider.m */; };
+		15680CA916AFD14C0086693E /* FestivalMethod.m in Sources */ = {isa = PBXBuildFile; fileRef = 15680CA816AFD14C0086693E /* FestivalMethod.m */; };
 		15815809168D8DDB00FB0E0B /* DatabaseOper.m in Sources */ = {isa = PBXBuildFile; fileRef = 15815808168D8DDB00FB0E0B /* DatabaseOper.m */; };
 		158326AF168439EF00E7410B /* BirthdayGiftController.m in Sources */ = {isa = PBXBuildFile; fileRef = 158326AE168439EF00E7410B /* BirthdayGiftController.m */; };
 		158B0EA9169FE85C0098B8E6 /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 158B0EA0169FE85C0098B8E6 /* FMDatabase.m */; };
@@ -308,6 +309,8 @@
 		1559F4A4167EF2F300F16634 /* BirthdayGiftItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = BirthdayGiftItem.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		1559F4A8167EF36600F16634 /* NMRangeSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NMRangeSlider.h; sourceTree = "<group>"; };
 		1559F4A9167EF36600F16634 /* NMRangeSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NMRangeSlider.m; sourceTree = "<group>"; };
+		15680CA716AFD14C0086693E /* FestivalMethod.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FestivalMethod.h; sourceTree = "<group>"; };
+		15680CA816AFD14C0086693E /* FestivalMethod.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FestivalMethod.m; sourceTree = "<group>"; };
 		15815807168D8DDB00FB0E0B /* DatabaseOper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DatabaseOper.h; sourceTree = "<group>"; };
 		15815808168D8DDB00FB0E0B /* DatabaseOper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DatabaseOper.m; sourceTree = "<group>"; };
 		158326AD168439EF00E7410B /* BirthdayGiftController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BirthdayGiftController.h; sourceTree = "<group>"; };
@@ -685,6 +688,15 @@
 				1559F472167ECB1200F16634 /* slider-yellow-track.png */,
 			);
 			path = YellowTheme;
+			sourceTree = "<group>";
+		};
+		15680C9F16AFD0080086693E /* PublicMethod */ = {
+			isa = PBXGroup;
+			children = (
+				15680CA716AFD14C0086693E /* FestivalMethod.h */,
+				15680CA816AFD14C0086693E /* FestivalMethod.m */,
+			);
+			name = PublicMethod;
 			sourceTree = "<group>";
 		};
 		15815805168D8D1100FB0E0B /* DBOper */ = {
@@ -1082,6 +1094,7 @@
 		E5D827C416081EC400969EE2 /* youli */ = {
 			isa = PBXGroup;
 			children = (
+				15680C9F16AFD0080086693E /* PublicMethod */,
 				15815805168D8D1100FB0E0B /* DBOper */,
 				15BB70BA1680364F00CC3043 /* Delegate */,
 				15D7CE901648E6250088E49F /* Models */,
@@ -1500,6 +1513,7 @@
 				1897B73D16A8E128001C810D /* UIFolderTableView.m in Sources */,
 				1897B73E16A8E128001C810D /* UIView+screenshot.m in Sources */,
 				1897B74316A8E157001C810D /* SubCateViewController.m in Sources */,
+				15680CA916AFD14C0086693E /* FestivalMethod.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

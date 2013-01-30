@@ -6,7 +6,6 @@
 //
 //
 
-#define DBNAME      @"youli.sqlite"
 #define TABLENAME   @"BIRTHDAYGIFT"
 #define GIFTID      @"giftid"
 #define GIFTTYPE    @"gifttype"
@@ -416,7 +415,7 @@
     CGPoint lowerCenter;
     lowerCenter.x = (priceSlider.lowerCenter.x + priceSlider.frame.origin.x);
     lowerCenter.y = (priceSlider.center.y - 20.0f);
-    self.lowerPrice.text = [strMoneySymble stringByAppendingString:[NSString stringWithFormat:@"%d", (int)priceSlider.lowerCenter.x]];
+    self.lowerPrice.text = [strMoneySymble stringByAppendingString:[NSString stringWithFormat:@"%d", (int)priceSlider.lowerValue]];
     
     CGPoint upperCenter;
     upperCenter.x = (priceSlider.upperCenter.x + priceSlider.frame.origin.x);

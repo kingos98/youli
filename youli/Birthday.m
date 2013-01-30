@@ -7,6 +7,7 @@
 //
 
 #import "Birthday.h"
+#import "FestivalMethod.h"
 
 @implementation Birthday
 

@@ -16,11 +16,18 @@
 }
 
 
--(void)cleanGiftList;
 -(void)ExecSql:(NSString *)sql;
+
+-(void)cleanGiftList;
 -(NSArray *)getGiftDetail:(NSInteger) PhotoID;
 -(NSMutableArray *)getGiftDetailList:(NSInteger)PhotoType;
 -(NSInteger)getSelectedGiftIndex:(NSInteger)GiftID;
 -(Boolean)checkIsCollect:(NSInteger)GiftID;
 -(void)operGiftToCollection:(Boolean)IsAdd GiftID:(NSInteger)GiftID;
+
+-(NSMutableArray *)getFeFestivalInfo:(NSString *)Sql;
+-(NSInteger)getMaxFestivalIDFromFestivalListDate;
+
+-(NSMutableArray *)getFriendInfo;
+
 @end
