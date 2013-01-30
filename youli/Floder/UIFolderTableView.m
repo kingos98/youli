@@ -44,15 +44,13 @@
     [super dealloc];
 }
 
-
-
 - (void)openFolderAtIndexPath:(NSIndexPath *)indexPath
-                      WithContentView:(UIView *)subClassContentView
-                        openBlock:(FolderOpenBlock)openBlock 
-                       closeBlock:(FolderCloseBlock)closeBlock
-                  completionBlock:(FolderCompletionBlock)completionBlock
+                   parentView:(UIView *)parentView
+              WithContentView:(UIView *)subClassContentView
+                    openBlock:(FolderOpenBlock)openBlock 
+                   closeBlock:(FolderCloseBlock)closeBlock
+              completionBlock:(FolderCompletionBlock)completionBlock
 {
-    // 
     self.subClassContentView = subClassContentView;
     self.openBlock = openBlock;
     self.completionBlock = completionBlock;
@@ -60,44 +58,38 @@
     
     // 位置和高度参数
     UITableViewCell *cell = [self cellForRowAtIndexPath:indexPath];
-    CGFloat deltaY = self.contentOffset.y;
+    CGFloat contentOffsetY = self.contentOffset.y;
     CGFloat positionX;
-
     // 小三角的位置x坐标
     if ([self.folderDelegate respondsToSelector:@selector(tableView:xForRowAtIndexPath:)]) {
         positionX = [self.folderDelegate tableView:self xForRowAtIndexPath:indexPath];
     } else {
         positionX = 40;
-    }
-    
-    CGPoint position = CGPointMake(positionX, cell.frame.origin.y+cell.frame.size.height - 1);
+    }    
+    CGPoint position = CGPointMake(positionX, cell.frame.origin.y+cell.frame.size.height);
     CGFloat width = self.frame.size.width;
     CGFloat height = self.frame.size.height;
     
-    if (position.y - deltaY > height) {
-        self.offsetY = position.y - height - deltaY;
+    if (position.y - contentOffsetY > height) {
+        self.offsetY = position.y - height - contentOffsetY;
     } else {
         self.offsetY = 0.0f;
-    }
-    
-    // 重置contentoffset  这里要动画吗？
+    }    
+    // 重置contentoffset
     self.oldContentOffset = self.contentOffset;
-    self.contentOffset = CGPointMake(0, self.offsetY + deltaY);
+    self.contentOffset = CGPointMake(0, self.offsetY + contentOffsetY);
     
-    deltaY = self.contentOffset.y;
-
-    UIImage *screenshot = [self screenshotWithOffset:-deltaY];
-    
+    contentOffsetY = self.contentOffset.y;
+    UIImage *screenshot = [self screenshotWithOffset:-contentOffsetY];    
     // 配置上下遮罩
-    CGRect upperRect = CGRectMake(0, deltaY, width, position.y - deltaY);
-    CGRect lowerRect = CGRectMake(0, position.y, width, height + deltaY - position.y);
-    
-    self.top = [self buttonForRect:upperRect
+    CGRect upperRect = CGRectMake(0, contentOffsetY, width, position.y - contentOffsetY);
+    CGRect lowerRect = CGRectMake(0, position.y, width, height + contentOffsetY - position.y);
+    self.top = [self coverForRect:upperRect
                             screen:screenshot
                           position:position
                                top:YES
                        transparent:NO];
-    self.bottom = [self buttonForRect:lowerRect
+    self.bottom = [self coverForRect:lowerRect
                                screen:screenshot
                              position:position
                                   top:NO
@@ -108,28 +100,30 @@
     [self.top.cover addGestureRecognizer:[[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGestureAction:)] autorelease]];
     [self.bottom.cover addGestureRecognizer:[[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGestureAction:)] autorelease]];
     
-    [self addSubview:subClassContentView];
+    [parentView addSubview:subClassContentView];
     [self addSubview:self.top];
     [self addSubview:self.bottom];
     
-    CGRect viewFrame = subClassContentView.frame;
-    if (position.y - deltaY + viewFrame.size.height > height) {
-        viewFrame.origin.y = height + deltaY - viewFrame.size.height;
+    CGRect subViewFrame = subClassContentView.frame;
+    
+    if (position.y - contentOffsetY + subViewFrame.size.height > height) {
+        subViewFrame.origin.y = height + contentOffsetY - subViewFrame.size.height;
     } else {
-        viewFrame.origin.y = position.y;
+        subViewFrame.origin.y = position.y;
     }
-    subClassContentView.frame = viewFrame;
+    subClassContentView.frame = subViewFrame;
     
     // 配置打开动画
     CGFloat contentHeight = subClassContentView.frame.size.height;
     CFTimeInterval duration = 0.4f;
+    //顶遮罩位置
     CGPoint toTopPoint;
     CABasicAnimation *moveTop = [CABasicAnimation animationWithKeyPath:@"position"];
     moveTop.duration = duration;
     moveTop.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
-    
     self.oldTopPoint = self.top.layer.position;
     CGFloat newTopY;
+    
     if (self.top.frame.origin.y + self.top.frame.size.height > subClassContentView.frame.origin.y) {
         newTopY = self.oldTopPoint.y + subClassContentView.frame.origin.y - (self.top.frame.origin.y + self.top.frame.size.height);
     } else {
@@ -138,17 +132,16 @@
     toTopPoint = (CGPoint){ self.oldTopPoint.x, newTopY};
     moveTop.fromValue = [NSValue valueWithCGPoint:self.oldTopPoint];
     moveTop.toValue = [NSValue valueWithCGPoint:toTopPoint];
-    
-    
+    //底遮罩位置
     CGPoint toBottomPoint;
     CABasicAnimation *moveBottom = [CABasicAnimation animationWithKeyPath:@"position"];
     moveBottom.duration = duration;
     moveBottom.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
-    
     self.oldBottomPoint = self.bottom.layer.position;
     CGFloat newBottomY;
-    if (subClassContentView.frame.origin.y + subClassContentView.frame.size.height > height + deltaY ) {
-        newBottomY = self.oldBottomPoint.y + (subClassContentView.frame.origin.y + contentHeight) - deltaY - height;
+    
+    if (subClassContentView.frame.origin.y + subClassContentView.frame.size.height > height + contentOffsetY ) {
+        newBottomY = self.oldBottomPoint.y + (subClassContentView.frame.origin.y + contentHeight) - contentOffsetY - height;
     } else {
         newBottomY = self.oldBottomPoint.y + contentHeight;
     }
@@ -159,7 +152,6 @@
     // 打开动画
     [self.top.layer addAnimation:moveTop forKey:@"t1"];
     [self.bottom.layer addAnimation:moveBottom forKey:@"t2"];
-    
     // 透明变半透明
     [UIView animateWithDuration:duration animations:^{
         self.top.cover.alpha = COVERALPHA;
@@ -188,8 +180,7 @@
         return;
     }else {
         self.closing = YES;
-    }
-    
+    }    
     // 配置关闭动画
     CFTimeInterval duration = 0.4f;
     CAMediaTimingFunction *timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
@@ -201,7 +192,6 @@
     moveTop.fromValue = [NSValue valueWithCGPoint:[[self.top.layer presentationLayer] position]];
     moveTop.toValue = [NSValue valueWithCGPoint:self.oldTopPoint];
     moveTop.duration = duration;
-
     
     CABasicAnimation *moveBottom = [CABasicAnimation animationWithKeyPath:@"position"];
     [moveBottom setValue:@"close" forKey:@"animationType"];
@@ -210,20 +200,15 @@
     moveBottom.fromValue = [NSValue valueWithCGPoint:[[self.bottom.layer presentationLayer] position]];
     moveBottom.toValue = [NSValue valueWithCGPoint:self.oldBottomPoint];
     moveBottom.duration = duration;
-    
     // 关闭动画 
     [self.top.layer addAnimation:moveTop forKey:@"b1"];
-    [self.bottom.layer addAnimation:moveBottom forKey:@"b2"];
-    
+    [self.bottom.layer addAnimation:moveBottom forKey:@"b2"];    
     // 半透明变透明
     [UIView animateWithDuration:duration animations:^{
-        
         self.contentOffset = self.oldContentOffset;
         self.top.cover.alpha = 0;
-        self.bottom.cover.alpha = 0;
-        
-    }];
-    
+        self.bottom.cover.alpha = 0;        
+    }];    
     if (self.closeBlock) self.closeBlock(self.subClassContentView, duration, timingFunction);
     
     [self.top.layer setPosition:self.oldTopPoint];
@@ -231,23 +216,19 @@
 }
 
 - (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag {
-    
     if ([[anim valueForKey:@"animationType"] isEqualToString:@"close"]) {        
         [self.top removeFromSuperview];
         [self.bottom removeFromSuperview];
-        [self.subClassContentView removeFromSuperview];
-        
+        [self.subClassContentView removeFromSuperview];        
         self.top = nil;
         self.bottom = nil;
-        self.subClassContentView = nil;
-        
+        self.subClassContentView = nil;        
         if (self.completionBlock) self.completionBlock();
 //        sharedInstance = nil;
     }
-    
 }
 
-- (FolderCoverView *)buttonForRect:(CGRect)aRect
+- (FolderCoverView *)coverForRect:(CGRect)aRect
                               screen:(UIImage *)screen
                             position:(CGPoint)position
                                  top:(BOOL)isTop
@@ -256,32 +237,25 @@
     CGFloat width = aRect.size.width;
     CGFloat height = aRect.size.height;
     CGPoint origin = aRect.origin;
-    CGFloat deltaY = self.contentOffset.y;
-    
+    CGFloat deltaY = self.contentOffset.y;    
     CGRect scaledRect = CGRectMake(origin.x*scale, origin.y*scale - deltaY*scale, width*scale, height*scale);
     CGImageRef ref1 = CGImageCreateWithImageInRect([screen CGImage], scaledRect);
-    
-    FolderCoverView *button;
+    FolderCoverView *coverView;
     if (isTop) {
-        button = [[[FolderCoverView alloc] initWithFrame:aRect offset:self.rowHeight] autorelease];
-        
+        coverView = [[[FolderCoverView alloc] initWithFrame:aRect offset:self.rowHeight] autorelease];
         UIImageView *notch = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"tip.png"]] autorelease];
         notch.center = CGPointMake(position.x, height - 2);
-        [button addSubview:notch];
-        
+        [coverView addSubview:notch];
     } else {
-        button = [[[FolderCoverView alloc] initWithFrame:aRect offset:0] autorelease];
-    }
-    
-    [button setIsTopView:isTop];
-    
-    button.position = position;
-    button.layer.contentsScale = scale;
-    button.layer.contents = isTransparent ? nil : (id)(ref1);
-    button.layer.contentsGravity = kCAGravityCenter;
+        coverView = [[[FolderCoverView alloc] initWithFrame:aRect offset:0] autorelease];
+    }    
+    [coverView setIsTopView:isTop];
+    coverView.position = position;
+    coverView.layer.contentsScale = scale;
+    coverView.layer.contents = isTransparent ? nil : (id)(ref1);
+    coverView.layer.contentsGravity = kCAGravityCenter;
     CGImageRelease(ref1);
-    
-    return button;
+    return coverView;
 }
 
 @end
