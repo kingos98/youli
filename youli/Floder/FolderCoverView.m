@@ -20,22 +20,17 @@
 {
     self = [super initWithFrame:frame];
     if (!self) return nil;
-    
     [self createHighlightWithFrame:frame];
-    
     self.cover = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height-delta)] autorelease];
     self.cover.backgroundColor = [UIColor whiteColor];
     self.cover.alpha = 0.0;
-    
-    [self addSubview:self.cover];
-    
+    [self addSubview:self.cover];    
     return self;
 }
 
 - (void)createHighlightWithFrame:(CGRect)aFrame {
     CGRect frame = aFrame;
     frame.size.height = 1.f;
-    
     self.highlight = [CALayer layer];
     self.highlight.frame = frame;
     self.highlight.anchorPoint = CGPointZero;
@@ -46,6 +41,5 @@
 - (void)setIsTopView:(BOOL)isTop {
     self.highlight.position = CGPointMake(0, isTop ? (self.frame.size.height-1) : 0);
 }
-
 
 @end
