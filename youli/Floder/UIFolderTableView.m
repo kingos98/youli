@@ -241,7 +241,7 @@
     CGImageRef ref1 = CGImageCreateWithImageInRect([screen CGImage], scaledRect);
     FolderCoverView *coverView;
     if (isTop) {
-        coverView = [[[FolderCoverView alloc] initWithFrame:aRect offset:self.rowHeight] autorelease];
+        coverView = [[[FolderCoverView alloc] initWithFrame:aRect offset:0] autorelease];
     } else {
         coverView = [[[FolderCoverView alloc] initWithFrame:aRect offset:0] autorelease];
     }    

@@ -35,7 +35,7 @@
     UIImageView *mainBgView = [[UIImageView alloc] initWithFrame:CGRectMake(0,0,320,480)];
     [mainBgView setImage:[UIImage imageNamed:@"bg.jpg"]];
     
-	self.friendTable = [[UIFolderTableView alloc] initWithFrame:CGRectMake(10, 0, 300, 480)];
+	self.friendTable = [[UIFolderTableView alloc] initWithFrame:CGRectMake(10, 0, 300, 380)];
     [self.friendTable setDelegate:self];
     [self.friendTable setDataSource:self];
     [self.friendTable setBackgroundColor:[UIColor whiteColor]];
@@ -107,7 +107,7 @@
 
 -(CGFloat)tableView:(UIFolderTableView *)tableView xForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 40;
+    return 37;
 }
 
 #pragma mark - SinaWeiboRequest Delegate
