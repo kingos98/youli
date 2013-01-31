@@ -25,6 +25,7 @@
 
 @property (nonatomic,assign) IBOutlet id <IZValueSelectorViewDelegate> delegate;
 @property (nonatomic,assign) IBOutlet id <IZValueSelectorViewDataSource> dataSource;
+@property (nonatomic,strong) NSMutableArray *values;
 @property (nonatomic,assign) BOOL shouldBeTransparent;
 @property (nonatomic,assign) BOOL horizontalScrolling;
 @property (nonatomic,assign) BOOL debugEnabled;

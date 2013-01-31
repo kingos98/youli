@@ -7,8 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "PersonalController.h"
+#import "IZValueSelectorView.h"
 
-@interface SubTableCellView : UIView
+@interface SubTableCellView : UIView<IZValueSelectorViewDataSource,IZValueSelectorViewDelegate>
+
+@property (nonatomic,strong)IZValueSelectorView *monthView;
+@property (nonatomic,strong)IZValueSelectorView *dayView;
+@property (nonatomic,strong)IZValueSelectorView *constellationView;
 
 @end

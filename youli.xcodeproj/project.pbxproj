@@ -177,7 +177,6 @@
 		18E24E8A168E9324000D2172 /* add.png in Resources */ = {isa = PBXBuildFile; fileRef = 18E24E86168E9324000D2172 /* add.png */; };
 		18E24E8B168E9324000D2172 /* add1.png in Resources */ = {isa = PBXBuildFile; fileRef = 18E24E87168E9324000D2172 /* add1.png */; };
 		18E24E94168E93E8000D2172 /* Friend.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E24E93168E93E8000D2172 /* Friend.m */; };
-		18EF449116913DCA00D0DFF6 /* BirthdayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 18EF449016913DCA00D0DFF6 /* BirthdayView.m */; };
 		18FAA61316560E480060BCEA /* next.png in Resources */ = {isa = PBXBuildFile; fileRef = 18FAA61116560E480060BCEA /* next.png */; };
 		18FAA61416560E480060BCEA /* next@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 18FAA61216560E480060BCEA /* next@2x.png */; };
 		18FAA61716561AAF0060BCEA /* face_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 18FAA61516561AAF0060BCEA /* face_bg.png */; };
@@ -454,8 +453,6 @@
 		18E24E87168E9324000D2172 /* add1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = add1.png; path = images/personal/add1.png; sourceTree = "<group>"; };
 		18E24E92168E93E8000D2172 /* Friend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Friend.h; sourceTree = "<group>"; };
 		18E24E93168E93E8000D2172 /* Friend.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Friend.m; sourceTree = "<group>"; };
-		18EF448F16913DCA00D0DFF6 /* BirthdayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BirthdayView.h; sourceTree = "<group>"; };
-		18EF449016913DCA00D0DFF6 /* BirthdayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BirthdayView.m; sourceTree = "<group>"; };
 		18FAA61116560E480060BCEA /* next.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = next.png; path = images/personal/next.png; sourceTree = "<group>"; };
 		18FAA61216560E480060BCEA /* next@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "next@2x.png"; path = "images/personal/next@2x.png"; sourceTree = "<group>"; };
 		18FAA61516561AAF0060BCEA /* face_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = face_bg.png; path = images/personal/face_bg.png; sourceTree = "<group>"; };
@@ -863,8 +860,6 @@
 				1897B73516A8E128001C810D /* Floder */,
 				15F413F31647952500AA6FB3 /* PersonalCell.h */,
 				15F413F41647952500AA6FB3 /* PersonalCell.m */,
-				18EF448F16913DCA00D0DFF6 /* BirthdayView.h */,
-				18EF449016913DCA00D0DFF6 /* BirthdayView.m */,
 				1897B75116A92183001C810D /* SubTableCellView.h */,
 				1897B75216A92184001C810D /* SubTableCellView.m */,
 			);
@@ -1536,7 +1531,6 @@
 				18E24E79168E9177000D2172 /* SinaWeiboAuthorizeView.m in Sources */,
 				18E24E7A168E9177000D2172 /* SinaWeiboRequest.m in Sources */,
 				18E24E94168E93E8000D2172 /* Friend.m in Sources */,
-				18EF449116913DCA00D0DFF6 /* BirthdayView.m in Sources */,
 				158B0EA9169FE85C0098B8E6 /* FMDatabase.m in Sources */,
 				158B0EAA169FE85C0098B8E6 /* FMDatabaseAdditions.m in Sources */,
 				158B0EAB169FE85C0098B8E6 /* FMDatabasePool.m in Sources */,

@@ -73,12 +73,11 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     self.folderTableView.scrollEnabled = NO;
-    SubTableCellView *subTableCellView = [[SubTableCellView alloc] init];
+    self.subTableCellView = [[SubTableCellView alloc] initWithFrame:CGRectMake(0, 0, 320, 200)];
     UIFolderTableView *folderTableView = (UIFolderTableView *)tableView;
-//    [folderTableView setFrame:CGRectMake(10, 0, 300, 480)];
     [folderTableView openFolderAtIndexPath:indexPath
                                 parentView: mainView
-                           WithContentView:subTableCellView
+                           WithContentView:self.subTableCellView
                                  openBlock:^(UIView *subClassView, CFTimeInterval duration, CAMediaTimingFunction *timingFunction){
                                      
                                  }

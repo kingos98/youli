@@ -100,7 +100,7 @@
     [self.top.cover addGestureRecognizer:[[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGestureAction:)] autorelease]];
     [self.bottom.cover addGestureRecognizer:[[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGestureAction:)] autorelease]];
     
-    [parentView addSubview:subClassContentView];
+    [self addSubview:subClassContentView];
     [self addSubview:self.top];
     [self addSubview:self.bottom];
     
@@ -114,7 +114,6 @@
     subClassContentView.frame = subViewFrame;
     
     // 配置打开动画
-    CGFloat contentHeight = subClassContentView.frame.size.height;
     CFTimeInterval duration = 0.4f;
     //顶遮罩位置
     CGPoint toTopPoint;
@@ -141,9 +140,9 @@
     CGFloat newBottomY;
     
     if (subClassContentView.frame.origin.y + subClassContentView.frame.size.height > height + contentOffsetY ) {
-        newBottomY = self.oldBottomPoint.y + (subClassContentView.frame.origin.y + contentHeight) - contentOffsetY - height;
+        newBottomY = self.oldBottomPoint.y + (subClassContentView.frame.origin.y + subClassContentView.frame.size.height) - contentOffsetY - height;
     } else {
-        newBottomY = self.oldBottomPoint.y + contentHeight;
+        newBottomY = self.oldBottomPoint.y + subClassContentView.frame.size.height;
     }
     toBottomPoint = (CGPoint){ self.oldBottomPoint.x, newBottomY};
     moveBottom.fromValue = [NSValue valueWithCGPoint:self.oldBottomPoint];
@@ -243,9 +242,6 @@
     FolderCoverView *coverView;
     if (isTop) {
         coverView = [[[FolderCoverView alloc] initWithFrame:aRect offset:self.rowHeight] autorelease];
-        UIImageView *notch = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"tip.png"]] autorelease];
-        notch.center = CGPointMake(position.x, height - 2);
-        [coverView addSubview:notch];
     } else {
         coverView = [[[FolderCoverView alloc] initWithFrame:aRect offset:0] autorelease];
     }    

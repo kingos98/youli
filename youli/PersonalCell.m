@@ -9,7 +9,6 @@
 #import "PersonalCell.h"
 #import "Friend.h"
 #import "UIImageView+WebCache.h"
-#import "BirthdayView.h"
 
 @implementation PersonalCell{
 @private
