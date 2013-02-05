@@ -7,7 +7,7 @@
 //
 
 #import "FriendAddController.h"
-#import "PersonalCell.h"
+#import "FriendCell.h"
 #import "SubTableCellView.h"
 #import "UIFolderTableView.h"
 #import "Friend.h"
@@ -35,7 +35,7 @@
     UIImageView *mainBgView = [[UIImageView alloc] initWithFrame:CGRectMake(0,0,320,480)];
     [mainBgView setImage:[UIImage imageNamed:@"bg.jpg"]];
     
-	self.friendTable = [[UIFolderTableView alloc] initWithFrame:CGRectMake(10, 0, 300, 380)];
+	self.friendTable = [[UIFolderTableView alloc] initWithFrame:CGRectMake(0, 0, 320, 380)];
     [self.friendTable setDelegate:self];
     [self.friendTable setDataSource:self];
     [self.friendTable setBackgroundColor:[UIColor whiteColor]];
@@ -62,7 +62,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"CellIdentifier";
-    PersonalCell *cell = [[PersonalCell alloc] initCell:CellIdentifier];
+    FriendCell *cell = [[FriendCell alloc] initCell:CellIdentifier];
     if (self.items.count>0) {
         cell.friend =  [self.items objectAtIndex:indexPath.row];
     }
@@ -76,7 +76,6 @@
     self.subTableCellView = [[SubTableCellView alloc] initWithFrame:CGRectMake(0, 0, 320, 200)];
     UIFolderTableView *folderTableView = (UIFolderTableView *)tableView;
     [folderTableView openFolderAtIndexPath:indexPath
-                                parentView: mainView
                            WithContentView:self.subTableCellView
                                  openBlock:^(UIView *subClassView, CFTimeInterval duration, CAMediaTimingFunction *timingFunction){
                                      

@@ -46,20 +46,11 @@
         selectionImageView.alpha = 0.7;
     }    
     if (self.horizontalScrolling) {
-        //In this case user might have created a view larger than taller
         contentTableView = [[UITableView alloc] initWithFrame:CGRectMake(self.bounds.origin.x, self.bounds.origin.y, self.bounds.size.height, self.bounds.size.width)];        
     }
     else {
         contentTableView = [[UITableView alloc] initWithFrame:self.bounds];
     }    
-    if (self.debugEnabled) {
-        contentTableView.layer.borderColor = [UIColor blueColor].CGColor;
-        contentTableView.layer.borderWidth = 1.0;
-        contentTableView.layer.cornerRadius = 10.0;
-        contentTableView.tableHeaderView.layer.borderColor = [UIColor blackColor].CGColor;
-        contentTableView.tableFooterView.layer.borderColor = [UIColor blackColor].CGColor;
-    }    
-    // Initialization code
     CGFloat OffsetCreated;    
     //If this is an horizontal scrolling we have to rotate the table view
     if (self.horizontalScrolling) {
@@ -97,8 +88,7 @@
 
 // Customize the number of rows in the table view.
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    NSInteger rows = [self.dataSource numberOfRowsInSelector:self];
-    return rows;
+    return self.values.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {    
@@ -111,31 +101,22 @@
     NSArray *contentSubviews = [cell.contentView subviews];
     //We the content view already has a subview we just replace it, no need to add it again
     //hopefully ARC will do the rest and release the old retained view
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 6, self.frame.size.width, 33)];
+    label.font = [UIFont fontWithName:@"Helvetica-Bold" size:17];
+    label.textColor = [UIColor whiteColor];
+    label.textAlignment =  NSTextAlignmentCenter;
+    label.backgroundColor = [UIColor clearColor];
     if ([contentSubviews count] >0 ) {
         UIView *contentSubV = [contentSubviews objectAtIndex:0];
         //This will release the previous contentSubV
         [contentSubV removeFromSuperview];        
-        UIView *viewToAdd = [self.dataSource selector:self viewForRowAtIndex:indexPath.row];
-        contentSubV = viewToAdd;
-        if (self.debugEnabled) {
-            viewToAdd.layer.borderWidth = 1.0;
-            viewToAdd.layer.borderColor = [UIColor redColor].CGColor;
-        }
-        [cell.contentView addSubview:contentSubV];
+        label.text = [NSString stringWithFormat:@"%@",[self.values objectAtIndex:indexPath.row]];
+        [cell.contentView addSubview:label];
     }
     else {        
-        UILabel *viewToAdd = (UILabel *)[self.dataSource selector:self viewForRowAtIndex:indexPath.row];
-        //This is a new cell so we just have to add the view        
-        if (self.debugEnabled) {
-            viewToAdd.layer.borderWidth = 1.0;
-            viewToAdd.layer.borderColor = [UIColor redColor].CGColor;
-        }
-        [cell.contentView addSubview:viewToAdd];
+        label.text = [NSString stringWithFormat:@"%@",[self.values objectAtIndex:indexPath.row]];
+        [cell.contentView addSubview:label];
     }
-    if (self.debugEnabled) {
-        cell.layer.borderColor = [UIColor greenColor].CGColor;
-        cell.layer.borderWidth = 1.0;
-    }    
     if (self.horizontalScrolling) {
         CGAffineTransform rotateTable = CGAffineTransformMakeRotation(M_PI_2);
         cell.transform = rotateTable;

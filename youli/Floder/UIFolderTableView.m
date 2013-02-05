@@ -9,6 +9,7 @@
 #import "UIFolderTableView.h"
 #import <QuartzCore/QuartzCore.h>
 #import "UIView+screenshot.h"
+#import "SubTableCellView.h"
 
 #define COVERALPHA 0.6
 
@@ -45,7 +46,6 @@
 }
 
 - (void)openFolderAtIndexPath:(NSIndexPath *)indexPath
-                   parentView:(UIView *)parentView
               WithContentView:(UIView *)subClassContentView
                     openBlock:(FolderOpenBlock)openBlock 
                    closeBlock:(FolderCloseBlock)closeBlock
@@ -210,6 +210,11 @@
     }];    
     if (self.closeBlock) self.closeBlock(self.subClassContentView, duration, timingFunction);
     
+    SubTableCellView *subTableCellView = (SubTableCellView *)self.subClassContentView;
+    NSLog(@"Selected value %@",subTableCellView.selectedMonth);
+    NSLog(@"Selected value %@",subTableCellView.selectedDay);
+    NSLog(@"Selected value %@",subTableCellView.selectedConstellation);
+    
     [self.top.layer setPosition:self.oldTopPoint];
     [self.bottom.layer setPosition:self.oldBottomPoint];
 }
@@ -223,7 +228,6 @@
         self.bottom = nil;
         self.subClassContentView = nil;        
         if (self.completionBlock) self.completionBlock();
-//        sharedInstance = nil;
     }
 }
 
@@ -241,10 +245,16 @@
     CGImageRef ref1 = CGImageCreateWithImageInRect([screen CGImage], scaledRect);
     FolderCoverView *coverView;
     if (isTop) {
-        coverView = [[[FolderCoverView alloc] initWithFrame:aRect offset:0] autorelease];
+        coverView = [[[FolderCoverView alloc] initWithFrame:aRect offset:self.rowHeight - 5] autorelease];
+        UIButton *saveButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        saveButton.frame = CGRectMake(260,height - 30,50,23);
+        UIImage *saveImage = [[UIImage imageNamed:@"save.png"] stretchableImageWithLeftCapWidth:0 topCapHeight:0];
+        [saveButton setBackgroundImage:saveImage forState:UIControlStateNormal];
+        [saveButton addTarget:self action:@selector(performClose:) forControlEvents:UIControlEventTouchUpInside];
+        [coverView addSubview:saveButton];
     } else {
         coverView = [[[FolderCoverView alloc] initWithFrame:aRect offset:0] autorelease];
-    }    
+    }
     [coverView setIsTopView:isTop];
     coverView.position = position;
     coverView.layer.contentsScale = scale;
@@ -252,6 +262,11 @@
     coverView.layer.contentsGravity = kCAGravityCenter;
     CGImageRelease(ref1);
     return coverView;
+}
+
+- (void)saveButtonPressed
+{
+    
 }
 
 @end

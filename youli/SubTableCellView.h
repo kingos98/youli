@@ -14,5 +14,8 @@
 @property (nonatomic,strong)IZValueSelectorView *monthView;
 @property (nonatomic,strong)IZValueSelectorView *dayView;
 @property (nonatomic,strong)IZValueSelectorView *constellationView;
+@property (nonatomic,strong)NSString *selectedMonth;
+@property (nonatomic,strong)NSString *selectedDay;
+@property (nonatomic,strong)NSString *selectedConstellation;
 
 @end

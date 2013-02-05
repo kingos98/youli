@@ -14,8 +14,6 @@
 @end
 
 @protocol IZValueSelectorViewDataSource <NSObject>
-- (NSInteger)numberOfRowsInSelector:(IZValueSelectorView *)valueSelector;
-- (UIView *)selector:(IZValueSelectorView *)valueSelector viewForRowAtIndex:(NSInteger) index;
 - (CGRect)rectForSelectionInSelector:(IZValueSelectorView *)valueSelector;
 - (CGFloat)rowHeightInSelector:(IZValueSelectorView *)valueSelector;
 - (CGFloat)rowWidthInSelector:(IZValueSelectorView *)valueSelector;
@@ -25,7 +23,7 @@
 
 @property (nonatomic,assign) IBOutlet id <IZValueSelectorViewDelegate> delegate;
 @property (nonatomic,assign) IBOutlet id <IZValueSelectorViewDataSource> dataSource;
-@property (nonatomic,strong) NSMutableArray *values;
+@property (nonatomic,strong) NSArray *values;
 @property (nonatomic,assign) BOOL shouldBeTransparent;
 @property (nonatomic,assign) BOOL horizontalScrolling;
 @property (nonatomic,assign) BOOL debugEnabled;
