@@ -183,6 +183,7 @@
 		18E24E8A168E9324000D2172 /* add.png in Resources */ = {isa = PBXBuildFile; fileRef = 18E24E86168E9324000D2172 /* add.png */; };
 		18E24E8B168E9324000D2172 /* add1.png in Resources */ = {isa = PBXBuildFile; fileRef = 18E24E87168E9324000D2172 /* add1.png */; };
 		18E24E94168E93E8000D2172 /* Friend.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E24E93168E93E8000D2172 /* Friend.m */; };
+		18F82E0316D0CF3E001EC74D /* ConstellationUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 18F82E0216D0CF3E001EC74D /* ConstellationUtils.m */; };
 		18FAA61316560E480060BCEA /* next.png in Resources */ = {isa = PBXBuildFile; fileRef = 18FAA61116560E480060BCEA /* next.png */; };
 		18FAA61416560E480060BCEA /* next@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 18FAA61216560E480060BCEA /* next@2x.png */; };
 		18FAA61716561AAF0060BCEA /* face_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 18FAA61516561AAF0060BCEA /* face_bg.png */; };
@@ -467,6 +468,8 @@
 		18E24E87168E9324000D2172 /* add1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = add1.png; path = images/personal/add1.png; sourceTree = "<group>"; };
 		18E24E92168E93E8000D2172 /* Friend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Friend.h; sourceTree = "<group>"; };
 		18E24E93168E93E8000D2172 /* Friend.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Friend.m; sourceTree = "<group>"; };
+		18F82E0116D0CF3E001EC74D /* ConstellationUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConstellationUtils.h; sourceTree = "<group>"; };
+		18F82E0216D0CF3E001EC74D /* ConstellationUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConstellationUtils.m; sourceTree = "<group>"; };
 		18FAA61116560E480060BCEA /* next.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = next.png; path = images/personal/next.png; sourceTree = "<group>"; };
 		18FAA61216560E480060BCEA /* next@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "next@2x.png"; path = "images/personal/next@2x.png"; sourceTree = "<group>"; };
 		18FAA61516561AAF0060BCEA /* face_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = face_bg.png; path = images/personal/face_bg.png; sourceTree = "<group>"; };
@@ -722,6 +725,8 @@
 			children = (
 				15680CA716AFD14C0086693E /* FestivalMethod.h */,
 				15680CA816AFD14C0086693E /* FestivalMethod.m */,
+				18F82E0116D0CF3E001EC74D /* ConstellationUtils.h */,
+				18F82E0216D0CF3E001EC74D /* ConstellationUtils.m */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -1576,6 +1581,7 @@
 				18B4E0AF16B8FA1B00F72D01 /* IZValueSelectorView.m in Sources */,
 				1823C9FF16BF58540069E624 /* FriendCell.m in Sources */,
 				1897AD7316C204BD00C89DF3 /* ConstellationSelector.m in Sources */,
+				18F82E0316D0CF3E001EC74D /* ConstellationUtils.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
