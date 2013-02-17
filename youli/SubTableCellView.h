@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "IZValueSelectorView.h"
+#import "ConstellationSelector.h"
 
 @interface SubTableCellView : UIView<IZValueSelectorViewDataSource,IZValueSelectorViewDelegate>
 
@@ -17,5 +18,6 @@
 @property (nonatomic,strong)NSString *selectedMonth;
 @property (nonatomic,strong)NSString *selectedDay;
 @property (nonatomic,strong)NSString *selectedConstellation;
+@property (nonatomic,strong)ConstellationSelector *constellationSelector;
 
 @end

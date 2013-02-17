@@ -153,6 +153,7 @@
 		189022BC16633B710096D464 /* selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 189022B316633B710096D464 /* selected.png */; };
 		189022BD16633B710096D464 /* splitbar.png in Resources */ = {isa = PBXBuildFile; fileRef = 189022B416633B710096D464 /* splitbar.png */; };
 		189022BE16633B710096D464 /* unselected.png in Resources */ = {isa = PBXBuildFile; fileRef = 189022B516633B710096D464 /* unselected.png */; };
+		1897AD7316C204BD00C89DF3 /* ConstellationSelector.m in Sources */ = {isa = PBXBuildFile; fileRef = 1897AD7216C204BD00C89DF3 /* ConstellationSelector.m */; };
 		1897B73C16A8E128001C810D /* FolderCoverView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1897B73716A8E128001C810D /* FolderCoverView.m */; };
 		1897B73D16A8E128001C810D /* UIFolderTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1897B73916A8E128001C810D /* UIFolderTableView.m */; };
 		1897B73E16A8E128001C810D /* UIView+screenshot.m in Sources */ = {isa = PBXBuildFile; fileRef = 1897B73B16A8E128001C810D /* UIView+screenshot.m */; };
@@ -422,6 +423,8 @@
 		189022B316633B710096D464 /* selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = selected.png; path = images/category/selected.png; sourceTree = "<group>"; };
 		189022B416633B710096D464 /* splitbar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = splitbar.png; path = images/category/splitbar.png; sourceTree = "<group>"; };
 		189022B516633B710096D464 /* unselected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = unselected.png; path = images/category/unselected.png; sourceTree = "<group>"; };
+		1897AD7116C204BD00C89DF3 /* ConstellationSelector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConstellationSelector.h; sourceTree = "<group>"; };
+		1897AD7216C204BD00C89DF3 /* ConstellationSelector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConstellationSelector.m; sourceTree = "<group>"; };
 		1897B73616A8E128001C810D /* FolderCoverView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FolderCoverView.h; sourceTree = "<group>"; };
 		1897B73716A8E128001C810D /* FolderCoverView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FolderCoverView.m; sourceTree = "<group>"; };
 		1897B73816A8E128001C810D /* UIFolderTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIFolderTableView.h; sourceTree = "<group>"; };
@@ -875,6 +878,8 @@
 				1897B75216A92184001C810D /* SubTableCellView.m */,
 				1823C9FD16BF58540069E624 /* FriendCell.h */,
 				1823C9FE16BF58540069E624 /* FriendCell.m */,
+				1897AD7116C204BD00C89DF3 /* ConstellationSelector.h */,
+				1897AD7216C204BD00C89DF3 /* ConstellationSelector.m */,
 			);
 			name = Personal;
 			sourceTree = "<group>";
@@ -1570,6 +1575,7 @@
 				1881E48516AFC5FC00857D7C /* FriendAddController.m in Sources */,
 				18B4E0AF16B8FA1B00F72D01 /* IZValueSelectorView.m in Sources */,
 				1823C9FF16BF58540069E624 /* FriendCell.m in Sources */,
+				1897AD7316C204BD00C89DF3 /* ConstellationSelector.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

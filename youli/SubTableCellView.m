@@ -43,6 +43,8 @@
         self.constellationView.values  = [[NSArray alloc] initWithObjects:@"白羊座",@"金牛座",@"双子座",@"巨蟹座",@"狮子座",@"处女座",@"天秤座",@"天蝎座",@"射手座",@"摩羯座",@"水瓶座",@"双鱼座",@"",nil];
         [self addSubview:self.constellationView];
         
+        self.constellationSelector = [[ConstellationSelector alloc] initWithFrame:CGRectMake(210, 35, 90, 170)];
+        
         
     }
     return self;
