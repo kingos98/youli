@@ -349,12 +349,12 @@ NSTimer *timer;
 #pragma mark - Timer Oper
 -(void) handleTimer: (NSTimer *) timer
 {
-    NSCalendar *calendar=[NSCalendar currentCalendar];
-//    unsigned unitFlags = NSYearCalendarUnit | NSMonthCalendarUnit |  NSDayCalendarUnit;
-    unsigned unitFlags1=NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit;
-    NSDateComponents *comp=[calendar components:unitFlags1 fromDate:[NSDate date]];
-
-    NSLog(@"%d:%d:%d",comp.hour,comp.minute,comp.second);
+//    NSCalendar *calendar=[NSCalendar currentCalendar];
+////    unsigned unitFlags = NSYearCalendarUnit | NSMonthCalendarUnit |  NSDayCalendarUnit;
+//    unsigned unitFlags1=NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit;
+//    NSDateComponents *comp=[calendar components:unitFlags1 fromDate:[NSDate date]];
+//
+//    NSLog(@"%d:%d:%d",comp.hour,comp.minute,comp.second);
 }
 
 
