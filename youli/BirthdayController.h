@@ -10,15 +10,19 @@
 #import "Birthday.h"
 #import "BirthdayGiftController.h"
 #import "YouliDelegate.h"
+#import "AssignBirthdayController.h"
 
-@interface BirthdayController : UIViewController<UITableViewDelegate, UITableViewDataSource,YouliDelegate>{
+@interface BirthdayController : UIViewController<UITableViewDelegate, UITableViewDataSource,UISearchBarDelegate>{
     NSMutableArray *data;
 }
 
 @property (nonatomic,strong)UITableView *birthdayTableView;
 
 @property (nonatomic, strong) Birthday *birthday;
+
 @property(nonatomic,strong)BirthdayGiftController *birthdayGiftController;
+
+@property(nonatomic,strong)AssignBirthdayController *assignBirthdayController;
 
 @property id<YouliDelegate> delegate;
 

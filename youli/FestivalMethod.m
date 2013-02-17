@@ -18,6 +18,25 @@
 
 @implementation FestivalMethod
 
+-(void)checkFestivalIsExist
+{
+    NSCalendar *calendar=[NSCalendar currentCalendar];
+    unsigned unitFlags = NSYearCalendarUnit | NSMonthCalendarUnit |  NSDayCalendarUnit;
+    NSDateComponents *comp=[calendar components:unitFlags fromDate:[NSDate date]];
+    
+    FMDatabaseOper *dbOper=[[FMDatabaseOper alloc]init];
+    if(![dbOper checkIsExistFestivalIsYear:comp.year])
+    {
+        [self writeFestivalToDB:comp.year];
+    }
+    
+    NSInteger nextYear=comp.year+1;
+    if(![dbOper checkIsExistFestivalIsYear:nextYear])
+    {
+        [self writeFestivalToDB:nextYear];
+    }
+}
+
 -(void)writeFestivalToDB:(NSInteger)Year
 {
     FMDatabaseOper *dbOper=[[FMDatabaseOper alloc] init] ;
@@ -72,15 +91,15 @@
         for (int LunarCount=0 ; LunarCount<LunarArray.count; LunarCount++)
         {
             //判断当天是不是农历节日       参考getChineseCalendarWithDate
-            dayLunarToGregorina=[NSString stringWithFormat:@"%@%@",[self updateLunarFormat:localeComp.month],[self updateLunarFormat:localeComp.day]];
+            dayLunarToGregorina=[NSString stringWithFormat:@"%@%@",[self updateDateFormat:localeComp.month],[self updateDateFormat:localeComp.day]];
             if([dayLunarToGregorina isEqualToString:[[LunarArray objectAtIndex:LunarCount] objectAtIndex:1]])
             {
                 NSDateComponents *gregorianDay=[gregorian components:unitFlags fromDate:date];
                 SingleLunar=[[NSArray alloc]  initWithObjects:[[LunarArray objectAtIndex:LunarCount]objectAtIndex:0],
                                                                 [NSString stringWithFormat:@"%4d%@%@",
                                                                  Year,
-                                                                 [self updateLunarFormat:gregorianDay.month],
-                                                                 [self updateLunarFormat:gregorianDay.day]],nil];
+                                                                 [self updateDateFormat:gregorianDay.month],
+                                                                 [self updateDateFormat:gregorianDay.day]],nil];
                 [festivalArray addObject:SingleLunar];
             }
         }
@@ -107,23 +126,28 @@
                     [self getEasterDay:Year],
                     nil];
     [festivalArray addObject:singleFestival];
-    
+
     NSInteger maxFestivalID=[dbOper getMaxFestivalIDFromFestivalListDate];
-    
+
     for (int i=0; i<festivalArray.count; i++) {
-//        NSLog(@"festivalname:%@ festivaltime:%@",
-//              [[FestivalArray objectAtIndex:i]objectAtIndex:0],
-//              [[FestivalArray objectAtIndex:i]objectAtIndex:1]);
         strSql=[NSString stringWithFormat:
                 @"insert into %@ (%@,%@,%@) values(%d,'%@','%@')",
                 TABLEFESTIVALLISTDATE,FESTIVALID,FESTIVALNAME,FESTIVALDATE,
                 i+maxFestivalID+1,[[festivalArray objectAtIndex:i]objectAtIndex:0],[[festivalArray objectAtIndex:i]objectAtIndex:1]
                 ];
         [dbOper ExecSql:strSql];
+        
+        maxFestivalID++;
     }
 }
 
--(NSString *)updateLunarFormat:(NSInteger)MonthOrDay
+-(NSMutableArray *)getTopSixFestivalList:(NSString *)FestivalName
+{
+    FMDatabaseOper *dbOper=[[FMDatabaseOper alloc]init];
+    return [dbOper getFestivalList:FestivalName];
+}
+
+-(NSString *)updateDateFormat:(NSInteger)MonthOrDay
 {
     NSString *strMonthOrDay=[NSString stringWithFormat:@"%d",MonthOrDay];
     if(strMonthOrDay.length==1)
@@ -140,7 +164,7 @@
 {
     NSDateComponents *comps = [[NSDateComponents alloc] init];
     NSDateComponents *weekdayComponents=[[NSDateComponents alloc]init];
-    NSCalendar *gregorian=[[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    NSCalendar *calendar=[[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
     NSDate *date;
 
     NSInteger i;
@@ -151,8 +175,8 @@
         [comps setMonth:Month];
         [comps setYear:Year];
         
-        date=[gregorian dateFromComponents:comps];
-        weekdayComponents=[gregorian components:NSWeekdayCalendarUnit fromDate:date];
+        date=[calendar dateFromComponents:comps];
+        weekdayComponents=[calendar components:NSWeekdayCalendarUnit fromDate:date];
         
         if(weekdayComponents.weekday==WeekDay)
         {
@@ -160,91 +184,7 @@
         }
     }
     
-    return [NSString stringWithFormat:@"%4d%@%@",Year,[self updateLunarFormat:Month],[self updateLunarFormat:(i+7*(WhichWeek-1))]];
-}
-
--(NSString *)findMotherDate:(NSString *)strYear
-{
-    NSDateComponents *comps = [[[NSDateComponents alloc] init] autorelease];
-    NSDateComponents *weekdayComponents=[[[NSDateComponents alloc]init]autorelease];
-    NSCalendar *gregorian=[[[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar] autorelease];
-    NSDate *date;
-    
-    NSInteger i;
-    for(i=1;i<=7;i++)
-    {
-        //日期初始化为 xxxx0501
-        [comps setDay:i];
-        [comps setMonth:5];
-        [comps setYear:[strYear integerValue]];
-        
-        date=[gregorian dateFromComponents:comps];
-        weekdayComponents=[gregorian components:NSWeekdayCalendarUnit fromDate:date];
-        
-        if(weekdayComponents.weekday==7)
-        {
-            break;
-        }
-    }
-    
-    [date release];
-    return [NSString stringWithFormat:@"%@05%2d",strYear,(i+7)];
-}
-
--(NSString *)findFatherDate:(NSString *)strYear
-{
-    NSDateComponents *comps = [[[NSDateComponents alloc] init] autorelease];
-    NSDateComponents *weekdayComponents=[[[NSDateComponents alloc]init]autorelease];
-    NSCalendar *gregorian=[[[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar] autorelease];
-    NSDate *date;
-    
-    NSInteger i;
-    for(i=1;i<=7;i++)
-    {
-        //日期初始化为 xxxx0601
-        [comps setDay:i];
-        [comps setMonth:6];
-        [comps setYear:[strYear integerValue]];
-        
-        date=[gregorian dateFromComponents:comps];
-        weekdayComponents=[gregorian components:NSWeekdayCalendarUnit fromDate:date];
-        
-        if(weekdayComponents.weekday==7)
-        {
-            break;
-        }
-    }
-    
-    [date release];
-    return [NSString stringWithFormat:@"%@06%2d",strYear,(i+14)];
-}
-
--(NSString *)findThanksgivingDate:(NSString *)strYear
-{
-    NSDateComponents *comps = [[[NSDateComponents alloc] init] autorelease];
-    NSDateComponents *weekdayComponents=[[[NSDateComponents alloc]init]autorelease];
-    NSCalendar *gregorian=[[[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar] autorelease];
-    NSDate *date;
-    
-    NSInteger i;
-    for(i=1;i<=7;i++)
-    {
-        //日期初始化为 xxxx1101
-        [comps setDay:i];
-        [comps setMonth:11];
-        [comps setYear:[strYear integerValue]];
-        
-        date=[gregorian dateFromComponents:comps];
-        weekdayComponents=[gregorian components:NSWeekdayCalendarUnit fromDate:date];
-        
-        if(weekdayComponents.weekday==4)
-        {
-            break;
-        }
-    }
-    
-    [date release];
-    return [NSString stringWithFormat:@"%@11%2d",strYear,(i+21)];
+    return [NSString stringWithFormat:@"%4d%@%@",Year,[self updateDateFormat:Month],[self updateDateFormat:(i+7*(WhichWeek-1))]];
 }
 
 -(NSString*)getChineseCalendarWithDate:(NSDate *)date{

@@ -9,5 +9,8 @@
 #import <Foundation/Foundation.h>
 
 @interface FestivalMethod : NSObject
+
+-(void)checkFestivalIsExist;
 -(void)writeFestivalToDB:(NSInteger)Year;
+-(NSMutableArray *)getTopSixFestivalList;
 @end

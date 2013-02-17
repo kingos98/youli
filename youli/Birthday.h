@@ -16,6 +16,6 @@
 @property(nonatomic,retain)NSString *type;
 @property(nonatomic,retain)NSString *countDown;
 
-- (void)loadData;
+- (void)loadData:(NSString *)SearchName;
 
 @end

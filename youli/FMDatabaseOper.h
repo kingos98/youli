@@ -27,7 +27,9 @@
 
 -(NSMutableArray *)getFeFestivalInfo:(NSString *)Sql;
 -(NSInteger)getMaxFestivalIDFromFestivalListDate;
+-(NSMutableArray *)getFestivalList:(NSString *)FestivalName;
+-(BOOL)checkIsExistFestivalIsYear:(NSInteger)SelectYear;
 
--(NSMutableArray *)getFriendInfo;
+-(NSMutableArray *)getFriendList:(NSString *)FriendName;
 
 @end

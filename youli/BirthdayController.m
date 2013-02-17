@@ -16,16 +16,16 @@
     NSArray *items;
 }
 
-@synthesize birthdayTableView;
 @synthesize birthday;
 @synthesize delegate;
+@synthesize birthdayTableView;
+@synthesize assignBirthdayController;
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Custom initialization
     }
     return self;
 }
@@ -36,12 +36,14 @@
     
     [self iniView];
     
-    self.birthdayGiftController=[[BirthdayGiftController alloc] init];
-    self.delegate=self.birthdayGiftController;
+//    self.birthdayGiftController=[[BirthdayGiftController alloc] init];
     
     birthday = [[Birthday alloc] init];
-    [birthday loadData];
+    [birthday loadData:nil];
     items = birthday.items;
+
+    self.assignBirthdayController=[[AssignBirthdayController alloc]init];
+    self.delegate=self.assignBirthdayController;
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -59,10 +61,21 @@
     
     UIButton *btnReturn=[[UIButton alloc]initWithFrame:CGRectMake(5, 7, 50, 30)];
     [btnReturn setBackgroundImage:[UIImage imageNamed:@"return_unclick.png"] forState:UIControlStateNormal];
+    [btnReturn setImage:[UIImage imageNamed:@"return_click.png"] forState:UIControlStateHighlighted];
     [btnReturn addTarget:self action:@selector(returnClick:) forControlEvents:UIControlEventTouchUpInside];
     
+    UISearchBar *searchBar=[[UISearchBar alloc]initWithFrame:CGRectMake(60, 0, 260, 44)];
+    searchBar.tintColor=[UIColor whiteColor];
+    searchBar.delegate=self;
+    //<---背景图片
+    UIView *segment = [searchBar.subviews objectAtIndex:0];
+    UIImageView *bgImage=[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 270, 44)];
+    [bgImage setImage:[UIImage imageNamed:@"head.jpg"]];
+    [segment addSubview: bgImage];
+    //--->背景图片
+    
     UIImageView *tableBgView = [[UIImageView alloc] initWithFrame:CGRectMake(0,44,320,416)];
-    [tableBgView setImage:[UIImage imageNamed:@"birthday_bg.png"]];
+    [tableBgView setImage:[UIImage imageNamed:@"birthday_bg@2x.png"]];
     
     birthdayTableView = [[UITableView alloc] initWithFrame:CGRectMake(0,44,320,416)];
     [birthdayTableView setDelegate:self];
@@ -75,6 +88,7 @@
     [self.view addSubview:mainBgView];
     [self.view addSubview:imgTitle];
     [self.view addSubview:btnReturn];
+    [self.view addSubview:searchBar];
     [self.view addSubview:birthdayTableView];
 }
 
@@ -87,7 +101,7 @@
 {
     BirthdayCell *cell = (BirthdayCell*)[self.birthdayTableView cellForRowAtIndexPath:indexPath];
     [self.delegate sendGiftTypeTitle:cell.nameLabel.text];
-    [self.navigationController pushViewController:self.birthdayGiftController animated:YES];
+    [self.navigationController pushViewController:self.assignBirthdayController animated:YES];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -110,7 +124,10 @@
 {
     static NSString *CellIdentifier = @"CellIdentifier";
     BirthdayCell *cell = [[BirthdayCell alloc] initCell:CellIdentifier];
-    cell.birthday =  [items objectAtIndex:indexPath.row];
+    if(items.count>0)
+    {
+        cell.birthday =  [items objectAtIndex:indexPath.row];
+    }
     return cell;
 }
 
@@ -124,4 +141,42 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
+-(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
+{
+    birthday = [[Birthday alloc] init];
+    [birthday loadData:searchBar.text];
+    items = birthday.items;
+    
+    [self dismissKeyboard:searchBar];
+}
+
+-(void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
+{
+    [self dismissKeyboard:searchBar];
+}
+
+-(void)dismissKeyboard:(UISearchBar *)sender
+{
+    [sender resignFirstResponder];
+    [sender setShowsCancelButton:false animated:true];
+}
+
+-(void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar
+{
+    [searchBar setShowsCancelButton:true animated:true];
+
+    for(id cc in [searchBar subviews])
+    {
+        if([cc isKindOfClass:[UIButton class]])
+        {
+            UIButton *sbtn = (UIButton *)cc;
+            [sbtn setTitle:@"" forState:UIControlStateNormal];
+            [sbtn setBackgroundImage:[UIImage imageNamed:@"cancel_unclick.png"] forState:UIControlStateNormal];
+            [sbtn setBackgroundImage:[UIImage imageNamed:@"cancel_click.png"] forState:UIControlStateHighlighted];
+            [sbtn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+        }
+    }
+}
+
+     
 @end

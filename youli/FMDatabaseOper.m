@@ -6,8 +6,28 @@
 //
 //
 
-#define DBNAME      @"youli.sqlite"
+#define DBNAME                      @"youli.sqlite"
+#define TABLEBIRTHDAYGIFT           @"birthdaygift"
+#define TABLECOLLECTBIRTHDAYGIFT    @"collectbirthdaygift"
+#define TABLEFESTIVALLISTDATE       @"FestivalListDate"
+#define TABLEFRIENDINFO             @"FriendInfo"
 
+#define GIFTID                      @"giftid"
+#define GIFTTYPE                    @"giftType"
+#define GIFTTITLE                   @"Title"
+#define GIFTDETAIL                  @"Detail"
+#define GIFTIMAGEURL                @"imageURL"
+#define GIFTTAOBAOURL               @"taobaoURL"
+#define GIFTPRICE                   @"price"
+
+#define FESTIVALID                  @"FestivalID"
+#define FESTIVALNAME                @"FestivalName"
+#define FESTIVALDATE                @"FestivalDate"
+
+#define FRIENDNAME                  @"FriendName"
+#define FRIENDBIRTHDAY              @"FriendBirthday"
+#define FRIENDCONSTELLATION         @"Constellation"
+#define FRIENDID                    @"FriendID"
 
 #import "FMDatabaseOper.h"
 #import "FMDatabase.h"
@@ -53,18 +73,19 @@
     
     NSArray *GiftArray=nil;
     
-    NSString *strSql= [NSString stringWithFormat:@"select * from birthdaygift where giftid=%d",GiftID];
+//    NSString *strSql= [NSString stringWithFormat:@"select * from birthdaygift where giftid=%d",GiftID];
+    NSString *strSql= [NSString stringWithFormat:@"select * from %@ where %@=%d",TABLEBIRTHDAYGIFT,GIFTID,GiftID];
 
     FMResultSet *rs = [db executeQuery:strSql];
 
     while ([rs next]) {
-        int giftID=[rs intForColumn:@"giftID"];
-        int giftType=[rs intForColumn:@"giftType"];
-        NSString *giftTitle=[rs stringForColumn:@"giftTitle"];
-        NSString *giftDetail=[rs stringForColumn:@"giftDetail"];
-        NSString *imageURL=[rs stringForColumn:@"imageURL"];
-        NSString *taobaoURL=[rs stringForColumn:@"taobaoURL"];
-        double price=[rs doubleForColumn:@"price"];
+        int giftID=[rs intForColumn:GIFTID];
+        int giftType=[rs intForColumn:GIFTTYPE];
+        NSString *giftTitle=[rs stringForColumn:GIFTTITLE];
+        NSString *giftDetail=[rs stringForColumn:GIFTDETAIL];
+        NSString *imageURL=[rs stringForColumn:GIFTIMAGEURL];
+        NSString *taobaoURL=[rs stringForColumn:GIFTTAOBAOURL];
+        double price=[rs doubleForColumn:GIFTPRICE];
          
         GiftArray=[[NSArray alloc]  initWithObjects:giftID,giftType,giftTitle,giftDetail,imageURL,taobaoURL, price,nil];
     }
@@ -76,7 +97,7 @@
 //每次启动该APP就自动清空birthday list
 -(void)cleanGiftList
 {
-    NSString *strSql=@"delete from birthdaygift";
+    NSString *strSql=[NSString stringWithFormat:@"delete from %@",TABLEBIRTHDAYGIFT];
     [self ExecSql:strSql];
 }
 
@@ -91,18 +112,19 @@
     NSMutableArray *GiftArray=[[NSMutableArray alloc] init];
     NSArray *GiftData=nil;
     
-    NSString *strSql= [NSString stringWithFormat:@"select * from birthdaygift where gifttype=%d",PhotoType];
+//    NSString *strSql= [NSString stringWithFormat:@"select * from birthdaygift where gifttype=%d",PhotoType];
+    NSString *strSql=[NSString stringWithFormat:@"select * from %@ where %@=%d",TABLEBIRTHDAYGIFT,GIFTTYPE,PhotoType];
 
     FMResultSet *rs=[db executeQuery:strSql];
 
     while ([rs next]) {
-        NSString *giftID=[rs stringForColumn:@"giftid"];
-        NSString *giftType=[rs stringForColumn:@"gifttype"];
-        NSString *giftTitle=[rs stringForColumn:@"title"];
-        NSString *giftDetail=[rs stringForColumn:@"detail"];
-        NSString *imageURL=[rs stringForColumn:@"imageurl"];
-        NSString *taobaoURL=[rs stringForColumn:@"taobaourl"];
-        NSString *price=[rs stringForColumn:@"price"];
+        NSString *giftID=[rs stringForColumn:GIFTID];
+        NSString *giftType=[rs stringForColumn:GIFTTYPE];
+        NSString *giftTitle=[rs stringForColumn:GIFTTITLE];
+        NSString *giftDetail=[rs stringForColumn:GIFTDETAIL];
+        NSString *imageURL=[rs stringForColumn:GIFTIMAGEURL];
+        NSString *taobaoURL=[rs stringForColumn:GIFTTAOBAOURL];
+        NSString *price=[rs stringForColumn:GIFTPRICE];
 
         GiftData=[[NSArray alloc]  initWithObjects:giftID,giftType,giftTitle,giftDetail,imageURL,taobaoURL, price,nil];
 
@@ -110,7 +132,10 @@
     }
     
     [self closeDB];
-    return  GiftArray;
+    if(GiftArray.count>0)
+        return  GiftArray;
+    else
+        return  nil;
 }
 
 //获取当前选中的礼物所在位置
@@ -123,10 +148,10 @@
     
     NSInteger index=0;
     Boolean find=false;
-    FMResultSet *rs=[db executeQuery:@"select giftid from birthdaygift"];
+//    FMResultSet *rs=[db executeQuery:@"select giftid from birthdaygift"];
+    FMResultSet *rs=[db executeQuery:@"select %@ from %@",GIFTID,TABLEBIRTHDAYGIFT];
     while ([rs next]) {
-//        NSLog(@"dbgiftid:%d,giftid:%d",[rs intForColumn:@"giftid"],GiftID);
-        if([rs intForColumn:@"giftid"]==GiftID)
+        if([rs intForColumn:GIFTID]==GiftID)
         {
             
             find=true;
@@ -153,7 +178,8 @@
 -(Boolean)checkIsCollect:(NSInteger)GiftID
 {
     Boolean find=false;
-    NSString *strSql=[NSString stringWithFormat:@"select count(*) count from collectbirthdaygift where giftid=%d",GiftID];
+//    NSString *strSql=[NSString stringWithFormat:@"select count(*) count from collectbirthdaygift where giftid=%d",GiftID];
+    NSString *strSql=[NSString stringWithFormat:@"select count(*) count from %@ where %@=%d",TABLECOLLECTBIRTHDAYGIFT,GIFTID,GiftID];
     FMResultSet *rs=[db executeQuery:strSql];
     while ([rs next]) {
         if([rs intForColumn:@"count"]>0)
@@ -171,11 +197,13 @@
     NSString *strSql;
     if(IsAdd)
     {
-        strSql=[NSString stringWithFormat:@"insert into collectbirthdaygift(giftid) values(%d)",GiftID];
+//        strSql=[NSString stringWithFormat:@"insert into collectbirthdaygift(giftid) values(%d)",GiftID];
+        strSql=[NSString stringWithFormat:@"insert into %@(%@) values(%d)",TABLECOLLECTBIRTHDAYGIFT,GIFTID,GiftID];
     }
     else
     {
-        strSql=[NSString stringWithFormat:@"delete from collectbirthdaygift where giftid=%d",GiftID];
+//        strSql=[NSString stringWithFormat:@"delete from collectbirthdaygift where giftid=%d",GiftID];
+        strSql=[NSString stringWithFormat:@"delete from %@ where %@=%d",TABLECOLLECTBIRTHDAYGIFT,GIFTID,GiftID];
     }
     [self ExecSql:strSql];
 }
@@ -190,21 +218,21 @@
         return nil;
     }
     
-    NSMutableArray *FestivalArray=[[NSMutableArray alloc]init];
-    NSArray *FestivalData=nil;
+    NSMutableArray *festivalArray=[[NSMutableArray alloc]init];
+    NSArray *festivalData=nil;
 
     FMResultSet *rs = [db executeQuery:Sql];
     
     while ([rs next]) {
-        FestivalData=[[NSArray alloc]  initWithObjects:[rs stringForColumn:@"FestivalName"],
-                                                        [rs stringForColumn:@"FestivalDate"],
+        festivalData=[[NSArray alloc]  initWithObjects:[rs stringForColumn:FESTIVALNAME],
+                                                        [rs stringForColumn:FESTIVALDATE],
                                                         nil];
-        [FestivalArray addObject: FestivalData];
+        [festivalArray addObject: festivalData];
     }
     
     [self closeDB];
     
-    return  FestivalArray;
+    return  festivalArray;
 }
 
 //获取FestivalListDate里最大的GiftID
@@ -216,41 +244,123 @@
     }
     
     NSInteger maxFestivalID=0;
-    FMResultSet *rs = [db executeQuery:@"select top 1 FestivalID from FestivalListDate order by FestivalID desc"];
+    
+    FMResultSet *rs=[db executeQuery:[NSString stringWithFormat: @"select %@ from %@ order by %@ desc limit 1",FESTIVALID,TABLEFESTIVALLISTDATE,FESTIVALID]];
 
     while ([rs next]) {
         maxFestivalID=[rs intForColumnIndex:0];
     }
-    
     [self closeDB];
     
     return  maxFestivalID;
 }
 
+
+-(BOOL)checkIsExistFestivalIsYear:(NSInteger)SelectYear
+{
+    if(![self openDB])
+    {
+        return false;
+    }
+    NSInteger resultCount=0;
+    NSString *strSql=[NSString stringWithFormat:@"select count(*) from %@ where %@ like '%d%%'",TABLEFESTIVALLISTDATE,FESTIVALDATE,SelectYear];
+    FMResultSet *rs=[db executeQuery:strSql];
+    while ([rs next]) {
+        resultCount=[rs intForColumnIndex:0];
+    }
+    [self closeDB];
+    
+    return resultCount>0?true:false;
+}
+
+//获取从当天起的6个节日信息
+-(NSMutableArray *)getFestivalList:(NSString *)FestivalName
+{
+    if(![self openDB])
+    {
+        return nil;
+    }
+    
+    //把当日日期转换成NSDateComponents
+    NSCalendar *calendar=[[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    unsigned unitFlags = NSYearCalendarUnit | NSMonthCalendarUnit |  NSDayCalendarUnit;
+    NSDateComponents *comp=[calendar components:unitFlags fromDate:[NSDate date]];
+    NSString *strCurrentDate=[NSString stringWithFormat:@"%d%@%@",comp.year,[self updateDateFormat:comp.month],[self updateDateFormat:comp.day]];
+    
+    NSMutableArray *festivalArray=[[NSMutableArray alloc]init];
+    NSArray *singleFestival=nil;
+    NSString *strSql;
+    if(FestivalName!=nil)
+    {
+        strSql=[NSString stringWithFormat:@"select * from %@ where %@>%@ and %@ like '%%%@%%' order by %@ limit 1,6",
+                TABLEFESTIVALLISTDATE,FESTIVALDATE,strCurrentDate,FESTIVALNAME,FestivalName,FESTIVALDATE];
+    }
+    else
+    {
+        strSql=[NSString stringWithFormat:@"select * from %@ where %@>%@ order by %@ limit 1,6",
+                TABLEFESTIVALLISTDATE,FESTIVALDATE,strCurrentDate,FESTIVALDATE];
+    }
+    
+    FMResultSet *rs=[db executeQuery:strSql];
+    while ([rs next]) {
+        singleFestival=[[NSArray alloc]initWithObjects:[rs stringForColumn:FESTIVALNAME],
+                        [rs stringForColumn:FESTIVALDATE],
+                         nil];
+        
+        [festivalArray addObject:singleFestival];
+    }
+    
+    [self closeDB];
+    
+    return  festivalArray;
+}
+
+-(NSString *)updateDateFormat:(NSInteger)MonthOrDay
+{
+    NSString *strMonthOrDay=[NSString stringWithFormat:@"%d",MonthOrDay];
+    if(strMonthOrDay.length==1)
+    {
+        return [NSString stringWithFormat:@"0%@",strMonthOrDay];
+    }
+    else
+    {
+        return strMonthOrDay;
+    }
+}
 #pragma mark - Friend Info Method
--(NSMutableArray *)getFriendInfo
+-(NSMutableArray *)getFriendList:(NSString *)FriendName
 {
     if(![self openDB])
     {
         return 0;
     }
 
-    NSMutableArray *FriendArray=[[NSMutableArray alloc]init];
-    NSArray *FriendData=nil;
+    NSMutableArray *friendArray=[[NSMutableArray alloc]init];
+    NSArray *friendData=nil;
     
-    FMResultSet *rs = [db executeQuery:@"select * from FriendInfo"];
+    
+    FMResultSet *rs=[[FMResultSet alloc] init];
+    if(FriendName!=nil)
+    {
+        rs=[db executeQuery:[NSString stringWithFormat:@"select * from %@ where %@ like ‘%%%@%%’ order by %@,%@",TABLEFRIENDINFO,FRIENDNAME,FriendName,FRIENDBIRTHDAY,FRIENDID]];
+    }
+    else
+    {
+        rs=[db executeQuery:[NSString stringWithFormat:@"select * from %@ order by %@,%@",TABLEFRIENDINFO,FRIENDBIRTHDAY,FRIENDID]];
+    }
+
     
     while ([rs next]) {
-        FriendData=[[NSArray alloc]  initWithObjects:[rs stringForColumn:@"FriendName"],
-                        [rs stringForColumn:@"FriendBirthday"],
-                        [rs stringForColumn:@"Constellation]"],
-                        nil];
-        [FriendArray addObject: FriendData];
+        friendData=[[NSArray alloc]  initWithObjects:[rs stringForColumn:FRIENDNAME],
+                    [rs stringForColumn:FRIENDBIRTHDAY],
+                    [rs stringForColumn:FRIENDCONSTELLATION],
+                    nil];
+        [friendArray addObject: friendData];
     }
     
     [self closeDB];
-        
-    return FriendArray;
+ 
+    return friendArray;
 }
 
 @end

@@ -29,15 +29,18 @@
     if (self) {
         self.selectionStyle = UITableViewCellSelectionStyleNone;
         [self addPhoto];
-        [self addDateLabel];
-        [self addCountDownLabel];
-        [self addTypeLabel];
     }
     return self;
 }
 
 - (void)setBirthday:(Birthday *)birthday {
-     [self addNameLabel:birthday];
+    if(birthday!=nil)
+    {
+        [self addNameLabel:birthday];
+        [self addDateLabel:birthday];
+        [self addCountDownLabel:birthday];
+        [self addTypeLabel:birthday];
+    }
 }
 
 - (void)addPhoto{
@@ -46,7 +49,7 @@
     [self.contentView addSubview:imageView];
 }
 
-- (void)addNameLabel:(Birthday *)birthday{
+- (void)addNameLabel:(Birthday*)birthday{
     nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(75, 26, 90, 15)];
     nameLabel.text = birthday.name;
     nameLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:15];
@@ -56,9 +59,9 @@
     [self.contentView addSubview:nameLabel];
 }
 
-- (void)addDateLabel{
+- (void)addDateLabel:(Birthday*)birthday{
     dateLabel = [[UILabel alloc] initWithFrame:CGRectMake(75, 46, 150, 15)];
-    dateLabel.text = @"2012年12月25日 星期三";
+    dateLabel.text =birthday.date;
     dateLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:11];
     dateLabel.textColor = [UIColor colorWithRed:0.52 green:0.52 blue:0.52 alpha:1];
     dateLabel.textAlignment = UITextAlignmentLeft;
@@ -66,9 +69,9 @@
     [self.contentView addSubview:dateLabel];
 }
 
-- (void)addCountDownLabel{
+- (void)addCountDownLabel:(Birthday*)birthday{
     countDownLabel = [[UILabel alloc] initWithFrame:CGRectMake(252, 41, 100, 25)];
-    countDownLabel.text = @"13";
+    countDownLabel.text = birthday.countDown;
     countDownLabel.font = [UIFont fontWithName:@"Helvetica" size:30];
     countDownLabel.textColor = [UIColor colorWithRed:0.30 green:0.30 blue:0.30 alpha:1];
     countDownLabel.textAlignment = UITextAlignmentLeft;
@@ -76,9 +79,9 @@
     [self.contentView addSubview:countDownLabel];
 }
 
-- (void)addTypeLabel{
+- (void)addTypeLabel:(Birthday*)birthday{
     typeLabel = [[UILabel alloc] initWithFrame:CGRectMake(260, 8, 100, 25)];
-    typeLabel.text = @"节日";
+    typeLabel.text = birthday.type;
     typeLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:11];
     typeLabel.textColor = [UIColor whiteColor];
     typeLabel.textAlignment = UITextAlignmentLeft;

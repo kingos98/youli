@@ -25,4 +25,7 @@
 
 @property (strong,nonatomic) id<YouliDelegate> youliDelegate;
 @property bool isPopCategoryView;
+
+-(void)hideCategoryView;
+
 @end

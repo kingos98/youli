@@ -53,6 +53,7 @@
 		1530E56E1676D6990010FDB0 /* scorpio.png in Resources */ = {isa = PBXBuildFile; fileRef = 1530E5611676D6990010FDB0 /* scorpio.png */; };
 		1530E56F1676D6990010FDB0 /* taurus.png in Resources */ = {isa = PBXBuildFile; fileRef = 1530E5621676D6990010FDB0 /* taurus.png */; };
 		1530E5701676D6990010FDB0 /* virgo.png in Resources */ = {isa = PBXBuildFile; fileRef = 1530E5631676D6990010FDB0 /* virgo.png */; };
+		1543366E16BFA2D800894F44 /* AssignBirthdayController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1543366D16BFA2D800894F44 /* AssignBirthdayController.m */; };
 		1559F473167ECB1200F16634 /* slider-default-handle-highlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 1559F45E167ECB1200F16634 /* slider-default-handle-highlighted.png */; };
 		1559F474167ECB1200F16634 /* slider-default-handle-highlighted@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1559F45F167ECB1200F16634 /* slider-default-handle-highlighted@2x.png */; };
 		1559F475167ECB1200F16634 /* slider-default-handle.png in Resources */ = {isa = PBXBuildFile; fileRef = 1559F460167ECB1200F16634 /* slider-default-handle.png */; };
@@ -92,6 +93,8 @@
 		15BB70AC167F0F9C00CC3043 /* setting_click.png in Resources */ = {isa = PBXBuildFile; fileRef = 15BB70A4167F0F9C00CC3043 /* setting_click.png */; };
 		15BB70AD167F0F9C00CC3043 /* setting_unclick.png in Resources */ = {isa = PBXBuildFile; fileRef = 15BB70A5167F0F9C00CC3043 /* setting_unclick.png */; };
 		15BB70B91680157800CC3043 /* gift_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 15BB70B81680157800CC3043 /* gift_bg.png */; };
+		15BEB0ED16C105AF0003EC20 /* birthday_gift_select.png in Resources */ = {isa = PBXBuildFile; fileRef = 15BEB0EC16C105AF0003EC20 /* birthday_gift_select.png */; };
+		15BEB11916D0CC030003EC20 /* LocalNotificationsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 15BEB11816D0CC030003EC20 /* LocalNotificationsManager.m */; };
 		15C3DFB4164618000006183D /* BirthdayCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 15C3DFB3164618000006183D /* BirthdayCell.m */; };
 		15CE7AFD1689A41A00707588 /* share_click.png in Resources */ = {isa = PBXBuildFile; fileRef = 15CE7AFB1689A41A00707588 /* share_click.png */; };
 		15CE7AFE1689A41A00707588 /* share_unclick.png in Resources */ = {isa = PBXBuildFile; fileRef = 15CE7AFC1689A41A00707588 /* share_unclick.png */; };
@@ -110,6 +113,7 @@
 		15E7389C1696D45E00EB6032 /* collect_click.png in Resources */ = {isa = PBXBuildFile; fileRef = 15E738981696D45E00EB6032 /* collect_click.png */; };
 		15E7389D1696D45E00EB6032 /* collect_unclick.png in Resources */ = {isa = PBXBuildFile; fileRef = 15E738991696D45E00EB6032 /* collect_unclick.png */; };
 		15F413F51647952500AA6FB3 /* PersonalCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 15F413F41647952500AA6FB3 /* PersonalCell.m */; };
+		15FB366B16BA4ECD00002561 /* FriendMethod.m in Sources */ = {isa = PBXBuildFile; fileRef = 15FB366A16BA4ECD00002561 /* FriendMethod.m */; };
 		180ABFFE1653455F00A505CF /* cart_select.png in Resources */ = {isa = PBXBuildFile; fileRef = 180ABFF61653455F00A505CF /* cart_select.png */; };
 		180ABFFF1653455F00A505CF /* cart_unselect.png in Resources */ = {isa = PBXBuildFile; fileRef = 180ABFF71653455F00A505CF /* cart_unselect.png */; };
 		180AC0001653455F00A505CF /* collect_select.png in Resources */ = {isa = PBXBuildFile; fileRef = 180ABFF81653455F00A505CF /* collect_select.png */; };
@@ -300,6 +304,8 @@
 		1530E5611676D6990010FDB0 /* scorpio.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = scorpio.png; sourceTree = "<group>"; };
 		1530E5621676D6990010FDB0 /* taurus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = taurus.png; sourceTree = "<group>"; };
 		1530E5631676D6990010FDB0 /* virgo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = virgo.png; sourceTree = "<group>"; };
+		1543366C16BFA2D800894F44 /* AssignBirthdayController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AssignBirthdayController.h; sourceTree = "<group>"; };
+		1543366D16BFA2D800894F44 /* AssignBirthdayController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AssignBirthdayController.m; sourceTree = "<group>"; };
 		1559F45E167ECB1200F16634 /* slider-default-handle-highlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "slider-default-handle-highlighted.png"; sourceTree = "<group>"; };
 		1559F45F167ECB1200F16634 /* slider-default-handle-highlighted@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "slider-default-handle-highlighted@2x.png"; sourceTree = "<group>"; };
 		1559F460167ECB1200F16634 /* slider-default-handle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "slider-default-handle.png"; sourceTree = "<group>"; };
@@ -351,6 +357,9 @@
 		15BB70A5167F0F9C00CC3043 /* setting_unclick.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = setting_unclick.png; sourceTree = "<group>"; };
 		15BB70B81680157800CC3043 /* gift_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = gift_bg.png; path = images/gifts/gift_bg.png; sourceTree = "<group>"; };
 		15BB70CD1681613700CC3043 /* YouliDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YouliDelegate.h; sourceTree = "<group>"; };
+		15BEB0EC16C105AF0003EC20 /* birthday_gift_select.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = birthday_gift_select.png; path = images/gifts/birthday_gift_select.png; sourceTree = "<group>"; };
+		15BEB11716D0CC030003EC20 /* LocalNotificationsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalNotificationsManager.h; sourceTree = "<group>"; };
+		15BEB11816D0CC030003EC20 /* LocalNotificationsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalNotificationsManager.m; sourceTree = "<group>"; };
 		15C3DFB2164618000006183D /* BirthdayCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BirthdayCell.h; sourceTree = "<group>"; };
 		15C3DFB3164618000006183D /* BirthdayCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BirthdayCell.m; sourceTree = "<group>"; };
 		15CE7AFB1689A41A00707588 /* share_click.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = share_click.png; sourceTree = "<group>"; };
@@ -375,6 +384,8 @@
 		15E738991696D45E00EB6032 /* collect_unclick.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = collect_unclick.png; path = images/gifts/collect_unclick.png; sourceTree = "<group>"; };
 		15F413F31647952500AA6FB3 /* PersonalCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonalCell.h; sourceTree = "<group>"; };
 		15F413F41647952500AA6FB3 /* PersonalCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonalCell.m; sourceTree = "<group>"; };
+		15FB366916BA4ECD00002561 /* FriendMethod.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendMethod.h; sourceTree = "<group>"; };
+		15FB366A16BA4ECD00002561 /* FriendMethod.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendMethod.m; sourceTree = "<group>"; };
 		180ABFF61653455F00A505CF /* cart_select.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = cart_select.png; path = images/personal/cart_select.png; sourceTree = "<group>"; };
 		180ABFF71653455F00A505CF /* cart_unselect.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = cart_unselect.png; path = images/personal/cart_unselect.png; sourceTree = "<group>"; };
 		180ABFF81653455F00A505CF /* collect_select.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = collect_select.png; path = images/personal/collect_select.png; sourceTree = "<group>"; };
@@ -727,6 +738,10 @@
 				15680CA816AFD14C0086693E /* FestivalMethod.m */,
 				18F82E0116D0CF3E001EC74D /* ConstellationUtils.h */,
 				18F82E0216D0CF3E001EC74D /* ConstellationUtils.m */,
+				15FB366916BA4ECD00002561 /* FriendMethod.h */,
+				15FB366A16BA4ECD00002561 /* FriendMethod.m */,
+				15BEB11716D0CC030003EC20 /* LocalNotificationsManager.h */,
+				15BEB11816D0CC030003EC20 /* LocalNotificationsManager.m */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -987,6 +1002,8 @@
 				E50002EB162E979B00434976 /* BirthdayController.m */,
 				188100EF1654870500E7B66B /* GiftListController.h */,
 				188100F01654870500E7B66B /* GiftListController.m */,
+				1543366C16BFA2D800894F44 /* AssignBirthdayController.h */,
+				1543366D16BFA2D800894F44 /* AssignBirthdayController.m */,
 			);
 			name = Birthday;
 			sourceTree = "<group>";
@@ -1039,6 +1056,7 @@
 				188BEE2D165B30DE00DB9A8D /* birthday_bg@2x.png */,
 				1530E52F1675D0D70010FDB0 /* birthday_gift_constellation_select.png */,
 				1530E5301675D0D70010FDB0 /* birthday_gift_price_select.png */,
+				15BEB0EC16C105AF0003EC20 /* birthday_gift_select.png */,
 				1530E5311675D0D70010FDB0 /* birthday_gift_top.jpg */,
 				15CE7B0A168A9D4300707588 /* buy_click.png */,
 				15CE7B0B168A9D4300707588 /* buy_unclick.png */,
@@ -1484,6 +1502,7 @@
 				1823CA0416BF601E0069E624 /* save.png in Resources */,
 				1823CA0716BF65090069E624 /* friend_cell_bg@2x.png in Resources */,
 				1823CA0816BF65090069E624 /* friend_cell_bg.png in Resources */,
+				15BEB0ED16C105AF0003EC20 /* birthday_gift_select.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1582,6 +1601,9 @@
 				1823C9FF16BF58540069E624 /* FriendCell.m in Sources */,
 				1897AD7316C204BD00C89DF3 /* ConstellationSelector.m in Sources */,
 				18F82E0316D0CF3E001EC74D /* ConstellationUtils.m in Sources */,
+				15FB366B16BA4ECD00002561 /* FriendMethod.m in Sources */,
+				1543366E16BFA2D800894F44 /* AssignBirthdayController.m in Sources */,
+				15BEB11916D0CC030003EC20 /* LocalNotificationsManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
