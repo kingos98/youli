@@ -27,5 +27,5 @@
 @property bool isPopCategoryView;
 
 -(void)hideCategoryView;
-
+-(void)showCategoryView;
 @end

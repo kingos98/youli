@@ -6,6 +6,8 @@
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
+#define BIRTHDAY_ALERT  @"BirthdayAlert"
+
 #import "AFJSONRequestOperation.h"
 #import "UIImageView+WebCache.h"
 #import "IndexController.h"
@@ -14,6 +16,9 @@
 #import "CategoryCell.h"
 #import "BirthdayGiftController.h"
 #import "FestivalMethod.h"
+
+#import "LocalNotificationsUtils.h"
+
 
 @interface IndexController ()
 
@@ -47,7 +52,6 @@ NSTimer *timer;
     //检查是否存在节日日期
     FestivalMethod *festivalMethod=[[FestivalMethod alloc]init];
     [festivalMethod checkFestivalIsExist];
-
     
     templateForIphone4 = [[NSArray alloc] initWithObjects:
     [NSArray arrayWithObjects:@"4",@"4",@"207",@"102",@"small",nil],
@@ -133,11 +137,27 @@ NSTimer *timer;
     
     
     
-    timer = [NSTimer scheduledTimerWithTimeInterval: 1
-                                             target: self
-                                           selector: @selector(handleTimer:)
-                                           userInfo: nil
-                                            repeats: YES];
+//    timer = [NSTimer scheduledTimerWithTimeInterval: 1
+//                                             target: self
+//                                           selector: @selector(handleTimer:)
+//                                           userInfo: nil
+//                                            repeats: YES];
+    
+    //添加通知
+//    NSCalendar *calendar = [NSCalendar autoupdatingCurrentCalendar];
+//    NSDateComponents *comp = [[NSDateComponents alloc] init];
+//    [comp setYear:2013];
+//    [comp setMonth:2];
+//    [comp setDay:18];
+//    [comp setHour:15];
+//    [comp setMinute:12];
+//    [comp setSecond:0];
+//    
+//    NSDate *pickerDate=[calendar dateFromComponents:comp];
+
+//    NSDate *pickerDate=[[NSDate date] addTimeInterval:5];
+//    LocalNotificationsUtils *localNotificationsUtils=[LocalNotificationsUtils alloc];
+//    [localNotificationsUtils addLocalNotificationWithFireDate:pickerDate activityId:BIRTHDAY_ALERT activityTitle:@"notice test"];
 }
 
 

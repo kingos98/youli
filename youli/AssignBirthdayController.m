@@ -107,7 +107,7 @@
     [self.lblGiftTypeTitle setTextAlignment:NSTextAlignmentCenter];
     self.lblGiftTypeTitle.text=@"生日礼物";
     
-    self.giftScrollView=[[UIScrollView alloc]initWithFrame:CGRectMake(0, 95, 320, 370)];
+    self.giftScrollView=[[UIScrollView alloc]initWithFrame:CGRectMake(0, 95, 320, 350)];
     
     imgPrice=[[UIImageView alloc]initWithFrame:CGRectMake(0, 37, 320, 61)];
     imgPrice.image=[UIImage imageNamed:@"birthday_gift_select.png"];    

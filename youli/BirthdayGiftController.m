@@ -137,7 +137,8 @@
     [self.btnPrice setBackgroundImage:[UIImage imageNamed:@"gift_btn_push_down.png"] forState:UIControlStateNormal];
     [self.btnPrice addTarget:self action:@selector(showPrice:) forControlEvents:UIControlEventTouchUpInside];
     
-    self.giftScrollView=[[UIScrollView alloc]initWithFrame:CGRectMake(0, 90, 320, 370)];
+//    self.giftScrollView=[[UIScrollView alloc]initWithFrame:CGRectMake(0, 90, 320, 370)];
+    self.giftScrollView=[[UIScrollView alloc]initWithFrame:CGRectMake(0, 90, 320, 350)];
     
     imgConstellation=[[UIImageView alloc] initWithFrame:CGRectMake(0, 81, 320, 61)];
     imgConstellation.image=[UIImage imageNamed:@"birthday_gift_constellation_select.png"];
@@ -203,6 +204,10 @@
     r=super.tabBarBoxButton.frame;
     r.origin.y=414.0f;
     super.tabBarBoxButton.frame=r;
+
+    //添加手势
+    UIPanGestureRecognizer *mainViewPan=[[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(handleMainPan:)];
+    [giftScrollView addGestureRecognizer: mainViewPan];
 }
 
 - (void)viewDidUnload {
@@ -295,8 +300,9 @@
              
                                                                                                 [giftScrollView setContentSize:CGSizeMake(size.width, iGiftScrollViewHeight+284)];
                                                                                                 
-                                                                                                [self.giftScrollView addSubview:birthdayGiftItem];                                                                                        
+                                                                                                [self.giftScrollView addSubview:birthdayGiftItem];
                                                                                                 
+//                                                                                                iGiftScrollViewHeight+=284;                                                                                                
                                                                                                 iGiftScrollViewHeight+=284;
                                                                                                 
                                                                                                 //把搜索的数据保存到sqlite
@@ -493,6 +499,22 @@
 //    NSLog([NSString stringWithFormat:@"%d",[(UIGestureRecognizer *)sender view].tag]);
     [self.birthdayGiftDetailController sendGiftID:[(UIGestureRecognizer *)sender view].tag];
     [self.navigationController pushViewController:birthdayGiftDetailController animated:YES];
-
 }
+
+-(void) handleMainPan:(UIPanGestureRecognizer *) gestureRecognizer{
+    if([gestureRecognizer state]==UIGestureRecognizerStateBegan||[gestureRecognizer state]==UIGestureRecognizerStateChanged)
+    {
+        CGPoint cgpoint=[gestureRecognizer translationInView:self.view];
+        if(cgpoint.x<0)
+        {
+            [self hideCategoryView];
+        }
+        else
+        {
+            [self showCategoryView];
+        }
+    }
+}
+
+
 @end

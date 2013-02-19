@@ -94,7 +94,7 @@
 		15BB70AD167F0F9C00CC3043 /* setting_unclick.png in Resources */ = {isa = PBXBuildFile; fileRef = 15BB70A5167F0F9C00CC3043 /* setting_unclick.png */; };
 		15BB70B91680157800CC3043 /* gift_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 15BB70B81680157800CC3043 /* gift_bg.png */; };
 		15BEB0ED16C105AF0003EC20 /* birthday_gift_select.png in Resources */ = {isa = PBXBuildFile; fileRef = 15BEB0EC16C105AF0003EC20 /* birthday_gift_select.png */; };
-		15BEB11916D0CC030003EC20 /* LocalNotificationsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 15BEB11816D0CC030003EC20 /* LocalNotificationsManager.m */; };
+		15BEB11916D0CC030003EC20 /* LocalNotificationsUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 15BEB11816D0CC030003EC20 /* LocalNotificationsUtils.m */; };
 		15C3DFB4164618000006183D /* BirthdayCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 15C3DFB3164618000006183D /* BirthdayCell.m */; };
 		15CE7AFD1689A41A00707588 /* share_click.png in Resources */ = {isa = PBXBuildFile; fileRef = 15CE7AFB1689A41A00707588 /* share_click.png */; };
 		15CE7AFE1689A41A00707588 /* share_unclick.png in Resources */ = {isa = PBXBuildFile; fileRef = 15CE7AFC1689A41A00707588 /* share_unclick.png */; };
@@ -358,8 +358,8 @@
 		15BB70B81680157800CC3043 /* gift_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = gift_bg.png; path = images/gifts/gift_bg.png; sourceTree = "<group>"; };
 		15BB70CD1681613700CC3043 /* YouliDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YouliDelegate.h; sourceTree = "<group>"; };
 		15BEB0EC16C105AF0003EC20 /* birthday_gift_select.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = birthday_gift_select.png; path = images/gifts/birthday_gift_select.png; sourceTree = "<group>"; };
-		15BEB11716D0CC030003EC20 /* LocalNotificationsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalNotificationsManager.h; sourceTree = "<group>"; };
-		15BEB11816D0CC030003EC20 /* LocalNotificationsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalNotificationsManager.m; sourceTree = "<group>"; };
+		15BEB11716D0CC030003EC20 /* LocalNotificationsUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalNotificationsUtils.h; sourceTree = "<group>"; };
+		15BEB11816D0CC030003EC20 /* LocalNotificationsUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalNotificationsUtils.m; sourceTree = "<group>"; };
 		15C3DFB2164618000006183D /* BirthdayCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BirthdayCell.h; sourceTree = "<group>"; };
 		15C3DFB3164618000006183D /* BirthdayCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BirthdayCell.m; sourceTree = "<group>"; };
 		15CE7AFB1689A41A00707588 /* share_click.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = share_click.png; sourceTree = "<group>"; };
@@ -502,7 +502,7 @@
 		E5D73BCC16251FC100745C65 /* SVPullToRefresh.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVPullToRefresh.m; sourceTree = "<group>"; };
 		E5D73BDA1625202800745C65 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		E5D73C0716256BDD00745C65 /* tabbar_box.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = tabbar_box.png; path = images/tabbar_box.png; sourceTree = "<group>"; };
-		E5D827BA16081EC400969EE2 /* youli.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = youli.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E5D827BA16081EC400969EE2 /* 友礼.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "友礼.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E5D827BE16081EC400969EE2 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		E5D827C016081EC400969EE2 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		E5D827C216081EC400969EE2 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -740,8 +740,8 @@
 				18F82E0216D0CF3E001EC74D /* ConstellationUtils.m */,
 				15FB366916BA4ECD00002561 /* FriendMethod.h */,
 				15FB366A16BA4ECD00002561 /* FriendMethod.m */,
-				15BEB11716D0CC030003EC20 /* LocalNotificationsManager.h */,
-				15BEB11816D0CC030003EC20 /* LocalNotificationsManager.m */,
+				15BEB11716D0CC030003EC20 /* LocalNotificationsUtils.h */,
+				15BEB11816D0CC030003EC20 /* LocalNotificationsUtils.m */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -1143,7 +1143,7 @@
 		E5D827BB16081EC400969EE2 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				E5D827BA16081EC400969EE2 /* youli.app */,
+				E5D827BA16081EC400969EE2 /* 友礼.app */,
 				E5D827DE16081EC400969EE2 /* youliTests.octest */,
 			);
 			name = Products;
@@ -1294,7 +1294,7 @@
 			);
 			name = youli;
 			productName = youli;
-			productReference = E5D827BA16081EC400969EE2 /* youli.app */;
+			productReference = E5D827BA16081EC400969EE2 /* 友礼.app */;
 			productType = "com.apple.product-type.application";
 		};
 		E5D827DD16081EC400969EE2 /* youliTests */ = {
@@ -1603,7 +1603,7 @@
 				18F82E0316D0CF3E001EC74D /* ConstellationUtils.m in Sources */,
 				15FB366B16BA4ECD00002561 /* FriendMethod.m in Sources */,
 				1543366E16BFA2D800894F44 /* AssignBirthdayController.m in Sources */,
-				15BEB11916D0CC030003EC20 /* LocalNotificationsManager.m in Sources */,
+				15BEB11916D0CC030003EC20 /* LocalNotificationsUtils.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1710,7 +1710,8 @@
 					"\"$(SRCROOT)/../../weibo/JimLiu-WeiboSDK-815d480/archives/v1/SinaWeiboOAuthDemo/Classes/WeiboEngine\"",
 				);
 				OTHER_LDFLAGS = "";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "友礼";
+				TARGETED_DEVICE_FAMILY = 1;
 				VALIDATE_PRODUCT = YES;
 				WRAPPER_EXTENSION = app;
 			};
@@ -1734,7 +1735,8 @@
 					"\"$(SRCROOT)/../../weibo/JimLiu-WeiboSDK-815d480/archives/v1/SinaWeiboOAuthDemo/Classes/WeiboEngine\"",
 				);
 				OTHER_LDFLAGS = "";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "友礼";
+				TARGETED_DEVICE_FAMILY = 1;
 				VALIDATE_PRODUCT = YES;
 				WRAPPER_EXTENSION = app;
 			};

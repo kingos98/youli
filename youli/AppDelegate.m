@@ -6,10 +6,15 @@
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
+#define BIRTHDAY_ALERT  @"BirthdayAlert"
+
+
 #import "AppDelegate.h"
 #import "IndexController.h"
 #import "PersonalController.h"
 #import "SinaWeibo.h"
+
+#import "LocalNotificationsUtils.h"
 
 @implementation AppDelegate
 
@@ -38,7 +43,7 @@
 
 - (void)application:(UIApplication *)app didReceiveLocalNotification:(UILocalNotification *)notif
 {
-    
+//    NSLog(@"didReceiveLocalNotification");
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application
@@ -51,6 +56,15 @@
 {
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+    
+    
+//    NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval: 1
+//                                             target: self
+//                                           selector: @selector(handleTimer:)
+//                                           userInfo: nil
+//                                            repeats: YES];
+
+    
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
@@ -62,6 +76,9 @@
 {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
     [self.sinaweibo applicationDidBecomeActive];
+    
+//    LocalNotificationsUtils *localNotificationsUtils=[[LocalNotificationsUtils alloc]init];
+//    [localNotificationsUtils removeLocalNotificationWithActivityId:BIRTHDAY_ALERT];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
@@ -77,6 +94,16 @@
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
 {
     return [self.sinaweibo handleOpenURL:url];
+}
+
+-(void) handleTimer: (NSTimer *) timer
+{
+    NSCalendar *calendar=[NSCalendar currentCalendar];
+
+    unsigned unitFlags1=NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit;
+    NSDateComponents *comp=[calendar components:unitFlags1 fromDate:[NSDate date]];
+
+    NSLog(@"%d:%d:%d",comp.hour,comp.minute,comp.second);
 }
 
 @end

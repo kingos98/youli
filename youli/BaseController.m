@@ -70,8 +70,8 @@
         categoryTableView.delegate=self;
 
         //为mainScrollView添加手势操作
-        UIPanGestureRecognizer *mainViewPan=[[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(handleMainPan:)];
-        [mainView addGestureRecognizer: mainViewPan];
+//        UIPanGestureRecognizer *mainViewPan=[[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(handleMainPan:)];
+//        [mainView addGestureRecognizer: mainViewPan];
 
         isPopCategoryView=false;
         
