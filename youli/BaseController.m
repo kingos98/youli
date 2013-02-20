@@ -14,6 +14,8 @@
 
 #import "YouliConfig.h"
 
+#import "AppDelegate.h"
+
 @interface BaseController ()
 @end
 
@@ -32,7 +34,8 @@
     if (self) {
         //类别view，可向右滑动，初始化时处于第一层，相当于被隐藏。
 
-        if([YouliConfig getScreenHeight]==480)
+//        if([YouliConfig getScreenHeight]==480)
+        if(!iPhone5)
         {
             categoryView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 212, 460)];
         }
@@ -42,7 +45,8 @@
         }
         
         //添加分类页面
-        if([YouliConfig getScreenHeight]==480)
+//        if([YouliConfig getScreenHeight]==480)
+        if(!iPhone5)
         {
             categoryTableView = [[CategoryTableView alloc] initWithFrame:CGRectMake(0, 0, 212, 460)];
         }
@@ -58,7 +62,8 @@
         [categoryView addSubview:categoryTableView];
         
         //主页面view，当前可看到的页面。
-        if([YouliConfig getScreenHeight]==480)
+//        if([YouliConfig getScreenHeight]==480)
+        if(!iPhone5)
         {
             mainView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 460)];
         }
@@ -126,7 +131,8 @@
 -(UIView *)backgroundView
 {
     UIImageView *categoryBgImageTmp=[[UIImageView  alloc] initWithFrame:CGRectMake(0,0,212,460)];
-    if([YouliConfig getScreenHeight]==568)
+//    if([YouliConfig getScreenHeight]==568)
+    if(iPhone5)
     {
         categoryBgImageTmp.frame=CGRectMake(0, 0, 212, 548);
     }

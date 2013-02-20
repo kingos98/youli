@@ -22,8 +22,6 @@
 #import "NMRangeSlider.h"
 #import "BaseController.h"
 
-#import "YouliConfig.h"
-
 #import "AppDelegate.h"
 
 @interface BirthdayGiftController ()
@@ -109,12 +107,6 @@
     [giftScrollView setShowsVerticalScrollIndicator:false];
     
     giftScrollView.delegate=self;
-    
-//    NSString *strMsg=[NSString stringWithFormat:@"this iphone height:%d",[YouliConfig getScreenHeight]];
-//    
-//    UIAlertView *alert1=[[UIAlertView alloc]initWithTitle:@"test alert" message:strMsg delegate:nil cancelButtonTitle:@"cancel me" otherButtonTitles:nil];
-//    
-//    [alert1 show];
 }
 
 //初始化view控件
@@ -124,7 +116,7 @@
     imgTitle.image = [UIImage imageNamed:@"head.jpg"];
     
     UIImageView *imgGiftScrollView=[[UIImageView alloc] initWithFrame:CGRectMake(0, 89, 320, 370)];
-    if([YouliConfig getScreenHeight]==568)
+    if(iPhone5)
     {
         imgGiftScrollView.frame=CGRectMake(0, 89, 320, 458);
     }
@@ -149,10 +141,11 @@
     self.btnPrice=[[UIButton alloc] initWithFrame:CGRectMake(245, 51, 62, 32)];
     [self.btnPrice setBackgroundImage:[UIImage imageNamed:@"gift_btn_push_down.png"] forState:UIControlStateNormal];
     [self.btnPrice addTarget:self action:@selector(showPrice:) forControlEvents:UIControlEventTouchUpInside];
-    
-//    self.giftScrollView=[[UIScrollView alloc]initWithFrame:CGRectMake(0, 90, 320, 370)];
+
     self.giftScrollView=[[UIScrollView alloc]initWithFrame:CGRectMake(0, 90, 320, 350)];
-    if([YouliConfig getScreenHeight]==568)
+    
+
+    if(iPhone5)
     {
         self.giftScrollView.frame=CGRectMake(0, 90, 320, 438);
     }
@@ -207,7 +200,7 @@
     
     //修改super组件位置
     CGRect r=super.tabBarLeftButton.frame;
-    if([YouliConfig getScreenHeight]==480)
+    if(!iPhone5)
     {
         r.origin.y=422.0f;
     }
@@ -218,7 +211,7 @@
     super.tabBarLeftButton.frame=r;
     
     r=super.tabBarRightButton.frame;
-    if([YouliConfig getScreenHeight]==480)
+    if(!iPhone5)
     {
         r.origin.y=422.0f;
     }
@@ -229,7 +222,7 @@
     super.tabBarRightButton.frame=r;
     
     r=super.tabBarBgImage.frame;
-    if([YouliConfig getScreenHeight]==480)
+    if(!iPhone5)
     {
         r.origin.y=422.0f;
     }
@@ -240,7 +233,7 @@
     super.tabBarBgImage.frame=r;
     
     r=super.tabBarBoxButton.frame;
-    if([YouliConfig getScreenHeight]==480)
+    if(!iPhone5)
     {
         r.origin.y=414.0f;
     }

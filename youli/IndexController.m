@@ -19,9 +19,6 @@
 
 #import "LocalNotificationsUtils.h"
 
-#import "YouliConfig.h"
-
-
 @interface IndexController ()
 
 @end
@@ -51,9 +48,9 @@ NSTimer *timer;
 {
     [super viewDidLoad];
     
-    //获取屏幕尺寸
-    CGRect rect=[[UIScreen mainScreen] bounds];  //全屏的
-    [YouliConfig setScreenWidthHeight:(int)rect.size.width :(int)rect.size.height];
+//    //获取屏幕尺寸
+//    CGRect rect=[[UIScreen mainScreen] bounds];  //全屏的
+//    [YouliConfig setScreenWidthHeight:(int)rect.size.width :(int)rect.size.height];
  
     //检查是否存在节日日期
     FestivalMethod *festivalMethod=[[FestivalMethod alloc]init];
