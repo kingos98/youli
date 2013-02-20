@@ -11,6 +11,9 @@
 #import "BirthdayController.h"
 #import "CategoryCell.h"
 #import "YouliDelegate.h"
+
+#import "YouliConfig.h"
+
 @interface BaseController ()
 @end
 
@@ -28,14 +31,42 @@
     self = [super init];
     if (self) {
         //类别view，可向右滑动，初始化时处于第一层，相当于被隐藏。
-        categoryView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 212, 460)];
+
+        if([YouliConfig getScreenHeight]==480)
+        {
+            categoryView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 212, 460)];
+        }
+        else
+        {
+            categoryView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 212, 548)];
+        }
         
         //添加分类页面
-        categoryTableView = [[CategoryTableView alloc] initWithFrame:CGRectMake(0, 0, 212, 460)];
+        if([YouliConfig getScreenHeight]==480)
+        {
+            categoryTableView = [[CategoryTableView alloc] initWithFrame:CGRectMake(0, 0, 212, 460)];
+        }
+        else
+        {
+            categoryTableView = [[CategoryTableView alloc] initWithFrame:CGRectMake(0, 0, 212, 548)];
+        }
+        categoryTableView.backgroundView=[self backgroundView];
+        categoryTableView.backgroundColor=[UIColor clearColor];
+        categoryTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+        categoryTableView.scrollEnabled=false;
+
         [categoryView addSubview:categoryTableView];
         
         //主页面view，当前可看到的页面。
-        mainView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 460)];
+        if([YouliConfig getScreenHeight]==480)
+        {
+            mainView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 460)];
+        }
+        else
+        {
+            mainView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 548)];
+        }
+
         
         //底部导航条
         self.tabBarBgImage = [[UIImageView alloc] initWithFrame:CGRectMake(0, 378, 320, 38)];
@@ -90,6 +121,18 @@
     {
         [self showCategoryView];
     }
+}
+
+-(UIView *)backgroundView
+{
+    UIImageView *categoryBgImageTmp=[[UIImageView  alloc] initWithFrame:CGRectMake(0,0,212,460)];
+    if([YouliConfig getScreenHeight]==568)
+    {
+        categoryBgImageTmp.frame=CGRectMake(0, 0, 212, 548);
+    }
+
+    categoryBgImageTmp.image = [UIImage imageNamed:@"gifttypebg.png"];
+    return categoryBgImageTmp;
 }
 
 - (void)showCategoryView

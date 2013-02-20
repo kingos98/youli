@@ -24,6 +24,8 @@
 
 #import "YouliConfig.h"
 
+#import "AppDelegate.h"
+
 @interface BirthdayGiftController ()
 {
     @private
@@ -93,7 +95,7 @@
     self.BirthdayGiftDetailControllerDelegate=birthdayGiftDetailController;
     
     strOldGiftType=nil;
-    strNewGiftType=nil;    
+    strNewGiftType=nil;
 }
 
 -(void) viewDidAppear:(BOOL)animated
@@ -290,6 +292,8 @@
     [priceSlider setHidden:YES];
     
     [mainView addSubview:priceSlider];
+    
+    
 }
 
 
