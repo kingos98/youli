@@ -84,7 +84,6 @@
 		158B0EAD169FE85C0098B8E6 /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 158B0EA8169FE85C0098B8E6 /* FMResultSet.m */; };
 		158B0EB1169FE9400098B8E6 /* FMDatabaseOper.m in Sources */ = {isa = PBXBuildFile; fileRef = 158B0EB0169FE9400098B8E6 /* FMDatabaseOper.m */; };
 		158B0EB316A132700098B8E6 /* gift_detail_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 158B0EB216A132700098B8E6 /* gift_detail_bg.png */; };
-		15B7C72016D3615300DDDCE3 /* YouliConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 15B7C71F16D3615300DDDCE3 /* YouliConfig.m */; };
 		15BB70A6167F0F9C00CC3043 /* cancel_click.png in Resources */ = {isa = PBXBuildFile; fileRef = 15BB709E167F0F9C00CC3043 /* cancel_click.png */; };
 		15BB70A7167F0F9C00CC3043 /* cancel_unclick.png in Resources */ = {isa = PBXBuildFile; fileRef = 15BB709F167F0F9C00CC3043 /* cancel_unclick.png */; };
 		15BB70A8167F0F9C00CC3043 /* home_click.png in Resources */ = {isa = PBXBuildFile; fileRef = 15BB70A0167F0F9C00CC3043 /* home_click.png */; };
@@ -348,8 +347,6 @@
 		158B0EAF169FE9400098B8E6 /* FMDatabaseOper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabaseOper.h; sourceTree = "<group>"; };
 		158B0EB0169FE9400098B8E6 /* FMDatabaseOper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabaseOper.m; sourceTree = "<group>"; };
 		158B0EB216A132700098B8E6 /* gift_detail_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = gift_detail_bg.png; path = images/gifts/gift_detail_bg.png; sourceTree = "<group>"; };
-		15B7C71E16D3615300DDDCE3 /* YouliConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YouliConfig.h; sourceTree = "<group>"; };
-		15B7C71F16D3615300DDDCE3 /* YouliConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YouliConfig.m; sourceTree = "<group>"; };
 		15BB709E167F0F9C00CC3043 /* cancel_click.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cancel_click.png; sourceTree = "<group>"; };
 		15BB709F167F0F9C00CC3043 /* cancel_unclick.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cancel_unclick.png; sourceTree = "<group>"; };
 		15BB70A0167F0F9C00CC3043 /* home_click.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = home_click.png; sourceTree = "<group>"; };
@@ -1202,8 +1199,6 @@
 				E5D827C716081EC400969EE2 /* InfoPlist.strings */,
 				E5D827CA16081EC400969EE2 /* main.m */,
 				E5D827CC16081EC400969EE2 /* youli-Prefix.pch */,
-				15B7C71E16D3615300DDDCE3 /* YouliConfig.h */,
-				15B7C71F16D3615300DDDCE3 /* YouliConfig.m */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -1609,7 +1604,6 @@
 				15FB366B16BA4ECD00002561 /* FriendMethod.m in Sources */,
 				1543366E16BFA2D800894F44 /* AssignBirthdayController.m in Sources */,
 				15BEB11916D0CC030003EC20 /* LocalNotificationsUtils.m in Sources */,
-				15B7C72016D3615300DDDCE3 /* YouliConfig.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

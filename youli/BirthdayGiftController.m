@@ -197,51 +197,6 @@
     [mainView addSubview:upperPrice];
     [mainView addSubview:btnReturn];
     [mainView addSubview:indicator];
-    
-    //修改super组件位置
-    CGRect r=super.tabBarLeftButton.frame;
-    if(!iPhone5)
-    {
-        r.origin.y=422.0f;
-    }
-    else
-    {
-        r.origin.y=510.0f;
-    }
-    super.tabBarLeftButton.frame=r;
-    
-    r=super.tabBarRightButton.frame;
-    if(!iPhone5)
-    {
-        r.origin.y=422.0f;
-    }
-    else
-    {
-        r.origin.y=510.0f;
-    }
-    super.tabBarRightButton.frame=r;
-    
-    r=super.tabBarBgImage.frame;
-    if(!iPhone5)
-    {
-        r.origin.y=422.0f;
-    }
-    else
-    {
-        r.origin.y=510.0f;
-    }
-    super.tabBarBgImage.frame=r;
-    
-    r=super.tabBarBoxButton.frame;
-    if(!iPhone5)
-    {
-        r.origin.y=414.0f;
-    }
-    else
-    {
-        r.origin.y=502.0f;
-    }
-    super.tabBarBoxButton.frame=r;
 
 //    //添加手势
 //    UIPanGestureRecognizer *mainViewPan=[[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(handleMainPan:)];
@@ -285,8 +240,6 @@
     [priceSlider setHidden:YES];
     
     [mainView addSubview:priceSlider];
-    
-    
 }
 
 
@@ -547,7 +500,6 @@
 
 -(void) handleMainPan:(UIPanGestureRecognizer *) gestureRecognizer{
     
-    NSLog(@"1");
     if([gestureRecognizer state]==UIGestureRecognizerStateBegan||[gestureRecognizer state]==UIGestureRecognizerStateChanged)
     {
         CGPoint cgpoint=[gestureRecognizer translationInView:self.view];
@@ -560,7 +512,6 @@
             [self showCategoryView];
         }
     }
-    NSLog(@"2");
 }
 
 -(void) handlePrice:(UIPanGestureRecognizer *) gestureRecognizer

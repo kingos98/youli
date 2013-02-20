@@ -11,9 +11,6 @@
 #import "BirthdayController.h"
 #import "CategoryCell.h"
 #import "YouliDelegate.h"
-
-#import "YouliConfig.h"
-
 #import "AppDelegate.h"
 
 @interface BaseController ()
@@ -33,8 +30,6 @@
     self = [super init];
     if (self) {
         //类别view，可向右滑动，初始化时处于第一层，相当于被隐藏。
-
-//        if([YouliConfig getScreenHeight]==480)
         if(!iPhone5)
         {
             categoryView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 212, 460)];
@@ -45,7 +40,6 @@
         }
         
         //添加分类页面
-//        if([YouliConfig getScreenHeight]==480)
         if(!iPhone5)
         {
             categoryTableView = [[CategoryTableView alloc] initWithFrame:CGRectMake(0, 0, 212, 460)];
@@ -62,7 +56,6 @@
         [categoryView addSubview:categoryTableView];
         
         //主页面view，当前可看到的页面。
-//        if([YouliConfig getScreenHeight]==480)
         if(!iPhone5)
         {
             mainView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 460)];
@@ -74,24 +67,56 @@
 
         
         //底部导航条
-        self.tabBarBgImage = [[UIImageView alloc] initWithFrame:CGRectMake(0, 378, 320, 38)];
+        if(!iPhone5)
+        {
+            self.tabBarBgImage = [[UIImageView alloc] initWithFrame:CGRectMake(0, 422, 320, 38)];
+        }
+        else
+        {
+            self.tabBarBgImage = [[UIImageView alloc] initWithFrame:CGRectMake(0, 510, 320, 38)];
+        }
+
         tabBarBgImage.image = [UIImage imageNamed:@"tabbar_bg.png"];
         
         tabBarLeftButton = [UIButton buttonWithType:UIButtonTypeCustom];
         UIImage *tabBarLeftImage = [UIImage imageNamed:@"tabbar_left.png"];
-        tabBarLeftButton.frame = CGRectMake(0, 378, 78, 38);
+        if(!iPhone5)
+        {
+            tabBarLeftButton.frame = CGRectMake(0, 422, 78, 38);
+        }
+        else
+        {
+            tabBarLeftButton.frame = CGRectMake(0, 510, 78, 38);
+        }
+
         [self.tabBarLeftButton setBackgroundImage:tabBarLeftImage forState:UIControlStateNormal];
         [tabBarLeftButton addTarget:self action:@selector(CategoryViewOper) forControlEvents:UIControlEventTouchUpInside];
                 
         tabBarBoxButton = [UIButton buttonWithType:UIButtonTypeCustom];
         UIImage *tabBarBoxImage = [UIImage imageNamed:@"tabbar_box.png"];
-        tabBarBoxButton.frame = CGRectMake(120, 371, 78, 45);
+        if(!iPhone5)
+        {
+            tabBarBoxButton.frame = CGRectMake(120, 415, 78, 45);
+        }
+        else
+        {
+            tabBarBoxButton.frame = CGRectMake(120, 503, 78, 45);
+        }
+
         [self.tabBarBoxButton setBackgroundImage:tabBarBoxImage forState:UIControlStateNormal];
         [tabBarBoxButton addTarget:self action:@selector(birthdayButtonPressed) forControlEvents:UIControlEventTouchUpInside];
         
         tabBarRightButton = [UIButton buttonWithType:UIButtonTypeCustom];
         UIImage *tabBarRightImage = [UIImage imageNamed:@"tabbar_right.png"];
-        tabBarRightButton.frame = CGRectMake(240, 378, 78, 38);
+        if(!iPhone5)
+        {
+            tabBarRightButton.frame = CGRectMake(240, 422, 78, 38);
+        }
+        else
+        {
+            tabBarRightButton.frame = CGRectMake(240, 510, 78, 38);
+        }
+
         [self.tabBarRightButton setBackgroundImage:tabBarRightImage forState:UIControlStateNormal];
         [tabBarRightButton addTarget:self action:@selector(personalButtonPressed) forControlEvents:UIControlEventTouchUpInside];
       
@@ -131,7 +156,6 @@
 -(UIView *)backgroundView
 {
     UIImageView *categoryBgImageTmp=[[UIImageView  alloc] initWithFrame:CGRectMake(0,0,212,460)];
-//    if([YouliConfig getScreenHeight]==568)
     if(iPhone5)
     {
         categoryBgImageTmp.frame=CGRectMake(0, 0, 212, 548);
