@@ -98,6 +98,9 @@ NSMutableArray *items ;
     [addButton addTarget:self action:@selector(addButtonPressed) forControlEvents:UIControlEventTouchUpInside];
     
     self.friendTable = [[UIFolderTableView alloc] initWithFrame:CGRectMake(10, 160, 300, 220)];
+    if(iPhone5){
+        self.friendTable.frame = CGRectMake(10, 160, 300, 308);
+    }
     [self.friendTable setDelegate:self];
     [self.friendTable setDataSource:self];
     [self.friendTable setBackgroundColor:[UIColor whiteColor]];

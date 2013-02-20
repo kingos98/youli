@@ -36,6 +36,9 @@
     [mainBgView setImage:[UIImage imageNamed:@"bg.jpg"]];
     
 	self.friendTable = [[UIFolderTableView alloc] initWithFrame:CGRectMake(0, 0, 320, 380)];
+    if(iPhone5){
+        self.friendTable.frame = CGRectMake(0, 0, 320, 468);
+    }
     [self.friendTable setDelegate:self];
     [self.friendTable setDataSource:self];
     [self.friendTable setBackgroundColor:[UIColor whiteColor]];

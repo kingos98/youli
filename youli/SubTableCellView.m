@@ -72,6 +72,7 @@
     NSInteger month = [[self.selectedMonth substringToIndex:monthRange.location] integerValue];
     NSInteger day = [[self.selectedDay substringToIndex:dayRange.location] integerValue];
     self.constellationSelector.selectedValue = [ConstellationUtils getAstroWithMonth:month andDay:day];
+    self.selectedConstellation = self.constellationSelector.selectedValue;
     [self.constellationSelector scrollToTheSelectedCell];    
 }
 
