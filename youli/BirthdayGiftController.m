@@ -22,6 +22,8 @@
 #import "NMRangeSlider.h"
 #import "BaseController.h"
 
+#import "YouliConfig.h"
+
 @interface BirthdayGiftController ()
 {
     @private
@@ -57,8 +59,6 @@
 @synthesize birthdayGiftDetailController;
 @synthesize birthdayGiftDetailControllerDelegate;
 
-
-
 #pragma mark -
 #pragma mark Initial
 - (void)viewDidLoad
@@ -93,7 +93,7 @@
     self.BirthdayGiftDetailControllerDelegate=birthdayGiftDetailController;
     
     strOldGiftType=nil;
-    strNewGiftType=nil;
+    strNewGiftType=nil;    
 }
 
 -(void) viewDidAppear:(BOOL)animated
@@ -107,6 +107,12 @@
     [giftScrollView setShowsVerticalScrollIndicator:false];
     
     giftScrollView.delegate=self;
+    
+//    NSString *strMsg=[NSString stringWithFormat:@"this iphone height:%d",[YouliConfig getScreenHeight]];
+//    
+//    UIAlertView *alert1=[[UIAlertView alloc]initWithTitle:@"test alert" message:strMsg delegate:nil cancelButtonTitle:@"cancel me" otherButtonTitles:nil];
+//    
+//    [alert1 show];
 }
 
 //初始化view控件
@@ -116,6 +122,11 @@
     imgTitle.image = [UIImage imageNamed:@"head.jpg"];
     
     UIImageView *imgGiftScrollView=[[UIImageView alloc] initWithFrame:CGRectMake(0, 89, 320, 370)];
+    if([YouliConfig getScreenHeight]==568)
+    {
+        imgGiftScrollView.frame=CGRectMake(0, 89, 320, 458);
+    }
+    
     imgGiftScrollView.image=[UIImage imageNamed:@"bg.jpg"];
     
     UIImageView *imgSelectorBG=[[UIImageView alloc] initWithFrame:CGRectMake(0, 44, 320, 45)];
@@ -139,6 +150,10 @@
     
 //    self.giftScrollView=[[UIScrollView alloc]initWithFrame:CGRectMake(0, 90, 320, 370)];
     self.giftScrollView=[[UIScrollView alloc]initWithFrame:CGRectMake(0, 90, 320, 350)];
+    if([YouliConfig getScreenHeight]==568)
+    {
+        self.giftScrollView.frame=CGRectMake(0, 90, 320, 438);
+    }
     
     imgConstellation=[[UIImageView alloc] initWithFrame:CGRectMake(0, 81, 320, 61)];
     imgConstellation.image=[UIImage imageNamed:@"birthday_gift_constellation_select.png"];
@@ -190,24 +205,55 @@
     
     //修改super组件位置
     CGRect r=super.tabBarLeftButton.frame;
-    r.origin.y=422.0f;
+    if([YouliConfig getScreenHeight]==480)
+    {
+        r.origin.y=422.0f;
+    }
+    else
+    {
+        r.origin.y=510.0f;
+    }
     super.tabBarLeftButton.frame=r;
     
     r=super.tabBarRightButton.frame;
-    r.origin.y=422.0f;
+    if([YouliConfig getScreenHeight]==480)
+    {
+        r.origin.y=422.0f;
+    }
+    else
+    {
+        r.origin.y=510.0f;
+    }
     super.tabBarRightButton.frame=r;
     
     r=super.tabBarBgImage.frame;
-    r.origin.y=422.0f;
+    if([YouliConfig getScreenHeight]==480)
+    {
+        r.origin.y=422.0f;
+    }
+    else
+    {
+        r.origin.y=510.0f;
+    }
     super.tabBarBgImage.frame=r;
     
     r=super.tabBarBoxButton.frame;
-    r.origin.y=414.0f;
+    if([YouliConfig getScreenHeight]==480)
+    {
+        r.origin.y=414.0f;
+    }
+    else
+    {
+        r.origin.y=502.0f;
+    }
     super.tabBarBoxButton.frame=r;
 
-    //添加手势
-    UIPanGestureRecognizer *mainViewPan=[[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(handleMainPan:)];
-    [giftScrollView addGestureRecognizer: mainViewPan];
+//    //添加手势
+//    UIPanGestureRecognizer *mainViewPan=[[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(handleMainPan:)];
+//    [giftScrollView addGestureRecognizer: mainViewPan];
+    
+//    UIPanGestureRecognizer *pricePan=[[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(handlePrice:)];
+//    [priceSlider addGestureRecognizer:pricePan];
 }
 
 - (void)viewDidUnload {
@@ -242,6 +288,7 @@
     
     [priceSlider addTarget:self action:@selector(priceSliderChange) forControlEvents:UIControlEventValueChanged];
     [priceSlider setHidden:YES];
+    
     [mainView addSubview:priceSlider];
 }
 
@@ -502,6 +549,8 @@
 }
 
 -(void) handleMainPan:(UIPanGestureRecognizer *) gestureRecognizer{
+    
+    NSLog(@"1");
     if([gestureRecognizer state]==UIGestureRecognizerStateBegan||[gestureRecognizer state]==UIGestureRecognizerStateChanged)
     {
         CGPoint cgpoint=[gestureRecognizer translationInView:self.view];
@@ -514,6 +563,17 @@
             [self showCategoryView];
         }
     }
+    NSLog(@"2");
+}
+
+-(void) handlePrice:(UIPanGestureRecognizer *) gestureRecognizer
+{
+    NSLog(@"before");
+    if([gestureRecognizer state]==UIGestureRecognizerStateBegan||[gestureRecognizer state]==UIGestureRecognizerStateChanged)
+    {
+        NSLog(@"price pan");
+    }
+    NSLog(@"after");
 }
 
 

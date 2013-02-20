@@ -16,3 +16,11 @@ profile
 *.moved-aside
 DerivedData
 .idea/
+
+youli/NSObject+YouliConfig.h
+
+youli/NSObject+YouliConfig.m
+
+youli/config.h
+
+youli/config.m
