@@ -130,7 +130,7 @@ NSMutableArray *items ;
     [sinaweibo logIn];
     sinaweibo.delegate = self;
     
-    [self.navigationController setNavigationBarHidden:NO animated:NO];
+    [self.navigationController setNavigationBarHidden:YES animated:NO];
 }
 
 - (void)addButtonPressed
