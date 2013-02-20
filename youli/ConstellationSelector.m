@@ -37,16 +37,23 @@
     return 12;
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	return 33;
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"Cell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
-    cell.textLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:17];
-    cell.textLabel.textColor = [UIColor whiteColor];
-    cell.textLabel.textAlignment =  NSTextAlignmentCenter;
-    cell.textLabel.backgroundColor = [UIColor clearColor];
-    cell.textLabel.text = [NSString stringWithFormat:@"%@",[self.values objectAtIndex:indexPath.row]];
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
+        cell.textLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:17];
+        cell.textLabel.textColor = [UIColor whiteColor];
+        cell.textLabel.textAlignment =  NSTextAlignmentCenter;
+        cell.textLabel.backgroundColor = [UIColor clearColor];
+        cell.textLabel.text = [NSString stringWithFormat:@"%@",[self.values objectAtIndex:indexPath.row]];
+    }
     return cell;
 }
 
@@ -59,7 +66,6 @@
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
     }
     else if (editingStyle == UITableViewCellEditingStyleInsert) {
@@ -78,42 +84,17 @@
     return YES;
 }
 
-#pragma mark - Table view delegate
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    
-}
-
-#pragma mark Scroll view methods
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-    [self scrollToTheSelectedCell];
-}
-
-- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
-{
-    if (!decelerate) {
-        [self scrollToTheSelectedCell];
-    }
-}
-
 - (void)scrollToTheSelectedCell
 {
-    CGRect selectionRectConverted = [self convertRect:selectionRect toView:self];
-    NSArray *indexPathArray = [self indexPathsForRowsInRect:selectionRectConverted];
-    CGFloat intersectionHeight = 0.0;
-    NSIndexPath *selectedIndexPath = nil;
-    for (NSIndexPath *index in indexPathArray) {
-        UITableViewCell *cell = [self cellForRowAtIndexPath:index];
-        CGRect intersectedRect = CGRectIntersection(cell.frame, selectionRectConverted);
-        if (intersectedRect.size.height>=intersectionHeight) {
-            selectedIndexPath = index;
-            intersectionHeight = intersectedRect.size.height;
+    for (NSString *value in self.values) {
+        if (value.length>1) {
+            if ([value hasPrefix:self.selectedValue]) {
+                NSUInteger index = [self.values indexOfObject:value];
+                NSIndexPath *selectedIndexPath = [NSIndexPath indexPathForRow:index inSection:0];
+                [self scrollToRowAtIndexPath:selectedIndexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+                break;
+            }
         }
-    }
-    if (selectedIndexPath!=nil) {
-        //As soon as we elected an indexpath we just have to scroll to it
-        [self scrollToRowAtIndexPath:selectedIndexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
-        
     }
 }
 

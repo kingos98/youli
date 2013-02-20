@@ -8,6 +8,7 @@
 
 #import "SubTableCellView.h"
 #import "IZValueSelectorView.h"
+#import "ConstellationUtils.h"
 
 @implementation SubTableCellView
 
@@ -34,14 +35,6 @@
         self.dayView.horizontalScrolling = NO;
         self.dayView.values  = [[NSArray alloc] initWithObjects:@"1日",@"2日",@"3日",@"4日",@"5日",@"6日",@"7日",@"8日",@"9日",@"10日",@"11日",@"12日",@"13日",@"14日",@"15日",@"16日",@"17日",@"18日",@"19日",@"20日",@"21日",@"22日",@"23日",@"24日",@"25日",@"26日",@"27日",@"28日",@"29日",@"30日",@"31日",@"",nil];
         [self addSubview:self.dayView];
-        
-        self.constellationView = [[IZValueSelectorView alloc] initWithFrame:CGRectMake(210, 35, 90, 170)];
-        self.constellationView.dataSource = self;
-        self.constellationView.delegate = self;
-        self.constellationView.shouldBeTransparent = YES;
-        self.constellationView.horizontalScrolling = NO;
-        self.constellationView.values  = [[NSArray alloc] initWithObjects:@"白羊座",@"金牛座",@"双子座",@"巨蟹座",@"狮子座",@"处女座",@"天秤座",@"天蝎座",@"射手座",@"摩羯座",@"水瓶座",@"双鱼座",@"",nil];
-        //        [self addSubview:self.constellationView];
         
         self.constellationSelector = [[ConstellationSelector alloc] initWithFrame:CGRectMake(210, 35, 90, 170)];
         self.constellationSelector.backgroundColor = [UIColor clearColor];
@@ -74,8 +67,25 @@
     if([selectedValue hasSuffix:@"日"]){
         self.selectedDay = [valueSelector.values objectAtIndex:index-1];
     }
-    if([selectedValue hasSuffix:@"座"]){
-        self.selectedConstellation = [valueSelector.values objectAtIndex:index-1];
+    NSRange monthRange = [self.selectedMonth rangeOfString:@"月"];
+    NSRange dayRange = [self.selectedDay rangeOfString:@"日"];
+    NSInteger month = [[self.selectedMonth substringToIndex:monthRange.location] integerValue];
+    NSInteger day = [[self.selectedDay substringToIndex:dayRange.location] integerValue];
+    self.constellationSelector.selectedValue = [ConstellationUtils getAstroWithMonth:month andDay:day];
+    [self.constellationSelector scrollToTheSelectedCell];    
+}
+
+-(void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    CGPoint contentOffset = scrollView.contentOffset;
+    CGRect bounds = scrollView.bounds;
+    CGSize contentSize = scrollView.contentSize;
+    UIEdgeInsets inset = scrollView.contentInset;
+    CGFloat currentOffset = contentOffset.y + bounds.size.height - inset.bottom;
+    CGFloat maximumOffset = contentSize.height;
+    if(currentOffset==maximumOffset)
+    {
+        
     }
 }
 

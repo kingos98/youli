@@ -10,4 +10,6 @@
 
 @interface ConstellationUtils : NSObject
 
++(NSString *)getAstroWithMonth:(NSInteger)month andDay:(NSInteger)day;
+
 @end
