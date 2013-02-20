@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+#define iPhone5 ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(640, 1136), [[UIScreen mainScreen] currentMode].size) : NO)
+
 #define kAppKey             @"3967452029"
 #define kAppSecret          @"207640bd3c7f1e5d13fee2149e07d561"
 #define kAppRedirectURI     @"http://www.sina.com"
