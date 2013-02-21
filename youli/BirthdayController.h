@@ -24,6 +24,6 @@
 
 @property(nonatomic,strong)AssignBirthdayController *assignBirthdayController;
 
-@property id<YouliDelegate> delegate;
+@property(nonatomic,strong)id<YouliDelegate> delegate;
 
 @end

@@ -39,6 +39,8 @@
         self.constellationSelector = [[ConstellationSelector alloc] initWithFrame:CGRectMake(210, 35, 90, 170)];
         self.constellationSelector.backgroundColor = [UIColor clearColor];
         self.constellationSelector.separatorStyle = UITableViewCellSeparatorStyleNone;
+        self.selectedMonth = @"1月";
+        self.selectedDay = @"1日";
         [self addSubview:self.constellationSelector];
         
     }
