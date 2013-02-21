@@ -40,36 +40,44 @@ NSMutableArray *items ;
     UIImageView *mainBgView = [[UIImageView alloc] initWithFrame:CGRectMake(0,0,320,480)];
     [mainBgView setImage:[UIImage imageNamed:@"bg.jpg"]];
     
-    UIImageView *personalInfoBgView = [[UIImageView alloc] initWithFrame:CGRectMake(10,9,300,69)];
+    UIImageView *imgTitle = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
+    imgTitle.image = [UIImage imageNamed:@"head.jpg"];
+    
+    UIButton *btnReturn=[[UIButton alloc]initWithFrame:CGRectMake(5, 7, 50, 30)];
+    [btnReturn setBackgroundImage:[UIImage imageNamed:@"return_unclick.png"] forState:UIControlStateNormal];
+    [btnReturn setImage:[UIImage imageNamed:@"return_click.png"] forState:UIControlStateHighlighted];
+    [btnReturn addTarget:self action:@selector(returnClick:) forControlEvents:UIControlEventTouchUpInside];
+    
+    UIImageView *personalInfoBgView = [[UIImageView alloc] initWithFrame:CGRectMake(10,53,300,69)];
     [personalInfoBgView setImage:[UIImage imageNamed:@"personal_info_bg.png"]];
     
-    UIImageView *faceBgView = [[UIImageView alloc] initWithFrame:CGRectMake(16,15,57,59)];
+    UIImageView *faceBgView = [[UIImageView alloc] initWithFrame:CGRectMake(16,59,57,59)];
     [faceBgView setImage:[UIImage imageNamed:@"face_bg.png"]];
     
-    UIImageView *faceView = [[UIImageView alloc] initWithFrame:CGRectMake(19,17,51,52)];
+    UIImageView *faceView = [[UIImageView alloc] initWithFrame:CGRectMake(19,61,51,52)];
     [faceView setImage:[UIImage imageNamed:@"icon.jpeg"]];
     
-    UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(87, 24, 90, 22)];
+    UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(87, 68, 90, 22)];
     nameLabel.text = @"天空之城";
     nameLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:17];
     nameLabel.textColor = [UIColor colorWithRed:0.5 green:0.5 blue:0.5 alpha:1];
     nameLabel.textAlignment = UITextAlignmentLeft;
     nameLabel.backgroundColor = [UIColor clearColor];
     
-    UIImageView *constellationView = [[UIImageView alloc] initWithFrame:CGRectMake(87,48,16,17)];
+    UIImageView *constellationView = [[UIImageView alloc] initWithFrame:CGRectMake(87,92,16,17)];
     [constellationView setImage:[UIImage imageNamed:@"constellation.png"]];
     
-    UILabel *constellationLabel = [[UILabel alloc] initWithFrame:CGRectMake(112, 46, 110, 22)];
+    UILabel *constellationLabel = [[UILabel alloc] initWithFrame:CGRectMake(112, 90, 110, 22)];
     constellationLabel.text = @"请选择星座";
     constellationLabel.font = [UIFont fontWithName:@"Helvetica" size:12];
     constellationLabel.textColor = [UIColor colorWithRed:0.5 green:0.5 blue:0.5 alpha:1];
     constellationLabel.textAlignment = UITextAlignmentLeft;
     constellationLabel.backgroundColor = [UIColor clearColor];
     
-    UIImageView *birthdayView = [[UIImageView alloc] initWithFrame:CGRectMake(250, 21, 21, 22)];
+    UIImageView *birthdayView = [[UIImageView alloc] initWithFrame:CGRectMake(250, 65, 21, 22)];
     [birthdayView setImage:[UIImage imageNamed:@"birthday_unselect.png"]];
     
-    UILabel *birthdayLabel = [[UILabel alloc] initWithFrame:CGRectMake(230, 46, 100, 22)];
+    UILabel *birthdayLabel = [[UILabel alloc] initWithFrame:CGRectMake(230, 90, 100, 22)];
     birthdayLabel.text = @"请填写生日";
     birthdayLabel.font = [UIFont fontWithName:@"Helvetica" size:12];
     birthdayLabel.textColor = [UIColor colorWithRed:0.5 green:0.5 blue:0.5 alpha:1];
@@ -78,34 +86,36 @@ NSMutableArray *items ;
     
     UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
     UIImage *tabBarLeftImage = [[UIImage imageNamed:@"collect_unselect.png"] stretchableImageWithLeftCapWidth:0 topCapHeight:0];
-    leftButton.frame = CGRectMake(10,78,100,41);
+    leftButton.frame = CGRectMake(10,122,100,41);
     [leftButton setBackgroundImage:tabBarLeftImage forState:UIControlStateNormal];
     
     UIButton *middleButton = [UIButton buttonWithType:UIButtonTypeCustom];
     UIImage *tabBarMiddleImage = [[UIImage imageNamed:@"cart_unselect.png"] stretchableImageWithLeftCapWidth:0 topCapHeight:0];
-    middleButton.frame = CGRectMake(110,78,100,41);
+    middleButton.frame = CGRectMake(110,122,100,41);
     [middleButton setBackgroundImage:tabBarMiddleImage forState:UIControlStateNormal];
     
     UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeCustom];
     UIImage *tabBarRightImage = [[UIImage imageNamed:@"friend_button_select.png"] stretchableImageWithLeftCapWidth:0 topCapHeight:0];
-    rightButton.frame = CGRectMake(210,78,100,41);
+    rightButton.frame = CGRectMake(210,122,100,41);
     [rightButton setBackgroundImage:tabBarRightImage forState:UIControlStateNormal];
     
     UIButton *addButton = [UIButton buttonWithType:UIButtonTypeCustom];
     UIImage *personalPromptBgView = [[UIImage imageNamed:@"add_friend.png"] stretchableImageWithLeftCapWidth:0 topCapHeight:0];
-    addButton.frame = CGRectMake(10,121,300,31);
+    addButton.frame = CGRectMake(10,165,300,31);
     [addButton setBackgroundImage:personalPromptBgView forState:UIControlStateNormal];
     [addButton addTarget:self action:@selector(addButtonPressed) forControlEvents:UIControlEventTouchUpInside];
     
-    self.friendTable = [[UIFolderTableView alloc] initWithFrame:CGRectMake(10, 160, 300, 220)];
+    self.friendTable = [[UIFolderTableView alloc] initWithFrame:CGRectMake(10, 204, 300, 220)];
     if(iPhone5){
-        self.friendTable.frame = CGRectMake(10, 160, 300, 308);
+        self.friendTable.frame = CGRectMake(10, 204, 300, 308);
     }
     [self.friendTable setDelegate:self];
     [self.friendTable setDataSource:self];
     [self.friendTable setBackgroundColor:[UIColor whiteColor]];
     
     [mainView addSubview:mainBgView];
+    [mainView addSubview:imgTitle];
+    [mainView addSubview:btnReturn];
     [mainView addSubview:personalInfoBgView];
     [mainView addSubview:faceBgView];
     [mainView addSubview:faceView];
@@ -131,6 +141,10 @@ NSMutableArray *items ;
     sinaweibo.delegate = self;
     
     [self.navigationController setNavigationBarHidden:YES animated:NO];
+}
+
+- (void)returnClick:(id)sender {
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)addButtonPressed

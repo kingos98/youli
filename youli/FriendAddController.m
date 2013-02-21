@@ -35,15 +35,25 @@
     UIImageView *mainBgView = [[UIImageView alloc] initWithFrame:CGRectMake(0,0,320,480)];
     [mainBgView setImage:[UIImage imageNamed:@"bg.jpg"]];
     
-	self.friendTable = [[UIFolderTableView alloc] initWithFrame:CGRectMake(0, 0, 320, 380)];
+    UIImageView *imgTitle = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
+    imgTitle.image = [UIImage imageNamed:@"head.jpg"];
+    
+    UIButton *btnReturn=[[UIButton alloc]initWithFrame:CGRectMake(5, 7, 50, 30)];
+    [btnReturn setBackgroundImage:[UIImage imageNamed:@"return_unclick.png"] forState:UIControlStateNormal];
+    [btnReturn setImage:[UIImage imageNamed:@"return_click.png"] forState:UIControlStateHighlighted];
+    [btnReturn addTarget:self action:@selector(returnClick:) forControlEvents:UIControlEventTouchUpInside];
+    
+	self.friendTable = [[UIFolderTableView alloc] initWithFrame:CGRectMake(0, 44, 320, 380)];
     if(iPhone5){
-        self.friendTable.frame = CGRectMake(0, 0, 320, 468);
+        self.friendTable.frame = CGRectMake(0, 44, 320, 468);
     }
     [self.friendTable setDelegate:self];
     [self.friendTable setDataSource:self];
     [self.friendTable setBackgroundColor:[UIColor whiteColor]];
     
     [mainView addSubview:mainBgView];
+    [mainView addSubview:imgTitle];
+    [mainView addSubview:btnReturn];
     [mainView addSubview:self.friendTable];
     
     SinaWeibo *sinaweibo = [self sinaweibo];
@@ -59,7 +69,11 @@
     SinaWeibo *sinaweibo = [self sinaweibo];
     sinaweibo.delegate = self;
     
-    [self.navigationController setNavigationBarHidden:NO animated:NO];
+    [self.navigationController setNavigationBarHidden:YES animated:NO];
+}
+
+- (void)returnClick:(id)sender {
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
