@@ -8,6 +8,7 @@
 
 #define BIRTHDAY_ALERT  @"BirthdayAlert"
 
+#import "AppDelegate.h"
 #import "AFJSONRequestOperation.h"
 #import "UIImageView+WebCache.h"
 #import "IndexController.h"
@@ -16,7 +17,6 @@
 #import "CategoryCell.h"
 #import "BirthdayGiftController.h"
 #import "FestivalMethod.h"
-
 #import "LocalNotificationsUtils.h"
 
 @interface IndexController ()
@@ -40,18 +40,11 @@
 @synthesize personalController;
 @synthesize birthdayController;
 
-
 NSTimer *timer;
-
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-//    //获取屏幕尺寸
-//    CGRect rect=[[UIScreen mainScreen] bounds];  //全屏的
-//    [YouliConfig setScreenWidthHeight:(int)rect.size.width :(int)rect.size.height];
-     
     //检查是否存在节日日期
     FestivalMethod *festivalMethod=[[FestivalMethod alloc]init];
     [festivalMethod checkFestivalIsExist];
@@ -67,9 +60,14 @@ NSTimer *timer;
     
     //类别view，可向右滑动，初始化时处于第一层，相当于被隐藏。
     categoryView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 212, 460)];
-    
+    if (iPhone5) {
+        categoryView.frame = CGRectMake(0, 0, 212, 504);
+    }
     //添加分类页面
     categoryTableView=[[UITableView alloc] initWithFrame:CGRectMake(0, 0, 212, 460)];
+    if (iPhone5) {
+        categoryTableView.frame = CGRectMake(0, 0, 212, 504);
+    }
     categoryTableView.backgroundView=[self backgroundView];
     categoryTableView.backgroundColor=[UIColor clearColor];
     categoryTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -86,6 +84,9 @@ NSTimer *timer;
     [categoryView addSubview:categoryTableView];
         
     mainScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, 320, 480)];
+    if (iPhone5) {
+        mainScrollView.frame = CGRectMake(0, 0, 320, 524);
+    }
     mainScrollView.backgroundColor = [UIColor whiteColor];
     mainScrollView.showsVerticalScrollIndicator = NO;
     CGSize size = mainScrollView.frame.size;
@@ -96,27 +97,38 @@ NSTimer *timer;
 //        [self loadDataSource];
 //    }
 
-    
     self.birthdayGiftController=[[BirthdayGiftController alloc]init];
     
     tabBarBgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 422, 320, 38)];
+    if (iPhone5) {
+        tabBarBgView.frame = CGRectMake(0, 466, 320, 38);
+    }
     [tabBarBgView setImage:[UIImage imageNamed:@"tabbar_bg.png"]];
     
     tabBarLeftButton = [UIButton buttonWithType:UIButtonTypeCustom];
     UIImage *tabBarLeftImage = [[UIImage imageNamed:@"tabbar_left.png"] stretchableImageWithLeftCapWidth:0 topCapHeight:0];
     tabBarLeftButton.frame = CGRectMake(0, 422, 78, 38);
+    if (iPhone5) {
+        tabBarLeftButton.frame = CGRectMake(0, 466, 78, 38);
+    }
     [tabBarLeftButton setBackgroundImage:tabBarLeftImage forState:UIControlStateNormal];
     [tabBarLeftButton addTarget:self action:@selector(showCategoryViewPressed) forControlEvents:UIControlEventTouchUpInside];
     
     tabBarBoxButton = [UIButton buttonWithType:UIButtonTypeCustom];
     UIImage *tabBarBoxImage = [[UIImage imageNamed:@"tabbar_box.png"] stretchableImageWithLeftCapWidth:0 topCapHeight:0];
     tabBarBoxButton.frame = CGRectMake(120, 414, 78, 45);
+    if (iPhone5) {
+        tabBarBoxButton.frame = CGRectMake(120, 458, 78, 45);
+    }
     [tabBarBoxButton setBackgroundImage:tabBarBoxImage forState:UIControlStateNormal];
     [tabBarBoxButton addTarget:self action:@selector(birthdayButtonPressed) forControlEvents:UIControlEventTouchUpInside];
     
     tabBarRightButton = [UIButton buttonWithType:UIButtonTypeCustom];
     UIImage *tabBarRightImage = [[UIImage imageNamed:@"tabbar_right.png"] stretchableImageWithLeftCapWidth:0 topCapHeight:0];
     tabBarRightButton.frame = CGRectMake(240, 422, 78, 38);
+    if (iPhone5) {
+        tabBarRightButton.frame = CGRectMake(240, 466, 78, 38);
+    }
     [tabBarRightButton setBackgroundImage:tabBarRightImage forState:UIControlStateNormal];
     [tabBarRightButton addTarget:self action:@selector(personalButtonPressed) forControlEvents:UIControlEventTouchUpInside];
     
@@ -136,9 +148,6 @@ NSTimer *timer;
     birthdayController=[[BirthdayController alloc] init];
     
     self.delegate=[self birthdayGiftController];
-    
-    
-    
     
 //    timer = [NSTimer scheduledTimerWithTimeInterval: 1
 //                                             target: self
@@ -167,9 +176,7 @@ NSTimer *timer;
 - (void)showCategoryViewPressed
 {
     [UIView beginAnimations:nil context:NULL];
-    [UIView setAnimationDuration:0.3];
-//    CGPoint point = mainScrollView.center;
-    
+    [UIView setAnimationDuration:0.3];    
     if(isPopCategoryView)
     {
         [self indexHideCategoryView];
@@ -193,7 +200,6 @@ NSTimer *timer;
     CGPoint pointLeftButton=tabBarLeftButton.center;
     CGPoint pointBoxButton=tabBarBoxButton.center;
     CGPoint pointRightButton=tabBarRightButton.center;
-
     
     mainScrollView.center=CGPointMake(point.x-212,point.y);
     tabBarBgView.center=CGPointMake(pointBgView.x-212,pointBgView.y);
@@ -209,24 +215,18 @@ NSTimer *timer;
 -(void)showCategoryView
 {
     [UIView beginAnimations:nil context:NULL];
-    
     [UIView setAnimationDuration:0.3];
-    
     CGPoint point=mainScrollView.center;
     CGPoint pointBgView=tabBarBgView.center;
     CGPoint pointLeftButton=tabBarLeftButton.center;
     CGPoint pointBoxButton=tabBarBoxButton.center;
-    CGPoint pointRightButton=tabBarRightButton.center;
-
-    
+    CGPoint pointRightButton=tabBarRightButton.center;    
     mainScrollView.center=CGPointMake(point.x+212,point.y);
     tabBarBgView.center=CGPointMake(pointBgView.x+212,pointBgView.y);
     tabBarLeftButton.center=CGPointMake(pointLeftButton.x+212,pointLeftButton.y);
     tabBarBoxButton.center=CGPointMake(pointBoxButton.x+212,pointBoxButton.y);
     tabBarRightButton.center=CGPointMake(pointRightButton.x+212,pointRightButton.y);
-
-    isPopCategoryView = true;
-    
+    isPopCategoryView = true;    
     [UIView commitAnimations];
 }
 
@@ -340,8 +340,6 @@ NSTimer *timer;
     return cell;
 }
 
-
-
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -368,17 +366,5 @@ NSTimer *timer;
     cell.labelImage.image = [UIImage imageNamed:@"unselected.png"];
     cell.nextImage.image = [UIImage imageNamed:@"pointerunselect.png"];
 }
-
-#pragma mark - Timer Oper
--(void) handleTimer: (NSTimer *) timer
-{
-//    NSCalendar *calendar=[NSCalendar currentCalendar];
-////    unsigned unitFlags = NSYearCalendarUnit | NSMonthCalendarUnit |  NSDayCalendarUnit;
-//    unsigned unitFlags1=NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit;
-//    NSDateComponents *comp=[calendar components:unitFlags1 fromDate:[NSDate date]];
-//
-//    NSLog(@"%d:%d:%d",comp.hour,comp.minute,comp.second);
-}
-
 
 @end
