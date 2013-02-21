@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1514AC2116D5EEEF0088B963 /* FMDatabase+InMemoryOnDiskIO.m in Sources */ = {isa = PBXBuildFile; fileRef = 1514AC2016D5EEEF0088B963 /* FMDatabase+InMemoryOnDiskIO.m */; };
 		152CCBAF16A7D5D000B0B578 /* BlockActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 152CCBA816A7D5D000B0B578 /* BlockActionSheet.m */; };
 		152CCBB016A7D5D000B0B578 /* BlockAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 152CCBAA16A7D5D000B0B578 /* BlockAlertView.m */; };
 		152CCBB116A7D5D000B0B578 /* BlockBackground.m in Sources */ = {isa = PBXBuildFile; fileRef = 152CCBAC16A7D5D000B0B578 /* BlockBackground.m */; };
@@ -261,6 +262,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1514AC1F16D5EEEF0088B963 /* FMDatabase+InMemoryOnDiskIO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "FMDatabase+InMemoryOnDiskIO.h"; sourceTree = "<group>"; };
+		1514AC2016D5EEEF0088B963 /* FMDatabase+InMemoryOnDiskIO.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "FMDatabase+InMemoryOnDiskIO.m"; sourceTree = "<group>"; };
 		152CCBA716A7D5D000B0B578 /* BlockActionSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlockActionSheet.h; sourceTree = "<group>"; };
 		152CCBA816A7D5D000B0B578 /* BlockActionSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BlockActionSheet.m; sourceTree = "<group>"; };
 		152CCBA916A7D5D000B0B578 /* BlockAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlockAlertView.h; sourceTree = "<group>"; };
@@ -611,6 +614,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1514AC1E16D5EEEF0088B963 /* extra */ = {
+			isa = PBXGroup;
+			children = (
+				1514AC1F16D5EEEF0088B963 /* FMDatabase+InMemoryOnDiskIO.h */,
+				1514AC2016D5EEEF0088B963 /* FMDatabase+InMemoryOnDiskIO.m */,
+			);
+			path = extra;
+			sourceTree = "<group>";
+		};
 		152CCBA616A7D5D000B0B578 /* BlockAlert */ = {
 			isa = PBXGroup;
 			children = (
@@ -776,6 +788,7 @@
 		158B0E9E169FE85C0098B8E6 /* fmdb */ = {
 			isa = PBXGroup;
 			children = (
+				1514AC1E16D5EEEF0088B963 /* extra */,
 				158B0E9F169FE85C0098B8E6 /* FMDatabase.h */,
 				158B0EA0169FE85C0098B8E6 /* FMDatabase.m */,
 				158B0EA1169FE85C0098B8E6 /* FMDatabaseAdditions.h */,
@@ -1636,6 +1649,7 @@
 				15FB366B16BA4ECD00002561 /* FriendMethod.m in Sources */,
 				1543366E16BFA2D800894F44 /* AssignBirthdayController.m in Sources */,
 				15BEB11916D0CC030003EC20 /* LocalNotificationsUtils.m in Sources */,
+				1514AC2116D5EEEF0088B963 /* FMDatabase+InMemoryOnDiskIO.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

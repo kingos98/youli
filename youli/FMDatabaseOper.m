@@ -35,9 +35,26 @@
 
 -(Boolean)openDB
 {
-    NSString *dbPath = [[[NSBundle mainBundle] resourcePath]
-                        stringByAppendingPathComponent:DBNAME];
     
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentDirectory = [paths objectAtIndex:0];
+
+    NSString *dbPath = [documentDirectory stringByAppendingPathComponent:DBNAME];
+
+    NSFileManager *fm=NULL;
+
+    fm=[NSFileManager defaultManager];
+
+    if ([fm fileExistsAtPath:dbPath]==NO)
+    {
+        NSString *dbPathApp = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:DBNAME];
+        [fm copyItemAtPath:dbPathApp toPath:dbPath error:nil];
+    }
+    
+//    NSString *dbPath = [[[NSBundle mainBundle] resourcePath]
+//                        stringByAppendingPathComponent:DBNAME];
+    
+//    NSLog(dbPath);
     db = [FMDatabase databaseWithPath:dbPath] ;
     
     if (![db open]) {

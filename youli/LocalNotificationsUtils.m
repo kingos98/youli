@@ -32,7 +32,7 @@
 }
 
 //取消提醒
--(BOOL)removeLocalNotificationWithActivityId:(NSString *)alertname
+-(BOOL)removeLocalNotificationWithActivityName:(NSString *)alertname
 {
     UIApplication *application = [UIApplication sharedApplication];
     
@@ -54,5 +54,29 @@
     
     return false;
 }
+
+-(BOOL)removeLocalNotificationWithActivityId:(NSInteger)aid
+{
+    UIApplication *application = [UIApplication sharedApplication];
+    
+    NSArray *localNotifications = [[UIApplication sharedApplication] scheduledLocalNotifications];
+    
+    for (UILocalNotification *obj in localNotifications) {
+        
+        NSInteger activityId = [[obj.userInfo objectForKey:@"activityid"] intValue];
+        
+        if (aid == activityId) {
+            
+            [application cancelLocalNotification:obj];
+            
+            return YES;
+            
+        }
+        
+    }
+    
+    return NO;
+}
+
 
 @end

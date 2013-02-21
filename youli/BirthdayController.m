@@ -36,8 +36,6 @@
     
     [self iniView];
     
-//    self.birthdayGiftController=[[BirthdayGiftController alloc] init];
-    
     birthday = [[Birthday alloc] init];
     [birthday loadData:nil];
     items = birthday.items;
