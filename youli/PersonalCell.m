@@ -62,8 +62,8 @@
 
 - (void)addButton{
     UIButton *addButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    addButton.frame = CGRectMake(240,7,50,23);
-    UIImage *addImage = [[UIImage imageNamed:@"add1.png"] stretchableImageWithLeftCapWidth:0 topCapHeight:0];
+    addButton.frame = CGRectMake(263,3,36,36);
+    UIImage *addImage = [[UIImage imageNamed:@"next.png"] stretchableImageWithLeftCapWidth:0 topCapHeight:0];
     [addButton setBackgroundImage:addImage forState:UIControlStateNormal];
     [self.contentView addSubview:addButton];
 }

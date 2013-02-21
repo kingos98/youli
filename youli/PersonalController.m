@@ -84,20 +84,23 @@ NSMutableArray *items ;
     birthdayLabel.textAlignment = UITextAlignmentLeft;
     birthdayLabel.backgroundColor = [UIColor clearColor];
     
-    UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    UIImage *tabBarLeftImage = [[UIImage imageNamed:@"collect_unselect.png"] stretchableImageWithLeftCapWidth:0 topCapHeight:0];
-    leftButton.frame = CGRectMake(10,122,100,41);
-    [leftButton setBackgroundImage:tabBarLeftImage forState:UIControlStateNormal];
+    UIButton *friendButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    UIImage *friendImage = [[UIImage imageNamed:@"friend_button_select.png"] stretchableImageWithLeftCapWidth:0 topCapHeight:0];
+    friendButton.frame = CGRectMake(10,122,99,41);
+    [friendButton setBackgroundImage:friendImage forState:UIControlStateNormal];
+    [friendButton addTarget:self action:@selector(friendButtonPressed) forControlEvents:UIControlEventTouchUpInside];
     
-    UIButton *middleButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    UIImage *tabBarMiddleImage = [[UIImage imageNamed:@"cart_unselect.png"] stretchableImageWithLeftCapWidth:0 topCapHeight:0];
-    middleButton.frame = CGRectMake(110,122,100,41);
-    [middleButton setBackgroundImage:tabBarMiddleImage forState:UIControlStateNormal];
+    UIButton *collectButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    UIImage *collectImage = [[UIImage imageNamed:@"collect_unselect.png"] stretchableImageWithLeftCapWidth:0 topCapHeight:0];
+    collectButton.frame = CGRectMake(110,122,100,41);
+    [collectButton setBackgroundImage:collectImage forState:UIControlStateNormal];
+    [collectButton addTarget:self action:@selector(collectButtonPressed) forControlEvents:UIControlEventTouchUpInside];
     
-    UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    UIImage *tabBarRightImage = [[UIImage imageNamed:@"friend_button_select.png"] stretchableImageWithLeftCapWidth:0 topCapHeight:0];
-    rightButton.frame = CGRectMake(210,122,100,41);
-    [rightButton setBackgroundImage:tabBarRightImage forState:UIControlStateNormal];
+    UIButton *cartButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    UIImage *cartImage = [[UIImage imageNamed:@"cart_unselect.png"] stretchableImageWithLeftCapWidth:0 topCapHeight:0];
+    cartButton.frame = CGRectMake(210,122,101,41);
+    [cartButton setBackgroundImage:cartImage forState:UIControlStateNormal];
+    [cartButton addTarget:self action:@selector(cartButtonPressed) forControlEvents:UIControlEventTouchUpInside];
     
     UIButton *addButton = [UIButton buttonWithType:UIButtonTypeCustom];
     UIImage *personalPromptBgView = [[UIImage imageNamed:@"add_friend.png"] stretchableImageWithLeftCapWidth:0 topCapHeight:0];
@@ -124,9 +127,9 @@ NSMutableArray *items ;
     [mainView addSubview:constellationLabel];
     [mainView addSubview:birthdayView];
     [mainView addSubview:birthdayLabel];
-    [mainView addSubview:leftButton];
-    [mainView addSubview:middleButton];
-    [mainView addSubview:rightButton];
+    [mainView addSubview:friendButton];
+    [mainView addSubview:collectButton];
+    [mainView addSubview:cartButton];
     [mainView addSubview:addButton];
     [mainView addSubview:self.friendTable];
     
@@ -145,6 +148,21 @@ NSMutableArray *items ;
 
 - (void)returnClick:(id)sender {
     [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void)friendButtonPressed
+{
+    
+}
+
+- (void)collectButtonPressed
+{
+    
+}
+
+- (void)cartButtonPressed
+{
+    
 }
 
 - (void)addButtonPressed
@@ -183,59 +201,6 @@ NSMutableArray *items ;
         cell.friend =  [self.items objectAtIndex:indexPath.row];
     }
     return cell;
-}
-
-#pragma mark - SinaWeibo Delegate
-
-- (void)sinaweiboDidLogIn:(SinaWeibo *)sinaweibo
-{
-    [sinaweibo requestWithURL:@"friendships/friends/bilateral.json"
-                       params:[NSMutableDictionary dictionaryWithObject:sinaweibo.userID forKey:@"uid"]
-                   httpMethod:@"GET"
-                     delegate:self];
-    [self.friendTable reloadData];
-}
-
-#pragma mark - SinaWeiboRequest Delegate
-
-- (void)request:(SinaWeiboRequest *)request didFailWithError:(NSError *)error
-{
-    [self.friendTable reloadData];
-}
-
-- (void)request:(SinaWeiboRequest *)request didFinishLoadingWithResult:(id)result
-{
-    NSDictionary *usersDict = [[result objectForKey:@"users"] retain];
-    self.items = [NSMutableArray arrayWithCapacity:24];
-    int count = 0;
-    for (NSDictionary *user in usersDict) {
-        Friend *friend = [Friend alloc];
-        friend.name = [user objectForKey:@"screen_name"];
-        friend.profileUrl = [user objectForKey:@"profile_image_url"];
-        [self.items addObject:friend];
-        count++;
-        if (count > 40) {
-            break;
-        }
-    }
-    [self.friendTable reloadData];
-}
-
-- (void)removeAuthData
-{
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"SinaWeiboAuthData"];
-}
-
-- (void)storeAuthData
-{
-    SinaWeibo *sinaweibo = [self sinaweibo];
-    NSDictionary *authData = [NSDictionary dictionaryWithObjectsAndKeys:
-                              sinaweibo.accessToken, @"AccessTokenKey",
-                              sinaweibo.expirationDate, @"ExpirationDateKey",
-                              sinaweibo.userID, @"UserIDKey",
-                              sinaweibo.refreshToken, @"refresh_token", nil];
-    [[NSUserDefaults standardUserDefaults] setObject:authData forKey:@"SinaWeiboAuthData"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 - (void)viewDidUnload
