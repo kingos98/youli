@@ -166,11 +166,11 @@
     NSInteger index=0;
     Boolean find=false;
 //    FMResultSet *rs=[db executeQuery:@"select giftid from birthdaygift"];
-    FMResultSet *rs=[db executeQuery:@"select %@ from %@",GIFTID,TABLEBIRTHDAYGIFT];
+    FMResultSet *rs=[db executeQuery:[NSString stringWithFormat: @"select %@ from %@",GIFTID,TABLEBIRTHDAYGIFT]];
+
     while ([rs next]) {
         if([rs intForColumn:GIFTID]==GiftID)
         {
-            
             find=true;
             break;
         }
@@ -180,12 +180,6 @@
         }
     }
     [self closeDB];
-    
-
-    if(!find)
-    {
-        index=0;
-    }
     
     return index;
 }

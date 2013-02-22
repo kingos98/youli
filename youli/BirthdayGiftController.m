@@ -21,8 +21,9 @@
 #import "BirthdayGiftItem.h"
 #import "NMRangeSlider.h"
 #import "BaseController.h"
-
 #import "AppDelegate.h"
+
+#import "FMDatabase.h"
 
 @interface BirthdayGiftController ()
 {
@@ -79,15 +80,16 @@
                          @"pisces.png",
                          nil];
 
+    fmdataOper=[[FMDatabaseOper alloc]init];
+
     [fmdataOper cleanGiftList];
-    
+        
     [self initView];
     
     [self initConstellation];
     
     [self initPriceSlider];
         
-    fmdataOper=[[FMDatabaseOper alloc]init];
     
     birthdayGiftDetailController=[[BirthdayGiftDetailController alloc]init];
     self.BirthdayGiftDetailControllerDelegate=birthdayGiftDetailController;
@@ -227,6 +229,7 @@
 {
     priceSlider=[[NMRangeSlider alloc] init];
     priceSlider.frame=CGRectMake(16, 106, 285, 35);
+//    priceSlider.frame=CGRectMake(0, 0, 285, 35);
     
     UIImage* image = nil;
     image = [UIImage imageNamed:@"slider-yellow-track"];
@@ -243,10 +246,23 @@
     
     [priceSlider addTarget:self action:@selector(priceSliderChange) forControlEvents:UIControlEventValueChanged];
     [priceSlider setHidden:YES];
+
+    
+//    UIView  *tmpView=[[UIView alloc] initWithFrame:CGRectMake(16, 106, 285, 35)];
+//    [tmpView addSubview:priceSlider];
+
+    
+//    UIPanGestureRecognizer *pricePan=[[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(handlePrice:)];
+//    [tmpView addGestureRecognizer:pricePan];
     
     [mainView addSubview:priceSlider];
+//    [mainView addSubview:tmpView];
+    
 }
 
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer{
+    return YES;
+}
 
 //初始化星座
 -(void) initConstellation
@@ -491,7 +507,6 @@
                      @"INSERT INTO %@ (%@,%@,%@,%@,%@,%@,%@) VALUES (%d,%d,'%@','%@','%@','%@',%f)",
                      TABLENAME,GIFTID, GIFTTYPE, TITLE, DETAIL,IMAGEURL,TAOBAOURL,PRICE ,PhotoID,1,
                      tmpPhotoTitle, tmpPhotoDetail,tmpPhotoURL,tmpPhotoURL,999.0f];
-    
     [fmdataOper ExecSql:sql];
 }
 
@@ -500,6 +515,9 @@
 {
 //    NSLog([NSString stringWithFormat:@"%d",[(UIGestureRecognizer *)sender view].tag]);
     [self.birthdayGiftDetailController sendGiftID:[(UIGestureRecognizer *)sender view].tag];
+
+//    [self.birthdayGiftDetailControllerDelegate sendGiftID:[(UIGestureRecognizer *)sender view].tag];
+    
     [self.navigationController pushViewController:birthdayGiftDetailController animated:YES];
 }
 
@@ -521,12 +539,10 @@
 
 -(void) handlePrice:(UIPanGestureRecognizer *) gestureRecognizer
 {
-    NSLog(@"before");
     if([gestureRecognizer state]==UIGestureRecognizerStateBegan||[gestureRecognizer state]==UIGestureRecognizerStateChanged)
     {
-        NSLog(@"price pan");
+//        NSLog(@"price pan");
     }
-    NSLog(@"after");
 }
 
 

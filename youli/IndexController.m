@@ -20,7 +20,10 @@
 #import "LocalNotificationsUtils.h"
 
 @interface IndexController ()
-
+{
+    NSInteger birthdayGiftControllerHeight;         //记录当前birthdayGiftController高度
+    NSInteger birthdayCurrentIndex;                 //记录当前birthday图片的序列，每load一次自动加7
+}
 @end
 
 @implementation IndexController
@@ -31,16 +34,12 @@
 @synthesize category;
 @synthesize birthdayGiftController;
 @synthesize delegate;
-
 @synthesize tabBarBgView;
 @synthesize tabBarBoxButton;
 @synthesize tabBarLeftButton;
 @synthesize tabBarRightButton;
-
 @synthesize personalController;
 @synthesize birthdayController;
-
-NSTimer *timer;
 
 - (void)viewDidLoad
 {
@@ -82,16 +81,32 @@ NSTimer *timer;
     }
     
     [categoryView addSubview:categoryTableView];
-        
-    mainScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, 320, 480)];
+    
+    if(!iPhone5)
+    {
+        mainScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, 320, 426)];
+    }
+    else
+    {
+        mainScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, 320, 512)];
+    }
+
     if (iPhone5) {
-        mainScrollView.frame = CGRectMake(0, 0, 320, 524);
+        mainScrollView.frame = CGRectMake(0, 0, 320, 508);
     }
     mainScrollView.backgroundColor = [UIColor whiteColor];
     mainScrollView.showsVerticalScrollIndicator = NO;
     CGSize size = mainScrollView.frame.size;
-    [mainScrollView setContentSize:CGSizeMake(size.width, size.height * 2)];
-    
+//    [mainScrollView setContentSize:CGSizeMake(size.width, size.height * 2)];
+    if(!iPhone5)
+    {
+        [mainScrollView setContentSize:CGSizeMake(size.width, 424 * 2)];
+    }
+    else
+    {
+        [mainScrollView setContentSize:CGSizeMake(size.width, 512 * 2)];
+    }
+
     for(int i=0;i<2;i++)
     {
         [self loadDataSource];
@@ -149,11 +164,7 @@ NSTimer *timer;
     
     self.delegate=[self birthdayGiftController];
     
-//    timer = [NSTimer scheduledTimerWithTimeInterval: 1
-//                                             target: self
-//                                           selector: @selector(handleTimer:)
-//                                           userInfo: nil
-//                                            repeats: YES];
+    mainScrollView.delegate=self;
     
     //添加通知
 //    NSCalendar *calendar = [NSCalendar autoupdatingCurrentCalendar];
@@ -171,7 +182,6 @@ NSTimer *timer;
 //    LocalNotificationsUtils *localNotificationsUtils=[LocalNotificationsUtils alloc];
 //    [localNotificationsUtils addLocalNotificationWithFireDate:pickerDate activityId:BIRTHDAY_ALERT activityTitle:@"notice test"];    
 }
-
 
 - (void)showCategoryViewPressed
 {
@@ -250,20 +260,23 @@ NSTimer *timer;
     [super viewDidUnload];
 }
 
-- (void)loadDataSource{
+- (void)loadDataSource
+{
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:@"http://imgur.com/gallery.json"]];
     AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request
     success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
         self.items = [JSON objectForKey:@"data"];
         for (int i=0; i<7; i++) {
-            NSDictionary *item = [self.items objectAtIndex:i];                                                
+            NSDictionary *item = [self.items objectAtIndex:i+birthdayCurrentIndex];
+            
             NSURL *URL = [NSURL URLWithString:[NSString stringWithFormat:@"http://imgur.com/%@%@",[item objectForKey:@"hash"], [item objectForKey:@"ext"]]];
+            
             NSString *x = [[templateForIphone4 objectAtIndex:i] objectAtIndex:0];
             NSString *y = [[templateForIphone4 objectAtIndex:i] objectAtIndex:1];
             NSString *width = [[templateForIphone4 objectAtIndex:i] objectAtIndex:2];
             NSString *height = [[templateForIphone4 objectAtIndex:i] objectAtIndex:3];
             UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake([x intValue],
-                                                                                   [y intValue],
+                                                                                   [y intValue] + birthdayGiftControllerHeight,
                                                                                    [width intValue],
                                                                                    [height intValue])];                                                 
             [imageView setImageWithURL:URL placeholderImage:[UIImage imageNamed:@"3.jpg"]];
@@ -271,6 +284,26 @@ NSTimer *timer;
 
             imageView = nil; 
         }
+        
+//        [mainScrollView setContentSize:CGSizeMake(size.width, 420 * 2)];
+        
+        if(!iPhone5)
+        {
+            birthdayGiftControllerHeight+=424;      //每load一屏自动加420；
+        }
+        else
+        {
+            birthdayGiftControllerHeight+=512;      //每load一屏自动加420；
+        }
+        
+        if(mainScrollView.contentSize.height<birthdayGiftControllerHeight)
+        {
+            [mainScrollView setContentSize:CGSizeMake(mainScrollView.frame.size.width, birthdayGiftControllerHeight)];
+        }
+
+
+        birthdayCurrentIndex+=7;                //每load一屏自动加7；
+        
     }failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
          NSLog(@"error: %@", error);
     }];
@@ -365,6 +398,22 @@ NSTimer *timer;
     CategoryCell *cell = (CategoryCell*)[categoryTableView cellForRowAtIndexPath:indexPath];
     cell.labelImage.image = [UIImage imageNamed:@"unselected.png"];
     cell.nextImage.image = [UIImage imageNamed:@"pointerunselect.png"];
+}
+
+#pragma mark - Scroll view delegate
+-(void)scrollViewDidScroll:(UIScrollView *)scrollView
+{    
+    CGPoint offset = mainScrollView.contentOffset;
+    CGRect bounds = mainScrollView.bounds;
+    CGSize size = mainScrollView.contentSize;
+    UIEdgeInsets inset = mainScrollView.contentInset;
+    CGFloat currentOffset = offset.y + bounds.size.height - inset.bottom;
+    CGFloat maximumOffset = size.height;
+    
+    if(currentOffset==maximumOffset)
+    {
+        [self loadDataSource];      //当滚到最底时自动更新内容
+    }
 }
 
 @end

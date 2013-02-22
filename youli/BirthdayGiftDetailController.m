@@ -60,7 +60,13 @@
     imgTitle.image = [UIImage imageNamed:@"head.jpg"];
 
     UIImageView *imgGiftScrollView=[[UIImageView alloc] initWithFrame:CGRectMake(0, 44, 320, 415)];
+<<<<<<< HEAD
     imgGiftScrollView.image=[UIImage imageNamed:@"bg.png"];
+=======
+
+    imgGiftScrollView.image=[UIImage imageNamed:@"bg.png"];
+
+>>>>>>> 定位选中的礼物
     if(iPhone5)
     {
         imgGiftScrollView.frame=CGRectMake(0, 89, 320, 458);
@@ -165,10 +171,7 @@
 
 -(void)sendGiftID:(NSInteger)GiftID
 {
-//    NSLog(@"GiftID:%d",GiftID);
     NSInteger index=[fmdataOper getSelectedGiftIndex:GiftID];
-    
-//    NSLog(@"GiftIndex:%d",index);
     
     k=k+(276+14)*index;
     [self.giftDetailScrollView setContentOffset:CGPointMake(k, 0) animated:YES];
