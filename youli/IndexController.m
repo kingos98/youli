@@ -296,7 +296,6 @@
             [mainScrollView setContentSize:CGSizeMake(mainScrollView.frame.size.width, birthdayGiftControllerHeight)];
         }
 
-
         birthdayCurrentIndex+=7;                //每load一屏自动加7；
         
     }failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {

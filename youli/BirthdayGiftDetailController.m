@@ -66,7 +66,7 @@
 
     if(iPhone5)
     {
-        imgGiftScrollView.frame=CGRectMake(0, 89, 320, 458);
+        imgGiftScrollView.frame=CGRectMake(0, 44, 320, 503);
     }
     
     self.lblGiftTypeTitle=[[UILabel alloc] initWithFrame:CGRectMake(126, -8, 68, 61)];
