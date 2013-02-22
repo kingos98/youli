@@ -10,6 +10,7 @@
 #import "BlockAlertView.h"
 #import "BlockActionSheet.h"
 #import "BlockTextPromptAlertView.h"
+#import "AppDelegate.h"
 
 @interface BirthdayGiftDetailController ()
 
@@ -59,7 +60,16 @@
     imgTitle.image = [UIImage imageNamed:@"head.jpg"];
 
     UIImageView *imgGiftScrollView=[[UIImageView alloc] initWithFrame:CGRectMake(0, 44, 320, 415)];
+<<<<<<< HEAD
     imgGiftScrollView.image=[UIImage imageNamed:@"bg.png"];
+=======
+    if(iPhone5)
+    {
+        imgGiftScrollView.frame=CGRectMake(0, 89, 320, 458);
+    }
+
+    imgGiftScrollView.image=[UIImage imageNamed:@"bg.jpg"];
+>>>>>>> iphone判断
     
     self.lblGiftTypeTitle=[[UILabel alloc] initWithFrame:CGRectMake(126, -8, 68, 61)];
     self.lblGiftTypeTitle.backgroundColor=[UIColor colorWithHue:0 saturation:0 brightness:0 alpha:0];
@@ -89,24 +99,6 @@
     [mainView addSubview:btnReturn];
     [mainView addSubview:btnShare];
     [mainView addSubview:giftDetailScrollView];
-
-    
-    //修改super组件位置
-    CGRect r=super.tabBarLeftButton.frame;
-    r.origin.y=422.0f;
-    super.tabBarLeftButton.frame=r;
-    
-    r=super.tabBarRightButton.frame;
-    r.origin.y=422.0f;
-    super.tabBarRightButton.frame=r;
-    
-    r=super.tabBarBgImage.frame;
-    r.origin.y=422.0f;
-    super.tabBarBgImage.frame=r;
-    
-    r=super.tabBarBoxButton.frame;
-    r.origin.y=414.0f;
-    super.tabBarBoxButton.frame=r;
 }
 
 - (void)returnClick
