@@ -171,16 +171,7 @@ NSMutableArray *items ;
     [self.navigationController pushViewController:friendAddController animated:NO];
 }
 
-#pragma mark - UITableViewDelegate Methods
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
 
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-	return 37;
-}
 
 #pragma mark - UITableViewDataSource Methods
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -201,6 +192,18 @@ NSMutableArray *items ;
         cell.friend =  [self.items objectAtIndex:indexPath.row];
     }
     return cell;
+}
+
+#pragma mark - UITableViewDelegate Methods
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	return 37;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    FriendInfoController *friendInfoController = [[FriendInfoController alloc] init];
+    [self.navigationController pushViewController:friendInfoController animated:NO];
 }
 
 - (void)viewDidUnload
