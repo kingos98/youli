@@ -61,12 +61,12 @@ NSTimer *timer;
     //类别view，可向右滑动，初始化时处于第一层，相当于被隐藏。
     categoryView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 212, 460)];
     if (iPhone5) {
-        categoryView.frame = CGRectMake(0, 0, 212, 504);
+        categoryView.frame = CGRectMake(0, 0, 212, 548);
     }
     //添加分类页面
     categoryTableView=[[UITableView alloc] initWithFrame:CGRectMake(0, 0, 212, 460)];
     if (iPhone5) {
-        categoryTableView.frame = CGRectMake(0, 0, 212, 504);
+        categoryTableView.frame = CGRectMake(0, 0, 212, 548);
     }
     categoryTableView.backgroundView=[self backgroundView];
     categoryTableView.backgroundColor=[UIColor clearColor];
@@ -92,16 +92,16 @@ NSTimer *timer;
     CGSize size = mainScrollView.frame.size;
     [mainScrollView setContentSize:CGSizeMake(size.width, size.height * 2)];
     
-//    for(int i=0;i<2;i++)
-//    {
-//        [self loadDataSource];
-//    }
+    for(int i=0;i<2;i++)
+    {
+        [self loadDataSource];
+    }
 
     self.birthdayGiftController=[[BirthdayGiftController alloc]init];
     
     tabBarBgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 422, 320, 38)];
     if (iPhone5) {
-        tabBarBgView.frame = CGRectMake(0, 466, 320, 38);
+        tabBarBgView.frame = CGRectMake(0, 510, 320, 38);
     }
     [tabBarBgView setImage:[UIImage imageNamed:@"tabbar_bg.png"]];
     
@@ -109,7 +109,7 @@ NSTimer *timer;
     UIImage *tabBarLeftImage = [[UIImage imageNamed:@"tabbar_left.png"] stretchableImageWithLeftCapWidth:0 topCapHeight:0];
     tabBarLeftButton.frame = CGRectMake(0, 422, 78, 38);
     if (iPhone5) {
-        tabBarLeftButton.frame = CGRectMake(0, 466, 78, 38);
+        tabBarLeftButton.frame = CGRectMake(0, 510, 78, 38);
     }
     [tabBarLeftButton setBackgroundImage:tabBarLeftImage forState:UIControlStateNormal];
     [tabBarLeftButton addTarget:self action:@selector(showCategoryViewPressed) forControlEvents:UIControlEventTouchUpInside];
@@ -118,7 +118,7 @@ NSTimer *timer;
     UIImage *tabBarBoxImage = [[UIImage imageNamed:@"tabbar_box.png"] stretchableImageWithLeftCapWidth:0 topCapHeight:0];
     tabBarBoxButton.frame = CGRectMake(120, 414, 78, 45);
     if (iPhone5) {
-        tabBarBoxButton.frame = CGRectMake(120, 458, 78, 45);
+        tabBarBoxButton.frame = CGRectMake(120, 503, 78, 45);
     }
     [tabBarBoxButton setBackgroundImage:tabBarBoxImage forState:UIControlStateNormal];
     [tabBarBoxButton addTarget:self action:@selector(birthdayButtonPressed) forControlEvents:UIControlEventTouchUpInside];
@@ -127,7 +127,7 @@ NSTimer *timer;
     UIImage *tabBarRightImage = [[UIImage imageNamed:@"tabbar_right.png"] stretchableImageWithLeftCapWidth:0 topCapHeight:0];
     tabBarRightButton.frame = CGRectMake(240, 422, 78, 38);
     if (iPhone5) {
-        tabBarRightButton.frame = CGRectMake(240, 466, 78, 38);
+        tabBarRightButton.frame = CGRectMake(240, 510, 78, 38);
     }
     [tabBarRightButton setBackgroundImage:tabBarRightImage forState:UIControlStateNormal];
     [tabBarRightButton addTarget:self action:@selector(personalButtonPressed) forControlEvents:UIControlEventTouchUpInside];
@@ -312,7 +312,7 @@ NSTimer *timer;
 
 -(UIView *)backgroundView
 {
-    UIImageView *categoryBgImageTmp=[[UIImageView  alloc] initWithFrame:CGRectMake(0,0,212,460)];
+    UIImageView *categoryBgImageTmp=[[UIImageView  alloc] initWithFrame:CGRectMake(0,0,212,548)];
     categoryBgImageTmp.image = [UIImage imageNamed:@"gifttypebg.png"];
     return categoryBgImageTmp;
 }

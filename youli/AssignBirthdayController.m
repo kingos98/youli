@@ -103,7 +103,10 @@
     
     self.lblGiftTypeTitle=[[UILabel alloc] initWithFrame:CGRectMake(75, -12, 170, 61)];
     self.lblGiftTypeTitle.backgroundColor=[UIColor colorWithHue:0 saturation:0 brightness:0 alpha:0];
-    self.lblGiftTypeTitle.font=[UIFont fontWithName:@"System" size:17.0f];
+    self.lblGiftTypeTitle.textColor = [UIColor colorWithRed:0.5 green:0.5 blue:0.5 alpha:1];
+    self.lblGiftTypeTitle.font=[UIFont fontWithName:@"Helvetica-Bold" size:19.0f];
+    self.lblGiftTypeTitle.shadowColor=[UIColor colorWithRed:1 green:1 blue:1 alpha:1];
+    self.lblGiftTypeTitle.shadowOffset=CGSizeMake(0, 1);
     [self.lblGiftTypeTitle setTextAlignment:NSTextAlignmentCenter];
     self.lblGiftTypeTitle.text=@"生日礼物";
     

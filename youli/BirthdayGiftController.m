@@ -126,10 +126,15 @@
     UIImageView *imgSelectorBG=[[UIImageView alloc] initWithFrame:CGRectMake(0, 44, 320, 45)];
     imgSelectorBG.image=[UIImage imageNamed:@"birthday_gift_top.jpg"];
     
-    self.lblGiftTypeTitle=[[UILabel alloc] initWithFrame:CGRectMake(126, -8, 68, 61)];
-    self.lblGiftTypeTitle.backgroundColor=[UIColor colorWithHue:0 saturation:0 brightness:0 alpha:0];
-    self.lblGiftTypeTitle.font=[UIFont fontWithName:@"System" size:17.0f];
+//    self.lblGiftTypeTitle=[[UILabel alloc] initWithFrame:CGRectMake(126, -8, 68, 61)];
+    self.lblGiftTypeTitle=[[UILabel alloc] initWithFrame:CGRectMake(75, -8, 170, 61)];
+    self.lblGiftTypeTitle.backgroundColor=[UIColor clearColor];
+    self.lblGiftTypeTitle.font=[UIFont fontWithName:@"Helvetica-Bold" size:19.0f];
+    self.lblGiftTypeTitle.textColor = [UIColor colorWithRed:0.5 green:0.5 blue:0.5 alpha:1];
+    self.lblGiftTypeTitle.shadowColor=[UIColor colorWithRed:1 green:1 blue:1 alpha:1];
+    self.lblGiftTypeTitle.shadowOffset=CGSizeMake(0, 1);
     self.lblGiftTypeTitle.text=@"生日礼物";
+    self.lblGiftTypeTitle.textAlignment=NSTextAlignmentCenter;
 //    //获取选中的礼品分类名称(第一次运行BirthdayGiftController传递的GiftTypeTitle)
 //    NSUserDefaults *mydefault = [NSUserDefaults standardUserDefaults];
 //    self.lblGiftTypeTitle.text=[mydefault objectForKey:@"giftTypeTitle"];
