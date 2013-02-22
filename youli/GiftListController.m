@@ -27,7 +27,7 @@
 {
     [super viewDidLoad];
 	
-    UIImageView *mainBgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 480)];
+    UIImageView *mainBgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 548)];
     mainBgView.image = [UIImage imageNamed:@"bg.png"];
     
     UIImageView *priceBgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 49)];

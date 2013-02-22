@@ -51,7 +51,7 @@
 
 -(void)iniView
 { 
-    UIImageView *mainBgView = [[UIImageView alloc] initWithFrame:CGRectMake(0,0,320,480)];
+    UIImageView *mainBgView = [[UIImageView alloc] initWithFrame:CGRectMake(0,0,320,548)];
     [mainBgView setImage:[UIImage imageNamed:@"bg.png"]];
 
     UIImageView *imgTitle = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
