@@ -60,13 +60,10 @@
     imgTitle.image = [UIImage imageNamed:@"head.jpg"];
 
     UIImageView *imgGiftScrollView=[[UIImageView alloc] initWithFrame:CGRectMake(0, 44, 320, 415)];
-<<<<<<< HEAD
-    imgGiftScrollView.image=[UIImage imageNamed:@"bg.png"];
-=======
+
 
     imgGiftScrollView.image=[UIImage imageNamed:@"bg.png"];
 
->>>>>>> 定位选中的礼物
     if(iPhone5)
     {
         imgGiftScrollView.frame=CGRectMake(0, 89, 320, 458);
