@@ -98,14 +98,16 @@
     mainScrollView.showsVerticalScrollIndicator = NO;
     CGSize size = mainScrollView.frame.size;
 //    [mainScrollView setContentSize:CGSizeMake(size.width, size.height * 2)];
-    if(!iPhone5)
-    {
-        [mainScrollView setContentSize:CGSizeMake(size.width, 424 * 2)];
-    }
-    else
-    {
-        [mainScrollView setContentSize:CGSizeMake(size.width, 512 * 2)];
-    }
+    [mainScrollView setContentSize:CGSizeMake(size.width, 424 * 2)];
+    
+//    if(!iPhone5)
+//    {
+//        [mainScrollView setContentSize:CGSizeMake(size.width, 424 * 2)];
+//    }
+//    else
+//    {
+//        [mainScrollView setContentSize:CGSizeMake(size.width, 512 * 2)];
+//    }
 
     for(int i=0;i<2;i++)
     {
@@ -287,14 +289,7 @@
         
 //        [mainScrollView setContentSize:CGSizeMake(size.width, 420 * 2)];
         
-        if(!iPhone5)
-        {
-            birthdayGiftControllerHeight+=424;      //每load一屏自动加420；
-        }
-        else
-        {
-            birthdayGiftControllerHeight+=512;      //每load一屏自动加420；
-        }
+        birthdayGiftControllerHeight+=424;      //每load一屏自动加420；
         
         if(mainScrollView.contentSize.height<birthdayGiftControllerHeight)
         {
