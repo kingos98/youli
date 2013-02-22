@@ -18,7 +18,7 @@
     [super viewDidLoad];
     
     UIImageView *mainBgView = [[UIImageView alloc] initWithFrame:CGRectMake(0,0,320,480)];
-    [mainBgView setImage:[UIImage imageNamed:@"bg.jpg"]];
+    [mainBgView setImage:[UIImage imageNamed:@"bg.png"]];
     
     UIImageView *imgTitle = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
     imgTitle.image = [UIImage imageNamed:@"head.jpg"];
@@ -67,7 +67,7 @@
     UIImageView *firendCollectBgView = [[UIImageView alloc] initWithFrame:CGRectMake(10,122,300,31)];
     [firendCollectBgView setImage:[UIImage imageNamed:@"friend_collect_bg.png"]];
     
-    UIScrollView *scrollview = [[UIScrollView alloc] initWithFrame:CGRectMake(10, 154, 300, 300)];
+    UIScrollView *scrollview = [[UIScrollView alloc] initWithFrame:CGRectMake(10, 154, 300, 344)];
     
     for (int i=0; i<1; i++) {
         UIImageView *collectView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 99, 110)];

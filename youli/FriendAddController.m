@@ -33,7 +33,7 @@
     [super viewDidLoad];
     
     UIImageView *mainBgView = [[UIImageView alloc] initWithFrame:CGRectMake(0,0,320,480)];
-    [mainBgView setImage:[UIImage imageNamed:@"bg.jpg"]];
+    [mainBgView setImage:[UIImage imageNamed:@"bg.png"]];
     
     UIImageView *imgTitle = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
     imgTitle.image = [UIImage imageNamed:@"head.jpg"];

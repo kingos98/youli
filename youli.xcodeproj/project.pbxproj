@@ -171,6 +171,9 @@
 		1897B73D16A8E128001C810D /* UIFolderTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1897B73916A8E128001C810D /* UIFolderTableView.m */; };
 		1897B73E16A8E128001C810D /* UIView+screenshot.m in Sources */ = {isa = PBXBuildFile; fileRef = 1897B73B16A8E128001C810D /* UIView+screenshot.m */; };
 		1897B75316A92185001C810D /* SubTableCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1897B75216A92184001C810D /* SubTableCellView.m */; };
+		189BB10316D70ADD00CC4F86 /* SettingControler.m in Sources */ = {isa = PBXBuildFile; fileRef = 189BB10216D70ADD00CC4F86 /* SettingControler.m */; };
+		189BB10A16D70DBE00CC4F86 /* bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 189BB10816D70DBE00CC4F86 /* bg@2x.png */; };
+		189BB10B16D70DBE00CC4F86 /* bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 189BB10916D70DBE00CC4F86 /* bg.png */; };
 		18B4E0AF16B8FA1B00F72D01 /* IZValueSelectorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 18B4E0AE16B8FA1B00F72D01 /* IZValueSelectorView.m */; };
 		18B4E0BB16B8FD8100F72D01 /* add_friend.png in Resources */ = {isa = PBXBuildFile; fileRef = 18B4E0B516B8FD8100F72D01 /* add_friend.png */; };
 		18B4E0BC16B8FD8100F72D01 /* add_friend@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 18B4E0B616B8FD8100F72D01 /* add_friend@2x.png */; };
@@ -464,6 +467,10 @@
 		1897B73B16A8E128001C810D /* UIView+screenshot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+screenshot.m"; sourceTree = "<group>"; };
 		1897B75116A92183001C810D /* SubTableCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubTableCellView.h; sourceTree = "<group>"; };
 		1897B75216A92184001C810D /* SubTableCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubTableCellView.m; sourceTree = "<group>"; };
+		189BB10116D70ADD00CC4F86 /* SettingControler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingControler.h; sourceTree = "<group>"; };
+		189BB10216D70ADD00CC4F86 /* SettingControler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingControler.m; sourceTree = "<group>"; };
+		189BB10816D70DBE00CC4F86 /* bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "bg@2x.png"; path = "images/bg@2x.png"; sourceTree = "<group>"; };
+		189BB10916D70DBE00CC4F86 /* bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bg.png; path = images/bg.png; sourceTree = "<group>"; };
 		18B4E0AD16B8FA1B00F72D01 /* IZValueSelectorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IZValueSelectorView.h; sourceTree = "<group>"; };
 		18B4E0AE16B8FA1B00F72D01 /* IZValueSelectorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IZValueSelectorView.m; sourceTree = "<group>"; };
 		18B4E0B516B8FD8100F72D01 /* add_friend.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = add_friend.png; path = images/personal/add_friend.png; sourceTree = "<group>"; };
@@ -842,8 +849,9 @@
 			isa = PBXGroup;
 			children = (
 				18E24E9E168EBCBE000D2172 /* Birthday */,
-				15D7CE911648E7870088E49F /* Gifts */,
 				15D7CE941648E8030088E49F /* Personal */,
+				15D7CE911648E7870088E49F /* Gifts */,
+				189BB0FF16D70A2C00CC4F86 /* Setting */,
 				18C7F705165A765900B709AE /* BaseController.h */,
 				18C7F706165A765900B709AE /* BaseController.m */,
 			);
@@ -966,6 +974,15 @@
 			path = Floder;
 			sourceTree = "<group>";
 		};
+		189BB0FF16D70A2C00CC4F86 /* Setting */ = {
+			isa = PBXGroup;
+			children = (
+				189BB10116D70ADD00CC4F86 /* SettingControler.h */,
+				189BB10216D70ADD00CC4F86 /* SettingControler.m */,
+			);
+			name = Setting;
+			sourceTree = "<group>";
+		};
 		18B4E0AC16B8FA1B00F72D01 /* IZValueSelector */ = {
 			isa = PBXGroup;
 			children = (
@@ -1040,6 +1057,8 @@
 		18FAA60C16560C720060BCEA /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				189BB10816D70DBE00CC4F86 /* bg@2x.png */,
+				189BB10916D70DBE00CC4F86 /* bg.png */,
 				152CCBB516A7D7B400B0B578 /* ActionSheet */,
 				152CCBC416A7D7B400B0B578 /* AlertView */,
 				180AC0081653729300A505CF /* icon.jpeg */,
@@ -1548,6 +1567,8 @@
 				1892D52A16D5F6CA007A8002 /* collect_unselect@2x.png in Resources */,
 				1892D52B16D5F6CA007A8002 /* friend_button_select@2x.png in Resources */,
 				1892D52C16D5F6CA007A8002 /* personal_prompt_bg.jpg in Resources */,
+				189BB10A16D70DBE00CC4F86 /* bg@2x.png in Resources */,
+				189BB10B16D70DBE00CC4F86 /* bg.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1650,6 +1671,7 @@
 				1543366E16BFA2D800894F44 /* AssignBirthdayController.m in Sources */,
 				15BEB11916D0CC030003EC20 /* LocalNotificationsUtils.m in Sources */,
 				1514AC2116D5EEEF0088B963 /* FMDatabase+InMemoryOnDiskIO.m in Sources */,
+				189BB10316D70ADD00CC4F86 /* SettingControler.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

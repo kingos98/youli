@@ -10,6 +10,7 @@
 #import "BaseController.h"
 #import "SinaWeibo.h"
 #import "SinaWeiboRequest.h"
+#import "FriendInfoController.h"
 
 @interface PersonalController : BaseController<UITableViewDelegate, UITableViewDataSource,SinaWeiboDelegate,SinaWeiboRequestDelegate>{
     NSMutableArray *data;
@@ -17,7 +18,7 @@
 }
 
 @property(nonatomic,retain)NSMutableArray *items;
-
-@property(strong, nonatomic)UITableView *friendTable;
+@property(strong,nonatomic)UITableView *friendTable;
+@property(strong,nonatomic)FriendInfoController *friendInfoController;
 
 @end

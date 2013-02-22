@@ -18,7 +18,6 @@
 #import "FriendAddController.h"
 
 @interface PersonalController ()
-
 @end
 
 @implementation PersonalController
@@ -38,7 +37,7 @@ NSMutableArray *items ;
     [super viewDidLoad];
     
     UIImageView *mainBgView = [[UIImageView alloc] initWithFrame:CGRectMake(0,0,320,480)];
-    [mainBgView setImage:[UIImage imageNamed:@"bg.jpg"]];
+    [mainBgView setImage:[UIImage imageNamed:@"bg.png"]];
     
     UIImageView *imgTitle = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
     imgTitle.image = [UIImage imageNamed:@"head.jpg"];
@@ -146,7 +145,8 @@ NSMutableArray *items ;
     [self.navigationController setNavigationBarHidden:YES animated:NO];
 }
 
-- (void)returnClick:(id)sender {
+- (void)returnClick:(id)sender
+{
     [self.navigationController popViewControllerAnimated:YES];
 }
 
@@ -170,8 +170,6 @@ NSMutableArray *items ;
     FriendAddController *friendAddController = [[FriendAddController alloc] init];
     [self.navigationController pushViewController:friendAddController animated:NO];
 }
-
-
 
 #pragma mark - UITableViewDataSource Methods
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -202,8 +200,10 @@ NSMutableArray *items ;
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    FriendInfoController *friendInfoController = [[FriendInfoController alloc] init];
-    [self.navigationController pushViewController:friendInfoController animated:NO];
+    if (self.friendInfoController == nil) {
+        self.friendInfoController = [[FriendInfoController alloc] init];
+    }
+    [self.navigationController pushViewController:self.friendInfoController animated:NO];
 }
 
 - (void)viewDidUnload

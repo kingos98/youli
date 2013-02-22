@@ -99,7 +99,7 @@
     imgTitle.image = [UIImage imageNamed:@"head.jpg"];
     
     UIImageView *imgGiftScrollView=[[UIImageView alloc] initWithFrame:CGRectMake(0, 90, 320, 370)];
-    imgGiftScrollView.image=[UIImage imageNamed:@"bg.jpg"];
+    imgGiftScrollView.image=[UIImage imageNamed:@"bg.png"];
     
     self.lblGiftTypeTitle=[[UILabel alloc] initWithFrame:CGRectMake(75, -12, 170, 61)];
     self.lblGiftTypeTitle.backgroundColor=[UIColor colorWithHue:0 saturation:0 brightness:0 alpha:0];

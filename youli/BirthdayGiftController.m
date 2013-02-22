@@ -121,7 +121,7 @@
         imgGiftScrollView.frame=CGRectMake(0, 89, 320, 458);
     }
     
-    imgGiftScrollView.image=[UIImage imageNamed:@"bg.jpg"];
+    imgGiftScrollView.image=[UIImage imageNamed:@"bg.png"];
     
     UIImageView *imgSelectorBG=[[UIImageView alloc] initWithFrame:CGRectMake(0, 44, 320, 45)];
     imgSelectorBG.image=[UIImage imageNamed:@"birthday_gift_top.jpg"];
