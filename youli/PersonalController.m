@@ -82,30 +82,34 @@ NSMutableArray *items ;
     birthdayLabel.textColor = [UIColor colorWithRed:0.5 green:0.5 blue:0.5 alpha:1];
     birthdayLabel.textAlignment = UITextAlignmentLeft;
     birthdayLabel.backgroundColor = [UIColor clearColor];
+    //3个tab
+    self.friendButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    UIImage *friendImage = [[UIImage imageNamed:@"friend_button_unselect.png"] stretchableImageWithLeftCapWidth:0 topCapHeight:0];
+    self.friendButton.frame = CGRectMake(10,122,99,40);
+    [self.friendButton setBackgroundImage:friendImage forState:UIControlStateNormal];
+    [self.friendButton setImage:[UIImage imageNamed:@"friend_button_select.png"] forState:UIControlStateSelected];
+    [self.friendButton addTarget:self action:@selector(friendButtonPressed) forControlEvents:UIControlEventTouchUpInside];
+    self.friendButton.selected = YES;
     
-    UIButton *friendButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    UIImage *friendImage = [[UIImage imageNamed:@"friend_button_select.png"] stretchableImageWithLeftCapWidth:0 topCapHeight:0];
-    friendButton.frame = CGRectMake(10,122,99,41);
-    [friendButton setBackgroundImage:friendImage forState:UIControlStateNormal];
-    [friendButton addTarget:self action:@selector(friendButtonPressed) forControlEvents:UIControlEventTouchUpInside];
-    
-    UIButton *collectButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.collectButton = [UIButton buttonWithType:UIButtonTypeCustom];
     UIImage *collectImage = [[UIImage imageNamed:@"collect_unselect.png"] stretchableImageWithLeftCapWidth:0 topCapHeight:0];
-    collectButton.frame = CGRectMake(110,122,100,41);
-    [collectButton setBackgroundImage:collectImage forState:UIControlStateNormal];
-    [collectButton addTarget:self action:@selector(collectButtonPressed) forControlEvents:UIControlEventTouchUpInside];
+    self.collectButton.frame = CGRectMake(110,122,100,40);
+    [self.collectButton setBackgroundImage:collectImage forState:UIControlStateNormal];
+    [self.collectButton setImage:[UIImage imageNamed:@"collect_select.png"] forState:UIControlStateSelected];
+    [self.collectButton addTarget:self action:@selector(collectButtonPressed) forControlEvents:UIControlEventTouchUpInside];
     
-    UIButton *cartButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.cartButton = [UIButton buttonWithType:UIButtonTypeCustom];
     UIImage *cartImage = [[UIImage imageNamed:@"cart_unselect.png"] stretchableImageWithLeftCapWidth:0 topCapHeight:0];
-    cartButton.frame = CGRectMake(210,122,101,41);
-    [cartButton setBackgroundImage:cartImage forState:UIControlStateNormal];
-    [cartButton addTarget:self action:@selector(cartButtonPressed) forControlEvents:UIControlEventTouchUpInside];
+    self.cartButton.frame = CGRectMake(210,122,101,40);
+    [self.cartButton setBackgroundImage:cartImage forState:UIControlStateNormal];
+    [self.cartButton setImage:[UIImage imageNamed:@"cart_select.png"] forState:UIControlStateSelected];
+    [self.cartButton addTarget:self action:@selector(cartButtonPressed) forControlEvents:UIControlEventTouchUpInside];
     
-    UIButton *addButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.addButton = [UIButton buttonWithType:UIButtonTypeCustom];
     UIImage *personalPromptBgView = [[UIImage imageNamed:@"add_friend.png"] stretchableImageWithLeftCapWidth:0 topCapHeight:0];
-    addButton.frame = CGRectMake(10,165,300,31);
-    [addButton setBackgroundImage:personalPromptBgView forState:UIControlStateNormal];
-    [addButton addTarget:self action:@selector(addButtonPressed) forControlEvents:UIControlEventTouchUpInside];
+    self.addButton.frame = CGRectMake(10,165,300,31);
+    [self.addButton setBackgroundImage:personalPromptBgView forState:UIControlStateNormal];
+    [self.addButton addTarget:self action:@selector(addButtonPressed) forControlEvents:UIControlEventTouchUpInside];
     
     self.friendTable = [[UIFolderTableView alloc] initWithFrame:CGRectMake(10, 204, 300, 220)];
     if(iPhone5){
@@ -114,6 +118,9 @@ NSMutableArray *items ;
     [self.friendTable setDelegate:self];
     [self.friendTable setDataSource:self];
     [self.friendTable setBackgroundColor:[UIColor whiteColor]];
+    //收藏与已购两个tab的图片容器
+    self.collectView = [[UIScrollView alloc] initWithFrame:CGRectMake(10, 154, 300, 344)];
+    self.cartView = [[UIScrollView alloc] initWithFrame:CGRectMake(10, 154, 300, 344)];
     
     [mainView addSubview:mainBgView];
     [mainView addSubview:imgTitle];
@@ -126,10 +133,10 @@ NSMutableArray *items ;
     [mainView addSubview:constellationLabel];
     [mainView addSubview:birthdayView];
     [mainView addSubview:birthdayLabel];
-    [mainView addSubview:friendButton];
-    [mainView addSubview:collectButton];
-    [mainView addSubview:cartButton];
-    [mainView addSubview:addButton];
+    [mainView addSubview:self.friendButton];
+    [mainView addSubview:self.collectButton];
+    [mainView addSubview:self.cartButton];
+    [mainView addSubview:self.addButton];
     [mainView addSubview:self.friendTable];
     
     self.items = [NSMutableArray arrayWithCapacity:24];
@@ -152,18 +159,58 @@ NSMutableArray *items ;
 
 - (void)friendButtonPressed
 {
-    
+    self.friendButton.selected = YES;
+    self.collectButton.selected = NO;
+    self.cartButton.selected = NO;
+    //隐藏其他tab
+    self.addButton.hidden = NO;
+    self.friendTable.hidden = NO;
+    self.collectView.hidden = YES;
+    self.cartView.hidden = YES;
 }
 
 - (void)collectButtonPressed
 {
+    self.friendButton.selected = NO;
+    self.collectButton.selected = YES;
+    self.cartButton.selected = NO;
     
+    self.addButton.hidden = YES;
+    self.friendTable.hidden = YES;
+    self.cartView.hidden = YES;
+    self.collectView.hidden = NO;
+    
+    for (int i=0; i<1; i++) {
+        UIImageView *collectView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 10, 99, 110)];
+        collectView.image = [UIImage imageNamed:@"collect_bg.png"];
+        UIImageView *giftView = [[UIImageView alloc] initWithFrame:CGRectMake(4, 3, 92, 92)];
+        giftView.image = [UIImage imageNamed:@"3.jpg"];
+        [collectView addSubview:giftView];
+        [self.collectView addSubview:collectView];
+    }
+    [mainView addSubview:self.collectView];
 }
 
 - (void)cartButtonPressed
 {
+    self.friendButton.selected = NO;
+    self.collectButton.selected = NO;
+    self.cartButton.selected = YES;
     
-}
+    self.addButton.hidden = YES;
+    self.friendTable.hidden = YES;
+    self.collectView.hidden = YES;
+    self.cartView.hidden = NO;
+    
+    for (int i=0; i<1; i++) {
+        UIImageView *collectView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 10, 99, 110)];
+        collectView.image = [UIImage imageNamed:@"collect_bg.png"];
+        UIImageView *giftView = [[UIImageView alloc] initWithFrame:CGRectMake(4, 3, 92, 92)];
+        giftView.image = [UIImage imageNamed:@"3.jpg"];
+        [collectView addSubview:giftView];
+        [self.cartView addSubview:collectView];
+    }
+    [mainView addSubview:self.cartView];}
 
 - (void)addButtonPressed
 {

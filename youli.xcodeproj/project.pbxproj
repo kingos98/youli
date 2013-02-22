@@ -849,8 +849,8 @@
 			isa = PBXGroup;
 			children = (
 				18E24E9E168EBCBE000D2172 /* Birthday */,
-				15D7CE941648E8030088E49F /* Personal */,
 				15D7CE911648E7870088E49F /* Gifts */,
+				15D7CE941648E8030088E49F /* Personal */,
 				189BB0FF16D70A2C00CC4F86 /* Setting */,
 				18C7F705165A765900B709AE /* BaseController.h */,
 				18C7F706165A765900B709AE /* BaseController.m */,
