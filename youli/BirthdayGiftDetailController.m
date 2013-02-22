@@ -59,15 +59,9 @@
     UIImageView *imgTitle = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
     imgTitle.image = [UIImage imageNamed:@"head.jpg"];
 
-    UIImageView *imgGiftScrollView=[[UIImageView alloc] initWithFrame:CGRectMake(0, 44, 320, 415)];
-
+    UIImageView *imgGiftScrollView=[[UIImageView alloc] initWithFrame:CGRectMake(0, 44, 320, 503)];
 
     imgGiftScrollView.image=[UIImage imageNamed:@"bg.png"];
-
-    if(iPhone5)
-    {
-        imgGiftScrollView.frame=CGRectMake(0, 44, 320, 503);
-    }
     
     self.lblGiftTypeTitle=[[UILabel alloc] initWithFrame:CGRectMake(126, -8, 68, 61)];
     self.lblGiftTypeTitle.backgroundColor=[UIColor colorWithHue:0 saturation:0 brightness:0 alpha:0];
@@ -84,7 +78,6 @@
     [self.btnShare setBackgroundImage:[UIImage imageNamed:@"share_click.png"] forState:UIControlStateHighlighted];
     [self.btnShare addTarget:self action:@selector(shareClick) forControlEvents:UIControlEventTouchUpInside];
 
-    
 
     giftDetailScrollView=[[UIScrollView alloc]initWithFrame:CGRectMake(0, 44, 320, 370)];
 //    giftDetailScrollView.pagingEnabled=true;
