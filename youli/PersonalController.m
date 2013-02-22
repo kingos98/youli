@@ -38,46 +38,38 @@ NSMutableArray *items ;
     
     UIImageView *mainBgView = [[UIImageView alloc] initWithFrame:CGRectMake(0,0,320,480)];
     [mainBgView setImage:[UIImage imageNamed:@"bg.png"]];
-    
+    //导航条
     UIImageView *imgTitle = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
     imgTitle.image = [UIImage imageNamed:@"head.jpg"];
-    
     UIButton *btnReturn=[[UIButton alloc]initWithFrame:CGRectMake(5, 7, 50, 30)];
     [btnReturn setBackgroundImage:[UIImage imageNamed:@"return_unclick.png"] forState:UIControlStateNormal];
     [btnReturn setImage:[UIImage imageNamed:@"return_click.png"] forState:UIControlStateHighlighted];
     [btnReturn addTarget:self action:@selector(returnClick:) forControlEvents:UIControlEventTouchUpInside];
-    
+    //个人信息
     UIImageView *personalInfoBgView = [[UIImageView alloc] initWithFrame:CGRectMake(10,53,300,69)];
     [personalInfoBgView setImage:[UIImage imageNamed:@"personal_info_bg.png"]];
-    
     UIImageView *faceBgView = [[UIImageView alloc] initWithFrame:CGRectMake(16,59,57,59)];
     [faceBgView setImage:[UIImage imageNamed:@"face_bg.png"]];
-    
     UIImageView *faceView = [[UIImageView alloc] initWithFrame:CGRectMake(19,61,51,52)];
     [faceView setImage:[UIImage imageNamed:@"icon.jpeg"]];
-    
-    UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(87, 68, 90, 22)];
+    UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(87, 66, 90, 22)];
     nameLabel.text = @"天空之城";
     nameLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:17];
     nameLabel.textColor = [UIColor colorWithRed:0.5 green:0.5 blue:0.5 alpha:1];
     nameLabel.textAlignment = UITextAlignmentLeft;
     nameLabel.backgroundColor = [UIColor clearColor];
-    
     UIImageView *constellationView = [[UIImageView alloc] initWithFrame:CGRectMake(87,92,16,17)];
     [constellationView setImage:[UIImage imageNamed:@"constellation.png"]];
-    
-    UILabel *constellationLabel = [[UILabel alloc] initWithFrame:CGRectMake(112, 90, 110, 22)];
-    constellationLabel.text = @"请选择星座";
+    UILabel *constellationLabel = [[UILabel alloc] initWithFrame:CGRectMake(87, 90, 110, 22)];
+    constellationLabel.text = @"摩羯座";
     constellationLabel.font = [UIFont fontWithName:@"Helvetica" size:12];
     constellationLabel.textColor = [UIColor colorWithRed:0.5 green:0.5 blue:0.5 alpha:1];
     constellationLabel.textAlignment = UITextAlignmentLeft;
     constellationLabel.backgroundColor = [UIColor clearColor];
-    
     UIImageView *birthdayView = [[UIImageView alloc] initWithFrame:CGRectMake(250, 65, 21, 22)];
     [birthdayView setImage:[UIImage imageNamed:@"birthday_unselect.png"]];
-    
-    UILabel *birthdayLabel = [[UILabel alloc] initWithFrame:CGRectMake(230, 90, 100, 22)];
-    birthdayLabel.text = @"请填写生日";
+    UILabel *birthdayLabel = [[UILabel alloc] initWithFrame:CGRectMake(242, 90, 100, 22)];
+    birthdayLabel.text = @"1月1日";
     birthdayLabel.font = [UIFont fontWithName:@"Helvetica" size:12];
     birthdayLabel.textColor = [UIColor colorWithRed:0.5 green:0.5 blue:0.5 alpha:1];
     birthdayLabel.textAlignment = UITextAlignmentLeft;
@@ -162,7 +154,7 @@ NSMutableArray *items ;
     self.friendButton.selected = YES;
     self.collectButton.selected = NO;
     self.cartButton.selected = NO;
-    //隐藏其他tab
+
     self.addButton.hidden = NO;
     self.friendTable.hidden = NO;
     self.collectView.hidden = YES;

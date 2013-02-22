@@ -174,6 +174,8 @@
 		189BB10316D70ADD00CC4F86 /* SettingControler.m in Sources */ = {isa = PBXBuildFile; fileRef = 189BB10216D70ADD00CC4F86 /* SettingControler.m */; };
 		189BB10A16D70DBE00CC4F86 /* bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 189BB10816D70DBE00CC4F86 /* bg@2x.png */; };
 		189BB10B16D70DBE00CC4F86 /* bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 189BB10916D70DBE00CC4F86 /* bg.png */; };
+		189BB12C16D7552D00CC4F86 /* edit_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 189BB12A16D7552D00CC4F86 /* edit_button@2x.png */; };
+		189BB12D16D7552D00CC4F86 /* edit_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 189BB12B16D7552D00CC4F86 /* edit_button.png */; };
 		18B4E0AF16B8FA1B00F72D01 /* IZValueSelectorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 18B4E0AE16B8FA1B00F72D01 /* IZValueSelectorView.m */; };
 		18B4E0BB16B8FD8100F72D01 /* add_friend.png in Resources */ = {isa = PBXBuildFile; fileRef = 18B4E0B516B8FD8100F72D01 /* add_friend.png */; };
 		18B4E0BC16B8FD8100F72D01 /* add_friend@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 18B4E0B616B8FD8100F72D01 /* add_friend@2x.png */; };
@@ -471,6 +473,8 @@
 		189BB10216D70ADD00CC4F86 /* SettingControler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingControler.m; sourceTree = "<group>"; };
 		189BB10816D70DBE00CC4F86 /* bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "bg@2x.png"; path = "images/bg@2x.png"; sourceTree = "<group>"; };
 		189BB10916D70DBE00CC4F86 /* bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bg.png; path = images/bg.png; sourceTree = "<group>"; };
+		189BB12A16D7552D00CC4F86 /* edit_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "edit_button@2x.png"; path = "images/personal/edit_button@2x.png"; sourceTree = "<group>"; };
+		189BB12B16D7552D00CC4F86 /* edit_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = edit_button.png; path = images/personal/edit_button.png; sourceTree = "<group>"; };
 		18B4E0AD16B8FA1B00F72D01 /* IZValueSelectorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IZValueSelectorView.h; sourceTree = "<group>"; };
 		18B4E0AE16B8FA1B00F72D01 /* IZValueSelectorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IZValueSelectorView.m; sourceTree = "<group>"; };
 		18B4E0B516B8FD8100F72D01 /* add_friend.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = add_friend.png; path = images/personal/add_friend.png; sourceTree = "<group>"; };
@@ -1122,6 +1126,8 @@
 		18FAA61016560DEB0060BCEA /* Personal */ = {
 			isa = PBXGroup;
 			children = (
+				189BB12A16D7552D00CC4F86 /* edit_button@2x.png */,
+				189BB12B16D7552D00CC4F86 /* edit_button.png */,
 				1892D51D16D5F6CA007A8002 /* cart_unselect@2x.png */,
 				1892D51E16D5F6CA007A8002 /* collect_select@2x.png */,
 				1892D51F16D5F6CA007A8002 /* friend_button_unselect@2x.png */,
@@ -1569,6 +1575,8 @@
 				1892D52C16D5F6CA007A8002 /* personal_prompt_bg.jpg in Resources */,
 				189BB10A16D70DBE00CC4F86 /* bg@2x.png in Resources */,
 				189BB10B16D70DBE00CC4F86 /* bg.png in Resources */,
+				189BB12C16D7552D00CC4F86 /* edit_button@2x.png in Resources */,
+				189BB12D16D7552D00CC4F86 /* edit_button.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
