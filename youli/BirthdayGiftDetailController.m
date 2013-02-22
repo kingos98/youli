@@ -60,16 +60,11 @@
     imgTitle.image = [UIImage imageNamed:@"head.jpg"];
 
     UIImageView *imgGiftScrollView=[[UIImageView alloc] initWithFrame:CGRectMake(0, 44, 320, 415)];
-<<<<<<< HEAD
     imgGiftScrollView.image=[UIImage imageNamed:@"bg.png"];
-=======
     if(iPhone5)
     {
         imgGiftScrollView.frame=CGRectMake(0, 89, 320, 458);
     }
-
-    imgGiftScrollView.image=[UIImage imageNamed:@"bg.jpg"];
->>>>>>> iphone判断
     
     self.lblGiftTypeTitle=[[UILabel alloc] initWithFrame:CGRectMake(126, -8, 68, 61)];
     self.lblGiftTypeTitle.backgroundColor=[UIColor colorWithHue:0 saturation:0 brightness:0 alpha:0];

@@ -181,9 +181,9 @@ NSMutableArray *items ;
     self.collectView.hidden = NO;
     
     for (int i=0; i<1; i++) {
-        UIImageView *collectView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 10, 99, 110)];
+        UIImageView *collectView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 10, 99, 98)];
         collectView.image = [UIImage imageNamed:@"collect_bg.png"];
-        UIImageView *giftView = [[UIImageView alloc] initWithFrame:CGRectMake(4, 3, 92, 92)];
+        UIImageView *giftView = [[UIImageView alloc] initWithFrame:CGRectMake(3.6f, 3.4f, 92, 92)];
         giftView.image = [UIImage imageNamed:@"3.jpg"];
         [collectView addSubview:giftView];
         [self.collectView addSubview:collectView];
@@ -203,9 +203,9 @@ NSMutableArray *items ;
     self.cartView.hidden = NO;
     
     for (int i=0; i<1; i++) {
-        UIImageView *collectView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 10, 99, 110)];
+        UIImageView *collectView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 10, 99, 98)];
         collectView.image = [UIImage imageNamed:@"collect_bg.png"];
-        UIImageView *giftView = [[UIImageView alloc] initWithFrame:CGRectMake(4, 3, 92, 92)];
+        UIImageView *giftView = [[UIImageView alloc] initWithFrame:CGRectMake(3.6f, 3.4f, 92, 92)];
         giftView.image = [UIImage imageNamed:@"3.jpg"];
         [collectView addSubview:giftView];
         [self.cartView addSubview:collectView];
