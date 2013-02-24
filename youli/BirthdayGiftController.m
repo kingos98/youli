@@ -257,7 +257,6 @@
     
     [mainView addSubview:priceSlider];
 //    [mainView addSubview:tmpView];
-    
 }
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer{

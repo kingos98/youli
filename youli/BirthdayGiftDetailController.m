@@ -163,7 +163,8 @@
 {
     NSInteger index=[fmdataOper getSelectedGiftIndex:GiftID];
     
-    k=k+(276+14)*index;
+//    k=k+(276+14)*index;
+    k=(276+14)*index;
     [self.giftDetailScrollView setContentOffset:CGPointMake(k, 0) animated:YES];
 }
 
