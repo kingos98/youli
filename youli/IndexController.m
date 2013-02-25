@@ -19,6 +19,8 @@
 #import "FestivalMethod.h"
 #import "LocalNotificationsUtils.h"
 
+#import "QuartzCore/CALayer.h"
+
 @interface IndexController ()
 {
     NSInteger birthdayGiftControllerHeight;         //记录当前birthdayGiftController高度
@@ -49,13 +51,21 @@
     [festivalMethod checkFestivalIsExist];
     
     templateForIphone4 = [[NSArray alloc] initWithObjects:
-    [NSArray arrayWithObjects:@"4",@"4",@"207",@"102",@"small",nil],
-    [NSArray arrayWithObjects:@"214",@"4",@"102",@"102",@"small",nil],
-    [NSArray arrayWithObjects:@"4",@"109",@"102",@"102",@"small",nil],
-    [NSArray arrayWithObjects:@"109",@"109",@"207",@"207",@"big",nil],
-    [NSArray arrayWithObjects:@"4",@"213",@"102",@"207",@"small",nil],
-    [NSArray arrayWithObjects:@"109",@"317",@"102",@"102",@"small",nil],
-    [NSArray arrayWithObjects:@"214",@"317",@"102",@"102",@"small",nil],nil];
+    [NSArray arrayWithObjects:@"4",@"4",@"205",@"100",@"small",nil],
+    [NSArray arrayWithObjects:@"214",@"4",@"100",@"100",@"small",nil],
+    [NSArray arrayWithObjects:@"4",@"109",@"100",@"100",@"small",nil],
+    [NSArray arrayWithObjects:@"109",@"109",@"205",@"205",@"big",nil],
+    [NSArray arrayWithObjects:@"4",@"213",@"100",@"205",@"small",nil],
+    [NSArray arrayWithObjects:@"109",@"317",@"100",@"100",@"small",nil],
+    [NSArray arrayWithObjects:@"214",@"317",@"100",@"100",@"small",nil],nil];
+    
+    imgGiftScrollView=[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 460)];
+    if(iPhone5)
+    {
+        imgGiftScrollView.frame=CGRectMake(0, 0, 320, 548);
+    }
+
+    imgGiftScrollView.image=[UIImage imageNamed:@"bg2_iphone5.png"];
     
     //类别view，可向右滑动，初始化时处于第一层，相当于被隐藏。
     categoryView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 212, 460)];
@@ -91,24 +101,12 @@
         mainScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, 320, 512)];
     }
 
-    if (iPhone5) {
-        mainScrollView.frame = CGRectMake(0, 0, 320, 508);
-    }
-    mainScrollView.backgroundColor = [UIColor whiteColor];
     mainScrollView.showsVerticalScrollIndicator = NO;
     CGSize size = mainScrollView.frame.size;
 //    [mainScrollView setContentSize:CGSizeMake(size.width, size.height * 2)];
-    [mainScrollView setContentSize:CGSizeMake(size.width, 424 * 2)];
+//    [mainScrollView setContentSize:CGSizeMake(size.width, 424 * 2)];
+    [mainScrollView setContentSize:CGSizeMake(size.width, 420 * 2)];
     
-//    if(!iPhone5)
-//    {
-//        [mainScrollView setContentSize:CGSizeMake(size.width, 424 * 2)];
-//    }
-//    else
-//    {
-//        [mainScrollView setContentSize:CGSizeMake(size.width, 512 * 2)];
-//    }
-
     for(int i=0;i<2;i++)
     {
         [self loadDataSource];
@@ -151,6 +149,7 @@
     
     //加到父view中的子view是按顺序加载的，需注意加载子view的顺序！
     [self.view addSubview:categoryView];
+    [self.view addSubview:imgGiftScrollView];
     [self.view addSubview:mainScrollView];
     [self.view addSubview:tabBarBgView];
     [self.view addSubview:tabBarLeftButton];
@@ -214,6 +213,7 @@
     CGPoint pointRightButton=tabBarRightButton.center;
     
     mainScrollView.center=CGPointMake(point.x-212,point.y);
+    imgGiftScrollView.center=CGPointMake(point.x-212,point.y);
     tabBarBgView.center=CGPointMake(pointBgView.x-212,pointBgView.y);
     tabBarLeftButton.center=CGPointMake(pointLeftButton.x-212,pointLeftButton.y);
     tabBarBoxButton.center=CGPointMake(pointBoxButton.x-212,pointBoxButton.y);
@@ -232,13 +232,17 @@
     CGPoint pointBgView=tabBarBgView.center;
     CGPoint pointLeftButton=tabBarLeftButton.center;
     CGPoint pointBoxButton=tabBarBoxButton.center;
-    CGPoint pointRightButton=tabBarRightButton.center;    
+    CGPoint pointRightButton=tabBarRightButton.center;
+    
     mainScrollView.center=CGPointMake(point.x+212,point.y);
+    imgGiftScrollView.center=CGPointMake(point.x+212,point.y);
     tabBarBgView.center=CGPointMake(pointBgView.x+212,pointBgView.y);
     tabBarLeftButton.center=CGPointMake(pointLeftButton.x+212,pointLeftButton.y);
     tabBarBoxButton.center=CGPointMake(pointBoxButton.x+212,pointBoxButton.y);
     tabBarRightButton.center=CGPointMake(pointRightButton.x+212,pointRightButton.y);
-    isPopCategoryView = true;    
+    
+    isPopCategoryView = true;
+    
     [UIView commitAnimations];
 }
 
@@ -280,8 +284,19 @@
             UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake([x intValue],
                                                                                    [y intValue] + birthdayGiftControllerHeight,
                                                                                    [width intValue],
-                                                                                   [height intValue])];                                                 
+                                                                                   [height intValue])];
+            
+
+            imageView.layer.shadowColor=[UIColor colorWithRed:0.27 green:0.2 blue:0.05 alpha:.8].CGColor;
+            imageView.layer.shadowOffset = CGSizeMake(2, 2);
+            imageView.layer.borderColor=[UIColor whiteColor].CGColor;
+            imageView.layer.borderWidth=2;
+            imageView.layer.shadowOpacity=1;
+            imageView.layer.shadowRadius=.8;
+            
+
             [imageView setImageWithURL:URL placeholderImage:[UIImage imageNamed:@"3.jpg"]];
+            
             [mainScrollView addSubview:imageView];
 
             imageView = nil; 
@@ -289,7 +304,9 @@
         
 //        [mainScrollView setContentSize:CGSizeMake(size.width, 420 * 2)];
         
-        birthdayGiftControllerHeight+=424;      //每load一屏自动加420；
+//        birthdayGiftControllerHeight+=424;      //每load一屏自动加424；
+            birthdayGiftControllerHeight+=420;      //每load一屏自动加420；
+
         
         if(mainScrollView.contentSize.height<birthdayGiftControllerHeight)
         {

@@ -141,11 +141,11 @@
 //    NSUserDefaults *mydefault = [NSUserDefaults standardUserDefaults];
 //    self.lblGiftTypeTitle.text=[mydefault objectForKey:@"giftTypeTitle"];
     
-    self.btnConstellation=[[UIButton alloc]initWithFrame:CGRectMake(92, 51, 62, 32)];
+    self.btnConstellation=[[UIButton alloc]initWithFrame:CGRectMake(100, 50, 60, 35)];
     [self.btnConstellation setBackgroundImage:[UIImage imageNamed:@"gift_btn_push_down.png"] forState:UIControlStateNormal];
     [self.btnConstellation addTarget:self action:@selector(showConstellation:) forControlEvents:UIControlEventTouchUpInside];
     
-    self.btnPrice=[[UIButton alloc] initWithFrame:CGRectMake(245, 51, 62, 32)];
+    self.btnPrice=[[UIButton alloc] initWithFrame:CGRectMake(260, 50, 60, 35)];
     [self.btnPrice setBackgroundImage:[UIImage imageNamed:@"gift_btn_push_down.png"] forState:UIControlStateNormal];
     [self.btnPrice addTarget:self action:@selector(showPrice:) forControlEvents:UIControlEventTouchUpInside];
 
@@ -188,7 +188,6 @@
     indicator = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(285, 10, 25, 25)];
     indicator.color=[UIColor scrollViewTexturedBackgroundColor];
     indicator.hidesWhenStopped=YES;
-//    indicator.center = CGPointMake(32, 25);
     
     [mainView addSubview:imgTitle];
     [mainView addSubview:imgGiftScrollView];
@@ -205,17 +204,15 @@
     [mainView addSubview:btnReturn];
     [mainView addSubview:indicator];
 
-//    //添加手势
-//    UIPanGestureRecognizer *mainViewPan=[[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(handleMainPan:)];
-//    [giftScrollView addGestureRecognizer: mainViewPan];
+    //添加左右滑动手势
+    UIPanGestureRecognizer *mainViewPan=[[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(handleMainPan:)];
+    [giftScrollView addGestureRecognizer: mainViewPan];
     
-//    UIPanGestureRecognizer *pricePan=[[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(handlePrice:)];
-//    [priceSlider addGestureRecognizer:pricePan];
+    //避免UIScrollView原有手势与新添加的手势冲突
+    [mainViewPan requireGestureRecognizerToFail:giftScrollView.panGestureRecognizer];
 }
 
 - (void)viewDidUnload {
-    //    [self setLblGiftListTitle:nil];
-    //    [self setBtnReturn:nil];
     [super viewDidUnload];
 }
 
@@ -229,7 +226,6 @@
 {
     priceSlider=[[NMRangeSlider alloc] init];
     priceSlider.frame=CGRectMake(16, 106, 285, 35);
-//    priceSlider.frame=CGRectMake(0, 0, 285, 35);
     
     UIImage* image = nil;
     image = [UIImage imageNamed:@"slider-yellow-track"];
@@ -247,16 +243,7 @@
     [priceSlider addTarget:self action:@selector(priceSliderChange) forControlEvents:UIControlEventValueChanged];
     [priceSlider setHidden:YES];
 
-    
-//    UIView  *tmpView=[[UIView alloc] initWithFrame:CGRectMake(16, 106, 285, 35)];
-//    [tmpView addSubview:priceSlider];
-
-    
-//    UIPanGestureRecognizer *pricePan=[[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(handlePrice:)];
-//    [tmpView addGestureRecognizer:pricePan];
-    
     [mainView addSubview:priceSlider];
-//    [mainView addSubview:tmpView];
 }
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer{
@@ -319,7 +306,6 @@
                                                                                                 
                                                                                                 [self.giftScrollView addSubview:birthdayGiftItem];
                                                                                                 
-//                                                                                                iGiftScrollViewHeight+=284;                                                                                                
                                                                                                 iGiftScrollViewHeight+=284;
                                                                                                 
                                                                                                 //把搜索的数据保存到sqlite
@@ -512,11 +498,8 @@
 #pragma mark - GestureRecognizer
 -(void) tapPhoto:(UITapGestureRecognizer*) sender
 {
-//    NSLog([NSString stringWithFormat:@"%d",[(UIGestureRecognizer *)sender view].tag]);
     [self.birthdayGiftDetailController sendGiftID:[(UIGestureRecognizer *)sender view].tag];
 
-//    [self.birthdayGiftDetailControllerDelegate sendGiftID:[(UIGestureRecognizer *)sender view].tag];
-    
     [self.navigationController pushViewController:birthdayGiftDetailController animated:YES];
 }
 
@@ -525,24 +508,17 @@
     if([gestureRecognizer state]==UIGestureRecognizerStateBegan||[gestureRecognizer state]==UIGestureRecognizerStateChanged)
     {
         CGPoint cgpoint=[gestureRecognizer translationInView:self.view];
-        if(cgpoint.x<0)
+        
+        
+        //滑动超过一定距离才招待滑动操作，避免与原来的操作手势冲突
+        if(cgpoint.x<-3)
         {
             [self hideCategoryView];
         }
-        else
+        else if(cgpoint.x>3)
         {
             [self showCategoryView];
         }
     }
 }
-
--(void) handlePrice:(UIPanGestureRecognizer *) gestureRecognizer
-{
-    if([gestureRecognizer state]==UIGestureRecognizerStateBegan||[gestureRecognizer state]==UIGestureRecognizerStateChanged)
-    {
-//        NSLog(@"price pan");
-    }
-}
-
-
 @end

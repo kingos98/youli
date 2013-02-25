@@ -18,6 +18,7 @@
     UIScrollView *mainScrollView;
     UIView *categoryView;
     UIImageView *categoryBgImage;
+    UIImageView *imgGiftScrollView;
     UITableView *categoryTableView;
     UITextField *_value;
 }
