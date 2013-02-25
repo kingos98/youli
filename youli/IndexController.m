@@ -287,12 +287,12 @@
                                                                                    [height intValue])];
             
 
-            imageView.layer.shadowColor=[UIColor colorWithRed:0.27 green:0.2 blue:0.05 alpha:.8].CGColor;
+            imageView.layer.shadowColor=[UIColor colorWithRed:0.27 green:0.2 blue:0.05 alpha:.6].CGColor;
             imageView.layer.shadowOffset = CGSizeMake(2, 2);
             imageView.layer.borderColor=[UIColor whiteColor].CGColor;
             imageView.layer.borderWidth=2;
             imageView.layer.shadowOpacity=1;
-            imageView.layer.shadowRadius=.8;
+            imageView.layer.shadowRadius=.6;
             
 
             [imageView setImageWithURL:URL placeholderImage:[UIImage imageNamed:@"3.jpg"]];
