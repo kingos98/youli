@@ -10,7 +10,7 @@
 #import "IZValueSelectorView.h"
 #import "ConstellationSelector.h"
 
-@interface SubTableCellView : UIView<IZValueSelectorViewDataSource,IZValueSelectorViewDelegate>
+@interface SubTableCell : UIView<IZValueSelectorViewDataSource,IZValueSelectorViewDelegate>
 
 @property (nonatomic,strong)IZValueSelectorView *monthView;
 @property (nonatomic,strong)IZValueSelectorView *dayView;

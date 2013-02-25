@@ -6,17 +6,17 @@
 //
 //
 
-#import "SubTableCellView.h"
+#import "SubTableCell.h"
 #import "IZValueSelectorView.h"
 #import "ConstellationUtils.h"
 
-@implementation SubTableCellView
+@implementation SubTableCell
 
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
     if (self) {
-        UIImageView *mainBgView = [[UIImageView alloc] initWithFrame:CGRectMake(0,0,320,200)];
+        UIImageView *mainBgView = [[UIImageView alloc] initWithFrame:CGRectMake(0,0,frame.size.width,frame.size.height)];
         [mainBgView setImage:[UIImage imageNamed:@"sub_cell_bg.png"]];
         [self addSubview:mainBgView];
         

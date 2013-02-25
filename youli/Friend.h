@@ -7,8 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "FMDatabase.h"
 
-@interface Friend : NSObject
+@interface Friend : NSObject{
+    FMDatabase *db;
+}
 
 @property(nonatomic,retain)NSMutableArray *items;
 @property(nonatomic,retain)NSString *name;

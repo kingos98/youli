@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "FolderCoverView.h"
-#import "SubTableCellView.h"
+#import "SubTableCell.h"
 
 @class CAMediaTimingFunction;
 @class UIFolderTableView;

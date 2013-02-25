@@ -8,7 +8,7 @@
 
 #import "FriendAddController.h"
 #import "FriendCell.h"
-#import "SubTableCellView.h"
+#import "SubTableCell.h"
 #import "UIFolderTableView.h"
 #import "Friend.h"
 #import "AppDelegate.h"
@@ -90,7 +90,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     self.folderTableView.scrollEnabled = NO;
-    self.subTableCellView = [[SubTableCellView alloc] initWithFrame:CGRectMake(0, 0, 320, 200)];
+    self.subTableCellView = [[SubTableCell alloc] initWithFrame:CGRectMake(0, 0, 320, 200)];
     UIFolderTableView *folderTableView = (UIFolderTableView *)tableView;
     [folderTableView openFolderAtIndexPath:indexPath
                            WithContentView:self.subTableCellView

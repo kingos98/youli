@@ -11,4 +11,6 @@
 
 @interface FriendInfoController : BaseController
 
+@property(strong,nonatomic)UIButton *editButton;
+
 @end

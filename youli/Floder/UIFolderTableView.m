@@ -9,7 +9,7 @@
 #import "UIFolderTableView.h"
 #import <QuartzCore/QuartzCore.h>
 #import "UIView+screenshot.h"
-#import "SubTableCellView.h"
+#import "SubTableCell.h"
 
 #define COVERALPHA 0.6
 
@@ -207,13 +207,9 @@
         self.contentOffset = self.oldContentOffset;
         self.top.cover.alpha = 0;
         self.bottom.cover.alpha = 0;        
-    }];    
-    if (self.closeBlock) self.closeBlock(self.subClassContentView, duration, timingFunction);
+    }];
     
-    SubTableCellView *subTableCellView = (SubTableCellView *)self.subClassContentView;
-    NSLog(@"Selected value %@",subTableCellView.selectedMonth);
-    NSLog(@"Selected value %@",subTableCellView.selectedDay);
-    NSLog(@"Selected value %@",subTableCellView.selectedConstellation);
+    if (self.closeBlock) self.closeBlock(self.subClassContentView, duration, timingFunction);
     
     [self.top.layer setPosition:self.oldTopPoint];
     [self.bottom.layer setPosition:self.oldBottomPoint];
@@ -245,12 +241,12 @@
     CGImageRef ref1 = CGImageCreateWithImageInRect([screen CGImage], scaledRect);
     FolderCoverView *coverView;
     if (isTop) {
-        coverView = [[[FolderCoverView alloc] initWithFrame:aRect offset:self.rowHeight - 5] autorelease];
+        coverView = [[[FolderCoverView alloc] initWithFrame:aRect offset:self.rowHeight-5] autorelease];
         UIButton *saveButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        saveButton.frame = CGRectMake(260,height - 30,50,23);
+        saveButton.frame = CGRectMake(260,height-30,50,23);
         UIImage *saveImage = [[UIImage imageNamed:@"save.png"] stretchableImageWithLeftCapWidth:0 topCapHeight:0];
         [saveButton setBackgroundImage:saveImage forState:UIControlStateNormal];
-        [saveButton addTarget:self action:@selector(performClose:) forControlEvents:UIControlEventTouchUpInside];
+        [saveButton addTarget:self action:@selector(saveButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
         [coverView addSubview:saveButton];
     } else {
         coverView = [[[FolderCoverView alloc] initWithFrame:aRect offset:0] autorelease];
@@ -264,9 +260,13 @@
     return coverView;
 }
 
-- (void)saveButtonPressed
-{
-    
+- (void)saveButtonPressed:(id)sender
+{    
+    [self performClose:sender];
+    SubTableCell *subTableCellView = (SubTableCell *)self.subClassContentView;
+    NSLog(@"Selected value %@",subTableCellView.selectedMonth);
+    NSLog(@"Selected value %@",subTableCellView.selectedDay);
+    NSLog(@"Selected value %@",subTableCellView.selectedConstellation);
 }
 
 @end

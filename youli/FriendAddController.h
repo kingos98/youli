@@ -11,7 +11,7 @@
 #import "UIFolderTableView.h"
 #import "SinaWeibo.h"
 #import "SinaWeiboRequest.h"
-#import "SubTableCellView.h"
+#import "SubTableCell.h"
 
 @interface FriendAddController : BaseController<UITableViewDelegate, UITableViewDataSource,SinaWeiboDelegate,SinaWeiboRequestDelegate>
 
@@ -21,6 +21,6 @@
 
 @property(strong, nonatomic)UIFolderTableView *folderTableView;
 
-@property(strong, nonatomic)SubTableCellView *subTableCellView;
+@property(strong, nonatomic)SubTableCell *subTableCellView;
 
 @end

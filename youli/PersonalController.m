@@ -13,7 +13,7 @@
 #import "FriendInfoController.h"
 #import "Friend.h"
 #import "AppDelegate.h"
-#import "SubTableCellView.h"
+#import "SubTableCell.h"
 #import "UIFolderTableView.h"
 #import "FriendAddController.h"
 
@@ -74,6 +74,9 @@ NSMutableArray *items ;
     birthdayLabel.textColor = [UIColor colorWithRed:0.5 green:0.5 blue:0.5 alpha:1];
     birthdayLabel.textAlignment = UITextAlignmentLeft;
     birthdayLabel.backgroundColor = [UIColor clearColor];
+    self.editButton = [[UIButton alloc] initWithFrame:CGRectMake(281, 53, 29, 29)];
+    [self.editButton setBackgroundImage:[UIImage imageNamed:@"edit_button.png"] forState:UIControlStateNormal];
+    [self.editButton addTarget:self action:@selector(editButtonPressed) forControlEvents:UIControlEventTouchUpInside];
     //3个tab
     self.friendButton = [UIButton buttonWithType:UIButtonTypeCustom];
     UIImage *friendImage = [[UIImage imageNamed:@"friend_button_unselect.png"] stretchableImageWithLeftCapWidth:0 topCapHeight:0];
@@ -97,11 +100,11 @@ NSMutableArray *items ;
     [self.cartButton setImage:[UIImage imageNamed:@"cart_select.png"] forState:UIControlStateSelected];
     [self.cartButton addTarget:self action:@selector(cartButtonPressed) forControlEvents:UIControlEventTouchUpInside];
     
-    self.addButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.messageView = [UIButton buttonWithType:UIButtonTypeCustom];
     UIImage *personalPromptBgView = [[UIImage imageNamed:@"add_friend.png"] stretchableImageWithLeftCapWidth:0 topCapHeight:0];
-    self.addButton.frame = CGRectMake(10,165,300,31);
-    [self.addButton setBackgroundImage:personalPromptBgView forState:UIControlStateNormal];
-    [self.addButton addTarget:self action:@selector(addButtonPressed) forControlEvents:UIControlEventTouchUpInside];
+    self.messageView.frame = CGRectMake(10,165,300,31);
+    [self.messageView setBackgroundImage:personalPromptBgView forState:UIControlStateNormal];
+    [self.messageView addTarget:self action:@selector(addButtonPressed) forControlEvents:UIControlEventTouchUpInside];
     
     self.friendTable = [[UIFolderTableView alloc] initWithFrame:CGRectMake(10, 204, 300, 220)];
     if(iPhone5){
@@ -125,10 +128,11 @@ NSMutableArray *items ;
     [mainView addSubview:constellationLabel];
     [mainView addSubview:birthdayView];
     [mainView addSubview:birthdayLabel];
+    [mainView addSubview:self.editButton];
     [mainView addSubview:self.friendButton];
     [mainView addSubview:self.collectButton];
     [mainView addSubview:self.cartButton];
-    [mainView addSubview:self.addButton];
+    [mainView addSubview:self.messageView];
     [mainView addSubview:self.friendTable];
     
     self.items = [NSMutableArray arrayWithCapacity:24];
@@ -149,13 +153,19 @@ NSMutableArray *items ;
     [self.navigationController popViewControllerAnimated:YES];
 }
 
+- (void)editButtonPressed
+{
+    SubTableCell *subTableCell = [[SubTableCell alloc] initWithFrame:CGRectMake(10,122,300,200)];
+    [mainView addSubview:subTableCell];
+}
+
 - (void)friendButtonPressed
 {
     self.friendButton.selected = YES;
     self.collectButton.selected = NO;
     self.cartButton.selected = NO;
 
-    self.addButton.hidden = NO;
+    self.messageView.hidden = NO;
     self.friendTable.hidden = NO;
     self.collectView.hidden = YES;
     self.cartView.hidden = YES;
@@ -167,7 +177,7 @@ NSMutableArray *items ;
     self.collectButton.selected = YES;
     self.cartButton.selected = NO;
     
-    self.addButton.hidden = YES;
+    self.messageView.hidden = YES;
     self.friendTable.hidden = YES;
     self.cartView.hidden = YES;
     self.collectView.hidden = NO;
@@ -189,7 +199,7 @@ NSMutableArray *items ;
     self.collectButton.selected = NO;
     self.cartButton.selected = YES;
     
-    self.addButton.hidden = YES;
+    self.messageView.hidden = YES;
     self.friendTable.hidden = YES;
     self.collectView.hidden = YES;
     self.cartView.hidden = NO;
@@ -221,6 +231,11 @@ NSMutableArray *items ;
     return 24;
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	return 37;
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"CellIdentifier";
@@ -232,11 +247,6 @@ NSMutableArray *items ;
 }
 
 #pragma mark - UITableViewDelegate Methods
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-	return 37;
-}
-
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (self.friendInfoController == nil) {
