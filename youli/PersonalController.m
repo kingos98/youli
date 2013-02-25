@@ -48,6 +48,10 @@ NSMutableArray *items ;
     //个人信息
     UIImageView *personalInfoBgView = [[UIImageView alloc] initWithFrame:CGRectMake(10,53,300,69)];
     [personalInfoBgView setImage:[UIImage imageNamed:@"personal_info_bg.png"]];
+    personalInfoBgView.userInteractionEnabled = YES;
+    UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(saveClick)];
+    [personalInfoBgView addGestureRecognizer:singleTap];
+    [singleTap release];
     UIImageView *faceBgView = [[UIImageView alloc] initWithFrame:CGRectMake(16,59,57,59)];
     [faceBgView setImage:[UIImage imageNamed:@"face_bg.png"]];
     UIImageView *faceView = [[UIImageView alloc] initWithFrame:CGRectMake(19,61,51,52)];
@@ -77,6 +81,8 @@ NSMutableArray *items ;
     self.editButton = [[UIButton alloc] initWithFrame:CGRectMake(281, 53, 29, 29)];
     [self.editButton setBackgroundImage:[UIImage imageNamed:@"edit_button.png"] forState:UIControlStateNormal];
     [self.editButton addTarget:self action:@selector(editButtonPressed) forControlEvents:UIControlEventTouchUpInside];
+    self.subTableCell = [[SubTableCell alloc] initWithFrame:CGRectMake(10,122,300,200)];
+    self.subTableCell.hidden = YES;
     //3个tab
     self.friendButton = [UIButton buttonWithType:UIButtonTypeCustom];
     UIImage *friendImage = [[UIImage imageNamed:@"friend_button_unselect.png"] stretchableImageWithLeftCapWidth:0 topCapHeight:0];
@@ -128,12 +134,13 @@ NSMutableArray *items ;
     [mainView addSubview:constellationLabel];
     [mainView addSubview:birthdayView];
     [mainView addSubview:birthdayLabel];
-    [mainView addSubview:self.editButton];
+    [mainView addSubview:self.editButton]; 
     [mainView addSubview:self.friendButton];
     [mainView addSubview:self.collectButton];
     [mainView addSubview:self.cartButton];
     [mainView addSubview:self.messageView];
     [mainView addSubview:self.friendTable];
+    [mainView addSubview:self.subTableCell];
     
     self.items = [NSMutableArray arrayWithCapacity:24];
     
@@ -155,8 +162,12 @@ NSMutableArray *items ;
 
 - (void)editButtonPressed
 {
-    SubTableCell *subTableCell = [[SubTableCell alloc] initWithFrame:CGRectMake(10,122,300,200)];
-    [mainView addSubview:subTableCell];
+    self.subTableCell.hidden = NO;
+}
+
+- (void)saveClick
+{
+    self.subTableCell.hidden = YES;
 }
 
 - (void)friendButtonPressed

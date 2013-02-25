@@ -11,6 +11,7 @@
 #import "SinaWeibo.h"
 #import "SinaWeiboRequest.h"
 #import "FriendInfoController.h"
+#import "SubTableCell.h"
 
 @interface PersonalController : BaseController<UITableViewDelegate, UITableViewDataSource,SinaWeiboDelegate,SinaWeiboRequestDelegate>{
     NSMutableArray *data;
@@ -25,6 +26,7 @@
 @property(strong,nonatomic)UIButton *cartButton;
 @property(strong,nonatomic)UIButton *editButton;
 @property(strong,nonatomic)UIButton *messageView;
+@property(strong,nonatomic)SubTableCell *subTableCell;
 @property(strong,nonatomic)UIScrollView *collectView;
 @property(strong,nonatomic)UIScrollView *cartView;
 
