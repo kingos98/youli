@@ -21,6 +21,7 @@
 #import "UIImageView+WebCache.h"
 #import "BirthdayGiftItem.h"
 #import "NMRangeSlider.h"
+#import "AppDelegate.h"
 
 @interface AssignBirthdayController ()
 {
@@ -99,6 +100,11 @@
     imgTitle.image = [UIImage imageNamed:@"head.jpg"];
     
     UIImageView *imgGiftScrollView=[[UIImageView alloc] initWithFrame:CGRectMake(0, 90, 320, 370)];
+    if(iPhone5)
+    {
+        imgGiftScrollView.frame=CGRectMake(0, 90, 320, 458);
+    }
+    
     imgGiftScrollView.image=[UIImage imageNamed:@"bg.png"];
     
     self.lblGiftTypeTitle=[[UILabel alloc] initWithFrame:CGRectMake(75, -12, 170, 61)];
@@ -110,7 +116,14 @@
     [self.lblGiftTypeTitle setTextAlignment:NSTextAlignmentCenter];
     self.lblGiftTypeTitle.text=@"生日礼物";
     
-    self.giftScrollView=[[UIScrollView alloc]initWithFrame:CGRectMake(0, 95, 320, 350)];
+    if(!iPhone5)
+    {
+        self.giftScrollView=[[UIScrollView alloc]initWithFrame:CGRectMake(0, 89, 320, 371)];
+    }
+    else
+    {
+        self.giftScrollView=[[UIScrollView alloc]initWithFrame:CGRectMake(0, 89, 320, 459)];
+    }
     
     imgPrice=[[UIImageView alloc]initWithFrame:CGRectMake(0, 37, 320, 61)];
     imgPrice.image=[UIImage imageNamed:@"birthday_gift_select.png"];    
@@ -256,9 +269,24 @@
 -(void)clearGiftScrollView
 {
     for(UIView *view in giftScrollView.subviews)
-    {
+    {        
         [view removeFromSuperview];
     }
+    
+    iGiftDisplayCount=0;
+    iGiftScrollViewHeight=0;
+    
+    if(!iPhone5)
+    {
+        self.giftScrollView.frame=CGRectMake(0, 89, 320, 371);
+    }
+    else
+    {
+        self.giftScrollView.frame=CGRectMake(0, 89, 320, 459);
+    }
+    
+    [self.giftScrollView setContentOffset:CGPointMake(0, 0) animated:YES];
+
 }
 
 -(void) sendGiftTypeTitle:(NSString *)GiftTypeTitle
@@ -269,7 +297,10 @@
     
     if(strOldGiftType!=strNewGiftType)
     {
+        [self clearGiftScrollView];
+
         [self loadDataSource];
+        
         strOldGiftType=strNewGiftType;
     }
 }

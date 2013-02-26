@@ -32,6 +32,7 @@
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>{
     SinaWeibo *sinaweibo;
+    UIImageView *splashView;
 }
 
 @property (strong, nonatomic) UIWindow *window;
@@ -40,4 +41,6 @@
 @property (strong, nonatomic) PersonalController *personalController;
 @property (readonly, nonatomic) SinaWeibo *sinaweibo;
 
+
+- (void) startupAnimationDone:(NSString *)animationID finished:(NSNumber *)finished context:(void *)context;
 @end

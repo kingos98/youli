@@ -24,3 +24,7 @@ youli/NSObject+YouliConfig.m
 youli/config.h
 
 youli/config.m
+
+youli/SplashViewController.m
+
+youli/SplashViewController.h

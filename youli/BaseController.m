@@ -48,11 +48,12 @@
         {
             categoryTableView = [[CategoryTableView alloc] initWithFrame:CGRectMake(0, 0, 212, 548)];
         }
-        categoryTableView.backgroundView=[self backgroundView];
-        categoryTableView.backgroundColor=[UIColor clearColor];
-        categoryTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-        categoryTableView.scrollEnabled=false;
 
+//        categoryTableView.backgroundView=[self backgroundView];
+//        categoryTableView.backgroundColor=[UIColor clearColor];
+//        categoryTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+//        categoryTableView.scrollEnabled=false;
+        
         [categoryView addSubview:categoryTableView];
         
         //主页面view，当前可看到的页面。
@@ -130,6 +131,7 @@
         
         categoryTableView.delegate=self;
 
+
         //为mainScrollView添加手势操作
 //        UIPanGestureRecognizer *mainViewPan=[[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(handleMainPan:)];
 //        [mainView addGestureRecognizer: mainViewPan];
@@ -159,9 +161,12 @@
     if(iPhone5)
     {
         categoryBgImageTmp.frame=CGRectMake(0, 0, 212, 548);
+        categoryBgImageTmp.image = [UIImage imageNamed:@"gifttypebg.png"];
     }
-
-    categoryBgImageTmp.image = [UIImage imageNamed:@"gifttypebg.png"];
+    else
+    {
+        categoryBgImageTmp.image = [UIImage imageNamed:@"gifttypebg460.png"];
+    }
     return categoryBgImageTmp;
 }
 
@@ -249,10 +254,10 @@
     
     [self hideCategoryView];
 
-    if ([youliDelegate respondsToSelector:@selector(changeGiftListByType:)])
-    {
-        [youliDelegate changeGiftListByType:123];
-    }
+//    if ([youliDelegate respondsToSelector:@selector(changeGiftListByType:)])
+//    {
+//        [youliDelegate changeGiftListByType:123];
+//    }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath

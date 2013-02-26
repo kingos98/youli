@@ -58,29 +58,32 @@
     [NSArray arrayWithObjects:@"4",@"213",@"100",@"205",@"small",nil],
     [NSArray arrayWithObjects:@"109",@"317",@"100",@"100",@"small",nil],
     [NSArray arrayWithObjects:@"214",@"317",@"100",@"100",@"small",nil],nil];
-    
-    imgGiftScrollView=[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 460)];
-    if(iPhone5)
-    {
-        imgGiftScrollView.frame=CGRectMake(0, 0, 320, 548);
-    }
+
+    //用iphone5尺寸,如果是iphone4会隐藏下面多余的部分
+    imgGiftScrollView=[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 548)];
 
     imgGiftScrollView.image=[UIImage imageNamed:@"bg2_iphone5.png"];
     
-    //类别view，可向右滑动，初始化时处于第一层，相当于被隐藏。
-    categoryView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 212, 460)];
-    if (iPhone5) {
-        categoryView.frame = CGRectMake(0, 0, 212, 548);
+    //类别view，可向右滑动，初始化时处于第一层，相当于被隐藏,用iphone5尺寸
+    if(!iPhone5)
+    {
+        categoryView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 212, 460)];
     }
+    else
+    {
+        categoryView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 212, 548)];
+    }
+
     //添加分类页面
-    categoryTableView=[[UITableView alloc] initWithFrame:CGRectMake(0, 0, 212, 460)];
-    if (iPhone5) {
-        categoryTableView.frame = CGRectMake(0, 0, 212, 548);
+    if(!iPhone5)
+    {
+        categoryTableView = [[CategoryTableView alloc] initWithFrame:CGRectMake(0, 0, 212, 460)];
     }
-    categoryTableView.backgroundView=[self backgroundView];
-    categoryTableView.backgroundColor=[UIColor clearColor];
-    categoryTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    categoryTableView.scrollEnabled=false;
+    else
+    {
+        categoryTableView = [[CategoryTableView alloc] initWithFrame:CGRectMake(0, 0, 212, 548)];
+    }
+    
     if(categoryTableView)
     {
         categoryTableView.dataSource=self;
@@ -105,7 +108,7 @@
     CGSize size = mainScrollView.frame.size;
 //    [mainScrollView setContentSize:CGSizeMake(size.width, size.height * 2)];
 //    [mainScrollView setContentSize:CGSizeMake(size.width, 424 * 2)];
-    [mainScrollView setContentSize:CGSizeMake(size.width, 420 * 2)];
+    [mainScrollView setContentSize:CGSizeMake(size.width, 418 * 2)];
     
     for(int i=0;i<2;i++)
     {
@@ -165,6 +168,8 @@
     
     self.delegate=[self birthdayGiftController];
     
+    categoryTableView.delegate=self;
+
     mainScrollView.delegate=self;
     
     //添加通知
@@ -305,7 +310,7 @@
 //        [mainScrollView setContentSize:CGSizeMake(size.width, 420 * 2)];
         
 //        birthdayGiftControllerHeight+=424;      //每load一屏自动加424；
-            birthdayGiftControllerHeight+=420;      //每load一屏自动加420；
+            birthdayGiftControllerHeight+=418;      //每load一屏自动加420；
 
         
         if(mainScrollView.contentSize.height<birthdayGiftControllerHeight)
@@ -356,8 +361,16 @@
 
 -(UIView *)backgroundView
 {
-    UIImageView *categoryBgImageTmp=[[UIImageView  alloc] initWithFrame:CGRectMake(0,0,212,548)];
-    categoryBgImageTmp.image = [UIImage imageNamed:@"gifttypebg.png"];
+    UIImageView *categoryBgImageTmp=[[UIImageView  alloc] initWithFrame:CGRectMake(0,0,212,460)];
+    if(iPhone5)
+    {
+        categoryBgImageTmp.frame=CGRectMake(0, 0, 212, 548);
+        categoryBgImageTmp.image = [UIImage imageNamed:@"gifttypebg.png"];
+    }
+    else
+    {
+        categoryBgImageTmp.image = [UIImage imageNamed:@"gifttypebg460.png"];
+    }
     return categoryBgImageTmp;
 }
 

@@ -13,10 +13,9 @@
 #import "IndexController.h"
 #import "PersonalController.h"
 #import "SinaWeibo.h"
-
 #import "LocalNotificationsUtils.h"
 
-@implementation AppDelegate
+@implementation AppDelegate 
 
 @synthesize sinaweibo;
 @synthesize personalController = _personalController;
@@ -38,12 +37,35 @@
         sinaweibo.expirationDate = [sinaweiboInfo objectForKey:@"ExpirationDateKey"];
         sinaweibo.userID = [sinaweiboInfo objectForKey:@"UserIDKey"];
     }
+    
+    
+    if(!iPhone5)
+    {
+        splashView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 480)];
+        splashView.image = [UIImage imageNamed:@"loading480.png"];
+    }
+    else
+    {
+        splashView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 568)];
+        splashView.image = [UIImage imageNamed:@"loading568.png"];
+    }
+    [self.window addSubview:splashView];
+    [self.window bringSubviewToFront:splashView];
+    [UIView beginAnimations:nil context:nil];
+    [UIView setAnimationDuration:2];
+    [UIView setAnimationTransition:UIViewAnimationTransitionNone forView:self.window cache:YES];
+    [UIView setAnimationDelegate:self];
+    [UIView setAnimationDidStopSelector:@selector(startupAnimationDone:finished:context:)];
+    splashView.alpha = 0.0;
+    splashView.frame = CGRectMake(-60, -85, 440, 635);
+    [UIView commitAnimations];
+        
 	return YES;
 }
 
 - (void)application:(UIApplication *)app didReceiveLocalNotification:(UILocalNotification *)notif
 {
-//    NSLog(@"didReceiveLocalNotification");
+
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application
@@ -63,7 +85,6 @@
 //                                           selector: @selector(handleTimer:)
 //                                           userInfo: nil
 //                                            repeats: YES];
-
     
 }
 
@@ -93,14 +114,14 @@
     return [self.sinaweibo handleOpenURL:url];
 }
 
--(void) handleTimer: (NSTimer *) timer
-{
-    NSCalendar *calendar=[NSCalendar currentCalendar];
-
-    unsigned unitFlags1=NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit;
-    NSDateComponents *comp=[calendar components:unitFlags1 fromDate:[NSDate date]];
-
-    NSLog(@"%d:%d:%d",comp.hour,comp.minute,comp.second);
-}
+//-(void) handleTimer: (NSTimer *) timer
+//{
+//    NSCalendar *calendar=[NSCalendar currentCalendar];
+//
+//    unsigned unitFlags1=NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit;
+//    NSDateComponents *comp=[calendar components:unitFlags1 fromDate:[NSDate date]];
+//
+//    NSLog(@"%d:%d:%d",comp.hour,comp.minute,comp.second);
+//}
 
 @end

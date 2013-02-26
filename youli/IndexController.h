@@ -19,7 +19,7 @@
     UIView *categoryView;
     UIImageView *categoryBgImage;
     UIImageView *imgGiftScrollView;
-    UITableView *categoryTableView;
+    CategoryTableView *categoryTableView;
     UITextField *_value;
 }
 

@@ -149,12 +149,13 @@
     [self.btnPrice setBackgroundImage:[UIImage imageNamed:@"gift_btn_push_down.png"] forState:UIControlStateNormal];
     [self.btnPrice addTarget:self action:@selector(showPrice:) forControlEvents:UIControlEventTouchUpInside];
 
-    self.giftScrollView=[[UIScrollView alloc]initWithFrame:CGRectMake(0, 90, 320, 350)];
-    
-
-    if(iPhone5)
+    if(!iPhone5)
     {
-        self.giftScrollView.frame=CGRectMake(0, 90, 320, 438);
+        self.giftScrollView=[[UIScrollView alloc]initWithFrame:CGRectMake(0, 90, 320, 350)];
+    }
+    else
+    {
+        self.giftScrollView=[[UIScrollView alloc]initWithFrame:CGRectMake(0, 90, 320, 438)];
     }
     
     imgConstellation=[[UIImageView alloc] initWithFrame:CGRectMake(0, 81, 320, 61)];
@@ -284,7 +285,9 @@
     AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request
                                                                                         success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
                                                                                             self.items = [JSON objectForKey:@"data"];
-                                                                                            for (int i=iGiftDisplayCount; i<iGiftDisplayCount+10; i++) {                                                                                                NSDictionary *item = [self.items objectAtIndex:i];
+                                                                                            for (int i=iGiftDisplayCount; i<iGiftDisplayCount+10; i++) {
+                                                                                                
+                                                                                                NSDictionary *item = [self.items objectAtIndex:i];
                                                                                                 
                                                                                                 NSString *strPhotoURL=[NSString stringWithFormat:@"http://imgur.com/%@%@",[item objectForKey:@"hash"], [item objectForKey:@"ext"]];
                                                                                                 
@@ -296,11 +299,9 @@
                                                                                                 [birthdayGiftItem setUserInteractionEnabled:YES];
                                                                                                 [birthdayGiftItem addGestureRecognizer:photoTap];
 
-
                                                                                                 birthdayGiftItem.frame=CGRectMake(8, iGiftScrollViewHeight, 308, 270);
                                                                                                 
                                                                                                 CGSize size = giftScrollView.frame.size;
-//                                                                                                [giftScrollView setContentSize:CGSizeMake(size.width, size.height +iGiftScrollViewHeight)];
              
                                                                                                 [giftScrollView setContentSize:CGSizeMake(size.width, iGiftScrollViewHeight+284)];
                                                                                                 
@@ -310,24 +311,20 @@
                                                                                                 
                                                                                                 //把搜索的数据保存到sqlite
                                                                                                 [self AddPhotoInfoToDB:[[item objectForKey:@"size"] intValue] tmpPhotoTitle:[item objectForKey:@"title"] photodetail:[item objectForKey:@"title"] photourl:strPhotoURL];
-                                                                                                
-//                                                                                                NSLog([item objectForKey:@"title"]);
                                                                                             }
                                                                                                                                                                                         [indicator stopAnimating];
+                                                                                            
+                                                                                            iGiftDisplayCount+=10;                                                                                            
                                                                                         }failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
                                                                                             NSLog(@"error: %@", error);
                                                                                         }];
     [operation start];
-    
-    iGiftDisplayCount+=10;
 }
 
 #pragma mark -
 #pragma mark Action
 - (IBAction)constellationButtonClick:(UIButton *)sender
 {
-    //    NSLog(@"this button text is %d",sender.tag);
-    
     for(UIView *view in [constellationScrollView subviews])
     {
         if([view isKindOfClass:[UIButton class]])
@@ -339,10 +336,8 @@
     [sender setBackgroundColor:[UIColor colorWithRed:.8 green:.8 blue:.8 alpha:1]];
 }
 
-
 - (IBAction)showConstellation:(id)sender
 {
-    
     if(btnConstellation.tag==0)
     {
         if(btnPrice.tag==1)
@@ -365,8 +360,7 @@
 }
 
 - (IBAction)showPrice:(id)sender
-{
-    
+{    
     if(btnPrice.tag==0)
     {
         if(btnConstellation.tag==1)
@@ -449,6 +443,20 @@
     {
         [view removeFromSuperview];
     }
+    
+    iGiftDisplayCount=0;
+    iGiftScrollViewHeight=0;
+    
+    if(!iPhone5)
+    {
+        self.giftScrollView.frame=CGRectMake(0, 90, 320, 350);
+    }
+    else
+    {
+        self.giftScrollView.frame=CGRectMake(0, 90, 320, 438);
+    }
+    
+    [self.giftScrollView setContentOffset:CGPointMake(0, 0) animated:YES];
 }
 
 -(void) sendGiftTypeTitle:(NSString *)GiftTypeTitle
@@ -459,7 +467,10 @@
     
     if(strOldGiftType!=strNewGiftType)
     {
+        [self clearGiftScrollView];
+        
         [self loadDataSource];
+        
         strOldGiftType=strNewGiftType;
     }
 }
@@ -508,8 +519,6 @@
     if([gestureRecognizer state]==UIGestureRecognizerStateBegan||[gestureRecognizer state]==UIGestureRecognizerStateChanged)
     {
         CGPoint cgpoint=[gestureRecognizer translationInView:self.view];
-        
-        
         //滑动超过一定距离才招待滑动操作，避免与原来的操作手势冲突
         if(cgpoint.x<-3)
         {

@@ -10,6 +10,7 @@
 #import "CategoryCell.h"
 #import "Category.h"
 #import "GiftListController.h"
+#import "AppDelegate.h"
 
 @implementation CategoryTableView{
 @private
@@ -43,7 +44,17 @@
 -(UIView *)backgroundView
 {
     UIImageView *categoryBgImage=[[UIImageView  alloc] initWithFrame:CGRectMake(0,0,212,460)];
-    categoryBgImage.image = [UIImage imageNamed:@"gifttypebg.png"];
+
+    if(iPhone5)
+    {
+        categoryBgImage.frame=CGRectMake(0, 0, 212, 548);
+        categoryBgImage.image = [UIImage imageNamed:@"gifttypebg.png"];
+    }
+    else
+    {
+        categoryBgImage.image = [UIImage imageNamed:@"gifttypebg460.png"];
+    }
+
     return categoryBgImage;
 }
 
