@@ -10,14 +10,13 @@
 #import "FMDatabase.h"
 
 @interface Friend : NSObject{
-    FMDatabase *db;
+    FMDatabase *fmDatabase;
 }
 
-@property(nonatomic,retain)NSMutableArray *items;
-@property(nonatomic,retain)NSString *name;
-@property(nonatomic,retain)NSString *birthdayDate;
-@property(nonatomic,retain)NSString *profileUrl;
+@property(nonatomic,strong)NSString *name;
+@property(nonatomic,strong)NSString *birthdayDate;
+@property(nonatomic,strong)NSString *profileUrl;
 
-- (void)loadData;
+- (NSMutableArray *)findAll;
 
 @end

@@ -16,6 +16,7 @@
 #import "SubTableCell.h"
 #import "UIFolderTableView.h"
 #import "FriendAddController.h"
+#import "IndexController.h"
 
 @interface PersonalController ()
 @end
@@ -41,10 +42,12 @@ NSMutableArray *items ;
     //导航条
     UIImageView *imgTitle = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
     imgTitle.image = [UIImage imageNamed:@"head.jpg"];
-    UIButton *btnReturn=[[UIButton alloc]initWithFrame:CGRectMake(5, 7, 50, 30)];
-    [btnReturn setBackgroundImage:[UIImage imageNamed:@"return_unclick.png"] forState:UIControlStateNormal];
-    [btnReturn setImage:[UIImage imageNamed:@"return_click.png"] forState:UIControlStateHighlighted];
-    [btnReturn addTarget:self action:@selector(returnClick:) forControlEvents:UIControlEventTouchUpInside];
+    UIButton *indexButton=[[UIButton alloc]initWithFrame:CGRectMake(10, 7, 50, 30)];
+    [indexButton setBackgroundImage:[UIImage imageNamed:@"index_button.png"] forState:UIControlStateNormal];
+    [indexButton addTarget:self action:@selector(indexButtonPressed) forControlEvents:UIControlEventTouchUpInside];
+    UIButton *addButton=[[UIButton alloc]initWithFrame:CGRectMake(260, 7, 50, 30)];
+    [addButton setBackgroundImage:[UIImage imageNamed:@"add_friend_1.png"] forState:UIControlStateNormal];
+    [addButton addTarget:self action:@selector(addButtonPressed) forControlEvents:UIControlEventTouchUpInside];
     //个人信息
     UIImageView *personalInfoBgView = [[UIImageView alloc] initWithFrame:CGRectMake(10,53,300,69)];
     [personalInfoBgView setImage:[UIImage imageNamed:@"personal_info_bg.png"]];
@@ -107,7 +110,7 @@ NSMutableArray *items ;
     [self.cartButton addTarget:self action:@selector(cartButtonPressed) forControlEvents:UIControlEventTouchUpInside];
     
     self.messageView = [UIButton buttonWithType:UIButtonTypeCustom];
-    UIImage *personalPromptBgView = [[UIImage imageNamed:@"add_friend.png"] stretchableImageWithLeftCapWidth:0 topCapHeight:0];
+    UIImage *personalPromptBgView = [[UIImage imageNamed:@"personal_prompt_bg.png"] stretchableImageWithLeftCapWidth:0 topCapHeight:0];
     self.messageView.frame = CGRectMake(10,165,300,31);
     [self.messageView setBackgroundImage:personalPromptBgView forState:UIControlStateNormal];
     [self.messageView addTarget:self action:@selector(addButtonPressed) forControlEvents:UIControlEventTouchUpInside];
@@ -125,7 +128,8 @@ NSMutableArray *items ;
     
     [mainView addSubview:mainBgView];
     [mainView addSubview:imgTitle];
-    [mainView addSubview:btnReturn];
+    [mainView addSubview:indexButton];
+    [mainView addSubview:addButton];
     [mainView addSubview:personalInfoBgView];
     [mainView addSubview:faceBgView];
     [mainView addSubview:faceView];
@@ -155,9 +159,16 @@ NSMutableArray *items ;
     [self.navigationController setNavigationBarHidden:YES animated:NO];
 }
 
-- (void)returnClick:(id)sender
+- (void)indexButtonPressed
 {
-    [self.navigationController popViewControllerAnimated:YES];
+    IndexController *indexController = [[IndexController alloc] init];
+    [self.navigationController pushViewController:indexController animated:NO];
+}
+
+- (void)addButtonPressed
+{
+    FriendAddController *friendAddController = [[FriendAddController alloc] init];
+    [self.navigationController pushViewController:friendAddController animated:NO];
 }
 
 - (void)editButtonPressed
@@ -223,12 +234,7 @@ NSMutableArray *items ;
         [collectView addSubview:giftView];
         [self.cartView addSubview:collectView];
     }
-    [mainView addSubview:self.cartView];}
-
-- (void)addButtonPressed
-{
-    FriendAddController *friendAddController = [[FriendAddController alloc] init];
-    [self.navigationController pushViewController:friendAddController animated:NO];
+    [mainView addSubview:self.cartView];
 }
 
 #pragma mark - UITableViewDataSource Methods

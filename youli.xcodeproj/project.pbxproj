@@ -177,6 +177,10 @@
 		189BB10B16D70DBE00CC4F86 /* bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 189BB10916D70DBE00CC4F86 /* bg.png */; };
 		189BB12C16D7552D00CC4F86 /* edit_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 189BB12A16D7552D00CC4F86 /* edit_button@2x.png */; };
 		189BB12D16D7552D00CC4F86 /* edit_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 189BB12B16D7552D00CC4F86 /* edit_button.png */; };
+		18B3975B16DC8A7A0056A327 /* add_friend_1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 18B3975916DC8A7A0056A327 /* add_friend_1@2x.png */; };
+		18B3975C16DC8A7A0056A327 /* add_friend_1.png in Resources */ = {isa = PBXBuildFile; fileRef = 18B3975A16DC8A7A0056A327 /* add_friend_1.png */; };
+		18B3976016DC8C970056A327 /* index_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 18B3975E16DC8C970056A327 /* index_button@2x.png */; };
+		18B3976116DC8C970056A327 /* index_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 18B3975F16DC8C970056A327 /* index_button.png */; };
 		18B4E0AF16B8FA1B00F72D01 /* IZValueSelectorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 18B4E0AE16B8FA1B00F72D01 /* IZValueSelectorView.m */; };
 		18B4E0BB16B8FD8100F72D01 /* add_friend.png in Resources */ = {isa = PBXBuildFile; fileRef = 18B4E0B516B8FD8100F72D01 /* add_friend.png */; };
 		18B4E0BC16B8FD8100F72D01 /* add_friend@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 18B4E0B616B8FD8100F72D01 /* add_friend@2x.png */; };
@@ -477,6 +481,10 @@
 		189BB10916D70DBE00CC4F86 /* bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bg.png; path = images/bg.png; sourceTree = "<group>"; };
 		189BB12A16D7552D00CC4F86 /* edit_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "edit_button@2x.png"; path = "images/personal/edit_button@2x.png"; sourceTree = "<group>"; };
 		189BB12B16D7552D00CC4F86 /* edit_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = edit_button.png; path = images/personal/edit_button.png; sourceTree = "<group>"; };
+		18B3975916DC8A7A0056A327 /* add_friend_1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "add_friend_1@2x.png"; path = "images/personal/add_friend_1@2x.png"; sourceTree = "<group>"; };
+		18B3975A16DC8A7A0056A327 /* add_friend_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = add_friend_1.png; path = images/personal/add_friend_1.png; sourceTree = "<group>"; };
+		18B3975E16DC8C970056A327 /* index_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "index_button@2x.png"; path = "images/personal/index_button@2x.png"; sourceTree = "<group>"; };
+		18B3975F16DC8C970056A327 /* index_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = index_button.png; path = images/personal/index_button.png; sourceTree = "<group>"; };
 		18B4E0AD16B8FA1B00F72D01 /* IZValueSelectorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IZValueSelectorView.h; sourceTree = "<group>"; };
 		18B4E0AE16B8FA1B00F72D01 /* IZValueSelectorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IZValueSelectorView.m; sourceTree = "<group>"; };
 		18B4E0B516B8FD8100F72D01 /* add_friend.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = add_friend.png; path = images/personal/add_friend.png; sourceTree = "<group>"; };
@@ -1129,6 +1137,10 @@
 		18FAA61016560DEB0060BCEA /* Personal */ = {
 			isa = PBXGroup;
 			children = (
+				18B3975E16DC8C970056A327 /* index_button@2x.png */,
+				18B3975F16DC8C970056A327 /* index_button.png */,
+				18B3975916DC8A7A0056A327 /* add_friend_1@2x.png */,
+				18B3975A16DC8A7A0056A327 /* add_friend_1.png */,
 				189BB12A16D7552D00CC4F86 /* edit_button@2x.png */,
 				189BB12B16D7552D00CC4F86 /* edit_button.png */,
 				1892D51D16D5F6CA007A8002 /* cart_unselect@2x.png */,
@@ -1581,6 +1593,10 @@
 				189BB12C16D7552D00CC4F86 /* edit_button@2x.png in Resources */,
 				189BB12D16D7552D00CC4F86 /* edit_button.png in Resources */,
 				155B8D5816DB0F3000E9F9CD /* bg2_iphone5.png in Resources */,
+				18B3975B16DC8A7A0056A327 /* add_friend_1@2x.png in Resources */,
+				18B3975C16DC8A7A0056A327 /* add_friend_1.png in Resources */,
+				18B3976016DC8C970056A327 /* index_button@2x.png in Resources */,
+				18B3976116DC8C970056A327 /* index_button.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
