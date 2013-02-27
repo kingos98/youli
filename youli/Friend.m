@@ -8,8 +8,7 @@
 
 #import "Friend.h"
 #import "FMDatabase.h"
-
-#define DB_NAME @"youli.sqlite"
+#import "DbUtils.h"
 
 @implementation Friend
 
@@ -17,26 +16,9 @@
 @synthesize birthdayDate;
 @synthesize profileUrl;
 
-- (id)init
-{
-    if (self) {
-        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-        NSString *documentDirectory = [paths objectAtIndex:0];
-        NSString *dbPath = [documentDirectory stringByAppendingPathComponent:DB_NAME];
-        NSFileManager *fileManager = [NSFileManager defaultManager];
-        if ([fileManager fileExistsAtPath:dbPath]==NO)
-        {
-            NSString *dbPathApp = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:DB_NAME];
-            [fileManager copyItemAtPath:dbPathApp toPath:dbPath error:nil];
-        }
-        fmDatabase = [FMDatabase databaseWithPath:dbPath];
-    }
-    return self;
-}
-
 - (NSMutableArray *)findAll{    
     NSMutableArray *friendArray = [[NSMutableArray alloc] init];
-    FMResultSet *rs = [fmDatabase executeQuery:@"select * from %@ where =",@"dd"];
+    FMResultSet *rs = [[DbUtils getInstance].fmDatabase executeQuery:@"select * from %@ where =",@"dd"];
     while ([rs next]) {
         NSString *giftID = [rs stringForColumn:@"id"];
         NSString *giftType = [rs stringForColumn:@"id"];

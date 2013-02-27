@@ -45,7 +45,7 @@ NSMutableArray *items ;
     UIButton *indexButton=[[UIButton alloc]initWithFrame:CGRectMake(10, 7, 50, 30)];
     [indexButton setBackgroundImage:[UIImage imageNamed:@"index_button.png"] forState:UIControlStateNormal];
     [indexButton addTarget:self action:@selector(indexButtonPressed) forControlEvents:UIControlEventTouchUpInside];
-    UIButton *addButton=[[UIButton alloc]initWithFrame:CGRectMake(260, 7, 50, 30)];
+    UIButton *addButton=[[UIButton alloc]initWithFrame:CGRectMake(250, 7, 60, 30)];
     [addButton setBackgroundImage:[UIImage imageNamed:@"add_friend_1.png"] forState:UIControlStateNormal];
     [addButton addTarget:self action:@selector(addButtonPressed) forControlEvents:UIControlEventTouchUpInside];
     //个人信息
@@ -108,12 +108,12 @@ NSMutableArray *items ;
     [self.cartButton setBackgroundImage:cartImage forState:UIControlStateNormal];
     [self.cartButton setImage:[UIImage imageNamed:@"cart_select.png"] forState:UIControlStateSelected];
     [self.cartButton addTarget:self action:@selector(cartButtonPressed) forControlEvents:UIControlEventTouchUpInside];
-    
-    self.messageView = [UIButton buttonWithType:UIButtonTypeCustom];
+    //朋友添加信息提示条
+    self.messageButton = [UIButton buttonWithType:UIButtonTypeCustom];
     UIImage *personalPromptBgView = [[UIImage imageNamed:@"personal_prompt_bg.png"] stretchableImageWithLeftCapWidth:0 topCapHeight:0];
-    self.messageView.frame = CGRectMake(10,165,300,31);
-    [self.messageView setBackgroundImage:personalPromptBgView forState:UIControlStateNormal];
-    [self.messageView addTarget:self action:@selector(addButtonPressed) forControlEvents:UIControlEventTouchUpInside];
+    self.messageButton.frame = CGRectMake(10,165,300,31);
+    [self.messageButton setBackgroundImage:personalPromptBgView forState:UIControlStateNormal];
+    [self.messageButton addTarget:self action:@selector(messageButtonPressed) forControlEvents:UIControlEventTouchUpInside];
     
     self.friendTable = [[UIFolderTableView alloc] initWithFrame:CGRectMake(10, 204, 300, 220)];
     if(iPhone5){
@@ -142,7 +142,7 @@ NSMutableArray *items ;
     [mainView addSubview:self.friendButton];
     [mainView addSubview:self.collectButton];
     [mainView addSubview:self.cartButton];
-    [mainView addSubview:self.messageView];
+    [mainView addSubview:self.messageButton];
     [mainView addSubview:self.friendTable];
     [mainView addSubview:self.subTableCell];
     
@@ -187,7 +187,7 @@ NSMutableArray *items ;
     self.collectButton.selected = NO;
     self.cartButton.selected = NO;
 
-    self.messageView.hidden = NO;
+    self.messageButton.hidden = NO;
     self.friendTable.hidden = NO;
     self.collectView.hidden = YES;
     self.cartView.hidden = YES;
@@ -199,7 +199,7 @@ NSMutableArray *items ;
     self.collectButton.selected = YES;
     self.cartButton.selected = NO;
     
-    self.messageView.hidden = YES;
+    self.messageButton.hidden = YES;
     self.friendTable.hidden = YES;
     self.cartView.hidden = YES;
     self.collectView.hidden = NO;
@@ -221,7 +221,7 @@ NSMutableArray *items ;
     self.collectButton.selected = NO;
     self.cartButton.selected = YES;
     
-    self.messageView.hidden = YES;
+    self.messageButton.hidden = YES;
     self.friendTable.hidden = YES;
     self.collectView.hidden = YES;
     self.cartView.hidden = NO;
@@ -235,6 +235,11 @@ NSMutableArray *items ;
         [self.cartView addSubview:collectView];
     }
     [mainView addSubview:self.cartView];
+}
+
+- (void)messageButtonPressed
+{
+    
 }
 
 #pragma mark - UITableViewDataSource Methods

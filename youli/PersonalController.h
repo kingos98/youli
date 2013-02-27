@@ -25,7 +25,8 @@
 @property(strong,nonatomic)UIButton *collectButton;
 @property(strong,nonatomic)UIButton *cartButton;
 @property(strong,nonatomic)UIButton *editButton;
-@property(strong,nonatomic)UIButton *messageView;
+@property(strong,nonatomic)UIButton *messageButton;
+@property(strong,nonatomic)NSMutableArray *messageArray;
 @property(strong,nonatomic)SubTableCell *subTableCell;
 @property(strong,nonatomic)UIScrollView *collectView;
 @property(strong,nonatomic)UIScrollView *cartView;

@@ -177,6 +177,7 @@
 		189BB10B16D70DBE00CC4F86 /* bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 189BB10916D70DBE00CC4F86 /* bg.png */; };
 		189BB12C16D7552D00CC4F86 /* edit_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 189BB12A16D7552D00CC4F86 /* edit_button@2x.png */; };
 		189BB12D16D7552D00CC4F86 /* edit_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 189BB12B16D7552D00CC4F86 /* edit_button.png */; };
+		18B0509716DDA24F00C56EFD /* DbUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 18B0509616DDA24F00C56EFD /* DbUtils.m */; };
 		18B3975B16DC8A7A0056A327 /* add_friend_1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 18B3975916DC8A7A0056A327 /* add_friend_1@2x.png */; };
 		18B3975C16DC8A7A0056A327 /* add_friend_1.png in Resources */ = {isa = PBXBuildFile; fileRef = 18B3975A16DC8A7A0056A327 /* add_friend_1.png */; };
 		18B3976016DC8C970056A327 /* index_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 18B3975E16DC8C970056A327 /* index_button@2x.png */; };
@@ -481,6 +482,8 @@
 		189BB10916D70DBE00CC4F86 /* bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bg.png; path = images/bg.png; sourceTree = "<group>"; };
 		189BB12A16D7552D00CC4F86 /* edit_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "edit_button@2x.png"; path = "images/personal/edit_button@2x.png"; sourceTree = "<group>"; };
 		189BB12B16D7552D00CC4F86 /* edit_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = edit_button.png; path = images/personal/edit_button.png; sourceTree = "<group>"; };
+		18B0509516DDA24F00C56EFD /* DbUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DbUtils.h; sourceTree = "<group>"; };
+		18B0509616DDA24F00C56EFD /* DbUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DbUtils.m; sourceTree = "<group>"; };
 		18B3975916DC8A7A0056A327 /* add_friend_1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "add_friend_1@2x.png"; path = "images/personal/add_friend_1@2x.png"; sourceTree = "<group>"; };
 		18B3975A16DC8A7A0056A327 /* add_friend_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = add_friend_1.png; path = images/personal/add_friend_1.png; sourceTree = "<group>"; };
 		18B3975E16DC8C970056A327 /* index_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "index_button@2x.png"; path = "images/personal/index_button@2x.png"; sourceTree = "<group>"; };
@@ -791,6 +794,8 @@
 				15FB366A16BA4ECD00002561 /* FriendMethod.m */,
 				15BEB11716D0CC030003EC20 /* LocalNotificationsUtils.h */,
 				15BEB11816D0CC030003EC20 /* LocalNotificationsUtils.m */,
+				18B0509516DDA24F00C56EFD /* DbUtils.h */,
+				18B0509616DDA24F00C56EFD /* DbUtils.m */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -1700,6 +1705,7 @@
 				15BEB11916D0CC030003EC20 /* LocalNotificationsUtils.m in Sources */,
 				1514AC2116D5EEEF0088B963 /* FMDatabase+InMemoryOnDiskIO.m in Sources */,
 				189BB10316D70ADD00CC4F86 /* SettingControler.m in Sources */,
+				18B0509716DDA24F00C56EFD /* DbUtils.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
