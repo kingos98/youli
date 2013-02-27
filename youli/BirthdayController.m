@@ -65,6 +65,10 @@
     UISearchBar *searchBar=[[UISearchBar alloc]initWithFrame:CGRectMake(60, 0, 260, 44)];
     searchBar.tintColor=[UIColor whiteColor];
     searchBar.delegate=self;
+    //把键盘里的Search转成Done
+    UITextField *searchField = [[searchBar subviews] lastObject];
+    [searchField setReturnKeyType:UIReturnKeyDone];
+
     //<---背景图片
     UIView *segment = [searchBar.subviews objectAtIndex:0];
     UIImageView *bgImage=[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 270, 44)];
@@ -141,16 +145,20 @@
 
 -(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
 {
-    birthday = [[Birthday alloc] init];
-    [birthday loadData:searchBar.text];
-    items = birthday.items;
-    
     [self dismissKeyboard:searchBar];
 }
 
 -(void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
 {
     [self dismissKeyboard:searchBar];
+}
+
+-(void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
+{
+    birthday = [[Birthday alloc] init];
+    [birthday loadData:searchBar.text];
+    items = birthday.items;
+    [birthdayTableView reloadData];
 }
 
 -(void)dismissKeyboard:(UISearchBar *)sender
@@ -175,6 +183,4 @@
         }
     }
 }
-
-     
 @end

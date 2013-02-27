@@ -368,7 +368,7 @@
                     nil];
         [friendArray addObject: friendData];
     }
-    
+        
     [self closeDB];
  
     return friendArray;

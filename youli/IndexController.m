@@ -18,7 +18,7 @@
 #import "BirthdayGiftController.h"
 #import "FestivalMethod.h"
 #import "LocalNotificationsUtils.h"
-
+#import "Birthday.h"
 #import "QuartzCore/CALayer.h"
 
 @interface IndexController ()
@@ -107,8 +107,16 @@
     mainScrollView.showsVerticalScrollIndicator = NO;
     CGSize size = mainScrollView.frame.size;
 //    [mainScrollView setContentSize:CGSizeMake(size.width, size.height * 2)];
-//    [mainScrollView setContentSize:CGSizeMake(size.width, 424 * 2)];
-    [mainScrollView setContentSize:CGSizeMake(size.width, 418 * 2)];
+//    [mainScrollView setContentSize:CGSizeMake(size.width, 418 * 2)];
+    if(!iPhone5)
+    {
+        [mainScrollView setContentSize:CGSizeMake(size.width, 460)];
+    }
+    else
+    {
+        [mainScrollView setContentSize:CGSizeMake(size.width, 548)];
+    }
+
     
     for(int i=0;i<2;i++)
     {
@@ -186,7 +194,14 @@
 
 //    NSDate *pickerDate=[[NSDate date] addTimeInterval:5];
 //    LocalNotificationsUtils *localNotificationsUtils=[LocalNotificationsUtils alloc];
-//    [localNotificationsUtils addLocalNotificationWithFireDate:pickerDate activityId:BIRTHDAY_ALERT activityTitle:@"notice test"];    
+//    [localNotificationsUtils addLocalNotificationWithFireDate:pickerDate activityId:BIRTHDAY_ALERT activityTitle:@"notice test"];
+//    UIApplication *application=[UIApplication sharedApplication];
+
+    if(![LocalNotificationsUtils checkIsExistLocalNotificationWithActivityName:@"birthday"])
+    {
+        Birthday *birthday=[[Birthday alloc]init];
+        [birthday setBirthdayNotifications];
+    }
 }
 
 - (void)showCategoryViewPressed

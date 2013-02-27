@@ -10,7 +10,15 @@
 
 @interface LocalNotificationsUtils : NSObject
 
--(void)addLocalNotificationWithFireDate:(NSDate *)date activityId:(NSString *)alertname activityTitle:(NSString *)title;
++(void)addLocalNotificationWithFireDate:(NSDate *)date activityId:(NSString *)alertname activityTitle:(NSString *)title;
 
--(BOOL)removeLocalNotificationWithActivityId:(NSString *)alertname;
++(BOOL)removeLocalNotificationWithActivityName:(NSString *)alertname;
+
++(BOOL)checkIsExistLocalNotificationWithActivityName:(NSString *)alertname;
+
++(BOOL)removeLocalNotificationWithActivityId:(NSInteger)aid;
+
++(BOOL)checkIsExistLocalNotificationWithActivityId:(NSInteger)alertaid;
+
++(void)removeAllLocalNotification;
 @end

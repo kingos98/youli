@@ -59,13 +59,13 @@
     splashView.alpha = 0.0;
     splashView.frame = CGRectMake(-60, -85, 440, 635);
     [UIView commitAnimations];
-        
+    
 	return YES;
 }
 
 - (void)application:(UIApplication *)app didReceiveLocalNotification:(UILocalNotification *)notif
 {
-
+    app.applicationIconBadgeNumber=0;
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application

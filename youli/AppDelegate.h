@@ -32,7 +32,7 @@
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>{
     SinaWeibo *sinaweibo;
-    UIImageView *splashView;
+    UIImageView *splashView;            //欢迎图片
 }
 
 @property (strong, nonatomic) UIWindow *window;

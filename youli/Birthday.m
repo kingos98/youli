@@ -9,6 +9,7 @@
 #import "Birthday.h"
 #import "FestivalMethod.h"
 #import "FriendMethod.h"
+#import "LocalNotificationsUtils.h"
 
 @implementation Birthday
 
@@ -17,6 +18,7 @@
 @synthesize date;
 @synthesize type;
 @synthesize countDown;
+
 
 - (void)loadData:(NSString *)SearchName
 {
@@ -213,6 +215,69 @@
     
     NSString *strReturnDay=[NSString stringWithFormat:@"%d",comp.day];
     return  strReturnDay;
+}
+
+-(void)setBirthdayNotifications
+{
+    FriendMethod *friendMethod=[[FriendMethod alloc]init];
+    NSMutableArray *friendArray=[friendMethod getFriendList:nil];
+    if(friendArray.count>0)
+    {
+        NSString *strname;
+        NSDate *datebirthday;
+        NSDate *dateseven;
+        NSDate *datethree;
+        NSDateComponents *comp;
+        NSCalendar *calendar=[[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+
+        NSTimeInterval sevenDayAgo=0-7*24*60*60;
+        NSTimeInterval threeDayAgo=0-3*24*60*60;
+        
+        for (int i=0; i<friendArray.count; i++)
+        {    
+            strname=[[friendArray objectAtIndex:i] objectAtIndex:0];
+            datebirthday=[self changeDatetimeFromString:[[friendArray objectAtIndex:i] objectAtIndex:1]];
+
+            //设置7天后通知提示
+            comp=[calendar components:NSDayCalendarUnit|NSMonthCalendarUnit|NSYearCalendarUnit fromDate:[datebirthday dateByAddingTimeInterval:sevenDayAgo]];
+            [comp setHour:8];
+            [comp setMinute:0];
+            [comp setSecond:0];
+            dateseven=[calendar dateFromComponents:comp];
+            [LocalNotificationsUtils addLocalNotificationWithFireDate:dateseven activityId:@"birthday" activityTitle:[NSString stringWithFormat:@"您的朋友[%@]将于7天后生日，赶紧选份礼物送给TA吧！",strname]];
+            
+            //设置3天后通知提示
+            comp=[calendar components:NSDayCalendarUnit|NSMonthCalendarUnit|NSYearCalendarUnit fromDate:[datebirthday dateByAddingTimeInterval:threeDayAgo]];
+            [comp setHour:8];
+            [comp setMinute:0];
+            [comp setSecond:0];
+            datethree=[calendar dateFromComponents:comp];
+            [LocalNotificationsUtils addLocalNotificationWithFireDate:datethree activityId:@"birthday" activityTitle:[NSString stringWithFormat:@"您的朋友[%@]将于3天后生日，赶紧选份礼物送给TA吧！",strname]];
+        }
+    }
+}
+
+-(NSDate *)changeDatetimeFromString:(NSString *)strFriendBirthday
+{
+    NSRange rng = NSMakeRange(0, 4);
+    NSString *strYear=[strFriendBirthday substringWithRange:rng];
+    
+    rng=NSMakeRange(4, 2);
+    NSString *strMonth=[strFriendBirthday substringWithRange:rng];
+    
+    rng=NSMakeRange(6, 2);  
+    NSString *strDay=[strFriendBirthday substringWithRange:rng];
+
+    NSDateComponents *comp=[[NSDateComponents alloc]init];
+    NSCalendar *calendar=[[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    
+    [comp setYear:[strYear intValue]];
+    [comp setMonth:[strMonth intValue]];
+    [comp setDay:[strDay intValue]];
+    
+    NSDate *dateFriendBirthday=[calendar dateFromComponents:comp];
+
+    return dateFriendBirthday;
 }
 
 @end

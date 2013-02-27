@@ -16,6 +16,7 @@
 @property(nonatomic,retain)NSString *type;
 @property(nonatomic,retain)NSString *countDown;
 
-- (void)loadData:(NSString *)SearchName;
+-(void)setBirthdayNotifications;
+-(void)loadData:(NSString *)SearchName;
 
 @end
