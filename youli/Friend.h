@@ -17,6 +17,8 @@
 @property(nonatomic,strong)NSString *birthdayDate;
 @property(nonatomic,strong)NSString *profileUrl;
 
+- (void)save;
+
 - (NSMutableArray *)findAll;
 
 @end

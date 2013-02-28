@@ -114,11 +114,20 @@ NSMutableArray *items ;
     self.messageButton.frame = CGRectMake(10,165,300,31);
     [self.messageButton setBackgroundImage:personalPromptBgView forState:UIControlStateNormal];
     [self.messageButton addTarget:self action:@selector(messageButtonPressed) forControlEvents:UIControlEventTouchUpInside];
+    if (self.messageArray.count>0) {
+        for (Friend *friend in self.messageArray) {
+            
+        }
+    }
     
     self.friendTable = [[UIFolderTableView alloc] initWithFrame:CGRectMake(10, 204, 300, 220)];
     if(iPhone5){
         self.friendTable.frame = CGRectMake(10, 204, 300, 308);
     }
+    //没新消息时遮盖住提示条
+//    if (self.messageArray.count==0) {
+//        self.friendTable.frame = CGRectMake(10, 204-38, 300, 308);
+//    }
     [self.friendTable setDelegate:self];
     [self.friendTable setDataSource:self];
     [self.friendTable setBackgroundColor:[UIColor whiteColor]];

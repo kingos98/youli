@@ -16,6 +16,10 @@
 @synthesize birthdayDate;
 @synthesize profileUrl;
 
+- (void)save{
+    
+}
+
 - (NSMutableArray *)findAll{    
     NSMutableArray *friendArray = [[NSMutableArray alloc] init];
     FMResultSet *rs = [[DbUtils getInstance].fmDatabase executeQuery:@"select * from %@ where =",@"dd"];
