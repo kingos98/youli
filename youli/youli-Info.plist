@@ -16,8 +16,8 @@
 			<array>
 				<string>icon114.png</string>
 				<string>icon57.png</string>
-				<string>Icon@2x.png</string>
-				<string>Icon.png</string>
+				<string>icon@2x.png</string>
+				<string>icon.png</string>
 			</array>
 			<key>UIPrerenderedIcon</key>
 			<true/>
@@ -39,14 +39,14 @@
 	<string>1.0</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-	<key>UIMainStoryboardFile~ipad</key>
-	<string>MainStoryboard_iPad</string>
-	<key>UIPrerenderedIcon</key>
-	<true/>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string></string>
 	</array>
+	<key>UIMainStoryboardFile~ipad</key>
+	<string>MainStoryboard_iPad</string>
+	<key>UIPrerenderedIcon</key>
+	<true/>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>

@@ -322,11 +322,7 @@
             imageView = nil; 
         }
         
-//        [mainScrollView setContentSize:CGSizeMake(size.width, 420 * 2)];
-        
-//        birthdayGiftControllerHeight+=424;      //每load一屏自动加424；
-            birthdayGiftControllerHeight+=418;      //每load一屏自动加420；
-
+        birthdayGiftControllerHeight+=418;      //每load一屏自动加418；
         
         if(mainScrollView.contentSize.height<birthdayGiftControllerHeight)
         {

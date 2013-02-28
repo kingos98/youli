@@ -13,6 +13,10 @@
 #import "AppDelegate.h"
 
 @interface BirthdayGiftDetailController ()
+{
+    @private
+        NSInteger yesToLoad;
+}
 
 @end
 
@@ -178,21 +182,16 @@ int k=0;        //giftDetailScrollView位移值
 -(void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
 {
     start = scrollView.contentOffset.x;
-    NSLog(@"start:%d end:%d",start,end);
 }
 
 -(void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
 {
     end = scrollView.contentOffset.x;
-    
-    NSLog(@"end:%d end:%d",start,end);
 }
 
 -(void)scrollViewWillBeginDecelerating:(UIScrollView *)scrollView
 {
     int diff = end-start;
-    
-//    NSLog(@"diff:%i",diff);
     
     if (diff>0)
     {
@@ -211,5 +210,4 @@ int k=0;        //giftDetailScrollView位移值
         }
     }
 }
-
 @end

@@ -10,6 +10,7 @@
 #import "FestivalMethod.h"
 #import "FriendMethod.h"
 #import "LocalNotificationsUtils.h"
+#import "AppDelegate.h"
 
 @implementation Birthday
 
@@ -51,7 +52,6 @@
     
     if(friendArray.count>0)
     {
-        NSInteger iCount=0;
         NSString *strCompareDate;
         
         if([[[friendArray objectAtIndex:0]objectAtIndex:1] intValue] <=[[[festivalArray objectAtIndex:0]objectAtIndex:1] intValue])
@@ -69,31 +69,52 @@
         NSInteger festivalIndex=0;
         
         //获取最近的生日或节日
-        if([[[friendArray objectAtIndex:iCount]objectAtIndex:1] intValue]<=[[[festivalArray objectAtIndex:iCount]objectAtIndex:1]intValue])
+        if([[[friendArray objectAtIndex:0]objectAtIndex:1] intValue]<=[[[festivalArray objectAtIndex:0]objectAtIndex:1]intValue])
         {
             birthday=[Birthday alloc];
-            birthday.name=[[friendArray objectAtIndex:iCount]objectAtIndex:0];
-            birthday.date=[self getDataFromString:[[friendArray objectAtIndex:iCount]objectAtIndex:1]];
+            birthday.name=[[friendArray objectAtIndex:0]objectAtIndex:0];
+            birthday.date=[self getDataFromString:[[friendArray objectAtIndex:0]objectAtIndex:1]];
             birthday.type=@"生日";
-            birthday.countDown=[self getCountDownDayFromNow:[[friendArray objectAtIndex:iCount]objectAtIndex:1]];
+            birthday.countDown=[self getCountDownDayFromNow:[[friendArray objectAtIndex:0]objectAtIndex:1]];
             friendIndex++;
         }
         else
         {
             birthday=[Birthday alloc];
-            birthday.name=[[festivalArray objectAtIndex:iCount]objectAtIndex:0];
-            birthday.date=[self getDataFromString:[[festivalArray objectAtIndex:iCount]objectAtIndex:1]];
+            birthday.name=[[festivalArray objectAtIndex:0]objectAtIndex:0];
+            birthday.date=[self getDataFromString:[[festivalArray objectAtIndex:0]objectAtIndex:1]];
             birthday.type=@"节日";
-            birthday.countDown=[self getCountDownDayFromNow:[[festivalArray objectAtIndex:iCount]objectAtIndex:1]];
+            birthday.countDown=[self getCountDownDayFromNow:[[festivalArray objectAtIndex:0]objectAtIndex:1]];
             festivalIndex++;
         }
         [self.items addObject:birthday];
-        iCount++;
         
-        while (iCount<6) {
+        while(friendArray.count>friendIndex || festivalArray.count>festivalIndex)
+        {
             if(friendArray.count>friendIndex)
             {
-                if([[[friendArray objectAtIndex:friendIndex]objectAtIndex:1] intValue]<=[[[festivalArray objectAtIndex:festivalIndex]objectAtIndex:1]intValue])
+                if(festivalArray.count>festivalIndex)
+                {
+                    if([[[friendArray objectAtIndex:friendIndex]objectAtIndex:1] intValue]<=[[[festivalArray objectAtIndex:festivalIndex]objectAtIndex:1]intValue])
+                    {
+                        birthday=[Birthday alloc];
+                        birthday.name=[[friendArray objectAtIndex:friendIndex]objectAtIndex:0];
+                        birthday.date=[self getDataFromString:[[friendArray objectAtIndex:friendIndex]objectAtIndex:1]];
+                        birthday.type=@"生日";
+                        birthday.countDown=[self getCountDownDayFromNow:[[friendArray objectAtIndex:friendIndex]objectAtIndex:1]];
+                        friendIndex++;
+                    }
+                    else
+                    {
+                        birthday=[Birthday alloc];
+                        birthday.name=[[festivalArray objectAtIndex:festivalIndex]objectAtIndex:0];
+                        birthday.date=[self getDataFromString:[[festivalArray objectAtIndex:festivalIndex]objectAtIndex:1]];
+                        birthday.type=@"节日";
+                        birthday.countDown=[self getCountDownDayFromNow:[[festivalArray objectAtIndex:festivalIndex]objectAtIndex:1]];
+                        festivalIndex++;
+                    }
+                }
+                else
                 {
                     birthday=[Birthday alloc];
                     birthday.name=[[friendArray objectAtIndex:friendIndex]objectAtIndex:0];
@@ -101,15 +122,6 @@
                     birthday.type=@"生日";
                     birthday.countDown=[self getCountDownDayFromNow:[[friendArray objectAtIndex:friendIndex]objectAtIndex:1]];
                     friendIndex++;
-                }
-                else
-                {
-                    birthday=[Birthday alloc];
-                    birthday.name=[[festivalArray objectAtIndex:festivalIndex]objectAtIndex:0];
-                    birthday.date=[self getDataFromString:[[festivalArray objectAtIndex:festivalIndex]objectAtIndex:1]];
-                    birthday.type=@"节日";
-                    birthday.countDown=[self getCountDownDayFromNow:[[festivalArray objectAtIndex:festivalIndex]objectAtIndex:1]];
-                    festivalIndex++;
                 }
             }
             else
@@ -123,7 +135,6 @@
             }
             
             [self.items addObject:birthday];
-            iCount++;
         }
     }
     else
@@ -135,6 +146,21 @@
             birthday.type=@"节日";
             birthday.countDown=[self getCountDownDayFromNow:[[festivalArray objectAtIndex:i]objectAtIndex:1]];
             [self.items addObject:birthday];
+        }
+    }
+    
+    //筛选60日内的生日/节日，如果筛选结果少于6/7(iphone5)条，自动补充
+    int minItemCount=iPhone5?7:6;
+    for (int i=self.items.count-1; i>minItemCount; i--)
+    {
+        birthday=[self.items objectAtIndex:i];
+        if([birthday.countDown intValue]>60)
+        {
+            [self.items removeObjectAtIndex:i];
+        }
+        else
+        {
+            break;
         }
     }
 }

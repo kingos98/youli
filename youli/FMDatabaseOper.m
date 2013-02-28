@@ -31,6 +31,7 @@
 
 #import "FMDatabaseOper.h"
 #import "FMDatabase.h"
+#import "AppDelegate.h"
 @implementation FMDatabaseOper
 
 -(Boolean)openDB
@@ -303,13 +304,29 @@
     NSString *strSql;
     if(FestivalName!=nil)
     {
-        strSql=[NSString stringWithFormat:@"select * from %@ where %@>%@ and %@ like '%%%@%%' order by %@ limit 1,6",
-                TABLEFESTIVALLISTDATE,FESTIVALDATE,strCurrentDate,FESTIVALNAME,FestivalName,FESTIVALDATE];
+        if(!iPhone5)
+        {
+            strSql=[NSString stringWithFormat:@"select * from %@ where %@>%@ and %@ like '%%%@%%' order by %@ limit 1,6",
+                    TABLEFESTIVALLISTDATE,FESTIVALDATE,strCurrentDate,FESTIVALNAME,FestivalName,FESTIVALDATE];
+        }
+        else
+        {
+            strSql=[NSString stringWithFormat:@"select * from %@ where %@>%@ and %@ like '%%%@%%' order by %@ limit 1,7",
+                    TABLEFESTIVALLISTDATE,FESTIVALDATE,strCurrentDate,FESTIVALNAME,FestivalName,FESTIVALDATE];
+        }
     }
     else
     {
-        strSql=[NSString stringWithFormat:@"select * from %@ where %@>%@ order by %@ limit 1,6",
-                TABLEFESTIVALLISTDATE,FESTIVALDATE,strCurrentDate,FESTIVALDATE];
+        if(!iPhone5)
+        {
+            strSql=[NSString stringWithFormat:@"select * from %@ where %@>%@ order by %@ limit 1,6",
+                    TABLEFESTIVALLISTDATE,FESTIVALDATE,strCurrentDate,FESTIVALDATE];
+        }
+        else
+        {
+            strSql=[NSString stringWithFormat:@"select * from %@ where %@>%@ order by %@ limit 1,7",
+                    TABLEFESTIVALLISTDATE,FESTIVALDATE,strCurrentDate,FESTIVALDATE];
+        }
     }
     
     FMResultSet *rs=[db executeQuery:strSql];
@@ -351,7 +368,7 @@
     
     
     FMResultSet *rs=[[FMResultSet alloc] init];
-    if(FriendName!=nil)
+    if(FriendName!=nil && FriendName.length>0)
     {
         rs=[db executeQuery:[NSString stringWithFormat:@"select * from %@ where %@ like ‘%%%@%%’ order by %@,%@",TABLEFRIENDINFO,FRIENDNAME,FriendName,FRIENDBIRTHDAY,FRIENDID]];
     }
@@ -370,7 +387,7 @@
     }
         
     [self closeDB];
- 
+    
     return friendArray;
 }
 

@@ -70,11 +70,11 @@
 }
 
 - (void)addCountDownLabel:(Birthday*)birthday{
-    countDownLabel = [[UILabel alloc] initWithFrame:CGRectMake(252, 41, 100, 25)];
+    countDownLabel = [[UILabel alloc] initWithFrame:CGRectMake(252, 41, 40, 25)];
     countDownLabel.text = birthday.countDown;
     countDownLabel.font = [UIFont fontWithName:@"Helvetica" size:30];
     countDownLabel.textColor = [UIColor colorWithRed:0.30 green:0.30 blue:0.30 alpha:1];
-    countDownLabel.textAlignment = UITextAlignmentLeft;
+    countDownLabel.textAlignment = UITextAlignmentCenter;
     countDownLabel.backgroundColor = [UIColor clearColor];
     [self.contentView addSubview:countDownLabel];
 }

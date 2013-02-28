@@ -8,6 +8,7 @@
 
 #import "BirthdayController.h"
 #import "BirthdayCell.h"
+#import "BirthdayCellNew.h"
 #import "GiftListController.h"
 #import "Birthday.h"
 
@@ -76,16 +77,16 @@
     [segment addSubview: bgImage];
     //--->背景图片
     
-    UIImageView *tableBgView = [[UIImageView alloc] initWithFrame:CGRectMake(0,44,320,416)];
-    [tableBgView setImage:[UIImage imageNamed:@"birthday_bg@2x.png"]];
+//    UIImageView *tableBgView = [[UIImageView alloc] initWithFrame:CGRectMake(0,44,320,416)];
+//    [tableBgView setImage:[UIImage imageNamed:@"birthday_bg@2x.png"]];
     
     birthdayTableView = [[UITableView alloc] initWithFrame:CGRectMake(0,44,320,416)];
     [birthdayTableView setDelegate:self];
     [birthdayTableView setDataSource:self];
     [birthdayTableView setBackgroundColor:[UIColor clearColor]];
     [birthdayTableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
-    [birthdayTableView setBackgroundView:tableBgView];
-    birthdayTableView.scrollEnabled=false;
+//    [birthdayTableView setBackgroundView:tableBgView];
+//    birthdayTableView.scrollEnabled=false;
     
     [self.view addSubview:mainBgView];
     [self.view addSubview:imgTitle];
@@ -125,7 +126,8 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"CellIdentifier";
-    BirthdayCell *cell = [[BirthdayCell alloc] initCell:CellIdentifier];
+//    BirthdayCell *cell = [[BirthdayCell alloc] initCell:CellIdentifier];
+    BirthdayCellNew *cell=[[BirthdayCellNew alloc] initCell: CellIdentifier];
     if(items.count>0)
     {
         cell.birthday =  [items objectAtIndex:indexPath.row];

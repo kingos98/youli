@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #import "Birthday.h"
-#import "BirthdayGiftController.h"
 #import "YouliDelegate.h"
 #import "AssignBirthdayController.h"
 
@@ -19,8 +18,6 @@
 @property (nonatomic,strong)UITableView *birthdayTableView;
 
 @property (nonatomic, strong) Birthday *birthday;
-
-@property(nonatomic,strong)BirthdayGiftController *birthdayGiftController;
 
 @property(nonatomic,strong)AssignBirthdayController *assignBirthdayController;
 
