@@ -11,6 +11,7 @@
 #import "BirthdayCellNew.h"
 #import "GiftListController.h"
 #import "Birthday.h"
+#import "AppDelegate.h"
 
 @implementation BirthdayController{
 @private
@@ -79,8 +80,15 @@
     
 //    UIImageView *tableBgView = [[UIImageView alloc] initWithFrame:CGRectMake(0,44,320,416)];
 //    [tableBgView setImage:[UIImage imageNamed:@"birthday_bg@2x.png"]];
-    
-    birthdayTableView = [[UITableView alloc] initWithFrame:CGRectMake(0,44,320,416)];
+
+    if(!iPhone5)
+    {
+        birthdayTableView = [[UITableView alloc] initWithFrame:CGRectMake(0,44,320,416)];
+    }
+    else
+    {
+        birthdayTableView = [[UITableView alloc] initWithFrame:CGRectMake(0,44,320,504)];
+    }
     [birthdayTableView setDelegate:self];
     [birthdayTableView setDataSource:self];
     [birthdayTableView setBackgroundColor:[UIColor clearColor]];
@@ -120,7 +128,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 6;
+    return  items.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath

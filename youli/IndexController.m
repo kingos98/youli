@@ -8,6 +8,8 @@
 
 #define BIRTHDAY_ALERT  @"BirthdayAlert"
 
+#define REFRESH_HEADER_HEIGHT 52.0f
+
 #import "AppDelegate.h"
 #import "AFJSONRequestOperation.h"
 #import "UIImageView+WebCache.h"
@@ -20,6 +22,8 @@
 #import "LocalNotificationsUtils.h"
 #import "Birthday.h"
 #import "QuartzCore/CALayer.h"
+
+#import "DbUtils.h"
 
 @interface IndexController ()
 {
@@ -43,6 +47,8 @@
 @synthesize personalController;
 @synthesize birthdayController;
 
+@synthesize textPull, textRelease, textLoading, refreshFooterView, refreshLabel, refreshArrow, refreshSpinner;
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -60,28 +66,28 @@
     [NSArray arrayWithObjects:@"214",@"317",@"100",@"100",@"small",nil],nil];
 
     //用iphone5尺寸,如果是iphone4会隐藏下面多余的部分
-    imgGiftScrollView=[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 548)];
+    imgGiftScrollView=[[UIImageView alloc] initWithFrame:CGRectMake(320, 0, 320, 548)];
 
     imgGiftScrollView.image=[UIImage imageNamed:@"bg2_iphone5.png"];
     
     //类别view，可向右滑动，初始化时处于第一层，相当于被隐藏,用iphone5尺寸
     if(!iPhone5)
     {
-        categoryView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 212, 460)];
+        categoryView = [[UIView alloc] initWithFrame:CGRectMake(320, 0, 212, 460)];
     }
     else
     {
-        categoryView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 212, 548)];
+        categoryView = [[UIView alloc] initWithFrame:CGRectMake(320, 0, 212, 548)];
     }
 
     //添加分类页面
     if(!iPhone5)
     {
-        categoryTableView = [[CategoryTableView alloc] initWithFrame:CGRectMake(0, 0, 212, 460)];
+        categoryTableView = [[CategoryTableView alloc] initWithFrame:CGRectMake(320, 0, 212, 460)];
     }
     else
     {
-        categoryTableView = [[CategoryTableView alloc] initWithFrame:CGRectMake(0, 0, 212, 548)];
+        categoryTableView = [[CategoryTableView alloc] initWithFrame:CGRectMake(320, 0, 212, 548)];
     }
     
     if(categoryTableView)
@@ -97,11 +103,11 @@
     
     if(!iPhone5)
     {
-        mainScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, 320, 426)];
+        mainScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(320, 0, 320, 426)];
     }
     else
     {
-        mainScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, 320, 512)];
+        mainScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(320, 0, 320, 512)];
     }
 
     mainScrollView.showsVerticalScrollIndicator = NO;
@@ -125,40 +131,41 @@
 
     self.birthdayGiftController=[[BirthdayGiftController alloc]init];
     
-    tabBarBgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 422, 320, 38)];
+    tabBarBgView = [[UIImageView alloc] initWithFrame:CGRectMake(320, 422, 320, 38)];
     if (iPhone5) {
-        tabBarBgView.frame = CGRectMake(0, 510, 320, 38);
+        tabBarBgView.frame = CGRectMake(320, 510, 320, 38);
     }
     [tabBarBgView setImage:[UIImage imageNamed:@"tabbar_bg.png"]];
     
     tabBarLeftButton = [UIButton buttonWithType:UIButtonTypeCustom];
     UIImage *tabBarLeftImage = [[UIImage imageNamed:@"tabbar_left.png"] stretchableImageWithLeftCapWidth:0 topCapHeight:0];
-    tabBarLeftButton.frame = CGRectMake(0, 422, 78, 38);
+    tabBarLeftButton.frame = CGRectMake(320, 422, 78, 38);
     if (iPhone5) {
-        tabBarLeftButton.frame = CGRectMake(0, 510, 78, 38);
+        tabBarLeftButton.frame = CGRectMake(320, 510, 78, 38);
     }
     [tabBarLeftButton setBackgroundImage:tabBarLeftImage forState:UIControlStateNormal];
     [tabBarLeftButton addTarget:self action:@selector(showCategoryViewPressed) forControlEvents:UIControlEventTouchUpInside];
     
     tabBarBoxButton = [UIButton buttonWithType:UIButtonTypeCustom];
     UIImage *tabBarBoxImage = [[UIImage imageNamed:@"tabbar_box.png"] stretchableImageWithLeftCapWidth:0 topCapHeight:0];
-    tabBarBoxButton.frame = CGRectMake(120, 414, 78, 45);
+    tabBarBoxButton.frame = CGRectMake(440, 414, 78, 45);
     if (iPhone5) {
-        tabBarBoxButton.frame = CGRectMake(120, 503, 78, 45);
+        tabBarBoxButton.frame = CGRectMake(440, 503, 78, 45);
     }
     [tabBarBoxButton setBackgroundImage:tabBarBoxImage forState:UIControlStateNormal];
     [tabBarBoxButton addTarget:self action:@selector(birthdayButtonPressed) forControlEvents:UIControlEventTouchUpInside];
     
     tabBarRightButton = [UIButton buttonWithType:UIButtonTypeCustom];
     UIImage *tabBarRightImage = [[UIImage imageNamed:@"tabbar_right.png"] stretchableImageWithLeftCapWidth:0 topCapHeight:0];
-    tabBarRightButton.frame = CGRectMake(240, 422, 78, 38);
+    tabBarRightButton.frame = CGRectMake(560, 422, 78, 38);
     if (iPhone5) {
-        tabBarRightButton.frame = CGRectMake(240, 510, 78, 38);
+        tabBarRightButton.frame = CGRectMake(560, 510, 78, 38);
     }
     [tabBarRightButton setBackgroundImage:tabBarRightImage forState:UIControlStateNormal];
     [tabBarRightButton addTarget:self action:@selector(personalButtonPressed) forControlEvents:UIControlEventTouchUpInside];
     
     //加到父view中的子view是按顺序加载的，需注意加载子view的顺序！
+    //添加欢迎页面，首页的所有组件右移320
     [self.view addSubview:categoryView];
     [self.view addSubview:imgGiftScrollView];
     [self.view addSubview:mainScrollView];
@@ -202,6 +209,133 @@
         Birthday *birthday=[[Birthday alloc]init];
         [birthday setBirthdayNotifications];
     }
+    
+    //每次启动APP将提醒数目清空
+    UILocalNotification *notification=[[UILocalNotification alloc] init];
+    notification.applicationIconBadgeNumber=0;
+    
+    //添加欢迎页面
+    //把欢迎页面从AppDelegate移到IndexController
+    if(!iPhone5)
+    {
+        splashView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 480)];
+        splashView.image = [UIImage imageNamed:@"loading480.png"];
+    }
+    else
+    {
+        splashView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 568)];
+        splashView.image = [UIImage imageNamed:@"loading568.png"];
+    }
+    [self.view insertSubview:splashView atIndex:0];
+
+    //添加定时器，2秒后把首页移入屏幕
+    NSTimer *timer;
+    timer = [NSTimer scheduledTimerWithTimeInterval: 2
+                                             target: self
+                                           selector: @selector(handleTimer:)
+                                           userInfo: nil
+                                            repeats: YES];
+    
+    //添加下拉loading提示
+    [self addPullToRefreshFooter];
+}
+
+- (void)setupStrings{
+    textPull    = @"上拉刷新...";
+    textRelease = @"释放开始刷新...";
+    textLoading = @"正在加载...";
+}
+
+- (void)startLoading {
+    isLoading = YES;
+    
+    // Show the header
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationDuration:0.3];
+    mainScrollView.contentInset = UIEdgeInsetsMake(REFRESH_HEADER_HEIGHT, 0, 0, 0);
+    refreshLabel.text = self.textLoading;
+    refreshArrow.hidden = YES;
+    [refreshSpinner startAnimating];
+    [UIView commitAnimations];
+}
+
+- (void)stopLoading {
+    isLoading = NO;
+    
+    // Hide the header
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationDelegate:self];
+    [UIView setAnimationDuration:0.3];
+    [UIView setAnimationDidStopSelector:@selector(stopLoadingComplete:finished:context:)];
+    mainScrollView.contentInset = UIEdgeInsetsZero;
+    UIEdgeInsets tableContentInset = mainScrollView.contentInset;
+    tableContentInset.top = 0.0;
+    mainScrollView.contentInset = tableContentInset;
+    [refreshArrow layer].transform = CATransform3DMakeRotation(M_PI * 2, 0, 0, 1);
+    [UIView commitAnimations];
+}
+
+- (void)stopLoadingComplete:(NSString *)animationID finished:(NSNumber *)finished context:(void *)context {
+    // Reset the header
+    
+    refreshLabel.text = self.textPull;
+    refreshArrow.hidden = NO;
+    
+    [refreshFooterView setFrame:CGRectMake(0, mainScrollView.contentSize.height, 320, 0)];
+    
+    [refreshSpinner stopAnimating];
+}
+
+-(void)addPullToRefreshFooter{
+    refreshFooterView = [[UIView alloc] initWithFrame:CGRectMake(0, 418, 320, REFRESH_HEADER_HEIGHT)];
+    refreshFooterView.backgroundColor = [UIColor clearColor];
+    
+    refreshLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 320, REFRESH_HEADER_HEIGHT)];
+    refreshLabel.backgroundColor = [UIColor clearColor];
+    refreshLabel.font = [UIFont boldSystemFontOfSize:12.0];
+    refreshLabel.textAlignment = UITextAlignmentCenter;
+    
+    refreshArrow = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"arrow.png"]];
+    refreshArrow.frame = CGRectMake(floorf((REFRESH_HEADER_HEIGHT - 27) / 2),
+                                    (floorf(REFRESH_HEADER_HEIGHT - 44) / 2),
+                                    27, 44);
+    
+    refreshSpinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    refreshSpinner.frame = CGRectMake(floorf(floorf(REFRESH_HEADER_HEIGHT - 20) / 2), floorf((REFRESH_HEADER_HEIGHT - 20) / 2), 20, 20);
+    refreshSpinner.hidesWhenStopped = YES;
+    
+    [refreshFooterView addSubview:refreshLabel];
+    [refreshFooterView addSubview:refreshArrow];
+    [refreshFooterView addSubview:refreshSpinner];
+    [mainScrollView addSubview:refreshFooterView];
+}
+
+- (void) handleTimer: (NSTimer *) timer
+{
+    [UIView beginAnimations:nil context:NULL];
+    
+    [UIView setAnimationDuration:1];
+    
+    CGPoint pointCategoryView=categoryView.center;
+    CGPoint pointImgGiftScrollView=imgGiftScrollView.center;
+    CGPoint point=mainScrollView.center;
+    CGPoint pointBgView=tabBarBgView.center;
+    CGPoint pointLeftButton=tabBarLeftButton.center;
+    CGPoint pointBoxButton=tabBarBoxButton.center;
+    CGPoint pointRightButton=tabBarRightButton.center;
+    
+    categoryView.center=CGPointMake(pointCategoryView.x-320, pointCategoryView.y);
+    imgGiftScrollView.center=CGPointMake(pointImgGiftScrollView.x-320, pointImgGiftScrollView.y);
+    mainScrollView.center=CGPointMake(point.x-320,point.y);
+    imgGiftScrollView.center=CGPointMake(point.x-320,point.y);
+    tabBarBgView.center=CGPointMake(pointBgView.x-320,pointBgView.y);
+    tabBarLeftButton.center=CGPointMake(pointLeftButton.x-320,pointLeftButton.y);
+    tabBarBoxButton.center=CGPointMake(pointBoxButton.x-320,pointBoxButton.y);
+    tabBarRightButton.center=CGPointMake(pointRightButton.x-320,pointRightButton.y);
+    
+    [timer invalidate];
+    
+    [UIView commitAnimations];
 }
 
 - (void)showCategoryViewPressed
@@ -306,14 +440,12 @@
                                                                                    [width intValue],
                                                                                    [height intValue])];
             
-
             imageView.layer.shadowColor=[UIColor colorWithRed:0.27 green:0.2 blue:0.05 alpha:.6].CGColor;
             imageView.layer.shadowOffset = CGSizeMake(2, 2);
             imageView.layer.borderColor=[UIColor whiteColor].CGColor;
             imageView.layer.borderWidth=2;
             imageView.layer.shadowOpacity=1;
             imageView.layer.shadowRadius=.6;
-            
 
             [imageView setImageWithURL:URL placeholderImage:[UIImage imageNamed:@"3.jpg"]];
             
@@ -330,6 +462,11 @@
         }
 
         birthdayCurrentIndex+=7;                //每load一屏自动加7；
+        
+        if(isLoading)
+        {
+            [self stopLoading];
+        }
         
     }failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
          NSLog(@"error: %@", error);
@@ -366,7 +503,6 @@
         }
     }
 }
-
 
 #pragma mark - Table view data source
 
@@ -447,7 +583,11 @@
     
     if(currentOffset==maximumOffset)
     {
-        [self loadDataSource];      //当滚到最底时自动更新内容
+        if(!isLoading)
+        {
+            [self startLoading];
+            [self loadDataSource];      //当滚到最底时自动更新内容
+        }
     }
 }
 

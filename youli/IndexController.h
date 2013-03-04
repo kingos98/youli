@@ -21,6 +21,10 @@
     UIImageView *imgGiftScrollView;
     CategoryTableView *categoryTableView;
     UITextField *_value;
+    
+    BOOL isLoading;
+    
+    UIImageView *splashView;            //欢迎图片
 }
 
 @property(nonatomic, retain)UITextField *value;
@@ -36,6 +40,15 @@
 @property(nonatomic,strong)BirthdayGiftController *birthdayGiftController;
 @property(nonatomic,strong)PersonalController *personalController;
 @property(nonatomic,strong)BirthdayController *birthdayController;
+
+
+@property (nonatomic, strong) UIView *refreshFooterView;
+@property (nonatomic, strong) UILabel *refreshLabel;
+@property (nonatomic, strong) UIImageView *refreshArrow;
+@property (nonatomic, strong) UIActivityIndicatorView *refreshSpinner;
+@property (nonatomic, strong) NSString *textPull;
+@property (nonatomic, strong) NSString *textRelease;
+@property (nonatomic, strong) NSString *textLoading;
 
 @property id<YouliDelegate> delegate;
 

@@ -32,7 +32,7 @@
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>{
     SinaWeibo *sinaweibo;
-    UIImageView *splashView;            //欢迎图片
+    UIImageView *firstSplashView;            //欢迎图片
 }
 
 @property (strong, nonatomic) UIWindow *window;
@@ -42,5 +42,4 @@
 @property (readonly, nonatomic) SinaWeibo *sinaweibo;
 
 
-- (void) startupAnimationDone:(NSString *)animationID finished:(NSNumber *)finished context:(void *)context;
 @end

@@ -39,26 +39,27 @@
     }
     
     
-    if(!iPhone5)
-    {
-        splashView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 480)];
-        splashView.image = [UIImage imageNamed:@"loading480.png"];
-    }
-    else
-    {
-        splashView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 568)];
-        splashView.image = [UIImage imageNamed:@"loading568.png"];
-    }
-    [self.window addSubview:splashView];
-    [self.window bringSubviewToFront:splashView];
-    [UIView beginAnimations:nil context:nil];
-    [UIView setAnimationDuration:2];
-    [UIView setAnimationTransition:UIViewAnimationTransitionNone forView:self.window cache:YES];
-    [UIView setAnimationDelegate:self];
-    [UIView setAnimationDidStopSelector:@selector(startupAnimationDone:finished:context:)];
-    splashView.alpha = 0.0;
-    splashView.frame = CGRectMake(-60, -85, 440, 635);
-    [UIView commitAnimations];
+//    if(!iPhone5)
+//    {
+//        firstSplashView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 480)];
+//        firstSplashView.image = [UIImage imageNamed:@"loading480.png"];
+//    }
+//    else
+//    {
+//        firstSplashView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 568)];
+//        firstSplashView.image = [UIImage imageNamed:@"loading568.png"];
+//    }
+//    [self.window addSubview:firstSplashView];
+//    [self.window bringSubviewToFront:firstSplashView];
+//    [UIView beginAnimations:nil context:nil];
+//    [UIView setAnimationDuration:2];
+//    [UIView setAnimationTransition:UIViewAnimationTransitionNone forView:self.window cache:YES];
+//    [UIView setAnimationDelegate:self];
+//    [UIView setAnimationDidStopSelector:@selector(startupAnimationDone:finished:context:)];
+//    firstSplashView.alpha = 0.0;
+////    firstSplashView.frame = CGRectMake(-60, -85, 440, 635);
+//    firstSplashView.frame = CGRectMake(0, 0, 320, 568);    
+//    [UIView commitAnimations];
     
 	return YES;
 }
@@ -124,4 +125,6 @@
 //    NSLog(@"%d:%d:%d",comp.hour,comp.minute,comp.second);
 //}
 
+//- (void) startupAnimationDone:(NSString *)animationID finished:(NSNumber *)finished context:(void *)context
+//{}
 @end
