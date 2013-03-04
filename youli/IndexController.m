@@ -47,7 +47,7 @@
 @synthesize personalController;
 @synthesize birthdayController;
 
-@synthesize textPull, textRelease, textLoading, refreshFooterView, refreshLabel, refreshArrow, refreshSpinner;
+@synthesize textPull, textLoading, refreshFooterView, refreshLabel, refreshSpinner;
 
 - (void)viewDidLoad
 {
@@ -122,8 +122,8 @@
     {
         [mainScrollView setContentSize:CGSizeMake(size.width, 548)];
     }
-
     
+    isLoading = YES;
     for(int i=0;i<2;i++)
     {
         [self loadDataSource];
@@ -237,77 +237,13 @@
                                             repeats: YES];
     
     //添加下拉loading提示
+    [self setupStrings];
     [self addPullToRefreshFooter];
 }
 
 - (void)setupStrings{
     textPull    = @"上拉刷新...";
-    textRelease = @"释放开始刷新...";
     textLoading = @"正在加载...";
-}
-
-- (void)startLoading {
-    isLoading = YES;
-    
-    // Show the header
-    [UIView beginAnimations:nil context:NULL];
-    [UIView setAnimationDuration:0.3];
-    mainScrollView.contentInset = UIEdgeInsetsMake(REFRESH_HEADER_HEIGHT, 0, 0, 0);
-    refreshLabel.text = self.textLoading;
-    refreshArrow.hidden = YES;
-    [refreshSpinner startAnimating];
-    [UIView commitAnimations];
-}
-
-- (void)stopLoading {
-    isLoading = NO;
-    
-    // Hide the header
-    [UIView beginAnimations:nil context:NULL];
-    [UIView setAnimationDelegate:self];
-    [UIView setAnimationDuration:0.3];
-    [UIView setAnimationDidStopSelector:@selector(stopLoadingComplete:finished:context:)];
-    mainScrollView.contentInset = UIEdgeInsetsZero;
-    UIEdgeInsets tableContentInset = mainScrollView.contentInset;
-    tableContentInset.top = 0.0;
-    mainScrollView.contentInset = tableContentInset;
-    [refreshArrow layer].transform = CATransform3DMakeRotation(M_PI * 2, 0, 0, 1);
-    [UIView commitAnimations];
-}
-
-- (void)stopLoadingComplete:(NSString *)animationID finished:(NSNumber *)finished context:(void *)context {
-    // Reset the header
-    
-    refreshLabel.text = self.textPull;
-    refreshArrow.hidden = NO;
-    
-    [refreshFooterView setFrame:CGRectMake(0, mainScrollView.contentSize.height, 320, 0)];
-    
-    [refreshSpinner stopAnimating];
-}
-
--(void)addPullToRefreshFooter{
-    refreshFooterView = [[UIView alloc] initWithFrame:CGRectMake(0, 418, 320, REFRESH_HEADER_HEIGHT)];
-    refreshFooterView.backgroundColor = [UIColor clearColor];
-    
-    refreshLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 320, REFRESH_HEADER_HEIGHT)];
-    refreshLabel.backgroundColor = [UIColor clearColor];
-    refreshLabel.font = [UIFont boldSystemFontOfSize:12.0];
-    refreshLabel.textAlignment = UITextAlignmentCenter;
-    
-    refreshArrow = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"arrow.png"]];
-    refreshArrow.frame = CGRectMake(floorf((REFRESH_HEADER_HEIGHT - 27) / 2),
-                                    (floorf(REFRESH_HEADER_HEIGHT - 44) / 2),
-                                    27, 44);
-    
-    refreshSpinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-    refreshSpinner.frame = CGRectMake(floorf(floorf(REFRESH_HEADER_HEIGHT - 20) / 2), floorf((REFRESH_HEADER_HEIGHT - 20) / 2), 20, 20);
-    refreshSpinner.hidesWhenStopped = YES;
-    
-    [refreshFooterView addSubview:refreshLabel];
-    [refreshFooterView addSubview:refreshArrow];
-    [refreshFooterView addSubview:refreshSpinner];
-    [mainScrollView addSubview:refreshFooterView];
 }
 
 - (void) handleTimer: (NSTimer *) timer
@@ -316,6 +252,7 @@
     
     [UIView setAnimationDuration:1];
     
+    CGPoint pointCategoryTableView=categoryTableView.center;
     CGPoint pointCategoryView=categoryView.center;
     CGPoint pointImgGiftScrollView=imgGiftScrollView.center;
     CGPoint point=mainScrollView.center;
@@ -324,10 +261,10 @@
     CGPoint pointBoxButton=tabBarBoxButton.center;
     CGPoint pointRightButton=tabBarRightButton.center;
     
+    categoryTableView.center=CGPointMake(pointCategoryTableView.x-320, pointCategoryTableView.y);
     categoryView.center=CGPointMake(pointCategoryView.x-320, pointCategoryView.y);
     imgGiftScrollView.center=CGPointMake(pointImgGiftScrollView.x-320, pointImgGiftScrollView.y);
     mainScrollView.center=CGPointMake(point.x-320,point.y);
-    imgGiftScrollView.center=CGPointMake(point.x-320,point.y);
     tabBarBgView.center=CGPointMake(pointBgView.x-320,pointBgView.y);
     tabBarLeftButton.center=CGPointMake(pointLeftButton.x-320,pointLeftButton.y);
     tabBarBoxButton.center=CGPointMake(pointBoxButton.x-320,pointBoxButton.y);
@@ -458,15 +395,13 @@
         
         if(mainScrollView.contentSize.height<birthdayGiftControllerHeight)
         {
-            [mainScrollView setContentSize:CGSizeMake(mainScrollView.frame.size.width, birthdayGiftControllerHeight)];
+            //mainScrollView的高度应包括loading块
+            [mainScrollView setContentSize:CGSizeMake(mainScrollView.frame.size.width, birthdayGiftControllerHeight+REFRESH_HEADER_HEIGHT)];
         }
 
         birthdayCurrentIndex+=7;                //每load一屏自动加7；
         
-        if(isLoading)
-        {
-            [self stopLoading];
-        }
+        [self stopLoading];
         
     }failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
          NSLog(@"error: %@", error);
@@ -502,6 +437,71 @@
             }
         }
     }
+}
+
+#pragma mark - Scroll View Loading
+
+
+- (void)startLoading {
+    //    isLoading = YES;
+    
+    // Show the header
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationDuration:0.3];
+    mainScrollView.contentInset = UIEdgeInsetsMake(REFRESH_HEADER_HEIGHT, 0, 0, 0);
+    refreshLabel.text = self.textLoading;
+    [refreshSpinner startAnimating];
+    [UIView commitAnimations];
+}
+
+- (void)stopLoading {
+    isLoading = NO;
+    
+    // Hide the header
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationDelegate:self];
+    [UIView setAnimationDuration:0.3];
+    [UIView setAnimationDidStopSelector:@selector(stopLoadingComplete:finished:context:)];
+    mainScrollView.contentInset = UIEdgeInsetsZero;
+    UIEdgeInsets tableContentInset = mainScrollView.contentInset;
+    tableContentInset.top = 0.0;
+    mainScrollView.contentInset = tableContentInset;
+    [UIView commitAnimations];
+}
+
+- (void)stopLoadingComplete:(NSString *)animationID finished:(NSNumber *)finished context:(void *)context {
+    
+    refreshLabel.text = self.textPull;
+    
+//    NSLog(@"refreshFooterView:height:%f",(mainScrollView.contentSize.height-REFRESH_HEADER_HEIGHT));
+    
+    [refreshFooterView setFrame:CGRectMake(0, mainScrollView.contentSize.height-REFRESH_HEADER_HEIGHT, 320, 0)];
+    
+    [refreshSpinner stopAnimating];
+}
+
+-(void)addPullToRefreshFooter{
+    refreshFooterView = [[UIView alloc] initWithFrame:CGRectMake(0, 418, 320, REFRESH_HEADER_HEIGHT)];
+    refreshFooterView.backgroundColor = [UIColor clearColor];
+    
+    //    refreshLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 320, REFRESH_HEADER_HEIGHT)];
+    refreshLabel=[[UILabel alloc]initWithFrame:CGRectMake(148, 0, 172, REFRESH_HEADER_HEIGHT)];
+    refreshLabel.textColor = [UIColor colorWithRed:0.45 green:0.45 blue:0.35 alpha:1];
+    refreshLabel.shadowColor=[UIColor colorWithRed:1 green:1 blue:1 alpha:1];
+    refreshLabel.shadowOffset=CGSizeMake(0, 1);
+    refreshLabel.backgroundColor = [UIColor clearColor];
+    refreshLabel.font = [UIFont boldSystemFontOfSize:13.0];
+    //    refreshLabel.textAlignment = UITextAlignmentCenter;
+    refreshLabel.text = self.textLoading;
+    
+    refreshSpinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    //    refreshSpinner.frame = CGRectMake(floorf(floorf(REFRESH_HEADER_HEIGHT - 20) / 2), floorf((REFRESH_HEADER_HEIGHT - 20) / 2), 24, 24);
+    refreshSpinner.frame = CGRectMake(120, 20, 24, 14);
+    refreshSpinner.hidesWhenStopped = YES;
+    
+    [refreshFooterView addSubview:refreshLabel];
+    [refreshFooterView addSubview:refreshSpinner];
+    [mainScrollView addSubview:refreshFooterView];
 }
 
 #pragma mark - Table view data source
@@ -585,6 +585,7 @@
     {
         if(!isLoading)
         {
+            isLoading=YES;
             [self startLoading];
             [self loadDataSource];      //当滚到最底时自动更新内容
         }

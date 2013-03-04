@@ -44,10 +44,8 @@
 
 @property (nonatomic, strong) UIView *refreshFooterView;
 @property (nonatomic, strong) UILabel *refreshLabel;
-@property (nonatomic, strong) UIImageView *refreshArrow;
 @property (nonatomic, strong) UIActivityIndicatorView *refreshSpinner;
 @property (nonatomic, strong) NSString *textPull;
-@property (nonatomic, strong) NSString *textRelease;
 @property (nonatomic, strong) NSString *textLoading;
 
 @property id<YouliDelegate> delegate;
