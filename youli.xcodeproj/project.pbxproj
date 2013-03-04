@@ -180,6 +180,7 @@
 		1897B73D16A8E128001C810D /* UIFolderTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1897B73916A8E128001C810D /* UIFolderTableView.m */; };
 		1897B73E16A8E128001C810D /* UIView+screenshot.m in Sources */ = {isa = PBXBuildFile; fileRef = 1897B73B16A8E128001C810D /* UIView+screenshot.m */; };
 		1897B75316A92185001C810D /* SubTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1897B75216A92184001C810D /* SubTableCell.m */; };
+		1899613316E4684B00684023 /* LoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1899613216E4684B00684023 /* LoginController.m */; };
 		189BB10316D70ADD00CC4F86 /* SettingControler.m in Sources */ = {isa = PBXBuildFile; fileRef = 189BB10216D70ADD00CC4F86 /* SettingControler.m */; };
 		189BB10A16D70DBE00CC4F86 /* bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 189BB10816D70DBE00CC4F86 /* bg@2x.png */; };
 		189BB10B16D70DBE00CC4F86 /* bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 189BB10916D70DBE00CC4F86 /* bg.png */; };
@@ -493,6 +494,8 @@
 		1897B73B16A8E128001C810D /* UIView+screenshot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+screenshot.m"; sourceTree = "<group>"; };
 		1897B75116A92183001C810D /* SubTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubTableCell.h; sourceTree = "<group>"; };
 		1897B75216A92184001C810D /* SubTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubTableCell.m; sourceTree = "<group>"; };
+		1899613116E4684B00684023 /* LoginController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginController.h; sourceTree = "<group>"; };
+		1899613216E4684B00684023 /* LoginController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginController.m; sourceTree = "<group>"; };
 		189BB10116D70ADD00CC4F86 /* SettingControler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingControler.h; sourceTree = "<group>"; };
 		189BB10216D70ADD00CC4F86 /* SettingControler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingControler.m; sourceTree = "<group>"; };
 		189BB10816D70DBE00CC4F86 /* bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "bg@2x.png"; path = "images/bg@2x.png"; sourceTree = "<group>"; };
@@ -892,6 +895,8 @@
 				E5D827D716081EC400969EE2 /* IndexController.m */,
 				18C7F705165A765900B709AE /* BaseController.h */,
 				18C7F706165A765900B709AE /* BaseController.m */,
+				1899613116E4684B00684023 /* LoginController.h */,
+				1899613216E4684B00684023 /* LoginController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -1740,6 +1745,7 @@
 				189BB10316D70ADD00CC4F86 /* SettingControler.m in Sources */,
 				18B0509716DDA24F00C56EFD /* DbUtils.m in Sources */,
 				151C0B2A16DDF2DC00F2B71F /* BirthdayCellNew.m in Sources */,
+				1899613316E4684B00684023 /* LoginController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

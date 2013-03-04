@@ -19,13 +19,12 @@
 #import "IndexController.h"
 
 @interface PersonalController ()
+
 @end
 
 @implementation PersonalController
 
 @synthesize friendTable = _friendTable;
-
-NSMutableArray *items ;
 
 - (SinaWeibo *)sinaweibo
 {
@@ -87,25 +86,17 @@ NSMutableArray *items ;
     self.subTableCell = [[SubTableCell alloc] initWithFrame:CGRectMake(10,122,300,200)];
     self.subTableCell.hidden = YES;
     //3个tab
-    self.friendButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    UIImage *friendImage = [[UIImage imageNamed:@"friend_button_unselect.png"] stretchableImageWithLeftCapWidth:0 topCapHeight:0];
-    self.friendButton.frame = CGRectMake(10,122,99,40);
-    [self.friendButton setBackgroundImage:friendImage forState:UIControlStateNormal];
+    self.friendButton = [[UIButton alloc] initWithFrame:CGRectMake(10,122,99,40)];
+    [self.friendButton setBackgroundImage:[UIImage imageNamed:@"friend_button_unselect.png"] forState:UIControlStateNormal];
     [self.friendButton setImage:[UIImage imageNamed:@"friend_button_select.png"] forState:UIControlStateSelected];
     [self.friendButton addTarget:self action:@selector(friendButtonPressed) forControlEvents:UIControlEventTouchUpInside];
-    self.friendButton.selected = YES;
-    
-    self.collectButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    UIImage *collectImage = [[UIImage imageNamed:@"collect_unselect.png"] stretchableImageWithLeftCapWidth:0 topCapHeight:0];
-    self.collectButton.frame = CGRectMake(110,122,100,40);
-    [self.collectButton setBackgroundImage:collectImage forState:UIControlStateNormal];
+    self.friendButton.selected = YES;    
+    self.collectButton = [[UIButton alloc] initWithFrame:CGRectMake(110,122,100,40)];
+    [self.collectButton setBackgroundImage:[UIImage imageNamed:@"collect_unselect.png"] forState:UIControlStateNormal];
     [self.collectButton setImage:[UIImage imageNamed:@"collect_select.png"] forState:UIControlStateSelected];
-    [self.collectButton addTarget:self action:@selector(collectButtonPressed) forControlEvents:UIControlEventTouchUpInside];
-    
-    self.cartButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    UIImage *cartImage = [[UIImage imageNamed:@"cart_unselect.png"] stretchableImageWithLeftCapWidth:0 topCapHeight:0];
-    self.cartButton.frame = CGRectMake(210,122,101,40);
-    [self.cartButton setBackgroundImage:cartImage forState:UIControlStateNormal];
+    [self.collectButton addTarget:self action:@selector(collectButtonPressed) forControlEvents:UIControlEventTouchUpInside];    
+    self.cartButton = [[UIButton alloc] initWithFrame:CGRectMake(210,122,101,40)];
+    [self.cartButton setBackgroundImage:[UIImage imageNamed:@"cart_unselect.png"] forState:UIControlStateNormal];
     [self.cartButton setImage:[UIImage imageNamed:@"cart_select.png"] forState:UIControlStateSelected];
     [self.cartButton addTarget:self action:@selector(cartButtonPressed) forControlEvents:UIControlEventTouchUpInside];
     //朋友添加信息提示条
@@ -159,13 +150,54 @@ NSMutableArray *items ;
     
 }
 
--(void)viewDidAppear:(BOOL)animated
+- (NSMutableArray*)loadFriend
+{
+    Friend *friend = [[Friend alloc] init];
+    return [friend findAll];
+}
+
+- (void)viewDidAppear:(BOOL)animated
 {
     SinaWeibo *sinaweibo = [self sinaweibo];
     [sinaweibo logIn];
     sinaweibo.delegate = self;
     
     [self.navigationController setNavigationBarHidden:YES animated:NO];
+}
+
+#pragma mark - UITableViewDataSource Methods
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 1;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return 24;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	return 37;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *CellIdentifier = @"CellIdentifier";
+    PersonalCell *cell = [[PersonalCell alloc] initCell:CellIdentifier];
+    if (self.items.count>0) {
+        cell.friend =  [self.items objectAtIndex:indexPath.row];
+    }
+    return cell;
+}
+
+#pragma mark - UITableViewDelegate Methods
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (self.friendInfoController == nil) {
+        self.friendInfoController = [[FriendInfoController alloc] init];
+    }
+    [self.navigationController pushViewController:self.friendInfoController animated:NO];
 }
 
 - (void)indexButtonPressed
@@ -195,7 +227,7 @@ NSMutableArray *items ;
     self.friendButton.selected = YES;
     self.collectButton.selected = NO;
     self.cartButton.selected = NO;
-
+    
     self.messageButton.hidden = NO;
     self.friendTable.hidden = NO;
     self.collectView.hidden = YES;
@@ -249,41 +281,6 @@ NSMutableArray *items ;
 - (void)messageButtonPressed
 {
     
-}
-
-#pragma mark - UITableViewDataSource Methods
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-    return 1;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    return 24;
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-	return 37;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    static NSString *CellIdentifier = @"CellIdentifier";
-    PersonalCell *cell = [[PersonalCell alloc] initCell:CellIdentifier];
-    if (self.items.count>0) {
-        cell.friend =  [self.items objectAtIndex:indexPath.row];
-    }
-    return cell;
-}
-
-#pragma mark - UITableViewDelegate Methods
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (self.friendInfoController == nil) {
-        self.friendInfoController = [[FriendInfoController alloc] init];
-    }
-    [self.navigationController pushViewController:self.friendInfoController animated:NO];
 }
 
 - (void)viewDidUnload
