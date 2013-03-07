@@ -1778,13 +1778,10 @@
 				18B0509716DDA24F00C56EFD /* DbUtils.m in Sources */,
 				151C0B2A16DDF2DC00F2B71F /* BirthdayCellNew.m in Sources */,
 				1899613316E4684B00684023 /* LoginController.m in Sources */,
-<<<<<<< HEAD
 				1525A8CC16E6E5E20059E066 /* PPRevealSideViewController.m in Sources */,
 				1525A8DD16E6EBA60059E066 /* CategoryController.m in Sources */,
-=======
 				18F34DB916E6D9D800CE6748 /* Account.m in Sources */,
 				18F34DCD16E6E73900CE6748 /* AFWeiboAPIClient.m in Sources */,
->>>>>>> 更换登陆方式，逐步替换官方sdk
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

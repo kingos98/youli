@@ -91,14 +91,11 @@ static bool isFirstLoad=YES;
         categoryTableView = isFirstLoad?[[CategoryTableView alloc] initWithFrame:CGRectMake(320, 0, 212, 548)]:[[CategoryTableView alloc] initWithFrame:CGRectMake(0, 0, 212, 548)];
     }
     
-    if(categoryTableView)
-    {
-        categoryTableView.dataSource=self;
-        categoryTableView.delegate=self;
-        category = [[Category alloc] init];
-        [category loadData];                        //load分类列表
-        giftTypeItems = category.items;
-    }
+    categoryTableView.dataSource=self;
+    categoryTableView.delegate=self;
+    category = [[Category alloc] init];
+    [category loadData];                        //load分类列表
+    giftTypeItems = category.items;
     
 //    [categoryView addSubview:categoryTableView];
     
@@ -363,12 +360,7 @@ static bool isFirstLoad=YES;
 
 - (void)personalButtonPressed
 {
-<<<<<<< HEAD
-    [self.navigationController pushViewController:personalController animated:NO];
-
-=======
     [self.navigationController pushViewController:self.loginController animated:NO];
->>>>>>> 更换登陆方式，逐步替换官方sdk
 }
 
 -(void)viewDidAppear:(BOOL)animated

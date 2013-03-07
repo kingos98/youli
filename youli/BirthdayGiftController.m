@@ -201,15 +201,13 @@
     {
         categoryTableView = [[CategoryTableView alloc] initWithFrame:CGRectMake(0, 0, 212, 548)];
     }
-    if(categoryTableView)
-    {
-        categoryTableView.dataSource=self;
-        categoryTableView.delegate=self;
-        category = [[Category alloc] init];
-        [category loadData];                        //load分类列表
-        giftTypeItems = category.items;
-    }
     
+    categoryTableView.dataSource=self;
+    categoryTableView.delegate=self;
+    category = [[Category alloc] init];
+    [category loadData];                        //load分类列表
+    giftTypeItems = category.items;
+
     indicator = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(285, 10, 25, 25)];
     indicator.color=[UIColor scrollViewTexturedBackgroundColor];
     indicator.hidesWhenStopped=YES;

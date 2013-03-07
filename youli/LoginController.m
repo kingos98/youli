@@ -12,8 +12,19 @@
 #import "SinaWeiboConstants.h"
 #import "AppDelegate.h"
 #import "PersonalController.h"
+#import "CategoryTableView.h"
+#import "CategoryCell.h"
+#import "BirthdayController.h"
 
-@interface LoginController ()
+@interface LoginController (){
+@private
+    UITableView *friendTable;
+    CategoryTableView *categoryTableView;
+    Category *category;
+    NSMutableArray *giftTypeItems;
+    id<YouliDelegate> delegate;
+    BirthdayGiftController *birthdayGiftController;
+}
 
 @end
 
@@ -21,8 +32,8 @@
 
 - (SinaWeibo *)sinaweibo
 {
-    AppDelegate *delegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
-    return delegate.sinaweibo;
+    AppDelegate *appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    return appDelegate.sinaweibo;
 }
 
 - (void)viewDidLoad
@@ -47,7 +58,21 @@
     NSString *authPagePath = [SinaWeiboRequest serializeURL:kSinaWeiboWebAuthURL
                                                      params:params httpMethod:@"GET"];
     [webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:authPagePath]]];
+    //加左边的类别tableview
+    categoryTableView = [[CategoryTableView alloc] initWithFrame:CGRectMake(0, 0, 212, 460)];
+    if(iPhone5)
+    {
+        categoryTableView = [[CategoryTableView alloc] initWithFrame:CGRectMake(0, 0, 212, 548)];
+    }
+    categoryTableView.dataSource = self;
+    categoryTableView.delegate = self;
+    category = [[Category alloc] init];
+    [category loadData];                        //load分类列表
+    giftTypeItems = category.items;
+    birthdayGiftController = [[BirthdayGiftController alloc]init];
+    delegate = birthdayGiftController;
   
+    [self.view addSubview:categoryTableView];
     [mainView addSubview:mainBgView];
     [mainView addSubview:imgTitle];
     [mainView addSubview:returnButton];
@@ -56,9 +81,6 @@
 
 - (void)returnButtonPressed
 {
-    if ([self isLoggedIn]) {
-
-    }
     [self.navigationController popViewControllerAnimated:YES];
 }
 
@@ -152,52 +174,46 @@
     }
 }
 
-/**
- * @description 清空认证信息
- */
-- (void)removeAuthData
+#pragma mark - UITableViewDataSource Methods
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    self.accessToken = nil;
-    self.userID = nil;
-    self.expirationDate = nil;
-    
-    NSHTTPCookieStorage* cookies = [NSHTTPCookieStorage sharedHTTPCookieStorage];
-    NSArray* sinaweiboCookies = [cookies cookiesForURL:
-                                 [NSURL URLWithString:@"https://open.weibo.cn"]];
-    
-    for (NSHTTPCookie* cookie in sinaweiboCookies)
-    {
-        [cookies deleteCookie:cookie];
-    }
+    return 1;
 }
 
-/**
- * @description 判断是否登录
- * @return YES为已登录；NO为未登录
- */
-- (BOOL)isLoggedIn
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.userID && self.accessToken && self.expirationDate;
+    return giftTypeItems.count;
 }
 
-/**
- * @description 判断登录是否过期
- * @return YES为已过期；NO为未为期
- */
-- (BOOL)isAuthorizeExpired
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSDate *now = [NSDate date];
-    return ([now compare:self.expirationDate] == NSOrderedDescending);
+    return 41;
 }
 
-
-/**
- * @description 判断登录是否有效，当已登录并且登录未过期时为有效状态
- * @return YES为有效；NO为无效
- */
-- (BOOL)isAuthValid
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return ([self isLoggedIn] && ![self isAuthorizeExpired]);
+    static NSString *CellIdentifier = @"Cell";
+    CategoryCell *cell = [[CategoryCell alloc] initCell:CellIdentifier];
+    cell.category =  [giftTypeItems objectAtIndex:indexPath.row];
+    return cell;
+}
+
+#pragma mark - UITableViewDelegate Methods
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    CategoryCell *cell = (CategoryCell*)[categoryTableView cellForRowAtIndexPath:indexPath];
+    [delegate sendGiftTypeTitle:cell.nameLabel.text];
+    [self.navigationController pushViewController:birthdayGiftController animated:YES];
+    cell.labelImage.image = [UIImage imageNamed:@"selected.png"];
+    cell.nextImage.image = [UIImage imageNamed:@"pointerselect.png"];
+    [self hideCategoryView];
+}
+
+- (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    CategoryCell *cell = (CategoryCell*)[categoryTableView cellForRowAtIndexPath:indexPath];
+    cell.labelImage.image = [UIImage imageNamed:@"unselected.png"];
+    cell.nextImage.image = [UIImage imageNamed:@"pointerunselect.png"];
 }
 
 @end

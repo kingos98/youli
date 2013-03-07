@@ -10,7 +10,7 @@
 #import "BaseController.h"
 #import "SinaWeiboRequest.h"
 
-@interface LoginController : BaseController<UIWebViewDelegate,SinaWeiboRequestDelegate>{
+@interface LoginController : BaseController<UITableViewDelegate,UITableViewDataSource,UIWebViewDelegate,SinaWeiboRequestDelegate>{
     SinaWeiboRequest *weiboRequest;
 }
 

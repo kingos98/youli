@@ -36,8 +36,8 @@
 
 - (SinaWeibo *)sinaweibo
 {
-    AppDelegate *delegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
-    return delegate.sinaweibo;
+    AppDelegate *appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    return appDelegate.sinaweibo;
 }
 
 - (void)viewDidLoad
@@ -49,16 +49,9 @@
     //导航条
     UIImageView *imgTitle = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
     imgTitle.image = [UIImage imageNamed:@"head.jpg"];
-<<<<<<< HEAD
-    UIButton *indexButton=[[UIButton alloc]initWithFrame:CGRectMake(10, 7, 50, 30)];
-    [indexButton setBackgroundImage:[UIImage imageNamed:@"return_unclick.png"] forState:UIControlStateNormal];
-    [indexButton setImage:[UIImage imageNamed:@"return_click.png"] forState:UIControlStateHighlighted];
-    [indexButton addTarget:self action:@selector(indexButtonPressed) forControlEvents:UIControlEventTouchUpInside];
-=======
     UIButton *returnButton=[[UIButton alloc]initWithFrame:CGRectMake(10, 7, 50, 30)];
     [returnButton setBackgroundImage:[UIImage imageNamed:@"return_unclick.png"] forState:UIControlStateNormal];
     [returnButton addTarget:self action:@selector(returnButtonPressed) forControlEvents:UIControlEventTouchUpInside];
->>>>>>> 更换登陆方式，逐步替换官方sdk
     UIButton *addButton=[[UIButton alloc]initWithFrame:CGRectMake(250, 7, 60, 30)];
     [addButton setBackgroundImage:[UIImage imageNamed:@"add_friend_1.png"] forState:UIControlStateNormal];
     [addButton addTarget:self action:@selector(addButtonPressed) forControlEvents:UIControlEventTouchUpInside];
@@ -150,14 +143,12 @@
     {
         categoryTableView = [[CategoryTableView alloc] initWithFrame:CGRectMake(0, 0, 212, 548)];
     }
-    if(categoryTableView)
-    {
-        categoryTableView.dataSource=self;
-        categoryTableView.delegate=self;
-        category = [[Category alloc] init];
-        [category loadData];                        //load分类列表
-        giftTypeItems = category.items;
-    }
+    
+    categoryTableView.dataSource=self;
+    categoryTableView.delegate=self;
+    category = [[Category alloc] init];
+    [category loadData];                        //load分类列表
+    giftTypeItems = category.items;
 
     birthdayGiftController=[[BirthdayGiftController alloc]init];
     delegate=birthdayGiftController;
@@ -284,14 +275,7 @@
 
 - (void)returnButtonPressed
 {
-<<<<<<< HEAD
     [self.navigationController popViewControllerAnimated:NO];
-=======
-    SinaWeibo *sinaweibo = [self sinaweibo];
-    if (!sinaweibo.isLoggedIn) {
-        [self.navigationController popViewControllerAnimated:YES];
-    }
->>>>>>> 更换登陆方式，逐步替换官方sdk
 }
 
 - (void)addButtonPressed
