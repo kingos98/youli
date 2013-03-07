@@ -15,8 +15,6 @@
 		151C0B3316DDF4D000F2B71F /* BirthdayCellBg2.png in Resources */ = {isa = PBXBuildFile; fileRef = 151C0B3016DDF4D000F2B71F /* BirthdayCellBg2.png */; };
 		151C0B3416DDF4D000F2B71F /* BirthdayCellBg3.png in Resources */ = {isa = PBXBuildFile; fileRef = 151C0B3116DDF4D000F2B71F /* BirthdayCellBg3.png */; };
 		151C0B3716DDFD7C00F2B71F /* today.png in Resources */ = {isa = PBXBuildFile; fileRef = 151C0B3616DDFD7C00F2B71F /* today.png */; };
-		1525A8CC16E6E5E20059E066 /* PPRevealSideViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1525A8CB16E6E5E20059E066 /* PPRevealSideViewController.m */; };
-		1525A8DD16E6EBA60059E066 /* CategoryController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1525A8DC16E6EBA60059E066 /* CategoryController.m */; };
 		152CCBAF16A7D5D000B0B578 /* BlockActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 152CCBA816A7D5D000B0B578 /* BlockActionSheet.m */; };
 		152CCBB016A7D5D000B0B578 /* BlockAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 152CCBAA16A7D5D000B0B578 /* BlockAlertView.m */; };
 		152CCBB116A7D5D000B0B578 /* BlockBackground.m in Sources */ = {isa = PBXBuildFile; fileRef = 152CCBAC16A7D5D000B0B578 /* BlockBackground.m */; };
@@ -297,10 +295,6 @@
 		151C0B3016DDF4D000F2B71F /* BirthdayCellBg2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = BirthdayCellBg2.png; path = images/gifts/BirthdayCellBg2.png; sourceTree = "<group>"; };
 		151C0B3116DDF4D000F2B71F /* BirthdayCellBg3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = BirthdayCellBg3.png; path = images/gifts/BirthdayCellBg3.png; sourceTree = "<group>"; };
 		151C0B3616DDFD7C00F2B71F /* today.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = today.png; path = images/gifts/today.png; sourceTree = "<group>"; };
-		1525A8CA16E6E5E20059E066 /* PPRevealSideViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPRevealSideViewController.h; sourceTree = "<group>"; };
-		1525A8CB16E6E5E20059E066 /* PPRevealSideViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPRevealSideViewController.m; sourceTree = "<group>"; };
-		1525A8DB16E6EBA60059E066 /* CategoryController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategoryController.h; sourceTree = "<group>"; };
-		1525A8DC16E6EBA60059E066 /* CategoryController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CategoryController.m; sourceTree = "<group>"; };
 		152CCBA716A7D5D000B0B578 /* BlockActionSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlockActionSheet.h; sourceTree = "<group>"; };
 		152CCBA816A7D5D000B0B578 /* BlockActionSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BlockActionSheet.m; sourceTree = "<group>"; };
 		152CCBA916A7D5D000B0B578 /* BlockAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlockAlertView.h; sourceTree = "<group>"; };
@@ -681,15 +675,6 @@
 			path = extra;
 			sourceTree = "<group>";
 		};
-		1525A8C916E6E5E20059E066 /* PPRevealSideviewController */ = {
-			isa = PBXGroup;
-			children = (
-				1525A8CA16E6E5E20059E066 /* PPRevealSideViewController.h */,
-				1525A8CB16E6E5E20059E066 /* PPRevealSideViewController.m */,
-			);
-			path = PPRevealSideviewController;
-			sourceTree = "<group>";
-		};
 		152CCBA616A7D5D000B0B578 /* BlockAlert */ = {
 			isa = PBXGroup;
 			children = (
@@ -922,8 +907,6 @@
 				18C7F706165A765900B709AE /* BaseController.m */,
 				1899613116E4684B00684023 /* LoginController.h */,
 				1899613216E4684B00684023 /* LoginController.m */,
-				1525A8DB16E6EBA60059E066 /* CategoryController.h */,
-				1525A8DC16E6EBA60059E066 /* CategoryController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -1328,7 +1311,6 @@
 		E5D827C516081EC400969EE2 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				1525A8C916E6E5E20059E066 /* PPRevealSideviewController */,
 				152CCBA616A7D5D000B0B578 /* BlockAlert */,
 				158B0E9E169FE85C0098B8E6 /* fmdb */,
 				18E24E6A168E9177000D2172 /* JSONKit */,
@@ -1778,8 +1760,6 @@
 				18B0509716DDA24F00C56EFD /* DbUtils.m in Sources */,
 				151C0B2A16DDF2DC00F2B71F /* BirthdayCellNew.m in Sources */,
 				1899613316E4684B00684023 /* LoginController.m in Sources */,
-				1525A8CC16E6E5E20059E066 /* PPRevealSideViewController.m in Sources */,
-				1525A8DD16E6EBA60059E066 /* CategoryController.m in Sources */,
 				18F34DB916E6D9D800CE6748 /* Account.m in Sources */,
 				18F34DCD16E6E73900CE6748 /* AFWeiboAPIClient.m in Sources */,
 			);
