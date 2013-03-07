@@ -15,6 +15,7 @@
 #import "AFJSONRequestOperation.h"
 #import "SinaWeiboConstants.h"
 #import "AFWeiboAPIClient.h"
+#import "Account.h"
 
 @interface FriendAddController ()<UIFolderTableViewDelegate>
 
@@ -67,6 +68,9 @@
                        params:[NSMutableDictionary dictionaryWithObject:sinaweibo.userID forKey:@"uid"]
                    httpMethod:@"GET"
                      delegate:self];
+    [Friend loadFriend:(void (^)(NSArray *friends, NSError *error))block{
+        
+    }]
     
     [self.friendTable reloadData];
 }
@@ -134,8 +138,9 @@
 }
 
 + (void)loadFriend:(void (^)(NSArray *friends, NSError *error))block {
-    
-    [[AFWeiboAPIClient getInstance] getPath:@"statuses/public_timeline.json" parameters:[NSDictionary dictionaryWithObject:@"false" forKey:@"include_entities"] success:^(AFHTTPRequestOperation *operation, id JSON) {
+    NSString *URL = [kSinaWeiboSDKAPIDomain stringByAppendingString:@"friendships/friends/bilateral.json"];
+    NSDictionary *param = [NSDictionary dictionaryWithObjectsAndKeys:[Account getInstance].userID, @"uid",[Account getInstance].accessToken, @"access_token", nil];
+    [[AFWeiboAPIClient getInstance] getPath:URL parameters:param success:^(AFHTTPRequestOperation *operation, id JSON) {
         NSMutableArray *mutableFriend = [NSMutableArray arrayWithCapacity:[JSON count]];
         for (NSDictionary *user in JSON) {
             Friend *friend = [Friend alloc];

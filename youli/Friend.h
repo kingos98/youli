@@ -18,7 +18,7 @@
 @property(nonatomic,strong)NSString *profileUrl;
 
 - (void)save;
-
 - (NSMutableArray *)findAll;
++ (void)loadFriend:(void (^)(NSArray *friends, NSError *error))block;
 
 @end

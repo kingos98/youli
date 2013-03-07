@@ -15,6 +15,7 @@
 #import "CategoryTableView.h"
 #import "CategoryCell.h"
 #import "BirthdayController.h"
+#import "Account.h"
 
 @interface LoginController (){
 @private
@@ -163,14 +164,13 @@
                 self.expirationDate = [NSDate dateWithTimeIntervalSinceNow:expVal];
             }
         }
-        
-        self.accessToken = access_token;
-        self.userID = uid;
-        self.refreshToken = refresh_token;
         SinaWeibo *sinaweibo = [self sinaweibo];
         sinaweibo.userID = uid;
         sinaweibo.refreshToken = refresh_token;
         sinaweibo.accessToken = access_token;
+        [Account getInstance].userID = uid;
+        [Account getInstance].accessToken = access_token;
+        [Account getInstance].refreshToken = refresh_token;
     }
 }
 

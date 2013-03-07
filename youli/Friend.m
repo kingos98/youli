@@ -9,6 +9,10 @@
 #import "Friend.h"
 #import "FMDatabase.h"
 #import "DbUtils.h"
+#import "AFJSONRequestOperation.h"
+#import "SinaWeiboConstants.h"
+#import "AFWeiboAPIClient.h"
+#import "Account.h"
 
 @implementation Friend
 
@@ -35,6 +39,27 @@
         [friendArray addObject: model];
     }
     return friendArray;
+}
+
++ (void)loadFriend:(void (^)(NSArray *friends, NSError *error))block {
+    NSString *URL = [kSinaWeiboSDKAPIDomain stringByAppendingString:@"friendships/friends/bilateral.json"];
+    NSDictionary *param = [NSDictionary dictionaryWithObjectsAndKeys:[Account getInstance].userID, @"uid",[Account getInstance].accessToken, @"access_token", nil];
+    [[AFWeiboAPIClient getInstance] getPath:URL parameters:param success:^(AFHTTPRequestOperation *operation, id JSON) {
+        NSMutableArray *mutableFriend = [NSMutableArray arrayWithCapacity:[JSON count]];
+        for (NSDictionary *user in JSON) {
+            Friend *friend = [Friend alloc];
+            friend.name = [user objectForKey:@"screen_name"];
+            friend.profileUrl = [user objectForKey:@"profile_image_url"];
+            [mutableFriend addObject:friend];
+        }
+        if (block) {
+            block([NSArray arrayWithArray:mutableFriend], nil);
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        if (block) {
+            block([NSArray array], error);
+        }
+    }];
 }
 
 @end

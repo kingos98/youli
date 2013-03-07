@@ -23,4 +23,6 @@
 
 @property(strong, nonatomic)SubTableCell *subTableCellView;
 
++ (void)loadFriend:(void (^)(NSArray *friends, NSError *error))block;
+
 @end

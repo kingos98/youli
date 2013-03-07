@@ -14,9 +14,4 @@
     SinaWeiboRequest *weiboRequest;
 }
 
-@property (nonatomic, copy) NSString *userID;
-@property (nonatomic, copy) NSString *accessToken;
-@property (nonatomic, copy) NSDate *expirationDate;
-@property (nonatomic, copy) NSString *refreshToken;
-
 @end
