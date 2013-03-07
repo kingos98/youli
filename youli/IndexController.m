@@ -190,6 +190,7 @@ static bool isFirstLoad=YES;
     
     personalController=[[PersonalController alloc] init];
     birthdayController=[[BirthdayController alloc] init];
+    self.loginController = [[LoginController alloc] init];
     
     self.delegate=[self birthdayGiftController];
     
@@ -362,8 +363,12 @@ static bool isFirstLoad=YES;
 
 - (void)personalButtonPressed
 {
+<<<<<<< HEAD
     [self.navigationController pushViewController:personalController animated:NO];
 
+=======
+    [self.navigationController pushViewController:self.loginController animated:NO];
+>>>>>>> 更换登陆方式，逐步替换官方sdk
 }
 
 -(void)viewDidAppear:(BOOL)animated

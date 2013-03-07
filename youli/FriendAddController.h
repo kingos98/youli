@@ -15,7 +15,7 @@
 
 @interface FriendAddController : BaseController<UITableViewDelegate, UITableViewDataSource,SinaWeiboDelegate,SinaWeiboRequestDelegate>
 
-@property(nonatomic,retain)NSMutableArray *items;
+@property(strong, nonatomic)NSMutableArray *items;
 
 @property(strong, nonatomic)UIFolderTableView *friendTable;
 

@@ -12,6 +12,7 @@
 #import "YouliDelegate.h"
 #import "PersonalController.h"
 #import "BirthdayController.h"
+#import "LoginController.h"
 
 @interface IndexController : UIViewController<UIScrollViewDelegate,UITableViewDataSource,UITableViewDelegate>{
     bool isPopCategoryView;
@@ -39,6 +40,7 @@
 @property (nonatomic, strong)Category *category;
 @property(nonatomic,strong)BirthdayGiftController *birthdayGiftController;
 @property(nonatomic,strong)PersonalController *personalController;
+@property(nonatomic,strong)LoginController *loginController;
 @property(nonatomic,strong)BirthdayController *birthdayController;
 
 

@@ -12,12 +12,18 @@
 #import "UIFolderTableView.h"
 #import "Friend.h"
 #import "AppDelegate.h"
+#import "AFJSONRequestOperation.h"
+#import "SinaWeiboConstants.h"
+#import "AFWeiboAPIClient.h"
 
 @interface FriendAddController ()<UIFolderTableViewDelegate>
 
 @end
 
-@implementation FriendAddController
+@implementation FriendAddController{
+@private
+    NSMutableArray *_items;
+}
 
 @synthesize folderTableView =_folderTableView;
 @synthesize friendTable = _friendTable;
@@ -61,6 +67,7 @@
                        params:[NSMutableDictionary dictionaryWithObject:sinaweibo.userID forKey:@"uid"]
                    httpMethod:@"GET"
                      delegate:self];
+    
     [self.friendTable reloadData];
 }
 
@@ -126,6 +133,27 @@
     return 37;
 }
 
++ (void)loadFriend:(void (^)(NSArray *friends, NSError *error))block {
+    
+    [[AFWeiboAPIClient getInstance] getPath:@"statuses/public_timeline.json" parameters:[NSDictionary dictionaryWithObject:@"false" forKey:@"include_entities"] success:^(AFHTTPRequestOperation *operation, id JSON) {
+        NSMutableArray *mutableFriend = [NSMutableArray arrayWithCapacity:[JSON count]];
+        for (NSDictionary *user in JSON) {
+            Friend *friend = [Friend alloc];
+            friend.name = [user objectForKey:@"screen_name"];
+            friend.profileUrl = [user objectForKey:@"profile_image_url"];
+            [mutableFriend addObject:friend];
+        }
+        if (block) {
+            block([NSArray arrayWithArray:mutableFriend], nil);
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        if (block) {
+            block([NSArray array], error);
+        }
+    }];
+}
+
+
 #pragma mark - SinaWeiboRequest Delegate
 - (void)request:(SinaWeiboRequest *)request didFailWithError:(NSError *)error
 {
@@ -136,16 +164,11 @@
 {
     NSDictionary *usersDict = [[result objectForKey:@"users"] retain];
     self.items = [NSMutableArray arrayWithCapacity:24];
-    int count = 0;
     for (NSDictionary *user in usersDict) {
         Friend *friend = [Friend alloc];
         friend.name = [user objectForKey:@"screen_name"];
         friend.profileUrl = [user objectForKey:@"profile_image_url"];
         [self.items addObject:friend];
-        count++;
-        if (count > 40) {
-            break;
-        }
     }
     [self.friendTable reloadData];
 }

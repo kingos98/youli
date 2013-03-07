@@ -49,10 +49,16 @@
     //导航条
     UIImageView *imgTitle = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
     imgTitle.image = [UIImage imageNamed:@"head.jpg"];
+<<<<<<< HEAD
     UIButton *indexButton=[[UIButton alloc]initWithFrame:CGRectMake(10, 7, 50, 30)];
     [indexButton setBackgroundImage:[UIImage imageNamed:@"return_unclick.png"] forState:UIControlStateNormal];
     [indexButton setImage:[UIImage imageNamed:@"return_click.png"] forState:UIControlStateHighlighted];
     [indexButton addTarget:self action:@selector(indexButtonPressed) forControlEvents:UIControlEventTouchUpInside];
+=======
+    UIButton *returnButton=[[UIButton alloc]initWithFrame:CGRectMake(10, 7, 50, 30)];
+    [returnButton setBackgroundImage:[UIImage imageNamed:@"return_unclick.png"] forState:UIControlStateNormal];
+    [returnButton addTarget:self action:@selector(returnButtonPressed) forControlEvents:UIControlEventTouchUpInside];
+>>>>>>> 更换登陆方式，逐步替换官方sdk
     UIButton *addButton=[[UIButton alloc]initWithFrame:CGRectMake(250, 7, 60, 30)];
     [addButton setBackgroundImage:[UIImage imageNamed:@"add_friend_1.png"] forState:UIControlStateNormal];
     [addButton addTarget:self action:@selector(addButtonPressed) forControlEvents:UIControlEventTouchUpInside];
@@ -159,7 +165,7 @@
     [self.view addSubview:categoryTableView];
     [mainView addSubview:mainBgView];
     [mainView addSubview:imgTitle];
-    [mainView addSubview:indexButton];
+    [mainView addSubview:returnButton];
     [mainView addSubview:addButton];
     [mainView addSubview:personalInfoBgView];
     [mainView addSubview:faceBgView];
@@ -189,10 +195,6 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
-    SinaWeibo *sinaweibo = [self sinaweibo];
-    [sinaweibo logIn];
-    sinaweibo.delegate = self;
-    
     [self.navigationController setNavigationBarHidden:YES animated:NO];
 }
 
@@ -280,9 +282,16 @@
     }
 }
 
-- (void)indexButtonPressed
+- (void)returnButtonPressed
 {
+<<<<<<< HEAD
     [self.navigationController popViewControllerAnimated:NO];
+=======
+    SinaWeibo *sinaweibo = [self sinaweibo];
+    if (!sinaweibo.isLoggedIn) {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+>>>>>>> 更换登陆方式，逐步替换官方sdk
 }
 
 - (void)addButtonPressed

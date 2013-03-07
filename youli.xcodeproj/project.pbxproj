@@ -219,6 +219,8 @@
 		18E24E8A168E9324000D2172 /* add.png in Resources */ = {isa = PBXBuildFile; fileRef = 18E24E86168E9324000D2172 /* add.png */; };
 		18E24E8B168E9324000D2172 /* add1.png in Resources */ = {isa = PBXBuildFile; fileRef = 18E24E87168E9324000D2172 /* add1.png */; };
 		18E24E94168E93E8000D2172 /* Friend.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E24E93168E93E8000D2172 /* Friend.m */; };
+		18F34DB916E6D9D800CE6748 /* Account.m in Sources */ = {isa = PBXBuildFile; fileRef = 18F34DB816E6D9D800CE6748 /* Account.m */; };
+		18F34DCD16E6E73900CE6748 /* AFWeiboAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 18F34DCC16E6E73900CE6748 /* AFWeiboAPIClient.m */; };
 		18F82E0316D0CF3E001EC74D /* ConstellationUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 18F82E0216D0CF3E001EC74D /* ConstellationUtils.m */; };
 		18FAA61316560E480060BCEA /* next.png in Resources */ = {isa = PBXBuildFile; fileRef = 18FAA61116560E480060BCEA /* next.png */; };
 		18FAA61416560E480060BCEA /* next@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 18FAA61216560E480060BCEA /* next@2x.png */; };
@@ -550,6 +552,10 @@
 		18E24E87168E9324000D2172 /* add1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = add1.png; path = images/personal/add1.png; sourceTree = "<group>"; };
 		18E24E92168E93E8000D2172 /* Friend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Friend.h; sourceTree = "<group>"; };
 		18E24E93168E93E8000D2172 /* Friend.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Friend.m; sourceTree = "<group>"; };
+		18F34DB716E6D9D800CE6748 /* Account.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Account.h; sourceTree = "<group>"; };
+		18F34DB816E6D9D800CE6748 /* Account.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Account.m; sourceTree = "<group>"; };
+		18F34DCB16E6E73900CE6748 /* AFWeiboAPIClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFWeiboAPIClient.h; sourceTree = "<group>"; };
+		18F34DCC16E6E73900CE6748 /* AFWeiboAPIClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFWeiboAPIClient.m; sourceTree = "<group>"; };
 		18F82E0116D0CF3E001EC74D /* ConstellationUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConstellationUtils.h; sourceTree = "<group>"; };
 		18F82E0216D0CF3E001EC74D /* ConstellationUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConstellationUtils.m; sourceTree = "<group>"; };
 		18FAA61116560E480060BCEA /* next.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = next.png; path = images/personal/next.png; sourceTree = "<group>"; };
@@ -823,6 +829,8 @@
 		1574719C16B8F34C005839E2 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				18F34DCB16E6E73900CE6748 /* AFWeiboAPIClient.h */,
+				18F34DCC16E6E73900CE6748 /* AFWeiboAPIClient.m */,
 				15680CA716AFD14C0086693E /* FestivalMethod.h */,
 				15680CA816AFD14C0086693E /* FestivalMethod.m */,
 				18F82E0116D0CF3E001EC74D /* ConstellationUtils.h */,
@@ -1100,6 +1108,8 @@
 		18E24E91168E9396000D2172 /* Personal */ = {
 			isa = PBXGroup;
 			children = (
+				18F34DB716E6D9D800CE6748 /* Account.h */,
+				18F34DB816E6D9D800CE6748 /* Account.m */,
 				18E24E92168E93E8000D2172 /* Friend.h */,
 				18E24E93168E93E8000D2172 /* Friend.m */,
 			);
@@ -1768,8 +1778,13 @@
 				18B0509716DDA24F00C56EFD /* DbUtils.m in Sources */,
 				151C0B2A16DDF2DC00F2B71F /* BirthdayCellNew.m in Sources */,
 				1899613316E4684B00684023 /* LoginController.m in Sources */,
+<<<<<<< HEAD
 				1525A8CC16E6E5E20059E066 /* PPRevealSideViewController.m in Sources */,
 				1525A8DD16E6EBA60059E066 /* CategoryController.m in Sources */,
+=======
+				18F34DB916E6D9D800CE6748 /* Account.m in Sources */,
+				18F34DCD16E6E73900CE6748 /* AFWeiboAPIClient.m in Sources */,
+>>>>>>> 更换登陆方式，逐步替换官方sdk
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
