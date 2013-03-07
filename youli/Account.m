@@ -20,33 +20,33 @@ static Account *instance = nil;
     return instance;
 }
 
-/**
- * @description 判断是否登录
- * @return YES为已登录；NO为未登录
- */
 - (BOOL)isLoggedIn
 {
     return self.userID && self.accessToken && self.expirationDate;
 }
 
-/**
- * @description 判断登录是否过期
- * @return YES为已过期；NO为未为期
- */
 - (BOOL)isAuthorizeExpired
 {
     NSDate *now = [NSDate date];
     return ([now compare:self.expirationDate] == NSOrderedDescending);
 }
 
-
-/**
- * @description 判断登录是否有效，当已登录并且登录未过期时为有效状态
- * @return YES为有效；NO为无效
- */
 - (BOOL)isAuthValid
 {
     return ([self isLoggedIn] && ![self isAuthorizeExpired]);
+}
+
+- (void)removeAuthData
+{
+    self.accessToken = nil;
+    self.userID = nil;
+    self.expirationDate = nil;
+    NSHTTPCookieStorage* cookies = [NSHTTPCookieStorage sharedHTTPCookieStorage];
+    NSArray* sinaweiboCookies = [cookies cookiesForURL:
+                                 [NSURL URLWithString:@"https://open.weibo.cn"]];
+    for (NSHTTPCookie* cookie in sinaweiboCookies){
+        [cookies deleteCookie:cookie];
+    }
 }
 
 @end
