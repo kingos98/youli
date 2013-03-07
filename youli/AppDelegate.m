@@ -19,26 +19,15 @@
 
 @synthesize sinaweibo;
 @synthesize personalController = _personalController;
-@synthesize revealSideViewController;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-//   	self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-//    IndexController *indexController = [[IndexController alloc] init];
-//    self.navigationController = [[UINavigationController alloc] initWithRootViewController:indexController];
-//	self.window.rootViewController = self.navigationController;
-//	[self.window makeKeyAndVisible];
-    
-    self.window = PP_AUTORELEASE([[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]]);
+   	self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     IndexController *indexController = [[IndexController alloc] init];
-    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:indexController];
-    revealSideViewController = [[PPRevealSideViewController alloc] initWithRootViewController:nav];
-    revealSideViewController.delegate = self;
-    self.window.rootViewController = revealSideViewController;
-    PP_RELEASE(indexController);
-    PP_RELEASE(nav);
-    self.window.backgroundColor = [UIColor whiteColor];
-    [self.window makeKeyAndVisible];
+    self.navigationController = [[UINavigationController alloc] initWithRootViewController:indexController];
+	self.window.rootViewController = self.navigationController;
+	[self.window makeKeyAndVisible];
+    
     
     sinaweibo = [[SinaWeibo alloc] initWithAppKey:kAppKey appSecret:kAppSecret appRedirectURI:kAppRedirectURI andDelegate:_personalController];
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];

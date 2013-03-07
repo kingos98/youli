@@ -14,21 +14,8 @@
 #import "BirthdayController.h"
 #import "LoginController.h"
 
-@interface IndexController : UIViewController<UIScrollViewDelegate,UITableViewDataSource,UITableViewDelegate>{
-    bool isPopCategoryView;
-    UIScrollView *mainScrollView;
-    UIView *categoryView;
-    UIImageView *categoryBgImage;
-    UIImageView *imgGiftScrollView;
-    CategoryTableView *categoryTableView;
-    UITextField *_value;
-    
-    BOOL isLoading;
-    
-    UIImageView *splashView;            //欢迎图片
-}
+@interface IndexController : UIViewController<UIScrollViewDelegate,UITableViewDataSource,UITableViewDelegate>
 
-@property(nonatomic, retain)UITextField *value;
 @property(nonatomic, retain)UIImageView *tabBarBgView;
 @property(nonatomic, retain)UIButton *tabBarLeftButton;
 @property(nonatomic, retain)UIButton *tabBarBoxButton;

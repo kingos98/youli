@@ -27,8 +27,19 @@
 
 @interface IndexController ()
 {
+    @private
+    bool isPopCategoryView;                         //是否打开分类列表
+    BOOL isLoading;                                 //是否正在加载图片
     NSInteger birthdayGiftControllerHeight;         //记录当前birthdayGiftController高度
     NSInteger birthdayCurrentIndex;                 //记录当前birthday图片的序列，每load一次自动加7
+
+    UIScrollView *mainScrollView;
+    UIView *categoryView;
+    UIImageView *categoryBgImage;
+    UIImageView *imgGiftScrollView;
+    CategoryTableView *categoryTableView;
+    UIImageView *splashView;                        //欢迎图片
+
 }
 @end
 
@@ -297,17 +308,17 @@ static bool isFirstLoad=YES;
     [UIView setAnimationDuration:0.3];    
     if(isPopCategoryView)
     {
-        [self indexHideCategoryView];
+        [self hideIndexCategoryView];
     }
     else
     {
-        [self showCategoryView];
+        [self showIndexCategoryView];
     }
     
     [UIView commitAnimations];
 }
 
--(void)indexHideCategoryView
+-(void)hideIndexCategoryView
 {
     [UIView beginAnimations:nil context:NULL];
     
@@ -331,7 +342,7 @@ static bool isFirstLoad=YES;
     [UIView commitAnimations];
 }
 
--(void)showCategoryView
+-(void)showIndexCategoryView
 {
     [UIView beginAnimations:nil context:NULL];
     [UIView setAnimationDuration:0.3];
@@ -442,7 +453,7 @@ static bool isFirstLoad=YES;
         {
             if(isPopCategoryView)
             {
-                [self indexHideCategoryView];
+                [self hideIndexCategoryView];
             }
         }
         else
@@ -558,7 +569,7 @@ static bool isFirstLoad=YES;
     cell.labelImage.image = [UIImage imageNamed:@"selected.png"];
     cell.nextImage.image = [UIImage imageNamed:@"pointerselect.png"];
     
-    [self indexHideCategoryView];
+    [self hideIndexCategoryView];
 }
 
 - (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath
