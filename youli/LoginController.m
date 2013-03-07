@@ -157,11 +157,11 @@
             int expVal = [remind_in intValue];
             if (expVal == 0)
             {
-                self.expirationDate = [NSDate distantFuture];
+//                self.expirationDate = [NSDate distantFuture];
             }
             else
             {
-                self.expirationDate = [NSDate dateWithTimeIntervalSinceNow:expVal];
+//                self.expirationDate = [NSDate dateWithTimeIntervalSinceNow:expVal];
             }
         }
         SinaWeibo *sinaweibo = [self sinaweibo];

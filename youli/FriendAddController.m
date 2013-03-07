@@ -23,7 +23,7 @@
 
 @implementation FriendAddController{
 @private
-    NSMutableArray *_items;
+    NSArray *_items;
 }
 
 @synthesize folderTableView =_folderTableView;
@@ -68,11 +68,16 @@
                        params:[NSMutableDictionary dictionaryWithObject:sinaweibo.userID forKey:@"uid"]
                    httpMethod:@"GET"
                      delegate:self];
-    [Friend loadFriend:(void (^)(NSArray *friends, NSError *error))block{
-        
-    }]
     
-    [self.friendTable reloadData];
+    [Friend loadFriend:^(NSArray *friends, NSError *error) {
+        if (error) {
+            [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil) message:[error localizedDescription] delegate:nil cancelButtonTitle:nil otherButtonTitles:NSLocalizedString(@"OK", nil), nil] show];
+        } else {
+            self.items = friends;
+            [self.friendTable reloadData];
+        }
+    }];
+    
 }
 
 -(void)viewDidAppear:(BOOL)animated
