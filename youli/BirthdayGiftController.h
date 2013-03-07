@@ -11,17 +11,11 @@
 #import "YouliDelegate.h"
 #import "BaseController.h"
 #import "sqlite3.h"
-#import "DatabaseOper.h"
-#import "FMDatabaseOper.h"
 #import "BirthdayGiftDetailController.h"
 #import "BirthdayGiftDetailControllerDelegate.h"
+#import "CategoryTableView.h"
 
-@interface BirthdayGiftController : BaseController<UIScrollViewDelegate,YouliDelegate>
-{
-    NMRangeSlider *priceSlider;
-    FMDatabaseOper *fmdataOper;
-}
-
+@interface BirthdayGiftController : BaseController<UIScrollViewDelegate,UITableViewDataSource,UITableViewDelegate,YouliDelegate>
 
 @property(retain,nonatomic) NSString *PhotoURL;
 @property(nonatomic,retain) NSMutableArray *items;
@@ -51,6 +45,7 @@
 @property(strong,nonatomic) BirthdayGiftDetailController *birthdayGiftDetailController;
 
 @property (strong,nonatomic) id<BirthdayGiftDetailControllerDelegate> birthdayGiftDetailControllerDelegate;
+
 
 -(void)AddPhotoInfoToDB:(NSInteger)PhotoID tmpPhotoTitle:(NSString *)tmpPhotoTitle photodetail:(NSString*)tmpPhotoDetail photourl:(NSString *)tmpPhotoURL
 ;

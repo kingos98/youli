@@ -19,7 +19,6 @@
 }
 
 @property(nonatomic,retain)NSMutableArray *items;
-@property(strong,nonatomic)UITableView *friendTable;
 @property(strong,nonatomic)FriendInfoController *friendInfoController;
 @property(strong,nonatomic)UIButton *friendButton;
 @property(strong,nonatomic)UIButton *collectButton;

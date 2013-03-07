@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "PPRevealSideViewController.h"
 
 #define iPhone5 ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(640, 1136), [[UIScreen mainScreen] currentMode].size) : NO)
 
@@ -30,7 +31,7 @@
 @class PersonalController;
 @class SinaWeibo;
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate>{
+@interface AppDelegate : UIResponder <UIApplicationDelegate,PPRevealSideViewControllerDelegate>{
     SinaWeibo *sinaweibo;
     UIImageView *firstSplashView;            //欢迎图片
 }
@@ -40,6 +41,9 @@
 @property (strong, nonatomic) IndexController *indexController;
 @property (strong, nonatomic) PersonalController *personalController;
 @property (readonly, nonatomic) SinaWeibo *sinaweibo;
+
+
+@property (strong, nonatomic) PPRevealSideViewController *revealSideViewController;
 
 
 @end

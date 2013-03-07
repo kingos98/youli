@@ -22,7 +22,7 @@
 #import "NMRangeSlider.h"
 #import "BaseController.h"
 #import "AppDelegate.h"
-
+#import "CategoryCell.h"
 #import "FMDatabase.h"
 
 @interface BirthdayGiftController ()
@@ -33,9 +33,17 @@
     
     NSString *strOldGiftType;
     NSString *strNewGiftType;
+
+    Category *category;
+    NSMutableArray *giftTypeItems;
     
-    __strong BirthdayGiftItem *birthdayGiftItem;
+    CategoryTableView *categoryTableView;
+    BirthdayGiftItem *birthdayGiftItem;
+    NMRangeSlider *priceSlider;
+    
+    FMDatabaseOper *fmdataOper;
 }
+
 @end
 
 @implementation BirthdayGiftController
@@ -128,7 +136,6 @@
     UIImageView *imgSelectorBG=[[UIImageView alloc] initWithFrame:CGRectMake(0, 44, 320, 45)];
     imgSelectorBG.image=[UIImage imageNamed:@"birthday_gift_top.jpg"];
     
-//    self.lblGiftTypeTitle=[[UILabel alloc] initWithFrame:CGRectMake(126, -8, 68, 61)];
     self.lblGiftTypeTitle=[[UILabel alloc] initWithFrame:CGRectMake(75, -8, 170, 61)];
     self.lblGiftTypeTitle.backgroundColor=[UIColor clearColor];
     self.lblGiftTypeTitle.font=[UIFont fontWithName:@"Helvetica-Bold" size:19.0f];
@@ -185,11 +192,29 @@
     [self.btnReturn setBackgroundImage:[UIImage imageNamed:@"return_unclick.png"] forState:UIControlStateNormal];
     [self.btnReturn setImage:[UIImage imageNamed:@"return_click.png"] forState:UIControlStateHighlighted];
     [self.btnReturn addTarget:self action:@selector(returnClick) forControlEvents:UIControlEventTouchUpInside];
+
+    if(!iPhone5)
+    {
+        categoryTableView = [[CategoryTableView alloc] initWithFrame:CGRectMake(0, 0, 212, 460)];
+    }
+    else
+    {
+        categoryTableView = [[CategoryTableView alloc] initWithFrame:CGRectMake(0, 0, 212, 548)];
+    }
+    if(categoryTableView)
+    {
+        categoryTableView.dataSource=self;
+        categoryTableView.delegate=self;
+        category = [[Category alloc] init];
+        [category loadData];                        //load分类列表
+        giftTypeItems = category.items;
+    }
     
     indicator = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(285, 10, 25, 25)];
     indicator.color=[UIColor scrollViewTexturedBackgroundColor];
     indicator.hidesWhenStopped=YES;
     
+    [self.view addSubview:categoryTableView];
     [mainView addSubview:imgTitle];
     [mainView addSubview:imgGiftScrollView];
     [mainView addSubview:imgSelectorBG];
@@ -529,5 +554,47 @@
             [self showCategoryView];
         }
     }
+}
+
+#pragma mark - Table view data source
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 1;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return giftTypeItems.count;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	return 41;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *CellIdentifier = @"Cell";
+    CategoryCell *cell = [[CategoryCell alloc] initCell:CellIdentifier];
+    cell.category =  [giftTypeItems objectAtIndex:indexPath.row];
+    return cell;
+}
+
+#pragma mark - Table view delegate
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    CategoryCell *cell = (CategoryCell*)[categoryTableView cellForRowAtIndexPath:indexPath];
+    [self sendGiftTypeTitle:cell.nameLabel.text];
+    cell.labelImage.image = [UIImage imageNamed:@"selected.png"];
+    cell.nextImage.image = [UIImage imageNamed:@"pointerselect.png"];
+    
+    [self hideCategoryView];
+}
+
+- (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    CategoryCell *cell = (CategoryCell*)[categoryTableView cellForRowAtIndexPath:indexPath];
+    cell.labelImage.image = [UIImage imageNamed:@"unselected.png"];
+    cell.nextImage.image = [UIImage imageNamed:@"pointerunselect.png"];
 }
 @end

@@ -34,7 +34,6 @@
 
 @implementation IndexController
 
-@synthesize items;
 @synthesize giftTypeItems;
 @synthesize templateForIphone4;
 @synthesize category;
@@ -48,6 +47,8 @@
 @synthesize birthdayController;
 
 @synthesize textPull, textLoading, refreshFooterView, refreshLabel, refreshSpinner;
+
+static bool isFirstLoad=YES;
 
 - (void)viewDidLoad
 {
@@ -70,24 +71,24 @@
 
     imgGiftScrollView.image=[UIImage imageNamed:@"bg2_iphone5.png"];
     
-    //类别view，可向右滑动，初始化时处于第一层，相当于被隐藏,用iphone5尺寸
-    if(!iPhone5)
-    {
-        categoryView = [[UIView alloc] initWithFrame:CGRectMake(320, 0, 212, 460)];
-    }
-    else
-    {
-        categoryView = [[UIView alloc] initWithFrame:CGRectMake(320, 0, 212, 548)];
-    }
+//    //类别view，可向右滑动，初始化时处于第一层，相当于被隐藏,用iphone5尺寸
+//    if(!iPhone5)
+//    {
+//        categoryView = isFirstLoad?[[UIView alloc] initWithFrame:CGRectMake(320, 0, 212, 460)]:[[UIView alloc] initWithFrame:CGRectMake(0, 0, 212, 460)];
+//    }
+//    else
+//    {
+//        categoryView = isFirstLoad?[[UIView alloc] initWithFrame:CGRectMake(320, 0, 212, 548)]:[[UIView alloc] initWithFrame:CGRectMake(0, 0, 212, 548)];
+//    }
 
     //添加分类页面
     if(!iPhone5)
     {
-        categoryTableView = [[CategoryTableView alloc] initWithFrame:CGRectMake(320, 0, 212, 460)];
+        categoryTableView = isFirstLoad?[[CategoryTableView alloc] initWithFrame:CGRectMake(320, 0, 212, 460)]:[[CategoryTableView alloc] initWithFrame:CGRectMake(0, 0, 212, 460)];
     }
     else
     {
-        categoryTableView = [[CategoryTableView alloc] initWithFrame:CGRectMake(320, 0, 212, 548)];
+        categoryTableView = isFirstLoad?[[CategoryTableView alloc] initWithFrame:CGRectMake(320, 0, 212, 548)]:[[CategoryTableView alloc] initWithFrame:CGRectMake(0, 0, 212, 548)];
     }
     
     if(categoryTableView)
@@ -99,15 +100,20 @@
         giftTypeItems = category.items;
     }
     
-    [categoryView addSubview:categoryTableView];
+//    [categoryView addSubview:categoryTableView];
     
     if(!iPhone5)
     {
-        mainScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(320, 0, 320, 426)];
+        mainScrollView = isFirstLoad?
+        [[UIScrollView alloc] initWithFrame:CGRectMake(320, 0, 320, 426)]:
+        [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, 320, 426)];
+        
     }
     else
     {
-        mainScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(320, 0, 320, 512)];
+        mainScrollView = isFirstLoad?
+        [[UIScrollView alloc] initWithFrame:CGRectMake(320, 0, 320, 512)]:
+        [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, 320, 512)];
     }
 
     mainScrollView.showsVerticalScrollIndicator = NO;
@@ -131,42 +137,46 @@
 
     self.birthdayGiftController=[[BirthdayGiftController alloc]init];
     
-    tabBarBgView = [[UIImageView alloc] initWithFrame:CGRectMake(320, 422, 320, 38)];
+    tabBarBgView = isFirstLoad?
+    [[UIImageView alloc] initWithFrame:CGRectMake(320, 422, 320, 38)]:
+    [[UIImageView alloc] initWithFrame:CGRectMake(0, 422, 320, 38)];
+    
     if (iPhone5) {
-        tabBarBgView.frame = CGRectMake(320, 510, 320, 38);
+        tabBarBgView.frame =isFirstLoad?CGRectMake(320, 510, 320, 38):CGRectMake(0, 510, 320, 38);
     }
     [tabBarBgView setImage:[UIImage imageNamed:@"tabbar_bg.png"]];
     
     tabBarLeftButton = [UIButton buttonWithType:UIButtonTypeCustom];
     UIImage *tabBarLeftImage = [[UIImage imageNamed:@"tabbar_left.png"] stretchableImageWithLeftCapWidth:0 topCapHeight:0];
-    tabBarLeftButton.frame = CGRectMake(320, 422, 78, 38);
+    tabBarLeftButton.frame =isFirstLoad?CGRectMake(320, 422, 78, 38):CGRectMake(0, 422, 78, 38);
+    
     if (iPhone5) {
-        tabBarLeftButton.frame = CGRectMake(320, 510, 78, 38);
+        tabBarLeftButton.frame =isFirstLoad?CGRectMake(320, 510, 78, 38):CGRectMake(0, 510, 78, 38);
     }
     [tabBarLeftButton setBackgroundImage:tabBarLeftImage forState:UIControlStateNormal];
     [tabBarLeftButton addTarget:self action:@selector(showCategoryViewPressed) forControlEvents:UIControlEventTouchUpInside];
     
     tabBarBoxButton = [UIButton buttonWithType:UIButtonTypeCustom];
     UIImage *tabBarBoxImage = [[UIImage imageNamed:@"tabbar_box.png"] stretchableImageWithLeftCapWidth:0 topCapHeight:0];
-    tabBarBoxButton.frame = CGRectMake(440, 414, 78, 45);
+    tabBarBoxButton.frame = isFirstLoad?CGRectMake(440, 414, 78, 45):CGRectMake(120, 414, 78, 45);
     if (iPhone5) {
-        tabBarBoxButton.frame = CGRectMake(440, 503, 78, 45);
+        tabBarBoxButton.frame = isFirstLoad?CGRectMake(440, 503, 78, 45):CGRectMake(120, 503, 78, 45);
     }
     [tabBarBoxButton setBackgroundImage:tabBarBoxImage forState:UIControlStateNormal];
     [tabBarBoxButton addTarget:self action:@selector(birthdayButtonPressed) forControlEvents:UIControlEventTouchUpInside];
     
     tabBarRightButton = [UIButton buttonWithType:UIButtonTypeCustom];
     UIImage *tabBarRightImage = [[UIImage imageNamed:@"tabbar_right.png"] stretchableImageWithLeftCapWidth:0 topCapHeight:0];
-    tabBarRightButton.frame = CGRectMake(560, 422, 78, 38);
+    tabBarRightButton.frame =isFirstLoad? CGRectMake(560, 422, 78, 38):CGRectMake(240, 422, 78, 38);
     if (iPhone5) {
-        tabBarRightButton.frame = CGRectMake(560, 510, 78, 38);
+        tabBarRightButton.frame = isFirstLoad? CGRectMake(560, 510, 78, 38): CGRectMake(240, 510, 78, 38);
     }
     [tabBarRightButton setBackgroundImage:tabBarRightImage forState:UIControlStateNormal];
     [tabBarRightButton addTarget:self action:@selector(personalButtonPressed) forControlEvents:UIControlEventTouchUpInside];
     
     //加到父view中的子view是按顺序加载的，需注意加载子view的顺序！
     //添加欢迎页面，首页的所有组件右移320
-    [self.view addSubview:categoryView];
+    [self.view addSubview:categoryTableView];
     [self.view addSubview:imgGiftScrollView];
     [self.view addSubview:mainScrollView];
     [self.view addSubview:tabBarBgView];
@@ -213,6 +223,9 @@
     //每次启动APP将提醒数目清空
     UILocalNotification *notification=[[UILocalNotification alloc] init];
     notification.applicationIconBadgeNumber=0;
+    [[UIApplication sharedApplication] scheduleLocalNotification:notification];
+    [notification release];
+
     
     //添加欢迎页面
     //把欢迎页面从AppDelegate移到IndexController
@@ -229,12 +242,15 @@
     [self.view insertSubview:splashView atIndex:0];
 
     //添加定时器，2秒后把首页移入屏幕
-    NSTimer *timer;
-    timer = [NSTimer scheduledTimerWithTimeInterval: 2
-                                             target: self
-                                           selector: @selector(handleTimer:)
-                                           userInfo: nil
-                                            repeats: YES];
+    if(isFirstLoad)
+    {
+        NSTimer *timer;
+        timer = [NSTimer scheduledTimerWithTimeInterval: 2
+                                                 target: self
+                                               selector: @selector(handleTimer:)
+                                               userInfo: nil
+                                                repeats: YES];
+    }
     
     //添加下拉loading提示
     [self setupStrings];
@@ -273,6 +289,8 @@
     [timer invalidate];
     
     [UIView commitAnimations];
+    
+    isLoading=NO;
 }
 
 - (void)showCategoryViewPressed
@@ -345,6 +363,7 @@
 - (void)personalButtonPressed
 {
     [self.navigationController pushViewController:personalController animated:NO];
+
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -440,8 +459,6 @@
 }
 
 #pragma mark - Scroll View Loading
-
-
 - (void)startLoading {
     //    isLoading = YES;
     
@@ -495,8 +512,7 @@
     refreshLabel.text = self.textLoading;
     
     refreshSpinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-    //    refreshSpinner.frame = CGRectMake(floorf(floorf(REFRESH_HEADER_HEIGHT - 20) / 2), floorf((REFRESH_HEADER_HEIGHT - 20) / 2), 24, 24);
-    refreshSpinner.frame = CGRectMake(120, 20, 24, 14);
+    refreshSpinner.frame = CGRectMake(110, 20, 24, 14);
     refreshSpinner.hidesWhenStopped = YES;
     
     [refreshFooterView addSubview:refreshLabel];
@@ -505,22 +521,6 @@
 }
 
 #pragma mark - Table view data source
-
--(UIView *)backgroundView
-{
-    UIImageView *categoryBgImageTmp=[[UIImageView  alloc] initWithFrame:CGRectMake(0,0,212,460)];
-    if(iPhone5)
-    {
-        categoryBgImageTmp.frame=CGRectMake(0, 0, 212, 548);
-        categoryBgImageTmp.image = [UIImage imageNamed:@"gifttypebg.png"];
-    }
-    else
-    {
-        categoryBgImageTmp.image = [UIImage imageNamed:@"gifttypebg460.png"];
-    }
-    return categoryBgImageTmp;
-}
-
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     return 1;
@@ -549,10 +549,10 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     CategoryCell *cell = (CategoryCell*)[categoryTableView cellForRowAtIndexPath:indexPath];
-
+    
     //第一次运行BirthdayGiftController传递的GiftTypeTitle
-//    NSUserDefaults *mydefault = [NSUserDefaults standardUserDefaults];
-//    [mydefault setObject:cell.nameLabel.text forKey:@"giftTypeTitle"];
+    //    NSUserDefaults *mydefault = [NSUserDefaults standardUserDefaults];
+    //    [mydefault setObject:cell.nameLabel.text forKey:@"giftTypeTitle"];
     
     [self.delegate sendGiftTypeTitle:cell.nameLabel.text];
     

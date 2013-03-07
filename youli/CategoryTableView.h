@@ -9,8 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "Category.h"
 
-@interface CategoryTableView : UITableView<UITableViewDelegate, UITableViewDataSource>
-
+@interface CategoryTableView : UITableView<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic, strong) Category *category;
-
 @end
+

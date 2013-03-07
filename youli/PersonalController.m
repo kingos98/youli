@@ -10,21 +10,29 @@
 #import "PersonalCell.h"
 #import "BirthdayController.h"
 #import "PersonalController.h"
+#import "BirthdayGiftController.h"
 #import "FriendInfoController.h"
 #import "Friend.h"
 #import "AppDelegate.h"
 #import "SubTableCell.h"
 #import "UIFolderTableView.h"
 #import "FriendAddController.h"
-#import "IndexController.h"
+#import "CategoryCell.h"
 
 @interface PersonalController ()
-
+{
+    @private
+    UITableView *friendTable;
+    CategoryTableView *categoryTableView;
+    Category *category;
+    NSMutableArray *giftTypeItems;
+    
+    BirthdayGiftController *birthdayGiftController;
+    id<YouliDelegate> delegate;
+}
 @end
 
 @implementation PersonalController
-
-@synthesize friendTable = _friendTable;
 
 - (SinaWeibo *)sinaweibo
 {
@@ -42,7 +50,8 @@
     UIImageView *imgTitle = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
     imgTitle.image = [UIImage imageNamed:@"head.jpg"];
     UIButton *indexButton=[[UIButton alloc]initWithFrame:CGRectMake(10, 7, 50, 30)];
-    [indexButton setBackgroundImage:[UIImage imageNamed:@"index_button.png"] forState:UIControlStateNormal];
+    [indexButton setBackgroundImage:[UIImage imageNamed:@"return_unclick.png"] forState:UIControlStateNormal];
+    [indexButton setImage:[UIImage imageNamed:@"return_click.png"] forState:UIControlStateHighlighted];
     [indexButton addTarget:self action:@selector(indexButtonPressed) forControlEvents:UIControlEventTouchUpInside];
     UIButton *addButton=[[UIButton alloc]initWithFrame:CGRectMake(250, 7, 60, 30)];
     [addButton setBackgroundImage:[UIImage imageNamed:@"add_friend_1.png"] forState:UIControlStateNormal];
@@ -111,21 +120,43 @@
         }
     }
     
-    self.friendTable = [[UIFolderTableView alloc] initWithFrame:CGRectMake(10, 204, 300, 220)];
+    friendTable = [[UIFolderTableView alloc] initWithFrame:CGRectMake(10, 204, 300, 220)];
     if(iPhone5){
-        self.friendTable.frame = CGRectMake(10, 204, 300, 308);
+        friendTable.frame = CGRectMake(10, 204, 300, 308);
     }
     //没新消息时遮盖住提示条
 //    if (self.messageArray.count==0) {
 //        self.friendTable.frame = CGRectMake(10, 204-38, 300, 308);
 //    }
-    [self.friendTable setDelegate:self];
-    [self.friendTable setDataSource:self];
-    [self.friendTable setBackgroundColor:[UIColor whiteColor]];
+    [friendTable setDelegate:self];
+    [friendTable setDataSource:self];
+    [friendTable setBackgroundColor:[UIColor whiteColor]];
     //收藏与已购两个tab的图片容器
     self.collectView = [[UIScrollView alloc] initWithFrame:CGRectMake(10, 154, 300, 344)];
     self.cartView = [[UIScrollView alloc] initWithFrame:CGRectMake(10, 154, 300, 344)];
     
+    
+    if(!iPhone5)
+    {
+        categoryTableView = [[CategoryTableView alloc] initWithFrame:CGRectMake(0, 0, 212, 460)];
+    }
+    else
+    {
+        categoryTableView = [[CategoryTableView alloc] initWithFrame:CGRectMake(0, 0, 212, 548)];
+    }
+    if(categoryTableView)
+    {
+        categoryTableView.dataSource=self;
+        categoryTableView.delegate=self;
+        category = [[Category alloc] init];
+        [category loadData];                        //load分类列表
+        giftTypeItems = category.items;
+    }
+
+    birthdayGiftController=[[BirthdayGiftController alloc]init];
+    delegate=birthdayGiftController;
+    
+    [self.view addSubview:categoryTableView];
     [mainView addSubview:mainBgView];
     [mainView addSubview:imgTitle];
     [mainView addSubview:indexButton];
@@ -143,7 +174,7 @@
     [mainView addSubview:self.collectButton];
     [mainView addSubview:self.cartButton];
     [mainView addSubview:self.messageButton];
-    [mainView addSubview:self.friendTable];
+    [mainView addSubview:friendTable];
     [mainView addSubview:self.subTableCell];
     
     self.items = [NSMutableArray arrayWithCapacity:24];
@@ -173,37 +204,85 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 24;
+    if(tableView==friendTable)
+    {
+        return 24;
+    }
+    else
+    {
+        return giftTypeItems.count;
+    }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	return 37;
+    if(tableView==friendTable)
+    {
+    	return 37;
+    }
+    else
+    {
+        return 41;
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"CellIdentifier";
-    PersonalCell *cell = [[PersonalCell alloc] initCell:CellIdentifier];
-    if (self.items.count>0) {
-        cell.friend =  [self.items objectAtIndex:indexPath.row];
+    if (tableView==friendTable) {
+        static NSString *CellIdentifier = @"CellIdentifier";
+        PersonalCell *cell = [[PersonalCell alloc] initCell:CellIdentifier];
+        if (self.items.count>0) {
+            cell.friend =  [self.items objectAtIndex:indexPath.row];
+        }
+        return cell;
     }
-    return cell;
+    else
+    {
+        static NSString *CellIdentifier = @"Cell";
+        CategoryCell *cell = [[CategoryCell alloc] initCell:CellIdentifier];
+        cell.category =  [giftTypeItems objectAtIndex:indexPath.row];
+        return cell;
+    }
 }
 
 #pragma mark - UITableViewDelegate Methods
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (self.friendInfoController == nil) {
-        self.friendInfoController = [[FriendInfoController alloc] init];
+    if(tableView==friendTable)
+    {
+        if (self.friendInfoController == nil) {
+            self.friendInfoController = [[FriendInfoController alloc] init];
+        }
+        [self.navigationController pushViewController:self.friendInfoController animated:NO];
     }
-    [self.navigationController pushViewController:self.friendInfoController animated:NO];
+    else
+    {
+        CategoryCell *cell = (CategoryCell*)[categoryTableView cellForRowAtIndexPath:indexPath];
+
+        [delegate sendGiftTypeTitle:cell.nameLabel.text];
+        
+        [self.navigationController pushViewController:birthdayGiftController animated:YES];
+        
+        cell.labelImage.image = [UIImage imageNamed:@"selected.png"];
+        cell.nextImage.image = [UIImage imageNamed:@"pointerselect.png"];
+        
+        [self hideCategoryView];
+    }
+}
+
+- (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if(tableView==categoryTableView)
+    {
+        CategoryCell *cell = (CategoryCell*)[categoryTableView cellForRowAtIndexPath:indexPath];
+        cell.labelImage.image = [UIImage imageNamed:@"unselected.png"];
+        cell.nextImage.image = [UIImage imageNamed:@"pointerunselect.png"];
+    }
 }
 
 - (void)indexButtonPressed
 {
-    IndexController *indexController = [[IndexController alloc] init];
-    [self.navigationController pushViewController:indexController animated:NO];
+    [self.navigationController popViewControllerAnimated:NO];
 }
 
 - (void)addButtonPressed
@@ -229,7 +308,7 @@
     self.cartButton.selected = NO;
     
     self.messageButton.hidden = NO;
-    self.friendTable.hidden = NO;
+    friendTable.hidden = NO;
     self.collectView.hidden = YES;
     self.cartView.hidden = YES;
 }
@@ -241,7 +320,7 @@
     self.cartButton.selected = NO;
     
     self.messageButton.hidden = YES;
-    self.friendTable.hidden = YES;
+    friendTable.hidden = YES;
     self.cartView.hidden = YES;
     self.collectView.hidden = NO;
     
@@ -263,7 +342,7 @@
     self.cartButton.selected = YES;
     
     self.messageButton.hidden = YES;
-    self.friendTable.hidden = YES;
+    friendTable.hidden = YES;
     self.collectView.hidden = YES;
     self.cartView.hidden = NO;
     
