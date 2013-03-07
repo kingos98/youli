@@ -150,6 +150,7 @@
     NSString *uid = [authInfo objectForKey:@"uid"];
     NSString *remind_in = [authInfo objectForKey:@"remind_in"];
     NSString *refresh_token = [authInfo objectForKey:@"refresh_token"];
+    SinaWeibo *sinaweibo = [self sinaweibo];
     if (access_token && uid)
     {
         if (remind_in != nil)
@@ -157,14 +158,13 @@
             int expVal = [remind_in intValue];
             if (expVal == 0)
             {
-//                self.expirationDate = [NSDate distantFuture];
+                sinaweibo.expirationDate = [NSDate distantFuture];
             }
             else
             {
-//                self.expirationDate = [NSDate dateWithTimeIntervalSinceNow:expVal];
+                sinaweibo.expirationDate = [NSDate dateWithTimeIntervalSinceNow:expVal];
             }
         }
-        SinaWeibo *sinaweibo = [self sinaweibo];
         sinaweibo.userID = uid;
         sinaweibo.refreshToken = refresh_token;
         sinaweibo.accessToken = access_token;

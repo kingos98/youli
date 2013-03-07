@@ -12,28 +12,15 @@
 #import "UIFolderTableView.h"
 #import "Friend.h"
 #import "AppDelegate.h"
-#import "AFJSONRequestOperation.h"
-#import "SinaWeiboConstants.h"
-#import "AFWeiboAPIClient.h"
-#import "Account.h"
 
 @interface FriendAddController ()<UIFolderTableViewDelegate>
 
 @end
 
-@implementation FriendAddController{
-@private
-    NSArray *_items;
-}
+@implementation FriendAddController
 
 @synthesize folderTableView =_folderTableView;
 @synthesize friendTable = _friendTable;
-
-- (SinaWeibo *)sinaweibo
-{
-    AppDelegate *delegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
-    return delegate.sinaweibo;
-}
 
 - (void)viewDidLoad
 {
@@ -41,10 +28,9 @@
     
     UIImageView *mainBgView = [[UIImageView alloc] initWithFrame:CGRectMake(0,0,320,548)];
     [mainBgView setImage:[UIImage imageNamed:@"bg.png"]];
-    
+    //返回导航条
     UIImageView *imgTitle = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
     imgTitle.image = [UIImage imageNamed:@"head.jpg"];
-    
     UIButton *btnReturn=[[UIButton alloc]initWithFrame:CGRectMake(5, 7, 50, 30)];
     [btnReturn setBackgroundImage:[UIImage imageNamed:@"return_unclick.png"] forState:UIControlStateNormal];
     [btnReturn setImage:[UIImage imageNamed:@"return_click.png"] forState:UIControlStateHighlighted];
@@ -63,12 +49,6 @@
     [mainView addSubview:btnReturn];
     [mainView addSubview:self.friendTable];
     
-    SinaWeibo *sinaweibo = [self sinaweibo];
-    [sinaweibo requestWithURL:@"friendships/friends/bilateral.json"
-                       params:[NSMutableDictionary dictionaryWithObject:sinaweibo.userID forKey:@"uid"]
-                   httpMethod:@"GET"
-                     delegate:self];
-    
     [Friend loadFriend:^(NSArray *friends, NSError *error) {
         if (error) {
             [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil) message:[error localizedDescription] delegate:nil cancelButtonTitle:nil otherButtonTitles:NSLocalizedString(@"OK", nil), nil] show];
@@ -82,9 +62,6 @@
 
 -(void)viewDidAppear:(BOOL)animated
 {
-    SinaWeibo *sinaweibo = [self sinaweibo];
-    sinaweibo.delegate = self;
-    
     [self.navigationController setNavigationBarHidden:YES animated:NO];
 }
 
@@ -140,47 +117,6 @@
 -(CGFloat)tableView:(UIFolderTableView *)tableView xForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return 37;
-}
-
-+ (void)loadFriend:(void (^)(NSArray *friends, NSError *error))block {
-    NSString *URL = [kSinaWeiboSDKAPIDomain stringByAppendingString:@"friendships/friends/bilateral.json"];
-    NSDictionary *param = [NSDictionary dictionaryWithObjectsAndKeys:[Account getInstance].userID, @"uid",[Account getInstance].accessToken, @"access_token", nil];
-    [[AFWeiboAPIClient getInstance] getPath:URL parameters:param success:^(AFHTTPRequestOperation *operation, id JSON) {
-        NSMutableArray *mutableFriend = [NSMutableArray arrayWithCapacity:[JSON count]];
-        for (NSDictionary *user in JSON) {
-            Friend *friend = [Friend alloc];
-            friend.name = [user objectForKey:@"screen_name"];
-            friend.profileUrl = [user objectForKey:@"profile_image_url"];
-            [mutableFriend addObject:friend];
-        }
-        if (block) {
-            block([NSArray arrayWithArray:mutableFriend], nil);
-        }
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        if (block) {
-            block([NSArray array], error);
-        }
-    }];
-}
-
-
-#pragma mark - SinaWeiboRequest Delegate
-- (void)request:(SinaWeiboRequest *)request didFailWithError:(NSError *)error
-{
-    [self.friendTable reloadData];
-}
-
-- (void)request:(SinaWeiboRequest *)request didFinishLoadingWithResult:(id)result
-{
-    NSDictionary *usersDict = [[result objectForKey:@"users"] retain];
-    self.items = [NSMutableArray arrayWithCapacity:24];
-    for (NSDictionary *user in usersDict) {
-        Friend *friend = [Friend alloc];
-        friend.name = [user objectForKey:@"screen_name"];
-        friend.profileUrl = [user objectForKey:@"profile_image_url"];
-        [self.items addObject:friend];
-    }
-    [self.friendTable reloadData];
 }
 
 @end

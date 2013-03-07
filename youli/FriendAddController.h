@@ -13,16 +13,11 @@
 #import "SinaWeiboRequest.h"
 #import "SubTableCell.h"
 
-@interface FriendAddController : BaseController<UITableViewDelegate, UITableViewDataSource,SinaWeiboDelegate,SinaWeiboRequestDelegate>
+@interface FriendAddController : BaseController<UITableViewDelegate, UITableViewDataSource>
 
 @property(strong, nonatomic)NSArray *items;
-
 @property(strong, nonatomic)UIFolderTableView *friendTable;
-
 @property(strong, nonatomic)UIFolderTableView *folderTableView;
-
 @property(strong, nonatomic)SubTableCell *subTableCellView;
-
-+ (void)loadFriend:(void (^)(NSArray *friends, NSError *error))block;
 
 @end
