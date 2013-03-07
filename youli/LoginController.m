@@ -19,10 +19,10 @@
 
 @interface LoginController (){
 @private
+    NSMutableArray *giftTypeItems;
     UITableView *friendTable;
     CategoryTableView *categoryTableView;
     Category *category;
-    NSMutableArray *giftTypeItems;
     id<YouliDelegate> delegate;
     BirthdayGiftController *birthdayGiftController;
 }
@@ -30,12 +30,6 @@
 @end
 
 @implementation LoginController
-
-- (SinaWeibo *)sinaweibo
-{
-    AppDelegate *appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
-    return appDelegate.sinaweibo;
-}
 
 - (void)viewDidLoad
 {
@@ -61,14 +55,13 @@
     [webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:authPagePath]]];
     //加左边的类别tableview
     categoryTableView = [[CategoryTableView alloc] initWithFrame:CGRectMake(0, 0, 212, 460)];
-    if(iPhone5)
-    {
+    if(iPhone5){
         categoryTableView = [[CategoryTableView alloc] initWithFrame:CGRectMake(0, 0, 212, 548)];
     }
     categoryTableView.dataSource = self;
     categoryTableView.delegate = self;
     category = [[Category alloc] init];
-    [category loadData];                        //load分类列表
+    [category loadData];
     giftTypeItems = category.items;
     birthdayGiftController = [[BirthdayGiftController alloc]init];
     delegate = birthdayGiftController;
@@ -89,28 +82,22 @@
 - (BOOL)webView:(UIWebView *)aWebView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {
     NSString *url = request.URL.absoluteString;
-    NSLog(@"url = %@", url);
     NSString *siteRedirectURI = [NSString stringWithFormat:@"%@%@", kSinaWeiboSDKOAuth2APIDomain, kAppRedirectURI];
-    if ([url hasPrefix:kAppRedirectURI] || [url hasPrefix:siteRedirectURI])
-    {
+    if ([url hasPrefix:kAppRedirectURI] || [url hasPrefix:siteRedirectURI]){
         NSString *error_code = [SinaWeiboRequest getParamValueFromUrl:url paramName:@"error_code"];
         if (error_code)
         {
             NSString *error = [SinaWeiboRequest getParamValueFromUrl:url paramName:@"error"];
             NSString *error_uri = [SinaWeiboRequest getParamValueFromUrl:url paramName:@"error_uri"];
             NSString *error_description = [SinaWeiboRequest getParamValueFromUrl:url paramName:@"error_description"];
-            NSDictionary *errorInfo = [NSDictionary dictionaryWithObjectsAndKeys:
-                                       error, @"error",
-                                       error_uri, @"error_uri",
-                                       error_code, @"error_code",
+            NSDictionary *errorInfo = [NSDictionary dictionaryWithObjectsAndKeys:error, @"error",error_uri, @"error_uri",error_code, @"error_code",
                                        error_description, @"error_description", nil];
-            
+            NSLog(@"errorInfo = %@",errorInfo);
         }
         else
         {
             NSString *code = [SinaWeiboRequest getParamValueFromUrl:url paramName:@"code"];
-            if (code)
-            {
+            if (code){
                 [self requestAccessTokenWithAuthorizationCode:code];
             }
         }        
@@ -150,24 +137,18 @@
     NSString *uid = [authInfo objectForKey:@"uid"];
     NSString *remind_in = [authInfo objectForKey:@"remind_in"];
     NSString *refresh_token = [authInfo objectForKey:@"refresh_token"];
-    SinaWeibo *sinaweibo = [self sinaweibo];
-    if (access_token && uid)
-    {
-        if (remind_in != nil)
-        {
+    if (access_token && uid){
+        if (remind_in != nil){
             int expVal = [remind_in intValue];
             if (expVal == 0)
             {
-                sinaweibo.expirationDate = [NSDate distantFuture];
+                [Account getInstance].expirationDate = [NSDate distantFuture];
             }
             else
             {
-                sinaweibo.expirationDate = [NSDate dateWithTimeIntervalSinceNow:expVal];
+                [Account getInstance].expirationDate = [NSDate dateWithTimeIntervalSinceNow:expVal];
             }
         }
-        sinaweibo.userID = uid;
-        sinaweibo.refreshToken = refresh_token;
-        sinaweibo.accessToken = access_token;
         [Account getInstance].userID = uid;
         [Account getInstance].accessToken = access_token;
         [Account getInstance].refreshToken = refresh_token;
