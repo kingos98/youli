@@ -22,7 +22,8 @@
 #import "LocalNotificationsUtils.h"
 #import "Birthday.h"
 #import "QuartzCore/CALayer.h"
-
+#import "Category.h"
+#import "LoginController.h"
 #import "DbUtils.h"
 
 @interface IndexController ()
@@ -32,34 +33,36 @@
     BOOL isLoading;                                 //是否正在加载图片
     NSInteger birthdayGiftControllerHeight;         //记录当前birthdayGiftController高度
     NSInteger birthdayCurrentIndex;                 //记录当前birthday图片的序列，每load一次自动加7
-
-    UIScrollView *mainScrollView;
-    UIView *categoryView;
-    UIImageView *categoryBgImage;
-    UIImageView *imgGiftScrollView;
-    CategoryTableView *categoryTableView;
+    NSMutableArray *items;                          //加载图片使用的临时数组
+    NSMutableArray *giftTypeItems;                  //记录分类内容的数组
+    
+    NSArray *templateForIphone4;                    //mainScrollView显示矩阵数组
+    
+    UIScrollView *mainScrollView;                   //主图片加载ScrollView
+    UIImageView *imgGiftScrollView;                 //mainScrollView底图
     UIImageView *splashView;                        //欢迎图片
+    UIImageView *tabBarBgView;                      //下方导航条底图
+    UIButton *tabBarLeftButton;                     //分类按钮
+    UIButton *tabBarBoxButton;                      //最近生日的朋友/节日按钮
+    UIButton *tabBarRightButton;                    //好友按钮
 
+    UIView *refreshFooterView;                      //动态加载图片等待通知视图
+    UILabel *refreshLabel;                          //等待提示标签
+    UIActivityIndicatorView *refreshSpinner;        //等待图标
+    NSString *textPull;                             //下拉加载前提示
+    NSString *textLoading;                          //下拉加载时提示
+
+    BirthdayGiftController *birthdayGiftController; //按分类展示的礼物ViewController
+    PersonalController *personalController;         //好友ViewController
+    LoginController *loginController;               //微博登录ViewController
+    BirthdayController *birthdayController;         //最近生日的朋友/节日ViewController    
+    CategoryTableView *categoryTableView;           //分类组件
+    
+    id<YouliDelegate> delegate;                     //指向BirthdayGiftController的委托
 }
 @end
 
 @implementation IndexController
-
-@synthesize giftTypeItems;
-@synthesize templateForIphone4;
-@synthesize category;
-@synthesize birthdayGiftController;
-@synthesize delegate;
-@synthesize tabBarBgView;
-@synthesize tabBarBoxButton;
-@synthesize tabBarLeftButton;
-@synthesize tabBarRightButton;
-@synthesize personalController;
-@synthesize birthdayController;
-
-@synthesize textPull, textLoading, refreshFooterView, refreshLabel, refreshSpinner;
-
-static bool isFirstLoad=YES;
 
 - (void)viewDidLoad
 {
@@ -82,46 +85,31 @@ static bool isFirstLoad=YES;
 
     imgGiftScrollView.image=[UIImage imageNamed:@"bg2_iphone5.png"];
     
-//    //类别view，可向右滑动，初始化时处于第一层，相当于被隐藏,用iphone5尺寸
-//    if(!iPhone5)
-//    {
-//        categoryView = isFirstLoad?[[UIView alloc] initWithFrame:CGRectMake(320, 0, 212, 460)]:[[UIView alloc] initWithFrame:CGRectMake(0, 0, 212, 460)];
-//    }
-//    else
-//    {
-//        categoryView = isFirstLoad?[[UIView alloc] initWithFrame:CGRectMake(320, 0, 212, 548)]:[[UIView alloc] initWithFrame:CGRectMake(0, 0, 212, 548)];
-//    }
-
     //添加分类页面
     if(!iPhone5)
     {
-        categoryTableView = isFirstLoad?[[CategoryTableView alloc] initWithFrame:CGRectMake(320, 0, 212, 460)]:[[CategoryTableView alloc] initWithFrame:CGRectMake(0, 0, 212, 460)];
+        categoryTableView = [[CategoryTableView alloc] initWithFrame:CGRectMake(320, 0, 212, 460)];
+
     }
     else
     {
-        categoryTableView = isFirstLoad?[[CategoryTableView alloc] initWithFrame:CGRectMake(320, 0, 212, 548)]:[[CategoryTableView alloc] initWithFrame:CGRectMake(0, 0, 212, 548)];
+        categoryTableView = [[CategoryTableView alloc] initWithFrame:CGRectMake(320, 0, 212, 548)];
+
     }
     
     categoryTableView.dataSource=self;
     categoryTableView.delegate=self;
-    category = [[Category alloc] init];
+    Category *category = [[Category alloc] init];
     [category loadData];                        //load分类列表
     giftTypeItems = category.items;
     
-//    [categoryView addSubview:categoryTableView];
-    
     if(!iPhone5)
     {
-        mainScrollView = isFirstLoad?
-        [[UIScrollView alloc] initWithFrame:CGRectMake(320, 0, 320, 426)]:
-        [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, 320, 426)];
-        
+        mainScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(320, 0, 320, 426)];
     }
     else
     {
-        mainScrollView = isFirstLoad?
-        [[UIScrollView alloc] initWithFrame:CGRectMake(320, 0, 320, 512)]:
-        [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, 320, 512)];
+        mainScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(320, 0, 320, 512)];
     }
 
     mainScrollView.showsVerticalScrollIndicator = NO;
@@ -142,42 +130,39 @@ static bool isFirstLoad=YES;
     {
         [self loadDataSource];
     }
-
-    self.birthdayGiftController=[[BirthdayGiftController alloc]init];
     
-    tabBarBgView = isFirstLoad?
-    [[UIImageView alloc] initWithFrame:CGRectMake(320, 422, 320, 38)]:
-    [[UIImageView alloc] initWithFrame:CGRectMake(0, 422, 320, 38)];
+    tabBarBgView = [[UIImageView alloc] initWithFrame:CGRectMake(320, 422, 320, 38)];
+
     
     if (iPhone5) {
-        tabBarBgView.frame =isFirstLoad?CGRectMake(320, 510, 320, 38):CGRectMake(0, 510, 320, 38);
+        tabBarBgView.frame = CGRectMake(320, 510, 320, 38);
     }
     [tabBarBgView setImage:[UIImage imageNamed:@"tabbar_bg.png"]];
     
     tabBarLeftButton = [UIButton buttonWithType:UIButtonTypeCustom];
     UIImage *tabBarLeftImage = [[UIImage imageNamed:@"tabbar_left.png"] stretchableImageWithLeftCapWidth:0 topCapHeight:0];
-    tabBarLeftButton.frame =isFirstLoad?CGRectMake(320, 422, 78, 38):CGRectMake(0, 422, 78, 38);
+    tabBarLeftButton.frame = CGRectMake(320, 422, 78, 38);
     
     if (iPhone5) {
-        tabBarLeftButton.frame =isFirstLoad?CGRectMake(320, 510, 78, 38):CGRectMake(0, 510, 78, 38);
+        tabBarLeftButton.frame = CGRectMake(320, 510, 78, 38);
     }
     [tabBarLeftButton setBackgroundImage:tabBarLeftImage forState:UIControlStateNormal];
     [tabBarLeftButton addTarget:self action:@selector(showCategoryViewPressed) forControlEvents:UIControlEventTouchUpInside];
     
     tabBarBoxButton = [UIButton buttonWithType:UIButtonTypeCustom];
     UIImage *tabBarBoxImage = [[UIImage imageNamed:@"tabbar_box.png"] stretchableImageWithLeftCapWidth:0 topCapHeight:0];
-    tabBarBoxButton.frame = isFirstLoad?CGRectMake(440, 414, 78, 45):CGRectMake(120, 414, 78, 45);
+    tabBarBoxButton.frame = CGRectMake(440, 414, 78, 45);
     if (iPhone5) {
-        tabBarBoxButton.frame = isFirstLoad?CGRectMake(440, 503, 78, 45):CGRectMake(120, 503, 78, 45);
+        tabBarBoxButton.frame = CGRectMake(440, 503, 78, 45);
     }
     [tabBarBoxButton setBackgroundImage:tabBarBoxImage forState:UIControlStateNormal];
     [tabBarBoxButton addTarget:self action:@selector(birthdayButtonPressed) forControlEvents:UIControlEventTouchUpInside];
     
     tabBarRightButton = [UIButton buttonWithType:UIButtonTypeCustom];
     UIImage *tabBarRightImage = [[UIImage imageNamed:@"tabbar_right.png"] stretchableImageWithLeftCapWidth:0 topCapHeight:0];
-    tabBarRightButton.frame =isFirstLoad? CGRectMake(560, 422, 78, 38):CGRectMake(240, 422, 78, 38);
+    tabBarRightButton.frame = CGRectMake(560, 422, 78, 38);
     if (iPhone5) {
-        tabBarRightButton.frame = isFirstLoad? CGRectMake(560, 510, 78, 38): CGRectMake(240, 510, 78, 38);
+        tabBarRightButton.frame = CGRectMake(560, 510, 78, 38);
     }
     [tabBarRightButton setBackgroundImage:tabBarRightImage forState:UIControlStateNormal];
     [tabBarRightButton addTarget:self action:@selector(personalButtonPressed) forControlEvents:UIControlEventTouchUpInside];
@@ -196,11 +181,12 @@ static bool isFirstLoad=YES;
     UIPanGestureRecognizer *mainViewPan=[[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(handleMainPan:)];
     [self.view addGestureRecognizer: mainViewPan];
     
+    birthdayGiftController=[[BirthdayGiftController alloc]init];
     personalController=[[PersonalController alloc] init];
     birthdayController=[[BirthdayController alloc] init];
-    self.loginController = [[LoginController alloc] init];
+    loginController = [[LoginController alloc] init];
     
-    self.delegate=[self birthdayGiftController];
+    delegate=birthdayGiftController;
     
     categoryTableView.delegate=self;
 
@@ -251,15 +237,12 @@ static bool isFirstLoad=YES;
     [self.view insertSubview:splashView atIndex:0];
 
     //添加定时器，2秒后把首页移入屏幕
-    if(isFirstLoad)
-    {
-        NSTimer *timer;
-        timer = [NSTimer scheduledTimerWithTimeInterval: 2
-                                                 target: self
-                                               selector: @selector(handleTimer:)
-                                               userInfo: nil
-                                                repeats: YES];
-    }
+    NSTimer *timer;
+    timer = [NSTimer scheduledTimerWithTimeInterval: 2
+                                             target: self
+                                           selector: @selector(handleTimer:)
+                                           userInfo: nil
+                                            repeats: YES];
     
     //添加下拉loading提示
     [self setupStrings];
@@ -278,7 +261,6 @@ static bool isFirstLoad=YES;
     [UIView setAnimationDuration:1];
     
     CGPoint pointCategoryTableView=categoryTableView.center;
-    CGPoint pointCategoryView=categoryView.center;
     CGPoint pointImgGiftScrollView=imgGiftScrollView.center;
     CGPoint point=mainScrollView.center;
     CGPoint pointBgView=tabBarBgView.center;
@@ -287,7 +269,6 @@ static bool isFirstLoad=YES;
     CGPoint pointRightButton=tabBarRightButton.center;
     
     categoryTableView.center=CGPointMake(pointCategoryTableView.x-320, pointCategoryTableView.y);
-    categoryView.center=CGPointMake(pointCategoryView.x-320, pointCategoryView.y);
     imgGiftScrollView.center=CGPointMake(pointImgGiftScrollView.x-320, pointImgGiftScrollView.y);
     mainScrollView.center=CGPointMake(point.x-320,point.y);
     tabBarBgView.center=CGPointMake(pointBgView.x-320,pointBgView.y);
@@ -371,7 +352,7 @@ static bool isFirstLoad=YES;
 
 - (void)personalButtonPressed
 {
-    [self.navigationController pushViewController:self.loginController animated:NO];
+    [self.navigationController pushViewController:loginController animated:NO];
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -389,9 +370,9 @@ static bool isFirstLoad=YES;
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:@"http://imgur.com/gallery.json"]];
     AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request
     success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
-        self.items = [JSON objectForKey:@"data"];
+        items = [JSON objectForKey:@"data"];
         for (int i=0; i<7; i++) {
-            NSDictionary *item = [self.items objectAtIndex:i+birthdayCurrentIndex];
+            NSDictionary *item = [items objectAtIndex:i+birthdayCurrentIndex];
             
             NSURL *URL = [NSURL URLWithString:[NSString stringWithFormat:@"http://imgur.com/%@%@",[item objectForKey:@"hash"], [item objectForKey:@"ext"]]];
             
@@ -468,13 +449,11 @@ static bool isFirstLoad=YES;
 
 #pragma mark - Scroll View Loading
 - (void)startLoading {
-    //    isLoading = YES;
-    
     // Show the header
     [UIView beginAnimations:nil context:NULL];
     [UIView setAnimationDuration:0.3];
     mainScrollView.contentInset = UIEdgeInsetsMake(REFRESH_HEADER_HEIGHT, 0, 0, 0);
-    refreshLabel.text = self.textLoading;
+    refreshLabel.text = textLoading;
     [refreshSpinner startAnimating];
     [UIView commitAnimations];
 }
@@ -496,9 +475,7 @@ static bool isFirstLoad=YES;
 
 - (void)stopLoadingComplete:(NSString *)animationID finished:(NSNumber *)finished context:(void *)context {
     
-    refreshLabel.text = self.textPull;
-    
-//    NSLog(@"refreshFooterView:height:%f",(mainScrollView.contentSize.height-REFRESH_HEADER_HEIGHT));
+    refreshLabel.text = textPull;
     
     [refreshFooterView setFrame:CGRectMake(0, mainScrollView.contentSize.height-REFRESH_HEADER_HEIGHT, 320, 0)];
     
@@ -516,8 +493,7 @@ static bool isFirstLoad=YES;
     refreshLabel.shadowOffset=CGSizeMake(0, 1);
     refreshLabel.backgroundColor = [UIColor clearColor];
     refreshLabel.font = [UIFont boldSystemFontOfSize:13.0];
-    //    refreshLabel.textAlignment = UITextAlignmentCenter;
-    refreshLabel.text = self.textLoading;
+    refreshLabel.text = textLoading;
     
     refreshSpinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     refreshSpinner.frame = CGRectMake(110, 20, 24, 14);
@@ -562,9 +538,9 @@ static bool isFirstLoad=YES;
     //    NSUserDefaults *mydefault = [NSUserDefaults standardUserDefaults];
     //    [mydefault setObject:cell.nameLabel.text forKey:@"giftTypeTitle"];
     
-    [self.delegate sendGiftTypeTitle:cell.nameLabel.text];
+    [delegate sendGiftTypeTitle:cell.nameLabel.text];
     
-    [self.navigationController pushViewController:[self birthdayGiftController] animated:YES];
+    [self.navigationController pushViewController:birthdayGiftController animated:YES];
     
     cell.labelImage.image = [UIImage imageNamed:@"selected.png"];
     cell.nextImage.image = [UIImage imageNamed:@"pointerselect.png"];
