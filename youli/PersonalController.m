@@ -49,9 +49,10 @@
     //导航条
     UIImageView *imgTitle = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
     imgTitle.image = [UIImage imageNamed:@"head.jpg"];
-    UIButton *returnButton=[[UIButton alloc]initWithFrame:CGRectMake(10, 7, 50, 30)];
-    [returnButton setBackgroundImage:[UIImage imageNamed:@"return_unclick.png"] forState:UIControlStateNormal];
-    [returnButton addTarget:self action:@selector(returnButtonPressed) forControlEvents:UIControlEventTouchUpInside];
+    UIButton *homeButton=[[UIButton alloc]initWithFrame:CGRectMake(10, 7, 50, 30)];
+    [homeButton setBackgroundImage:[UIImage imageNamed:@"home_click.png"] forState:UIControlStateHighlighted];
+    [homeButton setBackgroundImage:[UIImage imageNamed:@"home_unclick.png"] forState:UIControlStateNormal];    
+    [homeButton addTarget:self action:@selector(homeButtonPressed) forControlEvents:UIControlEventTouchUpInside];
     UIButton *addButton=[[UIButton alloc]initWithFrame:CGRectMake(250, 7, 60, 30)];
     [addButton setBackgroundImage:[UIImage imageNamed:@"add_friend_1.png"] forState:UIControlStateNormal];
     [addButton addTarget:self action:@selector(addButtonPressed) forControlEvents:UIControlEventTouchUpInside];
@@ -156,7 +157,7 @@
     [self.view addSubview:categoryTableView];
     [mainView addSubview:mainBgView];
     [mainView addSubview:imgTitle];
-    [mainView addSubview:returnButton];
+    [mainView addSubview:homeButton];
     [mainView addSubview:addButton];
     [mainView addSubview:personalInfoBgView];
     [mainView addSubview:faceBgView];
@@ -273,9 +274,9 @@
     }
 }
 
-- (void)returnButtonPressed
+- (void)homeButtonPressed
 {
-    [self.navigationController popViewControllerAnimated:NO];
+    [self.navigationController popToRootViewControllerAnimated:NO];
 }
 
 - (void)addButtonPressed

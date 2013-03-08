@@ -24,6 +24,7 @@
 #import "AppDelegate.h"
 #import "CategoryCell.h"
 #import "FMDatabase.h"
+#import "FMDatabaseOper.h"
 
 @interface BirthdayGiftController ()
 {
@@ -44,7 +45,7 @@
     
     FMDatabaseOper *fmdataOper;                                                         //数据库操作类
     
-    id<BirthdayGiftDetailControllerDelegate> birthdayGiftDetailControllerDelegate;      //指向BirthdayGiftController的委托
+//    id<BirthdayGiftDetailControllerDelegate> birthdayGiftDetailControllerDelegate;      //指向BirthdayGiftController的委托
     
     UIScrollView *giftScrollView;                                                       //礼物ScrollVie
     UIScrollView *constellationScrollView;                                              //星座ScrollVie
@@ -101,8 +102,8 @@
     [self initPriceSlider];
         
     
-    birthdayGiftDetailController=[[BirthdayGiftDetailController alloc]init];
-    birthdayGiftDetailControllerDelegate=birthdayGiftDetailController;
+//    birthdayGiftDetailController=[[BirthdayGiftDetailController alloc]init];
+//    birthdayGiftDetailControllerDelegate=birthdayGiftDetailController;
     
     strOldGiftType=nil;
     strNewGiftType=nil;
@@ -534,6 +535,7 @@
 #pragma mark - GestureRecognizer
 -(void) tapPhoto:(UITapGestureRecognizer*) sender
 {
+    birthdayGiftDetailController=[[[BirthdayGiftDetailController alloc]init] autorelease];
     [birthdayGiftDetailController sendGiftID:[(UIGestureRecognizer *)sender view].tag];
 
     [self.navigationController pushViewController:birthdayGiftDetailController animated:YES];

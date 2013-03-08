@@ -10,16 +10,7 @@
 #import "BaseController.h"
 #import "BirthdayGiftDetailControllerDelegate.h"
 
-@interface BirthdayGiftDetailController : BaseController<UIScrollViewDelegate,BirthdayGiftDetailControllerDelegate>
-{
-   
-}
+@interface BirthdayGiftDetailController : BaseController<UIScrollViewDelegate,UITableViewDelegate,UITableViewDataSource, BirthdayGiftDetailControllerDelegate>
 
--(id)initwithGiftID:(NSInteger)GiftID;
-
-@property(retain,nonatomic) UIScrollView *giftDetailScrollView;
-@property(retain,nonatomic) UIButton *btnReturn;
-@property(retain,nonatomic) UIButton *btnShare;
-@property (strong, nonatomic)UILabel *lblGiftTypeTitle;
-
+-(void)sendGiftID:(NSInteger)GiftID;
 @end

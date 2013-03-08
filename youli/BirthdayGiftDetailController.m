@@ -14,33 +14,30 @@
 #import "DatabaseOper.h"
 #import "FMDatabaseOper.h"
 #import "BirthdayGiftDetailItem.h"
+#import "BirthdayGiftController.h"
+#import "CategoryTableView.h"
+#import "CategoryCell.h"
+#import "Category.h"
+#import "YouliDelegate.h"
 
 @interface BirthdayGiftDetailController ()
 {
     @private
-    NSInteger yesToLoad;
-    DatabaseOper *dataOper;
-    FMDatabaseOper *fmdataOper;
-    BirthdayGiftDetailItem *birthdayGiftDetailItem;
+    FMDatabaseOper *fmdataOper;                                         //数据库操作类
+    BirthdayGiftDetailItem *birthdayGiftDetailItem;                     //单个礼物组件
+    CategoryTableView *categoryTableView;                               //分类组件
+    NSMutableArray *giftTypeItems;                                      //记录分类内容的数组
+
+    UIScrollView *giftDetailScrollView;                                 //礼物ScrollVie
+    
+    BirthdayGiftController *birthdayGiftController;                     //按分类展示的礼物ViewController
+
+    id<YouliDelegate> delegate;                                         //指向BirthdayGiftController的委托
 }
 
 @end
 
 @implementation BirthdayGiftDetailController
-
-@synthesize giftDetailScrollView;
-@synthesize btnReturn;
-@synthesize btnShare;
-@synthesize lblGiftTypeTitle;
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
 
 - (void)viewDidLoad
 {
@@ -48,7 +45,7 @@
     
     [self initView];
     
-    self.giftDetailScrollView.delegate=self;
+    giftDetailScrollView.delegate=self;
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -63,7 +60,6 @@
 
 - (void)initView
 {
-    dataOper=[[DatabaseOper alloc]init];
     fmdataOper=[[FMDatabaseOper alloc]init];
     
     UIImageView *imgTitle = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
@@ -73,20 +69,20 @@
 
     imgGiftScrollView.image=[UIImage imageNamed:@"bg.png"];
     
-    self.lblGiftTypeTitle=[[UILabel alloc] initWithFrame:CGRectMake(126, -8, 68, 61)];
-    self.lblGiftTypeTitle.backgroundColor=[UIColor colorWithHue:0 saturation:0 brightness:0 alpha:0];
-    self.lblGiftTypeTitle.font=[UIFont fontWithName:@"System" size:17.0f];
-    self.lblGiftTypeTitle.text=@"礼品展示";
+    UILabel *lblGiftTypeTitle=[[UILabel alloc] initWithFrame:CGRectMake(126, -8, 68, 61)];
+    lblGiftTypeTitle.backgroundColor=[UIColor colorWithHue:0 saturation:0 brightness:0 alpha:0];
+    lblGiftTypeTitle.font=[UIFont fontWithName:@"System" size:17.0f];
+    lblGiftTypeTitle.text=@"礼品展示";
     
-    self.btnReturn=[[UIButton alloc]initWithFrame:CGRectMake(5, 7, 50, 30)];
-    [self.btnReturn setBackgroundImage:[UIImage imageNamed:@"return_unclick.png"] forState:UIControlStateNormal];
-    [self.btnReturn setBackgroundImage:[UIImage imageNamed:@"return_click.png"] forState:UIControlStateHighlighted];
-    [self.btnReturn addTarget:self action:@selector(returnClick) forControlEvents:UIControlEventTouchUpInside];
+    UIButton *btnReturn=[[UIButton alloc]initWithFrame:CGRectMake(5, 7, 50, 30)];
+    [btnReturn setBackgroundImage:[UIImage imageNamed:@"return_unclick.png"] forState:UIControlStateNormal];
+    [btnReturn setBackgroundImage:[UIImage imageNamed:@"return_click.png"] forState:UIControlStateHighlighted];
+    [btnReturn addTarget:self action:@selector(returnClick) forControlEvents:UIControlEventTouchUpInside];
 
-    self.btnShare=[[UIButton alloc]initWithFrame:CGRectMake(265, 7, 50, 30)];
-    [self.btnShare setBackgroundImage:[UIImage imageNamed:@"share_unclick.png"] forState:UIControlStateNormal];
-    [self.btnShare setBackgroundImage:[UIImage imageNamed:@"share_click.png"] forState:UIControlStateHighlighted];
-    [self.btnShare addTarget:self action:@selector(shareClick) forControlEvents:UIControlEventTouchUpInside];
+    UIButton *btnShare=[[UIButton alloc]initWithFrame:CGRectMake(265, 7, 50, 30)];
+    [btnShare setBackgroundImage:[UIImage imageNamed:@"share_unclick.png"] forState:UIControlStateNormal];
+    [btnShare setBackgroundImage:[UIImage imageNamed:@"share_click.png"] forState:UIControlStateHighlighted];
+    [btnShare addTarget:self action:@selector(shareClick) forControlEvents:UIControlEventTouchUpInside];
 
 
     giftDetailScrollView=[[UIScrollView alloc]initWithFrame:CGRectMake(0, 44, 320, 370)];
@@ -94,6 +90,22 @@
     [giftDetailScrollView setShowsHorizontalScrollIndicator:false];
 
     
+    if(!iPhone5)
+    {
+        categoryTableView = [[CategoryTableView alloc] initWithFrame:CGRectMake(0, 0, 212, 460)];
+    }
+    else
+    {
+        categoryTableView = [[CategoryTableView alloc] initWithFrame:CGRectMake(0, 0, 212, 548)];
+    }
+    
+    categoryTableView.dataSource=self;
+    categoryTableView.delegate=self;
+    Category *category = [[Category alloc] init];
+    [category loadData];                        //load分类列表
+    giftTypeItems = category.items;
+
+    [self.view addSubview:categoryTableView];
     [mainView addSubview:imgTitle];
     [mainView addSubview:imgGiftScrollView];
     [mainView addSubview:lblGiftTypeTitle];
@@ -105,6 +117,7 @@
 - (void)returnClick
 {
     [self.navigationController popViewControllerAnimated:YES];
+//    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 - (void)shareClick
@@ -157,7 +170,7 @@
                 
                 birthdayGiftDetailItem.frame=CGRectMake(21 + i+iGiftScrollViewWidth, 14, 277, 353);
                 
-                [self.giftDetailScrollView addSubview:birthdayGiftDetailItem];
+                [giftDetailScrollView addSubview:birthdayGiftDetailItem];
                 
                 iGiftScrollViewWidth=iGiftScrollViewWidth+276+13;
             }
@@ -175,7 +188,7 @@
     
 //    k=k+(276+14)*index;
     k=(276+14)*index;
-    [self.giftDetailScrollView setContentOffset:CGPointMake(k, 0) animated:YES];
+    [giftDetailScrollView setContentOffset:CGPointMake(k, 0) animated:YES];
 }
 
 #pragma mark - Scrollview Delegate
@@ -215,5 +228,52 @@ int k=0;        //giftDetailScrollView位移值
             [scrollView setContentOffset:CGPointMake(k, 0) animated:YES];
         }
     }
+}
+
+#pragma mark - Table view data source
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 1;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return giftTypeItems.count;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	return 41;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *CellIdentifier = @"Cell";
+    CategoryCell *cell = [[CategoryCell alloc] initCell:CellIdentifier];
+    cell.category =  [giftTypeItems objectAtIndex:indexPath.row];
+    return cell;
+}
+
+#pragma mark - Table view delegate
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    birthdayGiftController=[[BirthdayGiftController alloc]init];
+    delegate=birthdayGiftController;
+    
+    CategoryCell *cell = (CategoryCell*)[categoryTableView cellForRowAtIndexPath:indexPath];
+    [delegate sendGiftTypeTitle:cell.nameLabel.text];
+    [self.navigationController pushViewController:birthdayGiftController animated:YES];
+
+    cell.labelImage.image = [UIImage imageNamed:@"selected.png"];
+    cell.nextImage.image = [UIImage imageNamed:@"pointerselect.png"];
+    
+    [self hideCategoryView];
+}
+
+- (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    CategoryCell *cell = (CategoryCell*)[categoryTableView cellForRowAtIndexPath:indexPath];
+    cell.labelImage.image = [UIImage imageNamed:@"unselected.png"];
+    cell.nextImage.image = [UIImage imageNamed:@"pointerunselect.png"];
 }
 @end
