@@ -15,13 +15,11 @@
     UIImageView *categoryBgImage;
 }
 
-
-@property(nonatomic,retain) UIImageView *tabBarBgImage;
-@property(nonatomic,retain) UIButton *tabBarLeftButton;
-@property(nonatomic,retain) UIButton *tabBarBoxButton;
-@property(nonatomic,retain) UIButton *tabBarRightButton;
-
-@property (strong,nonatomic) id<YouliDelegate> youliDelegate;
+@property(nonatomic,strong) UIImageView *tabBarBgImage;
+@property(nonatomic,strong) UIButton *tabBarLeftButton;
+@property(nonatomic,strong) UIButton *tabBarBoxButton;
+@property(nonatomic,strong) UIButton *tabBarRightButton;
+@property(nonatomic,strong) id<YouliDelegate> youliDelegate;
 @property bool isPopCategoryView;                   //判断是否打开分类列表
 
 -(void)hideCategoryView;

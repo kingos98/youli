@@ -9,11 +9,17 @@
 #import "BaseController.h"
 #import "PersonalController.h"
 #import "BirthdayController.h"
+#import "LoginController.h"
 #import "CategoryCell.h"
 #import "YouliDelegate.h"
 #import "AppDelegate.h"
+#import "Account.h"
 
-@interface BaseController ()
+@interface BaseController (){
+@private
+    PersonalController *personalController;         //好友ViewController
+    LoginController *loginController;               //微博登录ViewController
+}
 @end
 
 @implementation BaseController
@@ -102,6 +108,7 @@
         [mainView addSubview:tabBarLeftButton];
         [mainView addSubview:tabBarBoxButton];
         [mainView addSubview:tabBarRightButton];
+        
                 
         isPopCategoryView=false;
         
@@ -169,7 +176,16 @@
 
 - (void)personalButtonPressed
 {
-    PersonalController *personalController = [[PersonalController alloc] init];
-    [self.navigationController pushViewController:personalController animated:NO];
+    if (personalController==nil) {
+        personalController = [[PersonalController alloc] init];
+    }
+    if (loginController==nil) {
+        loginController =[[LoginController alloc] init];
+    }
+    if ([[Account getInstance] isLoggedIn]) {
+        [self.navigationController pushViewController:personalController animated:NO];
+    }else{
+        [self.navigationController pushViewController:loginController animated:NO];
+    }
 }
 @end

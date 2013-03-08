@@ -24,7 +24,7 @@
 #import "QuartzCore/CALayer.h"
 #import "Category.h"
 #import "LoginController.h"
-#import "DbUtils.h"
+#import "Account.h"
 
 @interface IndexController ()
 {
@@ -352,7 +352,11 @@
 
 - (void)personalButtonPressed
 {
-    [self.navigationController pushViewController:loginController animated:NO];
+    if ([[Account getInstance] isLoggedIn]) {
+        [self.navigationController pushViewController:personalController animated:NO];
+    }else{
+        [self.navigationController pushViewController:loginController animated:NO];
+    }
 }
 
 -(void)viewDidAppear:(BOOL)animated
