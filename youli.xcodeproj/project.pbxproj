@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1513DE0616E9AEB800F63995 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E50BA27F163B78690091D44A /* Default-568h@2x.png */; };
+		1513DE0C16E9AF6F00F63995 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1513DE0B16E9AF6F00F63995 /* Default-568h@2x.png */; };
+		1513DE0E16E9AF7600F63995 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1513DE0D16E9AF7600F63995 /* Default@2x.png */; };
 		1514AC2116D5EEEF0088B963 /* FMDatabase+InMemoryOnDiskIO.m in Sources */ = {isa = PBXBuildFile; fileRef = 1514AC2016D5EEEF0088B963 /* FMDatabase+InMemoryOnDiskIO.m */; };
 		151C0B0E16DCA80C00F2B71F /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 151C0B0C16DCA80C00F2B71F /* Icon.png */; };
 		151C0B0F16DCA80C00F2B71F /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 151C0B0D16DCA80C00F2B71F /* Icon@2x.png */; };
@@ -232,7 +235,6 @@
 		18FAA62416562DCD0060BCEA /* birthday_unselect@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 18FAA62016562DCD0060BCEA /* birthday_unselect@2x.png */; };
 		E50002DC162E879E00434976 /* PersonalController.m in Sources */ = {isa = PBXBuildFile; fileRef = E50002DB162E879E00434976 /* PersonalController.m */; };
 		E50002EC162E979B00434976 /* BirthdayController.m in Sources */ = {isa = PBXBuildFile; fileRef = E50002EB162E979B00434976 /* BirthdayController.m */; };
-		E50BA280163B78690091D44A /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E50BA27F163B78690091D44A /* Default-568h@2x.png */; };
 		E5BD1E7F163E1BCC005ACBEB /* cell_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = E5BD1E75163E1BCC005ACBEB /* cell_bg.png */; };
 		E5BD1E80163E1BCC005ACBEB /* cell_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E5BD1E76163E1BCC005ACBEB /* cell_bg@2x.png */; };
 		E5D73BCD16251FC100745C65 /* SVPullToRefresh.m in Sources */ = {isa = PBXBuildFile; fileRef = E5D73BCC16251FC100745C65 /* SVPullToRefresh.m */; };
@@ -285,6 +287,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1513DE0B16E9AF6F00F63995 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		1513DE0D16E9AF7600F63995 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		1514AC1F16D5EEEF0088B963 /* FMDatabase+InMemoryOnDiskIO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "FMDatabase+InMemoryOnDiskIO.h"; sourceTree = "<group>"; };
 		1514AC2016D5EEEF0088B963 /* FMDatabase+InMemoryOnDiskIO.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "FMDatabase+InMemoryOnDiskIO.m"; sourceTree = "<group>"; };
 		151C0B0C16DCA80C00F2B71F /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon.png; path = images/Icon.png; sourceTree = "<group>"; };
@@ -1261,6 +1265,8 @@
 		E5D827AF16081EC300969EE2 = {
 			isa = PBXGroup;
 			children = (
+				1513DE0D16E9AF7600F63995 /* Default@2x.png */,
+				1513DE0B16E9AF6F00F63995 /* Default-568h@2x.png */,
 				E5D827C416081EC400969EE2 /* youli */,
 				E5D827E516081EC400969EE2 /* youliTests */,
 				E5D827BD16081EC400969EE2 /* Frameworks */,
@@ -1479,7 +1485,6 @@
 				E5D73C0B16256BDD00745C65 /* tabbar_box.png in Resources */,
 				E5FD57CD16351C06008EEF00 /* bg.jpg in Resources */,
 				E5FD57CF16351C06008EEF00 /* head.jpg in Resources */,
-				E50BA280163B78690091D44A /* Default-568h@2x.png in Resources */,
 				E5BD1E7F163E1BCC005ACBEB /* cell_bg.png in Resources */,
 				E5BD1E80163E1BCC005ACBEB /* cell_bg@2x.png in Resources */,
 				15D7CEA016490C530088E49F /* 3.jpg in Resources */,
@@ -1654,6 +1659,9 @@
 				151C0B3416DDF4D000F2B71F /* BirthdayCellBg3.png in Resources */,
 				151C0B3716DDFD7C00F2B71F /* today.png in Resources */,
 				15B7278F16E4745E006111ED /* arrow.png in Resources */,
+				1513DE0616E9AEB800F63995 /* Default-568h@2x.png in Resources */,
+				1513DE0C16E9AF6F00F63995 /* Default-568h@2x.png in Resources */,
+				1513DE0E16E9AF7600F63995 /* Default@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

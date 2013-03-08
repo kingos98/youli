@@ -9,15 +9,10 @@
 #import <UIKit/UIKit.h>
 #import "BaseController.h"
 #import "BirthdayGiftDetailControllerDelegate.h"
-#import "DatabaseOper.h"
-#import "FMDatabaseOper.h"
-#import "BirthdayGiftDetailItem.h"
 
 @interface BirthdayGiftDetailController : BaseController<UIScrollViewDelegate,BirthdayGiftDetailControllerDelegate>
 {
-    DatabaseOper *dataOper;
-    FMDatabaseOper *fmdataOper;
-    BirthdayGiftDetailItem *birthdayGiftDetailItem;
+   
 }
 
 -(id)initwithGiftID:(NSInteger)GiftID;

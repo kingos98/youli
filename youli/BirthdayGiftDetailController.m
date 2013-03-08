@@ -11,11 +11,17 @@
 #import "BlockActionSheet.h"
 #import "BlockTextPromptAlertView.h"
 #import "AppDelegate.h"
+#import "DatabaseOper.h"
+#import "FMDatabaseOper.h"
+#import "BirthdayGiftDetailItem.h"
 
 @interface BirthdayGiftDetailController ()
 {
     @private
-        NSInteger yesToLoad;
+    NSInteger yesToLoad;
+    DatabaseOper *dataOper;
+    FMDatabaseOper *fmdataOper;
+    BirthdayGiftDetailItem *birthdayGiftDetailItem;
 }
 
 @end
