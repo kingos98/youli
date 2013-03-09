@@ -9,7 +9,6 @@
 #import "BirthdayController.h"
 #import "BirthdayCell.h"
 #import "BirthdayCellNew.h"
-#import "GiftListController.h"
 #import "Birthday.h"
 #import "AppDelegate.h"
 

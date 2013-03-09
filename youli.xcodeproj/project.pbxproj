@@ -143,15 +143,6 @@
 		1823CA0416BF601E0069E624 /* save.png in Resources */ = {isa = PBXBuildFile; fileRef = 1823CA0216BF601E0069E624 /* save.png */; };
 		1823CA0716BF65090069E624 /* friend_cell_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1823CA0516BF65090069E624 /* friend_cell_bg@2x.png */; };
 		1823CA0816BF65090069E624 /* friend_cell_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 1823CA0616BF65090069E624 /* friend_cell_bg.png */; };
-		182B63D916EA2C6F00A003B9 /* BlockActionSheet.h in Sources */ = {isa = PBXBuildFile; fileRef = 152CCBA716A7D5D000B0B578 /* BlockActionSheet.h */; };
-		182B63DA16EA2C6F00A003B9 /* BlockAlertView.h in Sources */ = {isa = PBXBuildFile; fileRef = 152CCBA916A7D5D000B0B578 /* BlockAlertView.h */; };
-		182B63DB16EA2C6F00A003B9 /* BlockBackground.h in Sources */ = {isa = PBXBuildFile; fileRef = 152CCBAB16A7D5D000B0B578 /* BlockBackground.h */; };
-		182B63DC16EA2C6F00A003B9 /* BlockTextPromptAlertView.h in Sources */ = {isa = PBXBuildFile; fileRef = 152CCBAD16A7D5D000B0B578 /* BlockTextPromptAlertView.h */; };
-		182B63DD16EA2C6F00A003B9 /* JSONKit.h in Sources */ = {isa = PBXBuildFile; fileRef = 18E24E6B168E9177000D2172 /* JSONKit.h */; };
-		182B63DE16EA2C6F00A003B9 /* SinaWeibo.h in Sources */ = {isa = PBXBuildFile; fileRef = 18E24E6F168E9177000D2172 /* SinaWeibo.h */; };
-		182B63DF16EA2C6F00A003B9 /* SinaWeiboAuthorizeView.h in Sources */ = {isa = PBXBuildFile; fileRef = 18E24E71168E9177000D2172 /* SinaWeiboAuthorizeView.h */; };
-		182B63E016EA2C6F00A003B9 /* SinaWeiboConstants.h in Sources */ = {isa = PBXBuildFile; fileRef = 18E24E73168E9177000D2172 /* SinaWeiboConstants.h */; };
-		182B63E116EA2C6F00A003B9 /* SinaWeiboRequest.h in Sources */ = {isa = PBXBuildFile; fileRef = 18E24E74168E9177000D2172 /* SinaWeiboRequest.h */; };
 		182B63EF16EA330000A003B9 /* UIFolderTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1897B73916A8E128001C810D /* UIFolderTableView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		184D3B1316523FAC008E3386 /* tabbar_box@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 184D3B0D16523FAC008E3386 /* tabbar_box@2x.png */; };
 		184D3B1416523FAC008E3386 /* tabbar_left.png in Resources */ = {isa = PBXBuildFile; fileRef = 184D3B0E16523FAC008E3386 /* tabbar_left.png */; };
@@ -166,7 +157,6 @@
 		186AEFDB165CA590008372B4 /* nocollect@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 186AEFD7165CA590008372B4 /* nocollect@2x.png */; };
 		186AEFFA165CBB37008372B4 /* CategoryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 186AEFF9165CBB37008372B4 /* CategoryCell.m */; };
 		186AEFFD165CBB5F008372B4 /* Category.m in Sources */ = {isa = PBXBuildFile; fileRef = 186AEFFC165CBB5F008372B4 /* Category.m */; };
-		188100F11654870500E7B66B /* GiftListController.m in Sources */ = {isa = PBXBuildFile; fileRef = 188100F01654870500E7B66B /* GiftListController.m */; };
 		1881E48516AFC5FC00857D7C /* FriendAddController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1881E48416AFC5FC00857D7C /* FriendAddController.m */; };
 		188BEE26165B161400DB9A8D /* FriendInfoController.m in Sources */ = {isa = PBXBuildFile; fileRef = 188BEE25165B161400DB9A8D /* FriendInfoController.m */; };
 		188BEE2E165B30DE00DB9A8D /* birthday_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 188BEE2C165B30DE00DB9A8D /* birthday_bg.png */; };
@@ -475,8 +465,6 @@
 		186AEFF9165CBB37008372B4 /* CategoryCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CategoryCell.m; sourceTree = "<group>"; };
 		186AEFFB165CBB5F008372B4 /* Category.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Category.h; sourceTree = "<group>"; };
 		186AEFFC165CBB5F008372B4 /* Category.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Category.m; sourceTree = "<group>"; };
-		188100EF1654870500E7B66B /* GiftListController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GiftListController.h; sourceTree = "<group>"; };
-		188100F01654870500E7B66B /* GiftListController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GiftListController.m; sourceTree = "<group>"; };
 		1881E48316AFC5FC00857D7C /* FriendAddController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendAddController.h; sourceTree = "<group>"; };
 		1881E48416AFC5FC00857D7C /* FriendAddController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendAddController.m; sourceTree = "<group>"; };
 		188BEE24165B161400DB9A8D /* FriendInfoController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendInfoController.h; sourceTree = "<group>"; };
@@ -1119,8 +1107,6 @@
 				1543366D16BFA2D800894F44 /* AssignBirthdayController.m */,
 				E50002EA162E979B00434976 /* BirthdayController.h */,
 				E50002EB162E979B00434976 /* BirthdayController.m */,
-				188100EF1654870500E7B66B /* GiftListController.h */,
-				188100F01654870500E7B66B /* GiftListController.m */,
 			);
 			name = Birthday;
 			sourceTree = "<group>";
@@ -1708,15 +1694,6 @@
 				182B63EF16EA330000A003B9 /* UIFolderTableView.m in Sources */,
 				1897B73C16A8E128001C810D /* FolderCoverView.m in Sources */,
 				1897B73E16A8E128001C810D /* UIView+screenshot.m in Sources */,
-				182B63D916EA2C6F00A003B9 /* BlockActionSheet.h in Sources */,
-				182B63DA16EA2C6F00A003B9 /* BlockAlertView.h in Sources */,
-				182B63DB16EA2C6F00A003B9 /* BlockBackground.h in Sources */,
-				182B63DC16EA2C6F00A003B9 /* BlockTextPromptAlertView.h in Sources */,
-				182B63DD16EA2C6F00A003B9 /* JSONKit.h in Sources */,
-				182B63DE16EA2C6F00A003B9 /* SinaWeibo.h in Sources */,
-				182B63DF16EA2C6F00A003B9 /* SinaWeiboAuthorizeView.h in Sources */,
-				182B63E016EA2C6F00A003B9 /* SinaWeiboConstants.h in Sources */,
-				182B63E116EA2C6F00A003B9 /* SinaWeiboRequest.h in Sources */,
 				E5D827CB16081EC400969EE2 /* main.m in Sources */,
 				E5D827CF16081EC400969EE2 /* AppDelegate.m in Sources */,
 				E5D827D816081EC400969EE2 /* IndexController.m in Sources */,
@@ -1744,7 +1721,6 @@
 				15C3DFB4164618000006183D /* BirthdayCell.m in Sources */,
 				15F413F51647952500AA6FB3 /* PersonalCell.m in Sources */,
 				15D7CE981648EA570088E49F /* Birthday.m in Sources */,
-				188100F11654870500E7B66B /* GiftListController.m in Sources */,
 				18C7F707165A765900B709AE /* BaseController.m in Sources */,
 				188BEE26165B161400DB9A8D /* FriendInfoController.m in Sources */,
 				186AEFFA165CBB37008372B4 /* CategoryCell.m in Sources */,
