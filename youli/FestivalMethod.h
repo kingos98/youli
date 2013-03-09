@@ -12,5 +12,5 @@
 
 -(void)checkFestivalIsExist;
 -(void)writeFestivalToDB:(NSInteger)Year;
--(NSMutableArray *)getTopSixFestivalList;
+-(NSMutableArray *)getTopSixFestivalList:(NSString *)FestivalName;
 @end

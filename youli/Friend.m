@@ -44,7 +44,7 @@
     NSString *URL = @"friendships/friends/bilateral.json";
     NSDictionary *param = [NSDictionary dictionaryWithObjectsAndKeys:[Account getInstance].userID, @"uid",[Account getInstance].accessToken, @"access_token", nil];
     [[AFWeiboAPIClient getInstance] getPath:URL parameters:param success:^(AFHTTPRequestOperation *operation, id JSON) {
-        NSDictionary *usersDict = [[JSON objectForKey:@"users"] retain];
+        NSDictionary *usersDict = [JSON objectForKey:@"users"];
         NSMutableArray *mutableFriend = [NSMutableArray arrayWithCapacity:[usersDict count]];
         for (NSDictionary *user in usersDict) {
             Friend *friend = [Friend alloc];

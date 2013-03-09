@@ -150,7 +150,7 @@
         self.TaobaoURL=[arrGiftDetail objectAtIndex:5];
     }
     
-    [fmdataOper release];
+
 }
 
 -(void)operGift
@@ -178,7 +178,6 @@
     [btnCollect setBackgroundImage:imgCollectButtonUnSelect forState:UIControlStateNormal];
     [btnCollect setBackgroundImage:imgCollectButtonSelect forState:UIControlStateHighlighted];
     
-    [fmdataOper release];
 }
 
 @end

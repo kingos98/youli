@@ -97,8 +97,8 @@
     FMResultSet *rs = [db executeQuery:strSql];
 
     while ([rs next]) {
-        int giftID=[rs intForColumn:GIFTID];
-        int giftType=[rs intForColumn:GIFTTYPE];
+        NSString *giftID=[rs stringForColumn:GIFTID];
+        NSString *giftType=[rs stringForColumn:GIFTTYPE];
         NSString *giftTitle=[rs stringForColumn:GIFTTITLE];
         NSString *giftDetail=[rs stringForColumn:GIFTDETAIL];
         NSString *imageURL=[rs stringForColumn:GIFTIMAGEURL];

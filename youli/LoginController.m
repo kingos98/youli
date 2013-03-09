@@ -115,11 +115,11 @@
                             kAppRedirectURI, @"redirect_uri",
                             code, @"code", nil];
     [weiboRequest disconnect];
-    [weiboRequest release], weiboRequest = nil;
-    weiboRequest = [[SinaWeiboRequest requestWithURL:kSinaWeiboWebAccessTokenURL
+    weiboRequest = nil;
+    weiboRequest = [SinaWeiboRequest requestWithURL:kSinaWeiboWebAccessTokenURL
                                      httpMethod:@"POST"
                                          params:params
-                                       delegate:self] retain];
+                                       delegate:self];
     
     [weiboRequest connect];
 }

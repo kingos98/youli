@@ -62,7 +62,6 @@
     personalInfoBgView.userInteractionEnabled = YES;
     UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(saveClick)];
     [personalInfoBgView addGestureRecognizer:singleTap];
-    [singleTap release];
     UIImageView *faceBgView = [[UIImageView alloc] initWithFrame:CGRectMake(16,59,57,59)];
     [faceBgView setImage:[UIImage imageNamed:@"face_bg.png"]];
     UIImageView *faceView = [[UIImageView alloc] initWithFrame:CGRectMake(19,61,51,52)];

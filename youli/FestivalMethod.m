@@ -222,7 +222,6 @@
     
     NSString *chineseCal_str =[NSString stringWithFormat: @"%@_%@_%@",y_str,m_str,d_str];
     
-    [localeCalendar release];
     
     return chineseCal_str;
 }

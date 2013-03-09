@@ -217,7 +217,6 @@
     UILocalNotification *notification=[[UILocalNotification alloc] init];
     notification.applicationIconBadgeNumber=0;
     [[UIApplication sharedApplication] scheduleLocalNotification:notification];
-    [notification release];
 
     [LocalNotificationsUtils removeAllLocalNotification];
     

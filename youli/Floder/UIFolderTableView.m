@@ -37,14 +37,6 @@
 @synthesize oldContentOffset=_oldContentOffset;
 @synthesize folderDelegate=_folderDelegate;
 
-- (void)dealloc
-{
-    [_top release];
-    [_bottom release];
-    [_subClassContentView release];
-    [super dealloc];
-}
-
 - (void)openFolderAtIndexPath:(NSIndexPath *)indexPath
               WithContentView:(UIView *)subClassContentView
                     openBlock:(FolderOpenBlock)openBlock 
@@ -97,8 +89,8 @@
     // 绑定关闭动作
     [self.top addTarget:self action:@selector(performClose:) forControlEvents:UIControlEventTouchUpInside];
     [self.bottom addTarget:self action:@selector(performClose:) forControlEvents:UIControlEventTouchUpInside];
-    [self.top.cover addGestureRecognizer:[[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGestureAction:)] autorelease]];
-    [self.bottom.cover addGestureRecognizer:[[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGestureAction:)] autorelease]];
+    [self.top.cover addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGestureAction:)]];
+    [self.bottom.cover addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGestureAction:)]];
     
     [self addSubview:subClassContentView];
     [self addSubview:self.top];
@@ -241,7 +233,7 @@
     CGImageRef ref1 = CGImageCreateWithImageInRect([screen CGImage], scaledRect);
     FolderCoverView *coverView;
     if (isTop) {
-        coverView = [[[FolderCoverView alloc] initWithFrame:aRect offset:self.rowHeight-5] autorelease];
+        coverView = [[FolderCoverView alloc] initWithFrame:aRect offset:self.rowHeight-5];
         UIButton *saveButton = [UIButton buttonWithType:UIButtonTypeCustom];
         saveButton.frame = CGRectMake(260,height-30,50,23);
         UIImage *saveImage = [[UIImage imageNamed:@"save.png"] stretchableImageWithLeftCapWidth:0 topCapHeight:0];
@@ -249,7 +241,7 @@
         [saveButton addTarget:self action:@selector(saveButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
         [coverView addSubview:saveButton];
     } else {
-        coverView = [[[FolderCoverView alloc] initWithFrame:aRect offset:0] autorelease];
+        coverView = [[FolderCoverView alloc] initWithFrame:aRect offset:0];
     }
     [coverView setIsTopView:isTop];
     coverView.position = position;

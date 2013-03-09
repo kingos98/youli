@@ -535,7 +535,7 @@
 #pragma mark - GestureRecognizer
 -(void) tapPhoto:(UITapGestureRecognizer*) sender
 {
-    birthdayGiftDetailController=[[[BirthdayGiftDetailController alloc]init] autorelease];
+    birthdayGiftDetailController=[[BirthdayGiftDetailController alloc] init];
     [birthdayGiftDetailController sendGiftID:[(UIGestureRecognizer *)sender view].tag];
 
     [self.navigationController pushViewController:birthdayGiftDetailController animated:YES];

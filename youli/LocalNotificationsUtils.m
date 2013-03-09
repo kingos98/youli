@@ -26,7 +26,6 @@
     NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:alertname, @"activityid", nil];
     notification.userInfo = dic;
     [[UIApplication sharedApplication] scheduleLocalNotification:notification];
-    [notification release];
 }
 
 //取消提醒 by name

@@ -18,10 +18,10 @@
 		151C0B3316DDF4D000F2B71F /* BirthdayCellBg2.png in Resources */ = {isa = PBXBuildFile; fileRef = 151C0B3016DDF4D000F2B71F /* BirthdayCellBg2.png */; };
 		151C0B3416DDF4D000F2B71F /* BirthdayCellBg3.png in Resources */ = {isa = PBXBuildFile; fileRef = 151C0B3116DDF4D000F2B71F /* BirthdayCellBg3.png */; };
 		151C0B3716DDFD7C00F2B71F /* today.png in Resources */ = {isa = PBXBuildFile; fileRef = 151C0B3616DDFD7C00F2B71F /* today.png */; };
-		152CCBAF16A7D5D000B0B578 /* BlockActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 152CCBA816A7D5D000B0B578 /* BlockActionSheet.m */; };
-		152CCBB016A7D5D000B0B578 /* BlockAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 152CCBAA16A7D5D000B0B578 /* BlockAlertView.m */; };
-		152CCBB116A7D5D000B0B578 /* BlockBackground.m in Sources */ = {isa = PBXBuildFile; fileRef = 152CCBAC16A7D5D000B0B578 /* BlockBackground.m */; };
-		152CCBB216A7D5D000B0B578 /* BlockTextPromptAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 152CCBAE16A7D5D000B0B578 /* BlockTextPromptAlertView.m */; };
+		152CCBAF16A7D5D000B0B578 /* BlockActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 152CCBA816A7D5D000B0B578 /* BlockActionSheet.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		152CCBB016A7D5D000B0B578 /* BlockAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 152CCBAA16A7D5D000B0B578 /* BlockAlertView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		152CCBB116A7D5D000B0B578 /* BlockBackground.m in Sources */ = {isa = PBXBuildFile; fileRef = 152CCBAC16A7D5D000B0B578 /* BlockBackground.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		152CCBB216A7D5D000B0B578 /* BlockTextPromptAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 152CCBAE16A7D5D000B0B578 /* BlockTextPromptAlertView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		152CCBCD16A7D7B400B0B578 /* action-black-button-selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 152CCBB616A7D7B400B0B578 /* action-black-button-selected.png */; };
 		152CCBCE16A7D7B400B0B578 /* action-black-button-selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 152CCBB716A7D7B400B0B578 /* action-black-button-selected@2x.png */; };
 		152CCBCF16A7D7B400B0B578 /* action-black-button.png in Resources */ = {isa = PBXBuildFile; fileRef = 152CCBB816A7D7B400B0B578 /* action-black-button.png */; };
@@ -143,6 +143,16 @@
 		1823CA0416BF601E0069E624 /* save.png in Resources */ = {isa = PBXBuildFile; fileRef = 1823CA0216BF601E0069E624 /* save.png */; };
 		1823CA0716BF65090069E624 /* friend_cell_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1823CA0516BF65090069E624 /* friend_cell_bg@2x.png */; };
 		1823CA0816BF65090069E624 /* friend_cell_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 1823CA0616BF65090069E624 /* friend_cell_bg.png */; };
+		182B63D916EA2C6F00A003B9 /* BlockActionSheet.h in Sources */ = {isa = PBXBuildFile; fileRef = 152CCBA716A7D5D000B0B578 /* BlockActionSheet.h */; };
+		182B63DA16EA2C6F00A003B9 /* BlockAlertView.h in Sources */ = {isa = PBXBuildFile; fileRef = 152CCBA916A7D5D000B0B578 /* BlockAlertView.h */; };
+		182B63DB16EA2C6F00A003B9 /* BlockBackground.h in Sources */ = {isa = PBXBuildFile; fileRef = 152CCBAB16A7D5D000B0B578 /* BlockBackground.h */; };
+		182B63DC16EA2C6F00A003B9 /* BlockTextPromptAlertView.h in Sources */ = {isa = PBXBuildFile; fileRef = 152CCBAD16A7D5D000B0B578 /* BlockTextPromptAlertView.h */; };
+		182B63DD16EA2C6F00A003B9 /* JSONKit.h in Sources */ = {isa = PBXBuildFile; fileRef = 18E24E6B168E9177000D2172 /* JSONKit.h */; };
+		182B63DE16EA2C6F00A003B9 /* SinaWeibo.h in Sources */ = {isa = PBXBuildFile; fileRef = 18E24E6F168E9177000D2172 /* SinaWeibo.h */; };
+		182B63DF16EA2C6F00A003B9 /* SinaWeiboAuthorizeView.h in Sources */ = {isa = PBXBuildFile; fileRef = 18E24E71168E9177000D2172 /* SinaWeiboAuthorizeView.h */; };
+		182B63E016EA2C6F00A003B9 /* SinaWeiboConstants.h in Sources */ = {isa = PBXBuildFile; fileRef = 18E24E73168E9177000D2172 /* SinaWeiboConstants.h */; };
+		182B63E116EA2C6F00A003B9 /* SinaWeiboRequest.h in Sources */ = {isa = PBXBuildFile; fileRef = 18E24E74168E9177000D2172 /* SinaWeiboRequest.h */; };
+		182B63EF16EA330000A003B9 /* UIFolderTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1897B73916A8E128001C810D /* UIFolderTableView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		184D3B1316523FAC008E3386 /* tabbar_box@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 184D3B0D16523FAC008E3386 /* tabbar_box@2x.png */; };
 		184D3B1416523FAC008E3386 /* tabbar_left.png in Resources */ = {isa = PBXBuildFile; fileRef = 184D3B0E16523FAC008E3386 /* tabbar_left.png */; };
 		184D3B1516523FAC008E3386 /* tabbar_left@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 184D3B0F16523FAC008E3386 /* tabbar_left@2x.png */; };
@@ -181,7 +191,6 @@
 		1892D52C16D5F6CA007A8002 /* personal_prompt_bg.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1892D52416D5F6CA007A8002 /* personal_prompt_bg.jpg */; };
 		1897AD7316C204BD00C89DF3 /* ConstellationSelector.m in Sources */ = {isa = PBXBuildFile; fileRef = 1897AD7216C204BD00C89DF3 /* ConstellationSelector.m */; };
 		1897B73C16A8E128001C810D /* FolderCoverView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1897B73716A8E128001C810D /* FolderCoverView.m */; };
-		1897B73D16A8E128001C810D /* UIFolderTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1897B73916A8E128001C810D /* UIFolderTableView.m */; };
 		1897B73E16A8E128001C810D /* UIView+screenshot.m in Sources */ = {isa = PBXBuildFile; fileRef = 1897B73B16A8E128001C810D /* UIView+screenshot.m */; };
 		1897B75316A92185001C810D /* SubTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1897B75216A92184001C810D /* SubTableCell.m */; };
 		1899613316E4684B00684023 /* LoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1899613216E4684B00684023 /* LoginController.m */; };
@@ -210,11 +219,11 @@
 		18CAD292165DCB75008CCF37 /* friend_info_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 18CAD28C165DCB75008CCF37 /* friend_info_bg.png */; };
 		18CAD293165DCB75008CCF37 /* friend_info_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 18CAD28D165DCB75008CCF37 /* friend_info_bg@2x.png */; };
 		18DBE8C91664643B006631FD /* CategoryTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DBE8C81664643B006631FD /* CategoryTableView.m */; };
-		18E24E76168E9177000D2172 /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E24E6C168E9177000D2172 /* JSONKit.m */; };
+		18E24E76168E9177000D2172 /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E24E6C168E9177000D2172 /* JSONKit.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		18E24E77168E9177000D2172 /* SinaWeibo.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 18E24E6E168E9177000D2172 /* SinaWeibo.bundle */; };
-		18E24E78168E9177000D2172 /* SinaWeibo.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E24E70168E9177000D2172 /* SinaWeibo.m */; };
-		18E24E79168E9177000D2172 /* SinaWeiboAuthorizeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E24E72168E9177000D2172 /* SinaWeiboAuthorizeView.m */; };
-		18E24E7A168E9177000D2172 /* SinaWeiboRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E24E75168E9177000D2172 /* SinaWeiboRequest.m */; };
+		18E24E78168E9177000D2172 /* SinaWeibo.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E24E70168E9177000D2172 /* SinaWeibo.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		18E24E79168E9177000D2172 /* SinaWeiboAuthorizeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E24E72168E9177000D2172 /* SinaWeiboAuthorizeView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		18E24E7A168E9177000D2172 /* SinaWeiboRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E24E75168E9177000D2172 /* SinaWeiboRequest.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		18E24E88168E9324000D2172 /* add@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 18E24E84168E9324000D2172 /* add@2x.png */; };
 		18E24E89168E9324000D2172 /* add1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 18E24E85168E9324000D2172 /* add1@2x.png */; };
 		18E24E8A168E9324000D2172 /* add.png in Resources */ = {isa = PBXBuildFile; fileRef = 18E24E86168E9324000D2172 /* add.png */; };
@@ -1696,6 +1705,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				182B63EF16EA330000A003B9 /* UIFolderTableView.m in Sources */,
+				1897B73C16A8E128001C810D /* FolderCoverView.m in Sources */,
+				1897B73E16A8E128001C810D /* UIView+screenshot.m in Sources */,
+				182B63D916EA2C6F00A003B9 /* BlockActionSheet.h in Sources */,
+				182B63DA16EA2C6F00A003B9 /* BlockAlertView.h in Sources */,
+				182B63DB16EA2C6F00A003B9 /* BlockBackground.h in Sources */,
+				182B63DC16EA2C6F00A003B9 /* BlockTextPromptAlertView.h in Sources */,
+				182B63DD16EA2C6F00A003B9 /* JSONKit.h in Sources */,
+				182B63DE16EA2C6F00A003B9 /* SinaWeibo.h in Sources */,
+				182B63DF16EA2C6F00A003B9 /* SinaWeiboAuthorizeView.h in Sources */,
+				182B63E016EA2C6F00A003B9 /* SinaWeiboConstants.h in Sources */,
+				182B63E116EA2C6F00A003B9 /* SinaWeiboRequest.h in Sources */,
 				E5D827CB16081EC400969EE2 /* main.m in Sources */,
 				E5D827CF16081EC400969EE2 /* AppDelegate.m in Sources */,
 				E5D827D816081EC400969EE2 /* IndexController.m in Sources */,
@@ -1750,9 +1771,6 @@
 				152CCBB016A7D5D000B0B578 /* BlockAlertView.m in Sources */,
 				152CCBB116A7D5D000B0B578 /* BlockBackground.m in Sources */,
 				152CCBB216A7D5D000B0B578 /* BlockTextPromptAlertView.m in Sources */,
-				1897B73C16A8E128001C810D /* FolderCoverView.m in Sources */,
-				1897B73D16A8E128001C810D /* UIFolderTableView.m in Sources */,
-				1897B73E16A8E128001C810D /* UIView+screenshot.m in Sources */,
 				15680CA916AFD14C0086693E /* FestivalMethod.m in Sources */,
 				1897B75316A92185001C810D /* SubTableCell.m in Sources */,
 				1881E48516AFC5FC00857D7C /* FriendAddController.m in Sources */,
@@ -1861,7 +1879,7 @@
 		E5D827F116081EC400969EE2 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_ARC = NO;
+				CLANG_ENABLE_OBJC_ARC = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "youli/youli-Prefix.pch";
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
@@ -1887,7 +1905,7 @@
 		E5D827F216081EC400969EE2 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_ARC = NO;
+				CLANG_ENABLE_OBJC_ARC = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "youli/youli-Prefix.pch";
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
