@@ -17,8 +17,8 @@
 @property(nonatomic,strong)NSString *birthdayDate;
 @property(nonatomic,strong)NSString *profileUrl;
 
-- (void)save;
-- (NSMutableArray *)findAll;
 + (void)loadFriend:(void (^)(NSArray *friends, NSError *error))block;
++ (NSMutableArray *)findByIsAdd;
+- (void)save;
 
 @end

@@ -19,27 +19,6 @@
 @synthesize birthdayDate;
 @synthesize profileUrl;
 
-- (void)save{
-    
-}
-
-- (NSMutableArray *)findAll{    
-    NSMutableArray *friendArray = [[NSMutableArray alloc] init];
-    FMResultSet *rs = [[DbUtils getInstance].fmDatabase executeQuery:@"select * from %@ where =",@"dd"];
-    while ([rs next]) {
-        NSString *giftID = [rs stringForColumn:@"id"];
-        NSString *giftType = [rs stringForColumn:@"id"];
-        NSString *giftTitle = [rs stringForColumn:@"id"];
-        NSString *giftDetail = [rs stringForColumn:@"id"];
-        NSString *imageURL = [rs stringForColumn:@"id"];
-        NSString *taobaoURL = [rs stringForColumn:@"id"];
-        NSString *price = [rs stringForColumn:@"id"];
-        NSArray *model = [[NSArray alloc]  initWithObjects:giftID,giftType,giftTitle,giftDetail,imageURL,taobaoURL, price,nil];
-        [friendArray addObject: model];
-    }
-    return friendArray;
-}
-
 + (void)loadFriend:(void (^)(NSArray *friends, NSError *error))block {
     NSString *URL = @"friendships/friends/bilateral.json";
     NSDictionary *param = [NSDictionary dictionaryWithObjectsAndKeys:[Account getInstance].userID, @"uid",[Account getInstance].accessToken, @"access_token", nil];
@@ -60,6 +39,22 @@
             block([NSArray array], error);
         }
     }];
+}
+
++ (NSMutableArray *)findByIsAdd{
+    NSMutableArray *friendArray = [[NSMutableArray alloc] init];
+    FMResultSet *rs = [[DbUtils getInstance].fmDatabase executeQuery:@"select * from %@ where =",@"dd"];
+    while ([rs next]) {
+        Friend *friend = [Friend alloc];
+        friend.name = [rs stringForColumn:@"id"];;
+        friend.profileUrl = [rs stringForColumn:@"id"];;
+        [friendArray addObject: friend];
+    }
+    return friendArray;
+}
+
+- (void)save{
+    [[DbUtils getInstance].fmDatabase executeUpdate:@"insert into %@(%@) values(%d)"];
 }
 
 @end

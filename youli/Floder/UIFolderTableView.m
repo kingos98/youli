@@ -231,9 +231,9 @@
     CGFloat deltaY = self.contentOffset.y;    
     CGRect scaledRect = CGRectMake(origin.x*scale, origin.y*scale - deltaY*scale, width*scale, height*scale);
     CGImageRef ref1 = CGImageCreateWithImageInRect([screen CGImage], scaledRect);
-    FolderCoverView *coverView;
+    FolderCoverView *coverView = [FolderCoverView alloc] ;
     if (isTop) {
-        coverView = [[FolderCoverView alloc] initWithFrame:aRect offset:self.rowHeight-5];
+        coverView = [coverView initWithFrame:aRect offset:self.rowHeight-5];
         UIButton *saveButton = [UIButton buttonWithType:UIButtonTypeCustom];
         saveButton.frame = CGRectMake(260,height-30,50,23);
         UIImage *saveImage = [[UIImage imageNamed:@"save.png"] stretchableImageWithLeftCapWidth:0 topCapHeight:0];
@@ -241,7 +241,7 @@
         [saveButton addTarget:self action:@selector(saveButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
         [coverView addSubview:saveButton];
     } else {
-        coverView = [[FolderCoverView alloc] initWithFrame:aRect offset:0];
+        coverView = [coverView initWithFrame:aRect offset:0];
     }
     [coverView setIsTopView:isTop];
     coverView.position = position;

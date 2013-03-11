@@ -144,6 +144,7 @@
 		1823CA0716BF65090069E624 /* friend_cell_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1823CA0516BF65090069E624 /* friend_cell_bg@2x.png */; };
 		1823CA0816BF65090069E624 /* friend_cell_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 1823CA0616BF65090069E624 /* friend_cell_bg.png */; };
 		182B63EF16EA330000A003B9 /* UIFolderTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1897B73916A8E128001C810D /* UIFolderTableView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		183A2B1216EB891E006B4D2C /* FriendMegController.m in Sources */ = {isa = PBXBuildFile; fileRef = 183A2B1116EB891E006B4D2C /* FriendMegController.m */; };
 		184D3B1316523FAC008E3386 /* tabbar_box@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 184D3B0D16523FAC008E3386 /* tabbar_box@2x.png */; };
 		184D3B1416523FAC008E3386 /* tabbar_left.png in Resources */ = {isa = PBXBuildFile; fileRef = 184D3B0E16523FAC008E3386 /* tabbar_left.png */; };
 		184D3B1516523FAC008E3386 /* tabbar_left@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 184D3B0F16523FAC008E3386 /* tabbar_left@2x.png */; };
@@ -450,6 +451,8 @@
 		1823CA0216BF601E0069E624 /* save.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = save.png; path = images/personal/save.png; sourceTree = "<group>"; };
 		1823CA0516BF65090069E624 /* friend_cell_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "friend_cell_bg@2x.png"; path = "images/personal/friend_cell_bg@2x.png"; sourceTree = "<group>"; };
 		1823CA0616BF65090069E624 /* friend_cell_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = friend_cell_bg.png; path = images/personal/friend_cell_bg.png; sourceTree = "<group>"; };
+		183A2B1016EB891E006B4D2C /* FriendMegController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendMegController.h; sourceTree = "<group>"; };
+		183A2B1116EB891E006B4D2C /* FriendMegController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendMegController.m; sourceTree = "<group>"; };
 		184D3B0D16523FAC008E3386 /* tabbar_box@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "tabbar_box@2x.png"; path = "images/tabbar_box@2x.png"; sourceTree = "<group>"; };
 		184D3B0E16523FAC008E3386 /* tabbar_left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = tabbar_left.png; path = images/tabbar_left.png; sourceTree = "<group>"; };
 		184D3B0F16523FAC008E3386 /* tabbar_left@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "tabbar_left@2x.png"; path = "images/tabbar_left@2x.png"; sourceTree = "<group>"; };
@@ -977,6 +980,8 @@
 				188BEE25165B161400DB9A8D /* FriendInfoController.m */,
 				1881E48316AFC5FC00857D7C /* FriendAddController.h */,
 				1881E48416AFC5FC00857D7C /* FriendAddController.m */,
+				183A2B1016EB891E006B4D2C /* FriendMegController.h */,
+				183A2B1116EB891E006B4D2C /* FriendMegController.m */,
 			);
 			name = Personal;
 			sourceTree = "<group>";
@@ -1764,6 +1769,7 @@
 				1899613316E4684B00684023 /* LoginController.m in Sources */,
 				18F34DB916E6D9D800CE6748 /* Account.m in Sources */,
 				18F34DCD16E6E73900CE6748 /* AFWeiboAPIClient.m in Sources */,
+				183A2B1216EB891E006B4D2C /* FriendMegController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

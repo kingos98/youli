@@ -180,8 +180,7 @@
 
 - (NSMutableArray*)loadFriend
 {
-    Friend *friend = [[Friend alloc] init];
-    return [friend findAll];
+    return [Friend findByIsAdd];
 }
 
 - (void)viewDidAppear:(BOOL)animated
