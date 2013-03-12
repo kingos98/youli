@@ -25,6 +25,7 @@
 #import "CategoryCell.h"
 #import "FMDatabase.h"
 #import "FMDatabaseOper.h"
+#import "BirthdayGiftModel.h"
 
 @interface BirthdayGiftController ()
 {
@@ -91,10 +92,11 @@
                          @"pisces.png",
                          nil];
 
-    fmdataOper=[[FMDatabaseOper alloc]init];
-
-    [fmdataOper cleanGiftList];
-        
+//    fmdataOper=[[FMDatabaseOper alloc]init];
+//    [fmdataOper cleanGiftList];
+    
+    [BirthdayGiftModel cleanGiftList];
+    
     [self initView];
     
     [self initConstellation];

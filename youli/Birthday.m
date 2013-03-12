@@ -178,7 +178,7 @@
     
     
     NSDateComponents *comp=[[NSDateComponents alloc]init];
-    NSDateComponents *weekdayComponents=[[NSDateComponents alloc]init];
+//    NSDateComponents *weekdayComponents=[[NSDateComponents alloc]init];
     NSCalendar *calendar=[[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
 
     [comp setYear:[strYear intValue]];
@@ -186,7 +186,7 @@
     [comp setDay:[strDay intValue]];
     
     NSDate *tmpDate=[calendar dateFromComponents:comp];
-    weekdayComponents=[calendar components:NSWeekdayCalendarUnit fromDate:tmpDate];
+    NSDateComponents *weekdayComponents=[calendar components:NSWeekdayCalendarUnit fromDate:tmpDate];
     
     NSString *strWeekDay;
     switch (weekdayComponents.weekday) {

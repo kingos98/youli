@@ -39,6 +39,15 @@ static DbUtils *instance = nil;
     return instance;
 }
 
++(void)ExecSql:(NSString *)Sql
+{
+    if([self getInstance].fmDatabase.open)
+    {
+        [[self getInstance].fmDatabase executeQuery:Sql];
+        
+        [[self getInstance].fmDatabase close];
+    }
+}
 
 
 @end

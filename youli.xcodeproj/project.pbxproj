@@ -112,6 +112,9 @@
 		15BEB0ED16C105AF0003EC20 /* birthday_gift_select.png in Resources */ = {isa = PBXBuildFile; fileRef = 15BEB0EC16C105AF0003EC20 /* birthday_gift_select.png */; };
 		15BEB11916D0CC030003EC20 /* LocalNotificationsUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 15BEB11816D0CC030003EC20 /* LocalNotificationsUtils.m */; };
 		15C3DFB4164618000006183D /* BirthdayCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 15C3DFB3164618000006183D /* BirthdayCell.m */; };
+		15C786A316EDBD7800B1908F /* BirthdayGiftModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 15C786A216EDBD7800B1908F /* BirthdayGiftModel.m */; };
+		15C786A716EE243000B1908F /* CollectBirthdayGiftModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 15C786A616EE243000B1908F /* CollectBirthdayGiftModel.m */; };
+		15C786AB16EEBFA500B1908F /* FestivalListDateModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 15C786AA16EEBFA500B1908F /* FestivalListDateModel.m */; };
 		15CE7AFD1689A41A00707588 /* share_click.png in Resources */ = {isa = PBXBuildFile; fileRef = 15CE7AFB1689A41A00707588 /* share_click.png */; };
 		15CE7AFE1689A41A00707588 /* share_unclick.png in Resources */ = {isa = PBXBuildFile; fileRef = 15CE7AFC1689A41A00707588 /* share_unclick.png */; };
 		15CE7B021689A63300707588 /* BirthdayGiftDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 15CE7B011689A63300707588 /* BirthdayGiftDetailController.m */; };
@@ -413,6 +416,12 @@
 		15BEB11816D0CC030003EC20 /* LocalNotificationsUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalNotificationsUtils.m; sourceTree = "<group>"; };
 		15C3DFB2164618000006183D /* BirthdayCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BirthdayCell.h; sourceTree = "<group>"; };
 		15C3DFB3164618000006183D /* BirthdayCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BirthdayCell.m; sourceTree = "<group>"; };
+		15C786A116EDBD7800B1908F /* BirthdayGiftModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BirthdayGiftModel.h; sourceTree = "<group>"; };
+		15C786A216EDBD7800B1908F /* BirthdayGiftModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BirthdayGiftModel.m; sourceTree = "<group>"; };
+		15C786A516EE243000B1908F /* CollectBirthdayGiftModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollectBirthdayGiftModel.h; sourceTree = "<group>"; };
+		15C786A616EE243000B1908F /* CollectBirthdayGiftModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollectBirthdayGiftModel.m; sourceTree = "<group>"; };
+		15C786A916EEBFA500B1908F /* FestivalListDateModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FestivalListDateModel.h; sourceTree = "<group>"; };
+		15C786AA16EEBFA500B1908F /* FestivalListDateModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FestivalListDateModel.m; sourceTree = "<group>"; };
 		15CE7AFB1689A41A00707588 /* share_click.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = share_click.png; sourceTree = "<group>"; };
 		15CE7AFC1689A41A00707588 /* share_unclick.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = share_unclick.png; sourceTree = "<group>"; };
 		15CE7B001689A63300707588 /* BirthdayGiftDetailController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BirthdayGiftDetailController.h; sourceTree = "<group>"; };
@@ -890,6 +899,15 @@
 			name = Delegate;
 			sourceTree = "<group>";
 		};
+		15C786A816EEBF9400B1908F /* Festival */ = {
+			isa = PBXGroup;
+			children = (
+				15C786A916EEBFA500B1908F /* FestivalListDateModel.h */,
+				15C786AA16EEBFA500B1908F /* FestivalListDateModel.m */,
+			);
+			name = Festival;
+			sourceTree = "<group>";
+		};
 		15CE7B14168AD71700707588 /* DB */ = {
 			isa = PBXGroup;
 			children = (
@@ -929,6 +947,7 @@
 		15D7CE901648E6250088E49F /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				15C786A816EEBF9400B1908F /* Festival */,
 				186AEFF1165CBA95008372B4 /* Category */,
 				15D7CE921648E7C90088E49F /* Gifts */,
 				18E24E91168E9396000D2172 /* Personal */,
@@ -952,6 +971,10 @@
 			children = (
 				15D7CE961648EA570088E49F /* Birthday.h */,
 				15D7CE971648EA570088E49F /* Birthday.m */,
+				15C786A116EDBD7800B1908F /* BirthdayGiftModel.h */,
+				15C786A216EDBD7800B1908F /* BirthdayGiftModel.m */,
+				15C786A516EE243000B1908F /* CollectBirthdayGiftModel.h */,
+				15C786A616EE243000B1908F /* CollectBirthdayGiftModel.m */,
 			);
 			name = Gifts;
 			sourceTree = "<group>";
@@ -1770,6 +1793,9 @@
 				18F34DB916E6D9D800CE6748 /* Account.m in Sources */,
 				18F34DCD16E6E73900CE6748 /* AFWeiboAPIClient.m in Sources */,
 				183A2B1216EB891E006B4D2C /* FriendMegController.m in Sources */,
+				15C786A316EDBD7800B1908F /* BirthdayGiftModel.m in Sources */,
+				15C786A716EE243000B1908F /* CollectBirthdayGiftModel.m in Sources */,
+				15C786AB16EEBFA500B1908F /* FestivalListDateModel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

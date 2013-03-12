@@ -8,7 +8,8 @@
 
 #import "BirthdayGiftDetailItem.h"
 #import "UIImageView+WebCache.h"
-
+#import "BirthdayGiftModel.h"
+#import "CollectBirthdayGiftModel.h"
 
 @interface BirthdayGiftDetailItem ()
 
@@ -91,7 +92,8 @@
     
     UIImage *imgCollectButtonSelect;
     UIImage *imgCollectButtonUnSelect;
-    if(![fmdataOper checkIsCollect:currentGiftID])
+//    if(![fmdataOper checkIsCollect:currentGiftID])
+    if(![CollectBirthdayGiftModel checkIsCollect:currentGiftID])
     {
         imgCollectButtonSelect=[[UIImage imageNamed:@"collect_click.png"] stretchableImageWithLeftCapWidth:0 topCapHeight:0];
         imgCollectButtonUnSelect=[[UIImage imageNamed:@"collect_unclick.png"] stretchableImageWithLeftCapWidth:0 topCapHeight:0];
@@ -133,24 +135,38 @@
 {
     fmdataOper=[[FMDatabaseOper alloc]init];
 
-    arrGiftDetail=[fmdataOper getGiftDetail:PhotoID];
+//    arrGiftDetail=[fmdataOper getGiftDetail:PhotoID];
     
+    BirthdayGiftModel *birthdayGiftModel=[BirthdayGiftModel getGiftDetail:PhotoID];
     
-    if(arrGiftDetail!=nil)
-    {
-        lblTitle.tag=[arrGiftDetail objectAtIndex:0];
-        lblTitle.text=[arrGiftDetail objectAtIndex:2];
-        
-        [imgPhoto setImageWithURL:[arrGiftDetail objectAtIndex:4] placeholderImage:[UIImage imageNamed:@"3.jpg"]];
-        
-        lblDetail.text= [arrGiftDetail objectAtIndex:3];
-        
-        lblPrice.text=[NSString stringWithFormat: @"%@", [arrGiftDetail objectAtIndex:6]];
-        
-        self.TaobaoURL=[arrGiftDetail objectAtIndex:5];
-    }
+//    if(arrGiftDetail!=nil)
+//    {
+//        lblTitle.tag=[arrGiftDetail objectAtIndex:0];
+//        lblTitle.text=[arrGiftDetail objectAtIndex:2];
+//        
+//        [imgPhoto setImageWithURL:[arrGiftDetail objectAtIndex:4] placeholderImage:[UIImage imageNamed:@"3.jpg"]];
+//        
+//        lblDetail.text= [arrGiftDetail objectAtIndex:3];
+//        
+//        lblPrice.text=[NSString stringWithFormat: @"%@", [arrGiftDetail objectAtIndex:6]];
+//        
+//        self.TaobaoURL=[arrGiftDetail objectAtIndex:5];
+//    }
     
 
+    if(birthdayGiftModel!=nil)
+    {
+        lblTitle.tag=birthdayGiftModel.giftid;
+        lblTitle.text=birthdayGiftModel.title;
+
+        [imgPhoto setImageWithURL:[NSURL URLWithString:birthdayGiftModel.imageurl] placeholderImage:[UIImage imageNamed:@"3.jpg"]];
+        
+        lblDetail.text=birthdayGiftModel.detail;
+        
+        lblPrice.text=[NSString stringWithFormat: @"%f", birthdayGiftModel.price];
+        
+        self.TaobaoURL=birthdayGiftModel.taobaourl;
+    }
 }
 
 -(void)operGift
@@ -158,17 +174,19 @@
     UIImage *imgCollectButtonSelect;
     UIImage *imgCollectButtonUnSelect;
 
-    fmdataOper=[[FMDatabaseOper alloc]init];
+//    fmdataOper=[[FMDatabaseOper alloc]init];
     
     if(!isCollect)
     {
-        [fmdataOper operGiftToCollection:true GiftID:currentGiftID];
+//        [fmdataOper operGiftToCollection:true GiftID:currentGiftID];
+        [CollectBirthdayGiftModel operGiftToCollection:true GiftID:currentGiftID];
         imgCollectButtonSelect=[[UIImage imageNamed:@"cancel_collect_click.png"] stretchableImageWithLeftCapWidth:0 topCapHeight:0];
         imgCollectButtonUnSelect=[[UIImage imageNamed:@"cancel_collect_unclick.png"] stretchableImageWithLeftCapWidth:0 topCapHeight:0];
     }
     else
     {
-        [fmdataOper operGiftToCollection:false GiftID:currentGiftID];
+//        [fmdataOper operGiftToCollection:false GiftID:currentGiftID];
+        [CollectBirthdayGiftModel operGiftToCollection:false GiftID:currentGiftID];
         imgCollectButtonSelect=[[UIImage imageNamed:@"collect_click.png"] stretchableImageWithLeftCapWidth:0 topCapHeight:0];
         imgCollectButtonUnSelect=[[UIImage imageNamed:@"collect_unclick.png"] stretchableImageWithLeftCapWidth:0 topCapHeight:0];
     }

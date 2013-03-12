@@ -165,14 +165,12 @@
     }
     
     NSInteger index=0;
-    Boolean find=false;
 //    FMResultSet *rs=[db executeQuery:@"select giftid from birthdaygift"];
     FMResultSet *rs=[db executeQuery:[NSString stringWithFormat: @"select %@ from %@",GIFTID,TABLEBIRTHDAYGIFT]];
 
     while ([rs next]) {
         if([rs intForColumn:GIFTID]==GiftID)
         {
-            find=true;
             break;
         }
         else
@@ -367,7 +365,8 @@
     NSArray *friendData=nil;
     
     
-    FMResultSet *rs=[[FMResultSet alloc] init];
+//    FMResultSet *rs=[[FMResultSet alloc] init];
+    FMResultSet *rs;
     if(FriendName!=nil && FriendName.length>0)
     {
         rs=[db executeQuery:[NSString stringWithFormat:@"select * from %@ where %@ like ‘%%%@%%’ order by %@,%@",TABLEFRIENDINFO,FRIENDNAME,FriendName,FRIENDBIRTHDAY,FRIENDID]];

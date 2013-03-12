@@ -22,6 +22,7 @@
 #import "BirthdayGiftItem.h"
 #import "NMRangeSlider.h"
 #import "AppDelegate.h"
+#import "BirthdayGiftModel.h"
 
 @interface AssignBirthdayController ()
 {
@@ -76,8 +77,10 @@
 {
     [super viewDidLoad];
 
-    fmdataOper=[[FMDatabaseOper alloc]init];
-    [fmdataOper cleanGiftList];
+//    fmdataOper=[[FMDatabaseOper alloc]init];
+//    [fmdataOper cleanGiftList];
+
+    [BirthdayGiftModel cleanGiftList];
     
     birthdayGiftDetailController=[[BirthdayGiftDetailController alloc]init];
     self.BirthdayGiftDetailControllerDelegate=birthdayGiftDetailController;

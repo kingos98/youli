@@ -15,4 +15,6 @@
 
 + (DbUtils *)getInstance;
 
++(void)ExecSql:(NSString *)Sql;
+
 @end

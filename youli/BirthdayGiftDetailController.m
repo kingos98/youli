@@ -19,6 +19,7 @@
 #import "CategoryCell.h"
 #import "Category.h"
 #import "YouliDelegate.h"
+#import "BirthdayGiftModel.h"
 
 @interface BirthdayGiftDetailController ()
 {
@@ -142,7 +143,9 @@
 #pragma mark - BirthdayGiftDetailControllerDelegate
 -(void)showGiftListByGiftType:(NSInteger)GiftType
 {
-    NSMutableArray *giftArray=[fmdataOper getGiftDetailList:GiftType];
+//    NSMutableArray *giftArray=[fmdataOper getGiftDetailList:GiftType];
+    
+    NSMutableArray *giftArray=[BirthdayGiftModel getGiftDetailList:GiftType];
     
     if(giftArray!=nil)
     {
@@ -159,12 +162,18 @@
 
             for(NSInteger i=0;i<giftArray.count;i++)
             {
-                GiftID=[[giftArray objectAtIndex:i] objectAtIndex:0];
-                strGiftTitle=[[giftArray objectAtIndex:i] objectAtIndex:2];
-                strGiftDetail=[[giftArray objectAtIndex:i] objectAtIndex:3];
-                strImageURL=[[giftArray objectAtIndex:i] objectAtIndex:4];
-                strTaobaoURL=[[giftArray objectAtIndex:i] objectAtIndex:5];
-                Price=[[giftArray objectAtIndex:i] objectAtIndex:6];
+//                GiftID=[[giftArray objectAtIndex:i] objectAtIndex:0];
+//                strGiftTitle=[[giftArray objectAtIndex:i] objectAtIndex:2];
+//                strGiftDetail=[[giftArray objectAtIndex:i] objectAtIndex:3];
+//                strImageURL=[[giftArray objectAtIndex:i] objectAtIndex:4];
+//                strTaobaoURL=[[giftArray objectAtIndex:i] objectAtIndex:5];
+//                Price=[[giftArray objectAtIndex:i] objectAtIndex:6];
+                BirthdayGiftModel *birthdayGiftModel=(BirthdayGiftModel *)[giftArray objectAtIndex:i];
+                GiftID=[NSString stringWithFormat:@"%d", birthdayGiftModel.giftid];
+                strGiftTitle=birthdayGiftModel.title;
+                strImageURL=birthdayGiftModel.imageurl;
+                strTaobaoURL=birthdayGiftModel.taobaourl;
+                Price=[NSString stringWithFormat:@"%f",birthdayGiftModel.price];
                 
                 birthdayGiftDetailItem=[[BirthdayGiftDetailItem alloc]initWithGiftInfo:GiftID GiftTitle:strGiftTitle GiftDetail:strGiftDetail ImageURL:strImageURL TaobaoURL:strTaobaoURL Price:Price];
                 
@@ -184,7 +193,9 @@
 
 -(void)sendGiftID:(NSInteger)GiftID
 {
-    NSInteger index=[fmdataOper getSelectedGiftIndex:GiftID];
+//    NSInteger index=[fmdataOper getSelectedGiftIndex:GiftID];
+    
+    NSInteger index=[BirthdayGiftModel getSelectedGiftIndex:GiftID];
     
 //    k=k+(276+14)*index;
     k=(276+14)*index;

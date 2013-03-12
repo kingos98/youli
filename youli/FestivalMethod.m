@@ -15,6 +15,8 @@
 
 #import "FestivalMethod.h"
 #import "FMDatabaseOper.h"
+#import "FestivalListDateModel.h"
+#import "DbUtils.h"
 
 @implementation FestivalMethod
 
@@ -24,14 +26,16 @@
     unsigned unitFlags = NSYearCalendarUnit | NSMonthCalendarUnit |  NSDayCalendarUnit;
     NSDateComponents *comp=[calendar components:unitFlags fromDate:[NSDate date]];
     
-    FMDatabaseOper *dbOper=[[FMDatabaseOper alloc]init];
-    if(![dbOper checkIsExistFestivalIsYear:comp.year])
+//    FMDatabaseOper *dbOper=[[FMDatabaseOper alloc]init];
+//    if(![dbOper checkIsExistFestivalIsYear:comp.year])
+    if(![FestivalListDateModel checkIsExistFestivalIsYear:comp.year])
     {
         [self writeFestivalToDB:comp.year];
     }
     
     NSInteger nextYear=comp.year+1;
-    if(![dbOper checkIsExistFestivalIsYear:nextYear])
+//    if(![dbOper checkIsExistFestivalIsYear:nextYear])
+    if(![FestivalListDateModel checkIsExistFestivalIsYear:nextYear])
     {
         [self writeFestivalToDB:nextYear];
     }
@@ -39,13 +43,14 @@
 
 -(void)writeFestivalToDB:(NSInteger)Year
 {
-    FMDatabaseOper *dbOper=[[FMDatabaseOper alloc] init] ;
+//    FMDatabaseOper *dbOper=[[FMDatabaseOper alloc] init] ;
     NSMutableArray *festivalArray=[[NSMutableArray alloc]init];
     NSArray *singleFestival=nil;
     
     NSString *strSql=[NSString stringWithFormat: @"select * from %@ where %@=0",TABLEFESTIVALLIST,ISLUNAR];
     
-    NSMutableArray *GregorianArray=[dbOper getFeFestivalInfo:strSql];    //记录当年节日的信息
+//    NSMutableArray *GregorianArray=[dbOper getFeFestivalInfo:strSql];    //记录当年节日的信息
+    NSMutableArray *GregorianArray=[FestivalListDateModel getFeFestivalInfo:strSql];
     
     if(GregorianArray!=nil)
     {
@@ -53,17 +58,22 @@
         {
             for(int i=0;i<GregorianArray.count;i++)
             {
-                singleFestival=[[NSArray alloc] initWithObjects:[[GregorianArray objectAtIndex:i] objectAtIndex:0],
-                                                                [NSString stringWithFormat:@"%4d%@",Year, [[GregorianArray objectAtIndex:i] objectAtIndex:1]],
-                                                                nil];                
+                FestivalListDateModel *festivalListDateModel=(FestivalListDateModel *)[GregorianArray objectAtIndex:i];
+//                singleFestival=[[NSArray alloc] initWithObjects:[[GregorianArray objectAtIndex:i] objectAtIndex:0],
+//                                                                [NSString stringWithFormat:@"%4d%@",Year, [[GregorianArray objectAtIndex:i] objectAtIndex:1]],
+//                                                                nil];
+                singleFestival=[[NSArray alloc]initWithObjects:festivalListDateModel.festivalName,
+                                [NSString stringWithFormat:@"%4d%@",Year, festivalListDateModel.festivalDate],nil];
+
                 [festivalArray addObject:singleFestival];
             }
         }
     }
     
     strSql=[NSString stringWithFormat:@"select * from %@ where %@=1",TABLEFESTIVALLIST,ISLUNAR];
-    NSMutableArray *LunarArray=[dbOper getFeFestivalInfo:strSql];       //农历节日数组
-    
+//    NSMutableArray *LunarArray=[dbOper getFeFestivalInfo:strSql];       //农历节日数组
+    NSMutableArray *LunarArray=[FestivalListDateModel getFeFestivalInfo:strSql];
+
     NSArray *SingleLunar=nil;
     
     //找出当年对应农历节日的日期
@@ -92,10 +102,14 @@
         {
             //判断当天是不是农历节日       参考getChineseCalendarWithDate
             dayLunarToGregorina=[NSString stringWithFormat:@"%@%@",[self updateDateFormat:localeComp.month],[self updateDateFormat:localeComp.day]];
-            if([dayLunarToGregorina isEqualToString:[[LunarArray objectAtIndex:LunarCount] objectAtIndex:1]])
+            
+            FestivalListDateModel *festivalListDateModel=(FestivalListDateModel *)[LunarArray objectAtIndex: LunarCount];
+            
+//            if([dayLunarToGregorina isEqualToString:[[LunarArray objectAtIndex:LunarCount] objectAtIndex:1]])
+            if([dayLunarToGregorina isEqualToString:festivalListDateModel.festivalDate])
             {
                 NSDateComponents *gregorianDay=[gregorian components:unitFlags fromDate:date];
-                SingleLunar=[[NSArray alloc]  initWithObjects:[[LunarArray objectAtIndex:LunarCount]objectAtIndex:0],
+                SingleLunar=[[NSArray alloc]  initWithObjects:festivalListDateModel.festivalName,
                                                                 [NSString stringWithFormat:@"%4d%@%@",
                                                                  Year,
                                                                  [self updateDateFormat:gregorianDay.month],
@@ -103,6 +117,7 @@
                 [festivalArray addObject:SingleLunar];
             }
         }
+        //日期自增1
         date=[NSDate dateWithTimeInterval:interval sinceDate:date];
     }
     
@@ -127,7 +142,8 @@
                     nil];
     [festivalArray addObject:singleFestival];
 
-    NSInteger maxFestivalID=[dbOper getMaxFestivalIDFromFestivalListDate];
+//    NSInteger maxFestivalID=[dbOper getMaxFestivalIDFromFestivalListDate];
+      NSInteger maxFestivalID=[FestivalListDateModel getMaxFestivalIDFromFestivalListDate];
 
     for (int i=0; i<festivalArray.count; i++) {
         strSql=[NSString stringWithFormat:
@@ -135,7 +151,7 @@
                 TABLEFESTIVALLISTDATE,FESTIVALID,FESTIVALNAME,FESTIVALDATE,
                 i+maxFestivalID+1,[[festivalArray objectAtIndex:i]objectAtIndex:0],[[festivalArray objectAtIndex:i]objectAtIndex:1]
                 ];
-        [dbOper ExecSql:strSql];
+        [DbUtils ExecSql:strSql];
         
         maxFestivalID++;
     }
@@ -143,8 +159,9 @@
 
 -(NSMutableArray *)getTopSixFestivalList:(NSString *)FestivalName
 {
-    FMDatabaseOper *dbOper=[[FMDatabaseOper alloc]init];
-    return [dbOper getFestivalList:FestivalName];
+//    FMDatabaseOper *dbOper=[[FMDatabaseOper alloc]init];
+//    return [dbOper getFestivalList:FestivalName];    
+    return [FestivalListDateModel getFestivalList:FestivalName];
 }
 
 -(NSString *)updateDateFormat:(NSInteger)MonthOrDay
@@ -163,7 +180,8 @@
 -(NSString *)findSpecialDate:(int)Year Month:(int)Month WeekDay:(int)WeekDay WhichWeek:(int)WhichWeek
 {
     NSDateComponents *comps = [[NSDateComponents alloc] init];
-    NSDateComponents *weekdayComponents=[[NSDateComponents alloc]init];
+//    NSDateComponents *weekdayComponents=[[NSDateComponents alloc]init];
+    NSDateComponents *weekdayComponents;
     NSCalendar *calendar=[[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
     NSDate *date;
 
