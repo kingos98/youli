@@ -20,6 +20,7 @@
 #import "Category.h"
 #import "YouliDelegate.h"
 #import "BirthdayGiftModel.h"
+#import "BirthdayWebViewController.h"
 
 @interface BirthdayGiftDetailController ()
 {
@@ -32,8 +33,11 @@
     UIScrollView *giftDetailScrollView;                                 //礼物ScrollVie
     
     BirthdayGiftController *birthdayGiftController;                     //按分类展示的礼物ViewController
+    BirthdayWebViewController *birthdayWebViewController;               //购买礼物的页面
 
-    id<YouliDelegate> delegate;                                         //指向BirthdayGiftController的委托
+    UIWebView *webView;                                                 //浏览具体gift信息
+    
+     id<YouliDelegate> delegate;                                         //指向BirthdayGiftController的委托
 }
 
 @end
@@ -105,6 +109,8 @@
     Category *category = [[Category alloc] init];
     [category loadData];                        //load分类列表
     giftTypeItems = category.items;
+    
+    birthdayWebViewController = [BirthdayWebViewController alloc];
 
     [self.view addSubview:categoryTableView];
     [mainView addSubview:imgTitle];
@@ -168,14 +174,16 @@
 //                strImageURL=[[giftArray objectAtIndex:i] objectAtIndex:4];
 //                strTaobaoURL=[[giftArray objectAtIndex:i] objectAtIndex:5];
 //                Price=[[giftArray objectAtIndex:i] objectAtIndex:6];
-                BirthdayGiftModel *birthdayGiftModel=(BirthdayGiftModel *)[giftArray objectAtIndex:i];
+                
+//                BirthdayGiftModel *birthdayGiftModel=(BirthdayGiftModel *)[giftArray objectAtIndex:i];
+                BirthdayGiftModel *birthdayGiftModel=[giftArray objectAtIndex:i];
                 GiftID=[NSString stringWithFormat:@"%d", birthdayGiftModel.giftid];
                 strGiftTitle=birthdayGiftModel.title;
                 strImageURL=birthdayGiftModel.imageurl;
                 strTaobaoURL=birthdayGiftModel.taobaourl;
-                Price=[NSString stringWithFormat:@"%f",birthdayGiftModel.price];
+                Price=[NSString stringWithFormat:@"%.2f",birthdayGiftModel.price];
                 
-                birthdayGiftDetailItem=[[BirthdayGiftDetailItem alloc]initWithGiftInfo:GiftID GiftTitle:strGiftTitle GiftDetail:strGiftDetail ImageURL:strImageURL TaobaoURL:strTaobaoURL Price:Price];
+                birthdayGiftDetailItem=[[BirthdayGiftDetailItem alloc]initWithGiftInfo:GiftID GiftTitle:strGiftTitle GiftDetail:strGiftDetail ImageURL:strImageURL TaobaoURL:strTaobaoURL Price:Price Delegate:self];
                 
                 birthdayGiftDetailItem.frame=CGRectMake(21 + i+iGiftScrollViewWidth, 14, 277, 353);
                 
@@ -286,5 +294,26 @@ int k=0;        //giftDetailScrollView位移值
     CategoryCell *cell = (CategoryCell*)[categoryTableView cellForRowAtIndexPath:indexPath];
     cell.labelImage.image = [UIImage imageNamed:@"unselected.png"];
     cell.nextImage.image = [UIImage imageNamed:@"pointerunselect.png"];
+}
+
+#pragma mark - BirthdayGiftDetailDelegate delegate
+-(void)showGiftInWebview:(NSString *)webaddress
+{
+//    webView=[[UIWebView alloc] initWithFrame:CGRectMake(0, 0, 360, 480)];
+//    NSLog(@"webaddress:%@",webaddress);
+    
+//    NSURL *url =[NSURL URLWithString:webaddress];
+//    NSURLRequest *request =[NSURLRequest requestWithURL:url];
+//    [webView loadRequest:request];
+//    
+//    [mainView addSubview:webView];
+
+    if(![birthdayWebViewController.webUrl isEqualToString:webaddress])
+    {
+        birthdayWebViewController.isChangeUrl=YES;
+        birthdayWebViewController.webUrl=webaddress;
+    }
+    
+    [self.navigationController pushViewController:birthdayWebViewController animated:YES];
 }
 @end

@@ -6,7 +6,7 @@
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
-#define BIRTHDAY_ALERT  @"BirthdayAlert"
+//#define BIRTHDAY_ALERT  @"BirthdayAlert"
 
 #define REFRESH_HEADER_HEIGHT 52.0f
 
@@ -25,6 +25,7 @@
 #import "Category.h"
 #import "LoginController.h"
 #import "Account.h"
+
 
 @interface IndexController ()
 {
@@ -58,15 +59,20 @@
     BirthdayController *birthdayController;         //最近生日的朋友/节日ViewController    
     CategoryTableView *categoryTableView;           //分类组件
     
+    UIScrollView *pageScroll;                       //引导页
+    UIImageView *pageImage;                         //引导页包含的图片
+    
     id<YouliDelegate> delegate;                     //指向BirthdayGiftController的委托
 }
 @end
 
 @implementation IndexController
 
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+        
     //检查是否存在节日日期
     FestivalMethod *festivalMethod=[[FestivalMethod alloc]init];
     [festivalMethod checkFestivalIsExist];
@@ -219,70 +225,63 @@
     [[UIApplication sharedApplication] scheduleLocalNotification:notification];
 
     [LocalNotificationsUtils removeAllLocalNotification];
-    
-    //添加欢迎页面
-    //把欢迎页面从AppDelegate移到IndexController
-//    if(!iPhone5)
-//    {
-//        splashView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 480)];
-//        splashView.image = [UIImage imageNamed:@"loading480.png"];
-//    }
-//    else
-//    {
-//        splashView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 568)];
-//        splashView.image = [UIImage imageNamed:@"loading568.png"];
-//    }
-//    [self.view insertSubview:splashView atIndex:0];
-    
-//    //添加定时器，2秒后把首页移入屏幕
-//    NSTimer *timer;
-//    timer = [NSTimer scheduledTimerWithTimeInterval: 2
-//                                             target: self
-//                                           selector: @selector(handleTimer:)
-//                                           userInfo: nil
-//                                            repeats: YES];
-    
+        
     //添加下拉loading提示
     [self setupStrings];
     [self addPullToRefreshFooter];
     
     [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:NO];
+    
+//    [self addFirstLaunch];
+    //判断是否首次启动
+    if([[NSUserDefaults standardUserDefaults] boolForKey:@"firstLaunch"])
+    {
+        [self addFirstLaunch];
+    }
+//    else
+//    {
+//        [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:NO];
+//    }    
 }
 
-- (void)setupStrings{
+//首次登录添加引导页
+-(void)addFirstLaunch
+{
+    pageScroll=[[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, 320, kHEIGHT-20)];
+    [pageScroll setContentSize:CGSizeMake(4*320, kHEIGHT-20)];
+    
+    pageScroll.pagingEnabled = YES;
+    pageScroll.delegate = self;
+    [pageScroll setShowsHorizontalScrollIndicator:NO];
+    [pageScroll setShowsVerticalScrollIndicator:NO];
+    pageScroll.alwaysBounceVertical=NO;
+    pageScroll.alwaysBounceHorizontal=YES;
+    
+    pageImage=[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 320, kHEIGHT-20)];
+    pageImage.image=[UIImage imageNamed:@"welcome1.png"];
+    [pageScroll addSubview:pageImage];
+    
+    pageImage=[[UIImageView alloc]initWithFrame:CGRectMake(320, 0, 320, kHEIGHT-20)];
+    pageImage.image=[UIImage imageNamed:@"welcome2.png"];
+    [pageScroll addSubview:pageImage];
+
+
+    pageImage=[[UIImageView alloc]initWithFrame:CGRectMake(640, 0, 320, kHEIGHT-20)];
+    pageImage.image=[UIImage imageNamed:@"welcome3.png"];
+    [pageScroll addSubview:pageImage];
+
+    [self.view addSubview:pageScroll];
+}
+
+-(void)animationDidStop:(NSString *)animationID finished:(NSNumber*)finished context:(void*)context
+{
+    [pageScroll setHidden:YES];
+}
+
+- (void)setupStrings
+{
     textPull    = @"上拉刷新...";
     textLoading = @"正在加载...";
-}
-
-- (void) handleTimer: (NSTimer *) timer
-{
-    [UIView beginAnimations:nil context:NULL];
-    
-    [UIView setAnimationDuration:1];
-    
-    CGPoint pointCategoryTableView=categoryTableView.center;
-    CGPoint pointImgGiftScrollView=imgGiftScrollView.center;
-    CGPoint point=mainScrollView.center;
-    CGPoint pointBgView=tabBarBgView.center;
-    CGPoint pointLeftButton=tabBarLeftButton.center;
-    CGPoint pointBoxButton=tabBarBoxButton.center;
-    CGPoint pointRightButton=tabBarRightButton.center;
-    
-    categoryTableView.center=CGPointMake(pointCategoryTableView.x-320, pointCategoryTableView.y);
-    imgGiftScrollView.center=CGPointMake(pointImgGiftScrollView.x-320, pointImgGiftScrollView.y);
-    mainScrollView.center=CGPointMake(point.x-320,point.y);
-    tabBarBgView.center=CGPointMake(pointBgView.x-320,pointBgView.y);
-    tabBarLeftButton.center=CGPointMake(pointLeftButton.x-320,pointLeftButton.y);
-    tabBarBoxButton.center=CGPointMake(pointBoxButton.x-320,pointBoxButton.y);
-    tabBarRightButton.center=CGPointMake(pointRightButton.x-320,pointRightButton.y);
-    
-    [timer invalidate];
-    
-    [UIView commitAnimations];
-    
-    isLoading=NO;
-
-
 }
 
 - (void)showCategoryViewPressed
@@ -563,21 +562,31 @@
 
 #pragma mark - Scroll view delegate
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView
-{    
-    CGPoint offset = mainScrollView.contentOffset;
-    CGRect bounds = mainScrollView.bounds;
-    CGSize size = mainScrollView.contentSize;
-    UIEdgeInsets inset = mainScrollView.contentInset;
-    CGFloat currentOffset = offset.y + bounds.size.height - inset.bottom;
-    CGFloat maximumOffset = size.height;
-    
-    if(currentOffset==maximumOffset)
+{
+    if(scrollView==pageScroll)
     {
-        if(!isLoading)
+        if(scrollView.contentOffset.x==3*320)
         {
-            isLoading=YES;
-            [self startLoading];
-            [self loadDataSource];      //当滚到最底时自动更新内容
+            [scrollView setHidden:YES];
+        }
+    }
+    else if(scrollView==mainScrollView)
+    {
+        CGPoint offset = mainScrollView.contentOffset;
+        CGRect bounds = mainScrollView.bounds;
+        CGSize size = mainScrollView.contentSize;
+        UIEdgeInsets inset = mainScrollView.contentInset;
+        CGFloat currentOffset = offset.y + bounds.size.height - inset.bottom;
+        CGFloat maximumOffset = size.height;
+        
+        if(currentOffset==maximumOffset)
+        {
+            if(!isLoading)
+            {
+                isLoading=YES;
+                [self startLoading];
+                [self loadDataSource];      //当滚到最底时自动更新内容
+            }
         }
     }
 }

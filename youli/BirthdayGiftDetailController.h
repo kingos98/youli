@@ -10,7 +10,11 @@
 #import "BaseController.h"
 #import "BirthdayGiftDetailControllerDelegate.h"
 
-@interface BirthdayGiftDetailController : BaseController<UIScrollViewDelegate,UITableViewDelegate,UITableViewDataSource, BirthdayGiftDetailControllerDelegate>
+@protocol BirthdayGiftDetailDelegate <NSObject>
+-(void)showGiftInWebview:(NSString *)webaddress;
+@end
+
+@interface BirthdayGiftDetailController : BaseController<UIScrollViewDelegate,UITableViewDelegate,UITableViewDataSource, BirthdayGiftDetailControllerDelegate,BirthdayGiftDetailDelegate>
 
 -(void)sendGiftID:(NSInteger)GiftID;
 @end

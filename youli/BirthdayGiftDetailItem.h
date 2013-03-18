@@ -9,11 +9,13 @@
 #import <UIKit/UIKit.h>
 #import "DatabaseOper.h"
 #import "FMDatabaseOper.h"
+#import "BirthdayGiftDetailController.h"
+
 
 @interface BirthdayGiftDetailItem : UIView
 {
-    DatabaseOper *dataOper;
-    FMDatabaseOper *fmdataOper;
+//    DatabaseOper *dataOper;
+//    FMDatabaseOper *fmdataOper;
     
     UIImageView *imgBg;
     UILabel *lblTitle;
@@ -29,8 +31,9 @@
 @property(retain,nonatomic)NSArray *arrGiftDetail;
 @property Boolean isCollect;
 @property NSInteger currentGiftID;
+@property id<BirthdayGiftDetailDelegate> delegate;
 
 -(id)initWithPhotoID:(NSInteger)GiftID;
--(id)initWithGiftInfo:(NSString *)GiftID GiftTitle:(NSString *)GiftTitle GiftDetail:(NSString *)GiftDetail ImageURL:(NSString *)ImageURL TaobaoURL:(NSString *)TaobaoURL Price:(NSString *) Price;
+-(id)initWithGiftInfo:(NSString *)GiftID GiftTitle:(NSString *)GiftTitle GiftDetail:(NSString *)GiftDetail ImageURL:(NSString *)ImageURL TaobaoURL:(NSString *)TaobaoURL Price:(NSString *) Price Delegate:(id<BirthdayGiftDetailDelegate>) _delegate;
 
 @end

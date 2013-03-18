@@ -21,20 +21,9 @@
 @synthesize arrGiftDetail;
 @synthesize isCollect;
 @synthesize currentGiftID;
+@synthesize delegate;
 
--(id)initWithGiftID:(NSInteger)GiftID
-{
-    self=[super init];
-    
-    if(self)
-    {
-        [self initView];
-        [self showGiftDetail:GiftID];
-    }
-    return self;
-}
-
--(id)initWithGiftInfo:(NSString *)GiftID GiftTitle:(NSString *)GiftTitle GiftDetail:(NSString *)GiftDetail ImageURL:(NSString *)ImageURL TaobaoURL:(NSString *)TaobaoURL Price:(NSString *)Price
+-(id)initWithGiftInfo:(NSString *)GiftID GiftTitle:(NSString *)GiftTitle GiftDetail:(NSString *)GiftDetail ImageURL:(NSString *)ImageURL TaobaoURL:(NSString *)TaobaoURL Price:(NSString *)Price Delegate:(id<BirthdayGiftDetailDelegate>) _delegate
 {
     self=[super init];
     
@@ -55,6 +44,8 @@
         lblPrice.text=[NSString stringWithFormat: @"%@", Price];
         
         taobaoURL=TaobaoURL;
+        
+        self.delegate=_delegate;
     }
     
     return self;
@@ -106,8 +97,6 @@
         isCollect=true;
     }
     
-//    UIImage *imgCollectButtonSelect=[[UIImage imageNamed:@"collect_click.png"] stretchableImageWithLeftCapWidth:0 topCapHeight:0];
-//    UIImage *imgCollectButtonUnSelect=[[UIImage imageNamed:@"collect_unclick.png"] stretchableImageWithLeftCapWidth:0 topCapHeight:0];
     btnCollect=[[UIButton alloc] initWithFrame:CGRectMake(124, 312, 65, 25)];
     [btnCollect setBackgroundImage:imgCollectButtonUnSelect forState:UIControlStateNormal];
     [btnCollect setBackgroundImage:imgCollectButtonSelect forState:UIControlStateHighlighted];
@@ -119,6 +108,7 @@
     btnBuy=[[UIButton alloc]initWithFrame:CGRectMake(194, 312, 65, 25)];
     [btnBuy setBackgroundImage:imgBuyButtonUnSelect forState:UIControlStateNormal];
     [btnBuy setBackgroundImage:imgBuyButtonSelect forState:UIControlStateHighlighted];
+    [btnBuy addTarget:self action:@selector(sendGiftWebUrl) forControlEvents:UIControlEventTouchUpInside];
     
     [self addSubview:imgBg];
     [self addSubview:lblTitle];
@@ -131,61 +121,20 @@
     [self addSubview:btnBuy];
 }
 
--(void) showGiftDetail:(NSInteger)PhotoID
-{
-    fmdataOper=[[FMDatabaseOper alloc]init];
-
-//    arrGiftDetail=[fmdataOper getGiftDetail:PhotoID];
-    
-    BirthdayGiftModel *birthdayGiftModel=[BirthdayGiftModel getGiftDetail:PhotoID];
-    
-//    if(arrGiftDetail!=nil)
-//    {
-//        lblTitle.tag=[arrGiftDetail objectAtIndex:0];
-//        lblTitle.text=[arrGiftDetail objectAtIndex:2];
-//        
-//        [imgPhoto setImageWithURL:[arrGiftDetail objectAtIndex:4] placeholderImage:[UIImage imageNamed:@"3.jpg"]];
-//        
-//        lblDetail.text= [arrGiftDetail objectAtIndex:3];
-//        
-//        lblPrice.text=[NSString stringWithFormat: @"%@", [arrGiftDetail objectAtIndex:6]];
-//        
-//        self.TaobaoURL=[arrGiftDetail objectAtIndex:5];
-//    }
-    
-
-    if(birthdayGiftModel!=nil)
-    {
-        lblTitle.tag=birthdayGiftModel.giftid;
-        lblTitle.text=birthdayGiftModel.title;
-
-        [imgPhoto setImageWithURL:[NSURL URLWithString:birthdayGiftModel.imageurl] placeholderImage:[UIImage imageNamed:@"3.jpg"]];
-        
-        lblDetail.text=birthdayGiftModel.detail;
-        
-        lblPrice.text=[NSString stringWithFormat: @"%f", birthdayGiftModel.price];
-        
-        self.TaobaoURL=birthdayGiftModel.taobaourl;
-    }
-}
-
+//对礼物进行收藏操作
 -(void)operGift
 {
     UIImage *imgCollectButtonSelect;
     UIImage *imgCollectButtonUnSelect;
-
-//    fmdataOper=[[FMDatabaseOper alloc]init];
     
     if(!isCollect)
     {
-//        [fmdataOper operGiftToCollection:true GiftID:currentGiftID];
         [CollectBirthdayGiftModel operGiftToCollection:true GiftID:currentGiftID];
         imgCollectButtonSelect=[[UIImage imageNamed:@"cancel_collect_click.png"] stretchableImageWithLeftCapWidth:0 topCapHeight:0];
         imgCollectButtonUnSelect=[[UIImage imageNamed:@"cancel_collect_unclick.png"] stretchableImageWithLeftCapWidth:0 topCapHeight:0];
     }
     else
     {
-//        [fmdataOper operGiftToCollection:false GiftID:currentGiftID];
         [CollectBirthdayGiftModel operGiftToCollection:false GiftID:currentGiftID];
         imgCollectButtonSelect=[[UIImage imageNamed:@"collect_click.png"] stretchableImageWithLeftCapWidth:0 topCapHeight:0];
         imgCollectButtonUnSelect=[[UIImage imageNamed:@"collect_unclick.png"] stretchableImageWithLeftCapWidth:0 topCapHeight:0];
@@ -195,7 +144,14 @@
     
     [btnCollect setBackgroundImage:imgCollectButtonUnSelect forState:UIControlStateNormal];
     [btnCollect setBackgroundImage:imgCollectButtonSelect forState:UIControlStateHighlighted];
-    
 }
 
+
+-(void)sendGiftWebUrl
+{
+    if ([delegate respondsToSelector:@selector(showGiftInWebview:)])
+    {
+        [delegate performSelector:@selector(showGiftInWebview:) withObject:taobaoURL];
+    }
+}
 @end

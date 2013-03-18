@@ -40,6 +40,18 @@
     }
     
     
+    //判断该app是否第一次启动
+    //@”everLaunched”  判断用户以前是否登录
+    //@”firstLaunch”   用来开发者在程序的其他部分判断
+    //以后在其它页面上用  if([[NSUserDefaults standardUserDefaults] boolForKey:@"firstLaunch"]) 进行判断
+    if (![[NSUserDefaults standardUserDefaults] boolForKey:@"everLaunched"]) {
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"everLaunched"];
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"firstLaunch"];
+    }
+    else{
+        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"firstLaunch"];
+    }
+    
 //    if(!iPhone5)
 //    {
 //        firstSplashView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 480)];

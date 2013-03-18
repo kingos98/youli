@@ -10,6 +10,9 @@
 
 #define iPhone5 ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(640, 1136), [[UIScreen mainScreen] currentMode].size) : NO)
 
+#define kWIDTH  [UIScreen mainScreen].bounds.size.width
+#define kHEIGHT [UIScreen mainScreen].bounds.size.height
+
 #define kDocuments [NSHomeDirectory() stringByAppendingPathComponent:@"Documents"]
 
 #define kAppKey             @"3967452029"
@@ -34,7 +37,6 @@
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>{
     SinaWeibo *sinaweibo;
-    UIImageView *firstSplashView;            //欢迎图片
 }
 
 @property (strong, nonatomic) UIWindow *window;

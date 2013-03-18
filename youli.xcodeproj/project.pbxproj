@@ -87,6 +87,7 @@
 		1559F4AA167EF36600F16634 /* NMRangeSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 1559F4A9167EF36600F16634 /* NMRangeSlider.m */; };
 		155B8D5816DB0F3000E9F9CD /* bg2_iphone5.png in Resources */ = {isa = PBXBuildFile; fileRef = 155B8D5716DB0F3000E9F9CD /* bg2_iphone5.png */; };
 		155B8D5F16DC50FB00E9F9CD /* gifttypebg460.png in Resources */ = {isa = PBXBuildFile; fileRef = 155B8D5E16DC50FB00E9F9CD /* gifttypebg460.png */; };
+		15602E1D16F2C2E00046FF2C /* BirthdayWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 15602E1C16F2C2E00046FF2C /* BirthdayWebViewController.m */; };
 		15680CA916AFD14C0086693E /* FestivalMethod.m in Sources */ = {isa = PBXBuildFile; fileRef = 15680CA816AFD14C0086693E /* FestivalMethod.m */; };
 		15815809168D8DDB00FB0E0B /* DatabaseOper.m in Sources */ = {isa = PBXBuildFile; fileRef = 15815808168D8DDB00FB0E0B /* DatabaseOper.m */; };
 		158326AF168439EF00E7410B /* BirthdayGiftController.m in Sources */ = {isa = PBXBuildFile; fileRef = 158326AE168439EF00E7410B /* BirthdayGiftController.m */; };
@@ -97,6 +98,9 @@
 		158B0EAD169FE85C0098B8E6 /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 158B0EA8169FE85C0098B8E6 /* FMResultSet.m */; };
 		158B0EB1169FE9400098B8E6 /* FMDatabaseOper.m in Sources */ = {isa = PBXBuildFile; fileRef = 158B0EB0169FE9400098B8E6 /* FMDatabaseOper.m */; };
 		158B0EB316A132700098B8E6 /* gift_detail_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 158B0EB216A132700098B8E6 /* gift_detail_bg.png */; };
+		1590E7D116F6BE170029ED68 /* welcome1.png in Resources */ = {isa = PBXBuildFile; fileRef = 1590E7CE16F6BE170029ED68 /* welcome1.png */; };
+		1590E7D216F6BE170029ED68 /* welcome2.png in Resources */ = {isa = PBXBuildFile; fileRef = 1590E7CF16F6BE170029ED68 /* welcome2.png */; };
+		1590E7D316F6BE170029ED68 /* welcome3.png in Resources */ = {isa = PBXBuildFile; fileRef = 1590E7D016F6BE170029ED68 /* welcome3.png */; };
 		15B7278F16E4745E006111ED /* arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 15B7278E16E4745E006111ED /* arrow.png */; };
 		15BB70A6167F0F9C00CC3043 /* cancel_click.png in Resources */ = {isa = PBXBuildFile; fileRef = 15BB709E167F0F9C00CC3043 /* cancel_click.png */; };
 		15BB70A7167F0F9C00CC3043 /* cancel_unclick.png in Resources */ = {isa = PBXBuildFile; fileRef = 15BB709F167F0F9C00CC3043 /* cancel_unclick.png */; };
@@ -274,7 +278,6 @@
 		E5EC440216241BF70055D63B /* AFPropertyListRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = E5EC43F516241BF70055D63B /* AFPropertyListRequestOperation.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		E5EC440316241BF70055D63B /* AFURLConnectionOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = E5EC43F716241BF70055D63B /* AFURLConnectionOperation.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		E5EC440416241BF70055D63B /* AFXMLRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = E5EC43F916241BF70055D63B /* AFXMLRequestOperation.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		E5EC440516241BF70055D63B /* UIImageView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = E5EC43FB16241BF70055D63B /* UIImageView+AFNetworking.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		E5FD57CD16351C06008EEF00 /* bg.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E5FD57CA16351C06008EEF00 /* bg.jpg */; };
 		E5FD57CF16351C06008EEF00 /* head.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E5FD57CC16351C06008EEF00 /* head.jpg */; };
 /* End PBXBuildFile section */
@@ -379,6 +382,8 @@
 		1559F4A9167EF36600F16634 /* NMRangeSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NMRangeSlider.m; sourceTree = "<group>"; };
 		155B8D5716DB0F3000E9F9CD /* bg2_iphone5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bg2_iphone5.png; path = images/bg2_iphone5.png; sourceTree = "<group>"; };
 		155B8D5E16DC50FB00E9F9CD /* gifttypebg460.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = gifttypebg460.png; path = images/category/gifttypebg460.png; sourceTree = "<group>"; };
+		15602E1B16F2C2E00046FF2C /* BirthdayWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BirthdayWebViewController.h; sourceTree = "<group>"; };
+		15602E1C16F2C2E00046FF2C /* BirthdayWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BirthdayWebViewController.m; sourceTree = "<group>"; };
 		15680CA716AFD14C0086693E /* FestivalMethod.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FestivalMethod.h; sourceTree = "<group>"; };
 		15680CA816AFD14C0086693E /* FestivalMethod.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FestivalMethod.m; sourceTree = "<group>"; };
 		15815807168D8DDB00FB0E0B /* DatabaseOper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DatabaseOper.h; sourceTree = "<group>"; };
@@ -398,6 +403,9 @@
 		158B0EAF169FE9400098B8E6 /* FMDatabaseOper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabaseOper.h; sourceTree = "<group>"; };
 		158B0EB0169FE9400098B8E6 /* FMDatabaseOper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabaseOper.m; sourceTree = "<group>"; };
 		158B0EB216A132700098B8E6 /* gift_detail_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = gift_detail_bg.png; path = images/gifts/gift_detail_bg.png; sourceTree = "<group>"; };
+		1590E7CE16F6BE170029ED68 /* welcome1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = welcome1.png; sourceTree = "<group>"; };
+		1590E7CF16F6BE170029ED68 /* welcome2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = welcome2.png; sourceTree = "<group>"; };
+		1590E7D016F6BE170029ED68 /* welcome3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = welcome3.png; sourceTree = "<group>"; };
 		15B7278E16E4745E006111ED /* arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrow.png; sourceTree = "<group>"; };
 		15BB709E167F0F9C00CC3043 /* cancel_click.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cancel_click.png; sourceTree = "<group>"; };
 		15BB709F167F0F9C00CC3043 /* cancel_unclick.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cancel_unclick.png; sourceTree = "<group>"; };
@@ -645,8 +653,6 @@
 		E5EC43F716241BF70055D63B /* AFURLConnectionOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLConnectionOperation.m; sourceTree = "<group>"; };
 		E5EC43F816241BF70055D63B /* AFXMLRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFXMLRequestOperation.h; sourceTree = "<group>"; };
 		E5EC43F916241BF70055D63B /* AFXMLRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFXMLRequestOperation.m; sourceTree = "<group>"; };
-		E5EC43FA16241BF70055D63B /* UIImageView+AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+AFNetworking.h"; sourceTree = "<group>"; };
-		E5EC43FB16241BF70055D63B /* UIImageView+AFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+AFNetworking.m"; sourceTree = "<group>"; };
 		E5FD57CA16351C06008EEF00 /* bg.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = bg.jpg; path = images/bg.jpg; sourceTree = "<group>"; };
 		E5FD57CC16351C06008EEF00 /* head.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = head.jpg; path = images/head.jpg; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -872,6 +878,17 @@
 			path = fmdb;
 			sourceTree = "<group>";
 		};
+		1590E7BF16F6AC2E0029ED68 /* Welcome */ = {
+			isa = PBXGroup;
+			children = (
+				1590E7CE16F6BE170029ED68 /* welcome1.png */,
+				1590E7CF16F6BE170029ED68 /* welcome2.png */,
+				1590E7D016F6BE170029ED68 /* welcome3.png */,
+			);
+			name = Welcome;
+			path = images/Welcome;
+			sourceTree = "<group>";
+		};
 		15BB708D167F0D9300CC3043 /* Common */ = {
 			isa = PBXGroup;
 			children = (
@@ -962,6 +979,8 @@
 				158326AE168439EF00E7410B /* BirthdayGiftController.m */,
 				15CE7B001689A63300707588 /* BirthdayGiftDetailController.h */,
 				15CE7B011689A63300707588 /* BirthdayGiftDetailController.m */,
+				15602E1B16F2C2E00046FF2C /* BirthdayWebViewController.h */,
+				15602E1C16F2C2E00046FF2C /* BirthdayWebViewController.m */,
 			);
 			name = Gifts;
 			sourceTree = "<group>";
@@ -1142,17 +1161,17 @@
 		18FAA60C16560C720060BCEA /* Images */ = {
 			isa = PBXGroup;
 			children = (
-				15B7278E16E4745E006111ED /* arrow.png */,
-				151C0B0C16DCA80C00F2B71F /* Icon.png */,
-				151C0B0D16DCA80C00F2B71F /* Icon@2x.png */,
 				180AC0081653729300A505CF /* icon.jpeg */,
 				15D7CE9D16490C530088E49F /* 3.jpg */,
 				E5FD57CA16351C06008EEF00 /* bg.jpg */,
 				E5FD57CC16351C06008EEF00 /* head.jpg */,
+				15B7278E16E4745E006111ED /* arrow.png */,
 				189BB10916D70DBE00CC4F86 /* bg.png */,
 				155B8D5716DB0F3000E9F9CD /* bg2_iphone5.png */,
 				189BB10816D70DBE00CC4F86 /* bg@2x.png */,
 				E50BA27F163B78690091D44A /* Default-568h@2x.png */,
+				151C0B0C16DCA80C00F2B71F /* Icon.png */,
+				151C0B0D16DCA80C00F2B71F /* Icon@2x.png */,
 				15BC52A016DC8ABF0065C6E1 /* loading480.png */,
 				15BC52A116DC8ABF0065C6E1 /* loading568.png */,
 				152CCBB516A7D7B400B0B578 /* ActionSheet */,
@@ -1162,6 +1181,7 @@
 				18FAA60F16560D360060BCEA /* Gifts */,
 				18FAA60E16560CFA0060BCEA /* Index */,
 				18FAA61016560DEB0060BCEA /* Personal */,
+				1590E7BF16F6AC2E0029ED68 /* Welcome */,
 			);
 			name = Images;
 			sourceTree = "<group>";
@@ -1426,8 +1446,6 @@
 				E5EC43F716241BF70055D63B /* AFURLConnectionOperation.m */,
 				E5EC43F816241BF70055D63B /* AFXMLRequestOperation.h */,
 				E5EC43F916241BF70055D63B /* AFXMLRequestOperation.m */,
-				E5EC43FA16241BF70055D63B /* UIImageView+AFNetworking.h */,
-				E5EC43FB16241BF70055D63B /* UIImageView+AFNetworking.m */,
 			);
 			path = AFNetworking;
 			sourceTree = "<group>";
@@ -1685,6 +1703,9 @@
 				1513DE0616E9AEB800F63995 /* Default-568h@2x.png in Resources */,
 				1513DE0C16E9AF6F00F63995 /* Default-568h@2x.png in Resources */,
 				1513DE0E16E9AF7600F63995 /* Default@2x.png in Resources */,
+				1590E7D116F6BE170029ED68 /* welcome1.png in Resources */,
+				1590E7D216F6BE170029ED68 /* welcome2.png in Resources */,
+				1590E7D316F6BE170029ED68 /* welcome3.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1742,7 +1763,6 @@
 				E5EC440216241BF70055D63B /* AFPropertyListRequestOperation.m in Sources */,
 				E5EC440316241BF70055D63B /* AFURLConnectionOperation.m in Sources */,
 				E5EC440416241BF70055D63B /* AFXMLRequestOperation.m in Sources */,
-				E5EC440516241BF70055D63B /* UIImageView+AFNetworking.m in Sources */,
 				E5D73BCD16251FC100745C65 /* SVPullToRefresh.m in Sources */,
 				E50002DC162E879E00434976 /* PersonalController.m in Sources */,
 				E50002EC162E979B00434976 /* BirthdayController.m in Sources */,
@@ -1796,6 +1816,7 @@
 				15C786A316EDBD7800B1908F /* BirthdayGiftModel.m in Sources */,
 				15C786A716EE243000B1908F /* CollectBirthdayGiftModel.m in Sources */,
 				15C786AB16EEBFA500B1908F /* FestivalListDateModel.m in Sources */,
+				15602E1D16F2C2E00046FF2C /* BirthdayWebViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
