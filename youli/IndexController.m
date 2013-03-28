@@ -25,12 +25,13 @@
 #import "Category.h"
 #import "LoginController.h"
 #import "Account.h"
-
+#import "SettingControler.h"
 
 @interface IndexController ()
 {
     @private
     bool isPopCategoryView;                         //是否打开分类列表
+    BOOL isTopLoading;                              //上拉是否正在加载图片
     BOOL isLoading;                                 //是否正在加载图片
     NSInteger birthdayGiftControllerHeight;         //记录当前birthdayGiftController高度
     NSInteger birthdayCurrentIndex;                 //记录当前birthday图片的序列，每load一次自动加7
@@ -58,11 +59,14 @@
     LoginController *loginController;               //微博登录ViewController
     BirthdayController *birthdayController;         //最近生日的朋友/节日ViewController    
     CategoryTableView *categoryTableView;           //分类组件
+    SettingControler *settingControler;             //系统设置
     
     UIScrollView *pageScroll;                       //引导页
     UIImageView *pageImage;                         //引导页包含的图片
     
     id<YouliDelegate> delegate;                     //指向BirthdayGiftController的委托
+    
+	CGPoint point;//判断是上拉还是下拉
 }
 @end
 
@@ -88,92 +92,63 @@
 
     //用iphone5尺寸,如果是iphone4会隐藏下面多余的部分
     imgGiftScrollView=[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 548)];
-
     imgGiftScrollView.image=[UIImage imageNamed:@"bg2_iphone5.png"];
     
     //添加分类页面
-    if(!iPhone5)
-    {
-        categoryTableView = [[CategoryTableView alloc] initWithFrame:CGRectMake(0, 0, 212, 460)];
-
-    }
-    else
-    {
-        categoryTableView = [[CategoryTableView alloc] initWithFrame:CGRectMake(0, 0, 212, 548)];
-
-    }
-    
+    categoryTableView = [[CategoryTableView alloc] initWithFrame:CGRectMake(0, 0, 212, kHEIGHT-20)];
     categoryTableView.dataSource=self;
     categoryTableView.delegate=self;
     Category *category = [[Category alloc] init];
     [category loadData];                        //load分类列表
     giftTypeItems = category.items;
     
-    if(!iPhone5)
-    {
-        mainScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, 320, 426)];
-    }
-    else
-    {
-        mainScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, 320, 512)];
-    }
-
+    mainScrollView=[[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, 320, kHEIGHT-54)];
     mainScrollView.showsVerticalScrollIndicator = NO;
-    CGSize size = mainScrollView.frame.size;
-    if(!iPhone5)
-    {
-        [mainScrollView setContentSize:CGSizeMake(size.width, 460)];
-    }
-    else
-    {
-        [mainScrollView setContentSize:CGSizeMake(size.width, 548)];
-    }
+    mainScrollView.delegate=self;
     
+    //添加设置图片按钮
+    UIImageView *imgSetting=[[UIImageView alloc] initWithFrame:CGRectMake(0, kHEIGHT-54, 213, 34)];
+    imgSetting.userInteractionEnabled=YES;
+    imgSetting.image=[UIImage imageNamed:@"setting.png"];
+    UITapGestureRecognizer *photoTap=[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(setttingClick:)];
+    [imgSetting addGestureRecognizer:photoTap];
+
+    
+    CGSize size = mainScrollView.frame.size;
+    [mainScrollView setContentSize:CGSizeMake(size.width, kHEIGHT-20)];
+
     isLoading = YES;
     for(int i=0;i<2;i++)
     {
         [self loadDataSource];
     }
     
-    tabBarBgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 422, 320, 38)];
-
-    
-    if (iPhone5) {
-        tabBarBgView.frame = CGRectMake(0, 510, 320, 38);
-    }
+    tabBarBgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, kHEIGHT-58, 320, 38)];
     [tabBarBgView setImage:[UIImage imageNamed:@"tabbar_bg.png"]];
     
     tabBarLeftButton = [UIButton buttonWithType:UIButtonTypeCustom];
     UIImage *tabBarLeftImage = [[UIImage imageNamed:@"tabbar_left.png"] stretchableImageWithLeftCapWidth:0 topCapHeight:0];
-    tabBarLeftButton.frame = CGRectMake(0, 422, 78, 38);
+    tabBarLeftButton.frame = CGRectMake(0, kHEIGHT-58, 78, 38);
     
-    if (iPhone5) {
-        tabBarLeftButton.frame = CGRectMake(0, 510, 78, 38);
-    }
     [tabBarLeftButton setBackgroundImage:tabBarLeftImage forState:UIControlStateNormal];
     [tabBarLeftButton addTarget:self action:@selector(showCategoryViewPressed) forControlEvents:UIControlEventTouchUpInside];
     
     tabBarBoxButton = [UIButton buttonWithType:UIButtonTypeCustom];
     UIImage *tabBarBoxImage = [[UIImage imageNamed:@"tabbar_box.png"] stretchableImageWithLeftCapWidth:0 topCapHeight:0];
-    tabBarBoxButton.frame = CGRectMake(120, 414, 78, 45);
-    if (iPhone5) {
-        tabBarBoxButton.frame = CGRectMake(120, 503, 78, 45);
-    }
+    tabBarBoxButton.frame = CGRectMake(120, kHEIGHT-66, 78, 45);
     [tabBarBoxButton setBackgroundImage:tabBarBoxImage forState:UIControlStateNormal];
     [tabBarBoxButton addTarget:self action:@selector(birthdayButtonPressed) forControlEvents:UIControlEventTouchUpInside];
     
     tabBarRightButton = [UIButton buttonWithType:UIButtonTypeCustom];
     UIImage *tabBarRightImage = [[UIImage imageNamed:@"tabbar_right.png"] stretchableImageWithLeftCapWidth:0 topCapHeight:0];
-    tabBarRightButton.frame = CGRectMake(240, 422, 78, 38);
-    if (iPhone5) {
-        tabBarRightButton.frame = CGRectMake(240, 510, 78, 38);
-    }
+    tabBarRightButton.frame = CGRectMake(240, kHEIGHT-58, 78, 38);
     [tabBarRightButton setBackgroundImage:tabBarRightImage forState:UIControlStateNormal];
     [tabBarRightButton addTarget:self action:@selector(personalButtonPressed) forControlEvents:UIControlEventTouchUpInside];
     
     //加到父view中的子view是按顺序加载的，需注意加载子view的顺序！
     //添加欢迎页面，首页的所有组件右移320
     [self.view addSubview:categoryTableView];
+    [self.view addSubview:imgSetting];
     [self.view addSubview:imgGiftScrollView];
     [self.view addSubview:mainScrollView];
     [self.view addSubview:tabBarBgView];
@@ -188,13 +163,10 @@
     birthdayGiftController=[[BirthdayGiftController alloc]init];
     personalController=[[PersonalController alloc] init];
     birthdayController=[[BirthdayController alloc] init];
-    loginController = [[LoginController alloc] init];
+//    loginController = [[LoginController alloc] init];
     
     delegate=birthdayGiftController;
-    
-    categoryTableView.delegate=self;
 
-    mainScrollView.delegate=self;
     
     //添加通知
 //    NSCalendar *calendar = [NSCalendar autoupdatingCurrentCalendar];
@@ -238,10 +210,6 @@
     {
         [self addFirstLaunch];
     }
-//    else
-//    {
-//        [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:NO];
-//    }    
 }
 
 //首次登录添加引导页
@@ -271,11 +239,6 @@
     [pageScroll addSubview:pageImage];
 
     [self.view addSubview:pageScroll];
-}
-
--(void)animationDidStop:(NSString *)animationID finished:(NSNumber*)finished context:(void*)context
-{
-    [pageScroll setHidden:YES];
 }
 
 - (void)setupStrings
@@ -356,6 +319,7 @@
     if ([[Account getInstance] isLoggedIn]) {
         [self.navigationController pushViewController:personalController animated:NO];
     }else{
+        loginController = [[LoginController alloc] init];
         [self.navigationController pushViewController:loginController animated:NO];
     }
 }
@@ -457,7 +421,7 @@
     // Show the header
     [UIView beginAnimations:nil context:NULL];
     [UIView setAnimationDuration:0.3];
-    mainScrollView.contentInset = UIEdgeInsetsMake(REFRESH_HEADER_HEIGHT, 0, 0, 0);
+//    mainScrollView.contentInset = UIEdgeInsetsMake(REFRESH_HEADER_HEIGHT, 0, 0, 0);
     refreshLabel.text = textLoading;
     [refreshSpinner startAnimating];
     [UIView commitAnimations];
@@ -561,6 +525,21 @@
 }
 
 #pragma mark - Scroll view delegate
+-(void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
+{
+    point =scrollView.contentOffset;
+}
+
+-(void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+{
+    CGPoint pt =scrollView.contentOffset;
+    if (point.y < pt.y) {//向上提加载更多
+//        [self startLoading];
+		
+//		[_refreshFootView egoRefreshScrollViewDidEndDragging:self];
+	}
+}
+
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     if(scrollView==pageScroll)
@@ -589,6 +568,13 @@
             }
         }
     }
+}
+
+#pragma mark - Setting GestureRecognizer
+-(void) setttingClick:(UITapGestureRecognizer*) sender
+{
+    settingControler=[[SettingControler alloc]init];
+    [self.navigationController pushViewController:settingControler animated:YES];
 }
 
 @end

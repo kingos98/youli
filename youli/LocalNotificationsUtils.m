@@ -54,24 +54,6 @@
     return NO;
 }
 
-//判断是否存在该提醒信息
-+(BOOL)checkIsExistLocalNotificationWithActivityName:(NSString *)alertname
-{
-    NSArray *localNotifications = [[UIApplication sharedApplication] scheduledLocalNotifications];
-    
-    for (UILocalNotification *obj in localNotifications) {
-        
-        NSString *activityName = [obj.userInfo objectForKey:@"activityid"];
-        
-        if (alertname == activityName) {
-            
-            return YES;
-        }
-    }
-    
-    return NO;
-}
-
 //取消提醒 by aid
 +(BOOL)removeLocalNotificationWithActivityId:(NSInteger)aid
 {
@@ -93,6 +75,25 @@
             
             return YES;
             
+        }
+    }
+    
+    return NO;
+}
+
+
+//判断是否存在该提醒信息
++(BOOL)checkIsExistLocalNotificationWithActivityName:(NSString *)alertname
+{
+    NSArray *localNotifications = [[UIApplication sharedApplication] scheduledLocalNotifications];
+    
+    for (UILocalNotification *obj in localNotifications) {
+        
+        NSString *activityName = [obj.userInfo objectForKey:@"activityid"];
+        
+        if (alertname == activityName) {
+            
+            return YES;
         }
     }
     

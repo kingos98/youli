@@ -43,9 +43,22 @@ static DbUtils *instance = nil;
 {
     if([self getInstance].fmDatabase.open)
     {
-        [[self getInstance].fmDatabase executeQuery:Sql];
-        
-        [[self getInstance].fmDatabase close];
+        @try
+        {
+            [[self getInstance].fmDatabase executeUpdate:Sql];
+        }
+        @catch (NSException *exception)
+        {
+            NSLog(@"exception:%@",exception);
+        }
+        @finally
+        {
+            [[self getInstance].fmDatabase close];
+        }
+    }
+    else
+    {
+        NSLog(@"Cound not open db.");
     }
 }
 

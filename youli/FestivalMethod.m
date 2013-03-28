@@ -26,15 +26,12 @@
     unsigned unitFlags = NSYearCalendarUnit | NSMonthCalendarUnit |  NSDayCalendarUnit;
     NSDateComponents *comp=[calendar components:unitFlags fromDate:[NSDate date]];
     
-//    FMDatabaseOper *dbOper=[[FMDatabaseOper alloc]init];
-//    if(![dbOper checkIsExistFestivalIsYear:comp.year])
     if(![FestivalListDateModel checkIsExistFestivalIsYear:comp.year])
     {
         [self writeFestivalToDB:comp.year];
     }
     
     NSInteger nextYear=comp.year+1;
-//    if(![dbOper checkIsExistFestivalIsYear:nextYear])
     if(![FestivalListDateModel checkIsExistFestivalIsYear:nextYear])
     {
         [self writeFestivalToDB:nextYear];
@@ -142,15 +139,15 @@
                     nil];
     [festivalArray addObject:singleFestival];
 
-//    NSInteger maxFestivalID=[dbOper getMaxFestivalIDFromFestivalListDate];
-      NSInteger maxFestivalID=[FestivalListDateModel getMaxFestivalIDFromFestivalListDate];
-
+    NSInteger maxFestivalID=[FestivalListDateModel getMaxFestivalIDFromFestivalListDate];
+    
     for (int i=0; i<festivalArray.count; i++) {
         strSql=[NSString stringWithFormat:
                 @"insert into %@ (%@,%@,%@) values(%d,'%@','%@')",
                 TABLEFESTIVALLISTDATE,FESTIVALID,FESTIVALNAME,FESTIVALDATE,
                 i+maxFestivalID+1,[[festivalArray objectAtIndex:i]objectAtIndex:0],[[festivalArray objectAtIndex:i]objectAtIndex:1]
                 ];
+        
         [DbUtils ExecSql:strSql];
         
         maxFestivalID++;

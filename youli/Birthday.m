@@ -165,6 +165,7 @@
     }
 }
 
+//返回日期明细信息
 -(NSString *)getDataFromString:(NSString *)FestivalDate
 {
     NSRange rng = NSMakeRange(0, 4);
@@ -178,7 +179,6 @@
     
     
     NSDateComponents *comp=[[NSDateComponents alloc]init];
-//    NSDateComponents *weekdayComponents=[[NSDateComponents alloc]init];
     NSCalendar *calendar=[[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
 
     [comp setYear:[strYear intValue]];
@@ -217,6 +217,7 @@
     return [NSString stringWithFormat:@"%@年%d月%d日 %@",strYear,[strMonth intValue],[strDay intValue],strWeekDay];
 }
 
+//日期倒数
 -(NSString *)getCountDownDayFromNow:(NSString *)FestivalDate
 {
     NSRange rng = NSMakeRange(0, 4);
@@ -239,10 +240,11 @@
     
     comp=[calendar components:NSDayCalendarUnit fromDate:[NSDate date] toDate:tmpDate options:0];
     
-    NSString *strReturnDay=[NSString stringWithFormat:@"%d",comp.day];
+    NSString *strReturnDay=[NSString stringWithFormat:@"%d",comp.day+1];
     return  strReturnDay;
 }
 
+//设置生日通知提示
 -(void)setBirthdayNotifications
 {
     FriendMethod *friendMethod=[[FriendMethod alloc]init];
@@ -256,11 +258,11 @@
         NSDateComponents *comp;
         NSCalendar *calendar=[[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
 
-        NSTimeInterval sevenDayAgo=0-7*24*60*60;
-        NSTimeInterval threeDayAgo=0-3*24*60*60;
+        NSTimeInterval sevenDayAgo=0-7*24*60*60;        //设置7天前生日时间
+        NSTimeInterval threeDayAgo=0-3*24*60*60;        //设置3天前生日时间
         
         for (int i=0; i<friendArray.count; i++)
-        {    
+        {
             strname=[[friendArray objectAtIndex:i] objectAtIndex:0];
             datebirthday=[self changeDatetimeFromString:[[friendArray objectAtIndex:i] objectAtIndex:1]];
 
@@ -283,6 +285,7 @@
     }
 }
 
+//从8位字符串转化成日期格式
 -(NSDate *)changeDatetimeFromString:(NSString *)strFriendBirthday
 {
     NSRange rng = NSMakeRange(0, 4);

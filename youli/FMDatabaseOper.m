@@ -7,27 +7,27 @@
 //
 
 #define DBNAME                      @"youli.sqlite"
-#define TABLEBIRTHDAYGIFT           @"birthdaygift"
-#define TABLECOLLECTBIRTHDAYGIFT    @"collectbirthdaygift"
+#define TABLEBIRTHDAYGIFT           @"Birthdaygift"
+#define TABLECOLLECTBIRTHDAYGIFT    @"Collectbirthdaygift"
 #define TABLEFESTIVALLISTDATE       @"FestivalListDate"
 #define TABLEFRIENDINFO             @"FriendInfo"
 
-#define GIFTID                      @"giftid"
-#define GIFTTYPE                    @"giftType"
+#define GIFTID                      @"GiftId"
+#define GIFTTYPE                    @"GiftType"
 #define GIFTTITLE                   @"Title"
 #define GIFTDETAIL                  @"Detail"
-#define GIFTIMAGEURL                @"imageURL"
-#define GIFTTAOBAOURL               @"taobaoURL"
-#define GIFTPRICE                   @"price"
+#define GIFTIMAGEURL                @"ImageURL"
+#define GIFTTAOBAOURL               @"TaobaoURL"
+#define GIFTPRICE                   @"Price"
 
-#define FESTIVALID                  @"FestivalID"
+#define FESTIVALID                  @"FestivalId"
 #define FESTIVALNAME                @"FestivalName"
 #define FESTIVALDATE                @"FestivalDate"
 
-#define FRIENDNAME                  @"FriendName"
-#define FRIENDBIRTHDAY              @"FriendBirthday"
+#define FRIENDNAME                  @"Name"
+#define FRIENDBIRTHDAY              @"BirthdayDate"
 #define FRIENDCONSTELLATION         @"Constellation"
-#define FRIENDID                    @"FriendID"
+#define FRIENDID                    @"FriendId"
 
 #import "FMDatabaseOper.h"
 #import "FMDatabase.h"
@@ -52,10 +52,6 @@
         [fm copyItemAtPath:dbPathApp toPath:dbPath error:nil];
     }
     
-//    NSString *dbPath = [[[NSBundle mainBundle] resourcePath]
-//                        stringByAppendingPathComponent:DBNAME];
-    
-//    NSLog(dbPath);
     db = [FMDatabase databaseWithPath:dbPath] ;
     
     if (![db open]) {
@@ -358,12 +354,11 @@
 {
     if(![self openDB])
     {
-        return 0;
+        return nil;
     }
 
     NSMutableArray *friendArray=[[NSMutableArray alloc]init];
     NSArray *friendData=nil;
-    
     
 //    FMResultSet *rs=[[FMResultSet alloc] init];
     FMResultSet *rs;
@@ -375,7 +370,6 @@
     {
         rs=[db executeQuery:[NSString stringWithFormat:@"select * from %@ order by %@,%@",TABLEFRIENDINFO,FRIENDBIRTHDAY,FRIENDID]];
     }
-
     
     while ([rs next]) {
         friendData=[[NSArray alloc]  initWithObjects:[rs stringForColumn:FRIENDNAME],

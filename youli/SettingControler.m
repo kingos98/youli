@@ -6,117 +6,224 @@
 //
 //
 
+#import "AppDelegate.h"
 #import "SettingControler.h"
+#import "SettingModel.h"
+#import "SettingCell.h"
+#import "QuartzCore/CALayer.h"
+#import "LoginController.h"
 
 @interface SettingControler ()
-
+{
+    UITableView *settingTableView;
+    
+    NSMutableArray *settingMenuItem;
+    NSArray *settingKey;
+}
 @end
 
 @implementation SettingControler
-
-- (id)initWithStyle:(UITableViewStyle)style
-{
-    self = [super initWithStyle:style];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
- 
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    UIImageView *imgTitle = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
+    imgTitle.image = [UIImage imageNamed:@"head.jpg"];
+    
+    UIImageView *imgGiftScrollView=[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 548)];
+    imgGiftScrollView.image=[UIImage imageNamed:@"bg2_iphone5.png"];
+    
+    UILabel *lblGiftTypeTitle=[[UILabel alloc] initWithFrame:CGRectMake(130, -8, 68, 61)];
+    lblGiftTypeTitle.backgroundColor=[UIColor colorWithHue:0 saturation:0 brightness:0 alpha:0];
+    lblGiftTypeTitle.font=[UIFont fontWithName:@"System" size:17.0f];
+    lblGiftTypeTitle.text=@"设置";
+    
+    UIButton *btnReturn=[[UIButton alloc]initWithFrame:CGRectMake(5, 7, 50, 30)];
+    [btnReturn setBackgroundImage:[UIImage imageNamed:@"return_unclick.png"] forState:UIControlStateNormal];
+    [btnReturn setBackgroundImage:[UIImage imageNamed:@"return_click.png"] forState:UIControlStateHighlighted];
+    [btnReturn addTarget:self action:@selector(returnClick) forControlEvents:UIControlEventTouchUpInside];
+
+    
+    settingTableView=[[UITableView alloc] initWithFrame:CGRectMake(0, 44, kWIDTH, kHEIGHT-20-44) style:UITableViewStyleGrouped];
+    settingTableView.delegate=self;
+    settingTableView.dataSource=self;
+    
+    settingTableView.backgroundColor=[UIColor clearColor];
+
+    SettingModel *setttingModel = [SettingModel alloc];
+    [setttingModel loadData];                        //load分类列表
+    settingMenuItem = setttingModel.items;
+    settingKey=setttingModel.keyItems;
+    
+    [self.view addSubview:imgGiftScrollView];
+    [self.view addSubview:imgTitle];
+    [self.view addSubview: lblGiftTypeTitle];
+    [self.view addSubview:btnReturn];
+    [self.view addSubview:settingTableView];
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
-#pragma mark - Table view data source
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+- (void) btnCleanCacheClick:(id)sender
 {
-#warning Potentially incomplete method implementation.
-    // Return the number of sections.
-    return 0;
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
+    NSString *diskCachePath = [[paths objectAtIndex:0] stringByAppendingPathComponent:@"ImageCache"];
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    [fileManager removeItemAtPath:diskCachePath error:nil];
+}
+
+- (void)returnClick
+{
+    [self.navigationController popViewControllerAnimated:NO];
+}
+
+#pragma mark-
+#pragma mark Table View Group
+//- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//	return 43;
+//}
+
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    //返回（向系统发送）分区个数,在这里有多少键就会有多少分区。
+    return settingKey.count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-#warning Incomplete method implementation.
-    // Return the number of rows in the section.
-    return 0;
+    //获取当前分区所对应的键(key)。在这里键就是分区的标示。
+    NSString *key=[settingKey objectAtIndex:section];
+    
+    //获取键所对应的值（数组）。
+    NSMutableArray *nameSec = [NSMutableArray arrayWithCapacity:1];
+
+    for(SettingModel *model in settingMenuItem)
+    {
+        if(model.menuGroup==key)
+        {
+            [nameSec addObject:model.menuName];
+        }
+    }
+    
+    return  [nameSec count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    //获得所在分区的行数
+    NSInteger row=[indexPath row];
+    //获得分区值
+    NSInteger section=[indexPath section];
+    //利用分区获得键值
+    NSString *key=[settingKey objectAtIndex:section];
+    //获取键所对应的值（数组）。
+    NSMutableArray *nameSec=[NSMutableArray arrayWithCapacity:1];
+    for(SettingModel *model in settingMenuItem)
+    {
+        if(model.menuGroup==key)
+        {
+            [nameSec addObject:model];
+        }
+    }
     
-    // Configure the cell...
+    if(((SettingModel *)[nameSec objectAtIndex:row]).menuName!=@"清除缓存")
+    {
+        NSString *CellIdentifier = @"Cell";
+        SettingCell *cell = [[SettingCell alloc] initCell:CellIdentifier];
+        cell.settingModel=[nameSec objectAtIndex:row];
+        
+        
+        UILongPressGestureRecognizer *longPressGR=[[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(cellLongTap:)];
+        longPressGR.minimumPressDuration = 0.1;
+        [cell setUserInteractionEnabled:YES];
+        [cell addGestureRecognizer:longPressGR];
+        [longPressGR setCancelsTouchesInView:NO];
+        
+        UITapGestureRecognizer *tapGR=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(cellTap:)];
+        [cell setUserInteractionEnabled:YES];
+        [cell addGestureRecognizer:tapGR];
+        [tapGR setCancelsTouchesInView:NO];
+        
+        [cell setBackgroundColor:[UIColor colorWithRed:(253.0/255.0) green:(253.0/255.0) blue:(251.0/255.0) alpha:1]];
+
+        return  cell;
+    }
+    else
+    {
+        //把清除缓存操作放到controller实现
+        UITableViewCell *cell=[[UITableViewCell alloc]init];
+        
+        UIButton *btnCleanCache=[[UIButton alloc]initWithFrame:CGRectMake(0, 0, 302, 45)];
+        [btnCleanCache setBackgroundImage:[UIImage imageNamed:@"cleancache_unclick"] forState:UIControlStateNormal];
+        [btnCleanCache setImage:[UIImage imageNamed:@"cleancache_click"] forState:UIControlStateHighlighted];
+        [btnCleanCache addTarget:self action:@selector(btnCleanCacheClick:) forControlEvents:UIControlEventTouchUpInside];
+        [cell.contentView addSubview:btnCleanCache];
+        
+        return cell;
+    }
+}
+
+-(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    NSString *key=[settingKey objectAtIndex:section];
+    return key;
+}
+
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+//    SettingCell *cell=(SettingCell *)[tableView cellForRowAtIndexPath:indexPath];
+//    if((cell.lblName.text!=@"接收通知") && (cell.lblName.text!=@"清除缓存"))
+//    {
+//        [cell setBackgroundColor:[UIColor lightTextColor]];
+//    }
+    SettingCell *cell=(SettingCell *)[tableView cellForRowAtIndexPath:indexPath];
+    if(cell.lblName.text==@"新浪微博")
+    {
+        LoginController *loginController=[LoginController alloc];
+        [self.navigationController pushViewController:loginController animated:YES];
+    }
+}
+
+-(void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    SettingCell *cell=(SettingCell *)[tableView cellForRowAtIndexPath:indexPath];
+    [cell setBackgroundColor:[UIColor colorWithRed:(253.0/255.0) green:(253.0/255.0) blue:(251.0/255.0) alpha:1]];
     
-    return cell;
+//在后台执行一个线程
+//    [self performSelectorInBackground:(SEL) withObject:(id)]
 }
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
+
+//添加右边索引
+//-(NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView
+//{
+//    return settingKey;
+//}
+
+#pragma mark - 添加自定义点击手势 替换 didSelectRowAtIndexPath
+
+-(void) cellTap:(UITapGestureRecognizer*) sender
+{   
+    SettingCell *cell=(SettingCell *)[(UIGestureRecognizer *)sender view];
+    if(cell.lblName.text!=@"接收通知")
+    {
+        [cell setBackgroundColor:[UIColor colorWithRed:(233.0/255.0) green:(232.0/255.0) blue:(231.0/255.0) alpha:1]];
+    }
 }
-*/
 
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+-(void) cellLongTap:(UILongPressGestureRecognizer*) sender
 {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-#pragma mark - Table view delegate
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     [detailViewController release];
-     */
+    SettingCell *cell=(SettingCell *)[(UIGestureRecognizer *)sender view];
+    if(cell.lblName.text!=@"接收通知")
+    {
+        [cell setBackgroundColor:[UIColor colorWithRed:(233.0/255.0) green:(232.0/255.0) blue:(231.0/255.0) alpha:1]];
+    }
 }
 
 @end

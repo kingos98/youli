@@ -6,7 +6,7 @@
 //
 //
 
-#define TABLENAME   @"BIRTHDAYGIFT"
+#define TABLENAME   @"ExecSql"
 #define GIFTID      @"giftid"
 #define GIFTTYPE    @"gifttype"
 #define TITLE       @"title"
@@ -80,7 +80,7 @@
 //    fmdataOper=[[FMDatabaseOper alloc]init];
 //    [fmdataOper cleanGiftList];
 
-    [BirthdayGiftModel cleanGiftList];
+//    [BirthdayGiftModel cleanGiftList];
     
     birthdayGiftDetailController=[[BirthdayGiftDetailController alloc]init];
     self.BirthdayGiftDetailControllerDelegate=birthdayGiftDetailController;
