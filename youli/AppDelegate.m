@@ -39,41 +39,6 @@
         sinaweibo.userID = [sinaweiboInfo objectForKey:@"UserIDKey"];
     }
     
-    
-    //判断该app是否第一次启动
-    //@”everLaunched”  判断用户以前是否登录
-    //@”firstLaunch”   用来开发者在程序的其他部分判断
-    //以后在其它页面上用  if([[NSUserDefaults standardUserDefaults] boolForKey:@"firstLaunch"]) 进行判断
-    if (![[NSUserDefaults standardUserDefaults] boolForKey:@"everLaunched"]) {
-        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"everLaunched"];
-        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"firstLaunch"];
-    }
-    else{
-        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"firstLaunch"];
-    }
-    
-//    if(!iPhone5)
-//    {
-//        firstSplashView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 480)];
-//        firstSplashView.image = [UIImage imageNamed:@"loading480.png"];
-//    }
-//    else
-//    {
-//        firstSplashView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 568)];
-//        firstSplashView.image = [UIImage imageNamed:@"loading568.png"];
-//    }
-//    [self.window addSubview:firstSplashView];
-//    [self.window bringSubviewToFront:firstSplashView];
-//    [UIView beginAnimations:nil context:nil];
-//    [UIView setAnimationDuration:2];
-//    [UIView setAnimationTransition:UIViewAnimationTransitionNone forView:self.window cache:YES];
-//    [UIView setAnimationDelegate:self];
-//    [UIView setAnimationDidStopSelector:@selector(startupAnimationDone:finished:context:)];
-//    firstSplashView.alpha = 0.0;
-////    firstSplashView.frame = CGRectMake(-60, -85, 440, 635);
-//    firstSplashView.frame = CGRectMake(0, 0, 320, 568);    
-//    [UIView commitAnimations];
-    
 	return YES;
 }
 

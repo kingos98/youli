@@ -16,7 +16,7 @@
 @property (nonatomic,strong) NSString *detail;
 @property (nonatomic,strong) NSString *imageurl;
 @property (nonatomic,strong) NSString *taobaourl;
-@property double price;
+@property NSInteger price;
 
 
 + (BirthdayGiftModel *)getInstance;

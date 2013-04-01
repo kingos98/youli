@@ -19,7 +19,7 @@
 @synthesize items;
 @synthesize photoURLItems;
 
--(id)initWithUrl:(NSString *)PhotoURL GiftTitle:(NSString *)GiftTitle
+-(id)initWithUrl:(NSString *)PhotoURL GiftTitle:(NSString *)GiftTitle Price:(NSInteger)GiftPrice
 {
     self=[super init];
     if(self)
@@ -28,7 +28,8 @@
         imgBackground.image=[UIImage imageNamed:@"gift_bg.png"];
         
         imgGiftPhoto=[[UIImageView alloc]initWithFrame:CGRectMake(11, 11, 281, 206)];
-        NSURL *url=[NSURL URLWithString:PhotoURL];
+//        NSURL *url=[NSURL URLWithString:PhotoURL];
+        NSURL *url=[NSURL URLWithString:[PhotoURL stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
         [imgGiftPhoto setImageWithURL:url placeholderImage:[UIImage imageNamed:@"3.jpg"]];
         [imgGiftPhoto.layer setBorderColor:[[UIColor colorWithRed:.84 green:.84 blue:.84 alpha:1] CGColor]];
         [imgGiftPhoto.layer setBorderWidth:1];
@@ -40,7 +41,7 @@
         lblMoneySymbol.backgroundColor=[UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.0];
         
         lblGiftPrice=[[UILabel alloc] initWithFrame:CGRectMake(268, 233, 45, 21)];
-        lblGiftPrice.text=@"99999";
+        lblGiftPrice.text= [NSString stringWithFormat:@"%d",GiftPrice];
         lblGiftPrice.font=[UIFont systemFontOfSize:14];
         lblGiftPrice.textColor=[UIColor whiteColor];
         lblGiftPrice.backgroundColor=[UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.0];

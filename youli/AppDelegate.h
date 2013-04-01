@@ -15,6 +15,8 @@
 
 #define kDocuments [NSHomeDirectory() stringByAppendingPathComponent:@"Documents"]
 
+#define kPhotoUrl @"http://yourgift.sinaapp.com/media/img/gift/"
+
 #define kAppKey             @"3967452029"
 #define kAppSecret          @"207640bd3c7f1e5d13fee2149e07d561"
 #define kAppRedirectURI     @"http://www.sina.com"

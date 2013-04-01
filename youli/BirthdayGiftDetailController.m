@@ -136,8 +136,8 @@
 {
     BlockActionSheet *sheet = [BlockActionSheet sheetWithTitle:@"分享给朋友"];
     [sheet addButtonWithTitle:@"新浪微博" block:nil];
-    [sheet addButtonWithTitle:@"腾讯微博" block:nil];
-    [sheet addButtonWithTitle:@"人人网" block:nil];
+//    [sheet addButtonWithTitle:@"腾讯微博" block:nil];
+//    [sheet addButtonWithTitle:@"人人网" block:nil];
     [sheet setCancelButtonWithTitle:@"取消" block:nil];
 
 //    [sheet addButtonWithTitle:@"Show another alert" block:^{
@@ -157,7 +157,7 @@
     {
         if(giftArray.count>0)
         {
-            NSString *GiftID;
+            NSInteger GiftID;
             NSString *strGiftTitle;
             NSString *strGiftDetail;
             NSString *strImageURL;
@@ -177,11 +177,12 @@
                 
 //                BirthdayGiftModel *birthdayGiftModel=(BirthdayGiftModel *)[giftArray objectAtIndex:i];
                 BirthdayGiftModel *birthdayGiftModel=[giftArray objectAtIndex:i];
-                GiftID=[NSString stringWithFormat:@"%d", birthdayGiftModel.giftid];
+                GiftID=birthdayGiftModel.giftid;
                 strGiftTitle=birthdayGiftModel.title;
+                strGiftDetail=birthdayGiftModel.detail;
                 strImageURL=birthdayGiftModel.imageurl;
                 strTaobaoURL=birthdayGiftModel.taobaourl;
-                Price=[NSString stringWithFormat:@"%.2f",birthdayGiftModel.price];
+                Price=[NSString stringWithFormat:@"%d",birthdayGiftModel.price];
                 
                 birthdayGiftDetailItem=[[BirthdayGiftDetailItem alloc]initWithGiftInfo:GiftID GiftTitle:strGiftTitle GiftDetail:strGiftDetail ImageURL:strImageURL TaobaoURL:strTaobaoURL Price:Price Delegate:self];
                 

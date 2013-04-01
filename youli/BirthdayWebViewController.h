@@ -12,4 +12,7 @@
 
 @property(nonatomic,strong)NSString *webUrl;
 @property BOOL isChangeUrl;
+
+-(id)init:(NSString *)strUrl;
+
 @end

@@ -34,6 +34,6 @@
 @property id<BirthdayGiftDetailDelegate> delegate;
 
 -(id)initWithPhotoID:(NSInteger)GiftID;
--(id)initWithGiftInfo:(NSString *)GiftID GiftTitle:(NSString *)GiftTitle GiftDetail:(NSString *)GiftDetail ImageURL:(NSString *)ImageURL TaobaoURL:(NSString *)TaobaoURL Price:(NSString *) Price Delegate:(id<BirthdayGiftDetailDelegate>) _delegate;
+-(id)initWithGiftInfo:(NSInteger)GiftID GiftTitle:(NSString *)GiftTitle GiftDetail:(NSString *)GiftDetail ImageURL:(NSString *)ImageURL TaobaoURL:(NSString *)TaobaoURL Price:(NSString *) Price Delegate:(id<BirthdayGiftDetailDelegate>) _delegate;
 
 @end

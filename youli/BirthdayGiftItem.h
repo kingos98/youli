@@ -21,7 +21,7 @@
 @property(retain,nonatomic) NSMutableArray *photoURLItems;
 @property(retain,nonatomic) UIViewController *RootViewController;
 
--(id)initWithUrl:(NSString *)PhotoURL GiftTitle:(NSString *)GiftTitle;
+-(id)initWithUrl:(NSString *)PhotoURL GiftTitle:(NSString *)GiftTitle Price:(NSInteger)GiftPrice;
 
 
 @end

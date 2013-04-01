@@ -23,9 +23,8 @@
 #import "BaseController.h"
 #import "AppDelegate.h"
 #import "CategoryCell.h"
-#import "FMDatabase.h"
-#import "FMDatabaseOper.h"
 #import "BirthdayGiftModel.h"
+#import "DbUtils.h"
 
 @interface BirthdayGiftController ()
 {
@@ -43,8 +42,6 @@
     CategoryTableView *categoryTableView;                                               //分类组件
     BirthdayGiftItem *birthdayGiftItem;                                                 //单个礼物组件
     NMRangeSlider *priceSlider;                                                         //价钱区间组件
-    
-    FMDatabaseOper *fmdataOper;                                                         //数据库操作类
     
 //    id<BirthdayGiftDetailControllerDelegate> birthdayGiftDetailControllerDelegate;      //指向BirthdayGiftController的委托
     
@@ -92,9 +89,6 @@
                          @"pisces.png",
                          nil];
 
-//    fmdataOper=[[FMDatabaseOper alloc]init];
-//    [fmdataOper cleanGiftList];
-    
     [BirthdayGiftModel cleanGiftList];
     
     [self initView];
@@ -308,20 +302,22 @@
 
 - (void)loadDataSource{
     [indicator startAnimating];
-    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:@"http://imgur.com/gallery.json"]];
-    
+//    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:@"http://imgur.com/gallery.json"]];
+    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:@"http://yourgift.sinaapp.com/"]];
+
     AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request
                                                                                         success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
-                                                                                            items = [JSON objectForKey:@"data"];
+                                                                                            items = [JSON objectForKey:@"items"];
                                                                                             for (int i=iGiftDisplayCount; i<iGiftDisplayCount+10; i++) {
                                                                                                 
                                                                                                 NSDictionary *item = [items objectAtIndex:i];
                                                                                                 
-                                                                                                NSString *strPhotoURL=[NSString stringWithFormat:@"http://imgur.com/%@%@",[item objectForKey:@"hash"], [item objectForKey:@"ext"]];
+//                                                                                                NSString *strPhotoURL=[NSString stringWithFormat:@"http://imgur.com/%@%@",[item objectForKey:@"hash"], [item objectForKey:@"ext"]];
+                                                                                                NSString *strPhotoURL=[NSString stringWithFormat:@"http://yourgift.sinaapp.com/media/img/gift/%@",[item objectForKey:@"imageUrl"]];
                                                                                                 
-                                                                                                birthdayGiftItem=[[BirthdayGiftItem alloc]initWithUrl:strPhotoURL GiftTitle:[item objectForKey:@"title"]];
+                                                                                                birthdayGiftItem=[[BirthdayGiftItem alloc]initWithUrl:strPhotoURL GiftTitle:[item objectForKey:@"name"] Price:[[item objectForKey:@"price"] intValue]];
                                                                                                 
-                                                                                                birthdayGiftItem.tag=[[item objectForKey:@"size"] intValue];
+                                                                                                birthdayGiftItem.tag=[[item objectForKey:@"id"] intValue];
 
                                                                                                 UITapGestureRecognizer *photoTap=[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapPhoto:)];
                                                                                                 [birthdayGiftItem setUserInteractionEnabled:YES];
@@ -338,7 +334,7 @@
                                                                                                 iGiftScrollViewHeight+=284;
                                                                                                 
                                                                                                 //把搜索的数据保存到sqlite
-                                                                                                [self AddPhotoInfoToDB:[[item objectForKey:@"size"] intValue] tmpPhotoTitle:[item objectForKey:@"title"] photodetail:[item objectForKey:@"title"] photourl:strPhotoURL];
+                                                                                                [self AddPhotoInfoToDB:[[item objectForKey:@"id"] intValue] tmpPhotoTitle:[item objectForKey:@"name"] photodetail:[item objectForKey:@"name"] photourl:strPhotoURL Price:[[item objectForKey:@"price"] intValue] TaobaoUrl:[item objectForKey:@"url"]];
                                                                                             }
                                                                                                                                                                                         [indicator stopAnimating];
                                                                                             
@@ -525,18 +521,19 @@
 }
 
 #pragma mark - Data Oper
--(void)AddPhotoInfoToDB:(NSInteger)PhotoID tmpPhotoTitle:(NSString *)tmpPhotoTitle photodetail:(NSString*)tmpPhotoDetail photourl:(NSString *)tmpPhotoURL
+-(void)AddPhotoInfoToDB:(NSInteger)PhotoID tmpPhotoTitle:(NSString *)tmpPhotoTitle photodetail:(NSString*)tmpPhotoDetail photourl:(NSString *)tmpPhotoURL Price:(NSInteger)GiftPrice TaobaoUrl:(NSString *)TaobaoUrl
 {
     NSString *sql = [NSString stringWithFormat:
-                     @"INSERT INTO %@ (%@,%@,%@,%@,%@,%@,%@) VALUES (%d,%d,'%@','%@','%@','%@',%f)",
+                     @"INSERT INTO %@ (%@,%@,%@,%@,%@,%@,%@) VALUES (%d,%d,'%@','%@','%@','%@',%d)",
                      TABLENAME,GIFTID, GIFTTYPE, TITLE, DETAIL,IMAGEURL,TAOBAOURL,PRICE ,PhotoID,1,
-                     tmpPhotoTitle, tmpPhotoDetail,tmpPhotoURL,tmpPhotoURL,999.0f];
-    [fmdataOper ExecSql:sql];
+                     tmpPhotoTitle, tmpPhotoDetail,tmpPhotoURL,TaobaoUrl,GiftPrice];
+    
+    [DbUtils ExecSql:sql];
 }
 
 #pragma mark - GestureRecognizer
 -(void) tapPhoto:(UITapGestureRecognizer*) sender
-{
+{        
     birthdayGiftDetailController=[[BirthdayGiftDetailController alloc] init];
     [birthdayGiftDetailController sendGiftID:[(UIGestureRecognizer *)sender view].tag];
 

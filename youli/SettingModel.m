@@ -18,9 +18,9 @@
 - (void)loadData{
     NSArray *array = [[NSArray alloc] initWithObjects:
                       [NSArray arrayWithObjects:@"分享设置",@"新浪微博",nil],
-                      [NSArray arrayWithObjects:@"分享设置",@"腾讯微博",nil],
-                      [NSArray arrayWithObjects:@"分享设置",@"人人网",nil],
-                      [NSArray arrayWithObjects:@"分享设置",@"QQ空间",nil],
+//                      [NSArray arrayWithObjects:@"分享设置",@"腾讯微博",nil],
+//                      [NSArray arrayWithObjects:@"分享设置",@"人人网",nil],
+//                      [NSArray arrayWithObjects:@"分享设置",@"QQ空间",nil],
                       [NSArray arrayWithObjects:@"通知设置",@"接收通知",nil],
                       [NSArray arrayWithObjects:@"其它设置",@"应用推荐",nil],
                       [NSArray arrayWithObjects:@"其它设置",@"新手指引",nil],                      

@@ -206,23 +206,24 @@
 
 - (void)loadDataSource{
     [indicator startAnimating];
-    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:@"http://imgur.com/gallery.json"]];
-    
+//    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:@"http://imgur.com/gallery.json"]];
+    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:@"http://yourgift.sinaapp.com/"]];
+
     AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request
                                                                                         success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
-                                                                                            self.items = [JSON objectForKey:@"data"];
+//                                                                                            self.items = [JSON objectForKey:@"data"];
+                                                                                            self.items = [JSON objectForKey:@"items"];
                                                                                             for (int i=iGiftDisplayCount; i<iGiftDisplayCount+10; i++) {                                                                                                NSDictionary *item = [self.items objectAtIndex:i];
                                                                                                 
-                                                                                                NSString *strPhotoURL=[NSString stringWithFormat:@"http://imgur.com/%@%@",[item objectForKey:@"hash"], [item objectForKey:@"ext"]];
+                                                                                                NSString *strPhotoURL=[NSString stringWithFormat:@"http://yourgift.sinaapp.com/media/img/gift/%@",[item objectForKey:@"imageUrl"]];
                                                                                                 
-                                                                                                birthdayGiftItem=[[BirthdayGiftItem alloc]initWithUrl:strPhotoURL GiftTitle:[item objectForKey:@"title"]];
+                                                                                                birthdayGiftItem=[[BirthdayGiftItem alloc]initWithUrl:strPhotoURL GiftTitle:[item objectForKey:@"name"] Price:[[item objectForKey:@"price"] intValue]];
                                                                                                 
-                                                                                                birthdayGiftItem.tag=[[item objectForKey:@"size"] intValue];
+                                                                                                birthdayGiftItem.tag=[[item objectForKey:@"id"] intValue];
                                                                                                 
                                                                                                 UITapGestureRecognizer *photoTap=[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapPhoto:)];
                                                                                                 [birthdayGiftItem setUserInteractionEnabled:YES];
                                                                                                 [birthdayGiftItem addGestureRecognizer:photoTap];
-                                                                                                
                                                                                                 
                                                                                                 birthdayGiftItem.frame=CGRectMake(8, iGiftScrollViewHeight, 308, 270);
                                                                                                 
@@ -235,7 +236,7 @@
                                                                                                 iGiftScrollViewHeight+=284;
 
                                                                                                 //把搜索的数据保存到sqlite
-                                                                                                [self AddPhotoInfoToDB:[[item objectForKey:@"size"] intValue] tmpPhotoTitle:[item objectForKey:@"title"] photodetail:[item objectForKey:@"title"] photourl:strPhotoURL];
+                                                                                                [self AddPhotoInfoToDB:[[item objectForKey:@"id"] intValue] tmpPhotoTitle:[item objectForKey:@"name"] photodetail:[item objectForKey:@"name"] photourl:strPhotoURL];
                                                                                                 
                                                                                                 //                                                                                                NSLog([item objectForKey:@"title"]);
                                                                                             }
@@ -343,7 +344,8 @@
 #pragma mark - GestureRecognizer
 -(void) tapPhoto:(UITapGestureRecognizer*) sender
 {
-    //    NSLog([NSString stringWithFormat:@"%d",[(UIGestureRecognizer *)sender view].tag]);
+//    NSLog([NSString stringWithFormat:@"%d",[(UIGestureRecognizer *)sender view].tag]);
+    
     [self.birthdayGiftDetailController sendGiftID:[(UIGestureRecognizer *)sender view].tag];
     [self.navigationController pushViewController:birthdayGiftDetailController animated:YES];
     

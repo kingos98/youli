@@ -33,6 +33,7 @@
     bool isPopCategoryView;                         //是否打开分类列表
     BOOL isTopLoading;                              //上拉是否正在加载图片
     BOOL isLoading;                                 //是否正在加载图片
+
     NSInteger birthdayGiftControllerHeight;         //记录当前birthdayGiftController高度
     NSInteger birthdayCurrentIndex;                 //记录当前birthday图片的序列，每load一次自动加7
     NSMutableArray *items;                          //加载图片使用的临时数组
@@ -48,6 +49,9 @@
     UIButton *tabBarBoxButton;                      //最近生日的朋友/节日按钮
     UIButton *tabBarRightButton;                    //好友按钮
 
+    UIView *refreshTopView;                         //上拉动态加载图片等待通知视图
+    UIActivityIndicatorView *refreshTopSpinner;     //上拉等待图标
+    
     UIView *refreshFooterView;                      //动态加载图片等待通知视图
     UILabel *refreshLabel;                          //等待提示标签
     UIActivityIndicatorView *refreshSpinner;        //等待图标
@@ -66,7 +70,9 @@
     
     id<YouliDelegate> delegate;                     //指向BirthdayGiftController的委托
     
-	CGPoint point;//判断是上拉还是下拉
+	CGPoint downPoint;                              //上拉
+    
+    NSInteger currentTemplateIndex;                 //当前使用的显示模板序号
 }
 @end
 
@@ -76,19 +82,43 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-        
+    
     //检查是否存在节日日期
     FestivalMethod *festivalMethod=[[FestivalMethod alloc]init];
     [festivalMethod checkFestivalIsExist];
     
-    templateForIphone4 = [[NSArray alloc] initWithObjects:
-    [NSArray arrayWithObjects:@"4",@"4",@"205",@"100",@"small",nil],
-    [NSArray arrayWithObjects:@"214",@"4",@"100",@"100",@"small",nil],
-    [NSArray arrayWithObjects:@"4",@"109",@"100",@"100",@"small",nil],
-    [NSArray arrayWithObjects:@"109",@"109",@"205",@"205",@"big",nil],
-    [NSArray arrayWithObjects:@"4",@"213",@"100",@"205",@"small",nil],
-    [NSArray arrayWithObjects:@"109",@"317",@"100",@"100",@"small",nil],
-    [NSArray arrayWithObjects:@"214",@"317",@"100",@"100",@"small",nil],nil];
+    currentTemplateIndex=0;
+    
+    templateForIphone4=[[NSArray alloc]initWithObjects:
+                        [[NSArray alloc] initWithObjects:
+                         [NSArray arrayWithObjects:@"4",@"4",@"205",@"100",@"small",nil],
+                         [NSArray arrayWithObjects:@"214",@"4",@"100",@"100",@"small",nil],
+                         [NSArray arrayWithObjects:@"4",@"109",@"100",@"100",@"small",nil],
+                         [NSArray arrayWithObjects:@"109",@"109",@"205",@"205",@"big",nil],
+                         [NSArray arrayWithObjects:@"4",@"213",@"100",@"205",@"small",nil],
+                         [NSArray arrayWithObjects:@"109",@"317",@"100",@"100",@"small",nil],
+                         [NSArray arrayWithObjects:@"214",@"317",@"100",@"100",@"small",nil],nil],
+                        
+                        [[NSArray alloc] initWithObjects:
+                         [NSArray arrayWithObjects:@"4",@"4",@"100",@"100",@"small",nil],
+                         [NSArray arrayWithObjects:@"109",@"4",@"205",@"100",@"small",nil],
+                         [NSArray arrayWithObjects:@"4",@"109",@"205",@"205",@"small",nil],
+                         [NSArray arrayWithObjects:@"216",@"109",@"100",@"100",@"big",nil],
+                         [NSArray arrayWithObjects:@"216",@"213",@"100",@"100",@"small",nil],
+                         [NSArray arrayWithObjects:@"4",@"317",@"100",@"100",@"small",nil],
+                         [NSArray arrayWithObjects:@"109",@"317",@"205",@"100",@"small",nil],nil],
+                        
+                        [[NSArray alloc] initWithObjects:
+                         [NSArray arrayWithObjects:@"4",@"4",@"100",@"205",@"small",nil],
+                         [NSArray arrayWithObjects:@"109",@"4",@"205",@"205",@"small",nil],
+                         [NSArray arrayWithObjects:@"4",@"214",@"205",@"100",@"small",nil],
+                         [NSArray arrayWithObjects:@"214",@"214",@"100",@"100",@"big",nil],
+                         [NSArray arrayWithObjects:@"4",@"317",@"100",@"100",@"small",nil],
+                         [NSArray arrayWithObjects:@"109",@"317",@"100",@"100",@"small",nil],
+                         [NSArray arrayWithObjects:@"214",@"317",@"100",@"100",@"small",nil],nil],
+
+                        nil
+                        ];
 
     //用iphone5尺寸,如果是iphone4会隐藏下面多余的部分
     imgGiftScrollView=[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 548)];
@@ -150,6 +180,9 @@
     [self.view addSubview:categoryTableView];
     [self.view addSubview:imgSetting];
     [self.view addSubview:imgGiftScrollView];
+    
+    [self addPullToRefreshHeader];                  //添加上拉loading
+    
     [self.view addSubview:mainScrollView];
     [self.view addSubview:tabBarBgView];
     [self.view addSubview:tabBarLeftButton];
@@ -163,28 +196,9 @@
     birthdayGiftController=[[BirthdayGiftController alloc]init];
     personalController=[[PersonalController alloc] init];
     birthdayController=[[BirthdayController alloc] init];
-//    loginController = [[LoginController alloc] init];
     
     delegate=birthdayGiftController;
-
     
-    //添加通知
-//    NSCalendar *calendar = [NSCalendar autoupdatingCurrentCalendar];
-//    NSDateComponents *comp = [[NSDateComponents alloc] init];
-//    [comp setYear:2013];
-//    [comp setMonth:2];
-//    [comp setDay:18];
-//    [comp setHour:15];
-//    [comp setMinute:12];
-//    [comp setSecond:0];
-//    
-//    NSDate *pickerDate=[calendar dateFromComponents:comp];
-
-//    NSDate *pickerDate=[[NSDate date] addTimeInterval:5];
-//    LocalNotificationsUtils *localNotificationsUtils=[LocalNotificationsUtils alloc];
-//    [localNotificationsUtils addLocalNotificationWithFireDate:pickerDate activityId:BIRTHDAY_ALERT activityTitle:@"notice test"];
-//    UIApplication *application=[UIApplication sharedApplication];
-
     if(![LocalNotificationsUtils checkIsExistLocalNotificationWithActivityName:@"birthday"])
     {
         Birthday *birthday=[[Birthday alloc]init];
@@ -204,11 +218,12 @@
     
     [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:NO];
     
-//    [self addFirstLaunch];
     //判断是否首次启动
-    if([[NSUserDefaults standardUserDefaults] boolForKey:@"firstLaunch"])
+    if(![[NSUserDefaults standardUserDefaults] boolForKey:@"everLaunched"])
     {
         [self addFirstLaunch];
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"everLaunched"];
+
     }
 }
 
@@ -334,38 +349,123 @@
     [super viewDidUnload];
 }
 
-- (void)loadDataSource
+//上拉加载数据
+- (void)loadTopDataSource
 {
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:@"http://imgur.com/gallery.json"]];
     AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request
+            success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+                items = [JSON objectForKey:@"data"];
+                
+                //先把mainScrollView里面的所有uiView高度 + 418
+                [self putAllUIViewDownMove:418];
+                
+                for (int i=0; i<7; i++) {
+                    NSDictionary *item = [items objectAtIndex:i+birthdayCurrentIndex];
+                                                                                                
+                    NSURL *URL = [NSURL URLWithString:[NSString stringWithFormat:@"http://imgur.com/%@%@",[item objectForKey:@"hash"], [item objectForKey:@"ext"]]];
+                                                                                                
+                    NSString *x = [[[templateForIphone4 objectAtIndex:currentTemplateIndex] objectAtIndex:i] objectAtIndex:0];
+                    NSString *y = [[[templateForIphone4 objectAtIndex:currentTemplateIndex] objectAtIndex:i] objectAtIndex:1];
+                    NSString *width = [[[templateForIphone4 objectAtIndex:currentTemplateIndex] objectAtIndex:i] objectAtIndex:2];
+                    NSString *height = [[[templateForIphone4 objectAtIndex:currentTemplateIndex] objectAtIndex:i] objectAtIndex:3];
+
+                    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake([x intValue],[y intValue]+REFRESH_HEADER_HEIGHT,[width intValue],[height intValue])];
+                    imageView.layer.shadowColor=[UIColor colorWithRed:0.27 green:0.2 blue:0.05 alpha:.6].CGColor;
+                    imageView.layer.shadowOffset = CGSizeMake(2, 2);
+                    imageView.layer.borderColor=[UIColor whiteColor].CGColor;
+                    imageView.layer.borderWidth=2;
+                    imageView.layer.shadowOpacity=1;
+                    imageView.layer.shadowRadius=.6;
+                                                                                                
+                    [imageView setImageWithURL:URL placeholderImage:[UIImage imageNamed:@"3.jpg"]];
+                                                                                                
+                    [mainScrollView addSubview:imageView];
+                                                                                                
+                    imageView = nil;
+                }
+                                                                                            
+                birthdayGiftControllerHeight+=418;      //每load一屏自动加418；
+                
+                if(mainScrollView.contentSize.height<birthdayGiftControllerHeight)
+                {
+                    //mainScrollView的高度应包括loading块
+                    [mainScrollView setContentSize:CGSizeMake(mainScrollView.frame.size.width, birthdayGiftControllerHeight+REFRESH_HEADER_HEIGHT)];
+                }
+                
+                //加载完把mainScrollView恢复原位置
+                [UIView beginAnimations:nil context:NULL];
+                [refreshTopView removeFromSuperview];
+                [UIView setAnimationDuration:0.3];
+                [self putAllUIViewUpMove:REFRESH_HEADER_HEIGHT];
+                [UIView commitAnimations];
+                
+                isTopLoading=NO;
+                birthdayCurrentIndex+=7;                //每load一屏自动加7；
+                
+                
+                //每加载一次,currentTemplateIndex自加1,目前只有3组模板，当currentTemplateIndex加到第3组时，将currentTemplateIndex设为0
+                currentTemplateIndex++;
+                if(currentTemplateIndex==3)
+                {
+                    currentTemplateIndex=0;
+                }
+                    
+    }failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+        NSLog(@"error: %@", error);
+    }];
+    [operation start];
+}
+
+//下拉加载数据
+- (void)loadDataSource
+{
+//    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:@"http://imgur.com/gallery.json"]];
+    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:@"http://yourgift.sinaapp.com/"]];
+    
+    AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request
     success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
-        items = [JSON objectForKey:@"data"];
+//        items = [JSON objectForKey:@"data"];
+        items = [JSON objectForKey:@"items"];
+        
         for (int i=0; i<7; i++) {
-            NSDictionary *item = [items objectAtIndex:i+birthdayCurrentIndex];
-            
-            NSURL *URL = [NSURL URLWithString:[NSString stringWithFormat:@"http://imgur.com/%@%@",[item objectForKey:@"hash"], [item objectForKey:@"ext"]]];
-            
-            NSString *x = [[templateForIphone4 objectAtIndex:i] objectAtIndex:0];
-            NSString *y = [[templateForIphone4 objectAtIndex:i] objectAtIndex:1];
-            NSString *width = [[templateForIphone4 objectAtIndex:i] objectAtIndex:2];
-            NSString *height = [[templateForIphone4 objectAtIndex:i] objectAtIndex:3];
-            UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake([x intValue],
-                                                                                   [y intValue] + birthdayGiftControllerHeight,
-                                                                                   [width intValue],
-                                                                                   [height intValue])];
-            
-            imageView.layer.shadowColor=[UIColor colorWithRed:0.27 green:0.2 blue:0.05 alpha:.6].CGColor;
-            imageView.layer.shadowOffset = CGSizeMake(2, 2);
-            imageView.layer.borderColor=[UIColor whiteColor].CGColor;
-            imageView.layer.borderWidth=2;
-            imageView.layer.shadowOpacity=1;
-            imageView.layer.shadowRadius=.6;
-
-            [imageView setImageWithURL:URL placeholderImage:[UIImage imageNamed:@"3.jpg"]];
-            
-            [mainScrollView addSubview:imageView];
-
-            imageView = nil; 
+            if(items.count>i+birthdayCurrentIndex)
+            {
+                NSDictionary *item = [items objectAtIndex:i+birthdayCurrentIndex];
+                
+                //            NSURL *URL = [NSURL URLWithString:[NSString stringWithFormat:@"http://imgur.com/%@%@",[item objectForKey:@"hash"], [item objectForKey:@"ext"]]];
+                
+                NSString *strTempImageName=[item objectForKey:@"imageUrl"];
+                NSURL *URL = [NSURL URLWithString:[NSString stringWithFormat:@"http://yourgift.sinaapp.com/media/img/gift/%@",
+                                                   [strTempImageName stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]];
+                
+                NSString *x = [[[templateForIphone4 objectAtIndex:currentTemplateIndex] objectAtIndex:i] objectAtIndex:0];
+                NSString *y = [[[templateForIphone4 objectAtIndex:currentTemplateIndex] objectAtIndex:i] objectAtIndex:1];
+                NSString *width = [[[templateForIphone4 objectAtIndex:currentTemplateIndex] objectAtIndex:i] objectAtIndex:2];
+                NSString *height = [[[templateForIphone4 objectAtIndex:currentTemplateIndex] objectAtIndex:i] objectAtIndex:3];
+                UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake([x intValue],
+                                                                                       [y intValue] + birthdayGiftControllerHeight,
+                                                                                       [width intValue],
+                                                                                       [height intValue])];
+                
+                imageView.layer.shadowColor=[UIColor colorWithRed:0.27 green:0.2 blue:0.05 alpha:.6].CGColor;
+                imageView.layer.shadowOffset = CGSizeMake(2, 2);
+                imageView.layer.borderColor=[UIColor whiteColor].CGColor;
+                imageView.layer.borderWidth=2;
+                imageView.layer.shadowOpacity=1;
+                imageView.layer.shadowRadius=.6;
+                
+                [imageView setImageWithURL:URL placeholderImage:[UIImage imageNamed:@"3.jpg"]];
+                
+                [mainScrollView addSubview:imageView];
+                
+                imageView = nil;
+            }
+            else
+            {
+                NSLog(@"Max Count!");
+                return ;
+            }
         }
         
         birthdayGiftControllerHeight+=418;      //每load一屏自动加418；
@@ -380,10 +480,35 @@
         
         [self stopLoading];
         
+
+        //每加载一次,currentTemplateIndex自加1,目前只有3组模板，当currentTemplateIndex加到第3组时，将currentTemplateIndex设为0
+        currentTemplateIndex++;
+        if(currentTemplateIndex==3)
+        {
+            currentTemplateIndex=0;
+        }
+        
     }failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
          NSLog(@"error: %@", error);
     }];
     [operation start];
+}
+
+
+-(void)putAllUIViewDownMove:(NSInteger)height
+{
+    for(UIView *subView in mainScrollView.subviews)
+    {
+        subView.center=CGPointMake(subView.center.x,subView.center.y+height);
+    }
+}
+
+-(void)putAllUIViewUpMove:(NSInteger)height
+{
+    for(UIView *subView in mainScrollView.subviews)
+    {
+        subView.center=CGPointMake(subView.center.x,subView.center.y-height);
+    }
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -451,7 +576,21 @@
     [refreshSpinner stopAnimating];
 }
 
--(void)addPullToRefreshFooter{
+-(void)addPullToRefreshHeader
+{
+    refreshTopView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, REFRESH_HEADER_HEIGHT)];
+    refreshTopView.backgroundColor=[UIColor clearColor];
+    refreshTopSpinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    refreshTopSpinner.frame = CGRectMake(148, 20, 24, 14);
+    [refreshTopView addSubview:refreshTopSpinner];
+    
+    [refreshTopView setHidden:NO];
+//    [self.view addSubview:refreshTopView];
+    [mainScrollView addSubview:refreshTopView];
+}
+
+-(void)addPullToRefreshFooter
+{
     refreshFooterView = [[UIView alloc] initWithFrame:CGRectMake(0, 418, 320, REFRESH_HEADER_HEIGHT)];
     refreshFooterView.backgroundColor = [UIColor clearColor];
     
@@ -527,17 +666,39 @@
 #pragma mark - Scroll view delegate
 -(void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
 {
-    point =scrollView.contentOffset;
+    downPoint =scrollView.contentOffset;
 }
 
 -(void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
 {
+    if(isTopLoading)
+    {
+        return;
+    }
+    
     CGPoint pt =scrollView.contentOffset;
-    if (point.y < pt.y) {//向上提加载更多
-//        [self startLoading];
-		
-//		[_refreshFootView egoRefreshScrollViewDidEndDragging:self];
-	}
+
+    if(downPoint.y==0)
+    {
+        if (downPoint.y > pt.y)
+        {
+            [self putAllUIViewDownMove:REFRESH_HEADER_HEIGHT];
+            
+            [self addPullToRefreshHeader];
+            
+            [UIView beginAnimations:nil context:NULL];
+            
+            [UIView setAnimationDuration:0.3];
+
+            [UIView commitAnimations];
+
+            [refreshTopSpinner startAnimating];
+            
+            isTopLoading=YES;
+            
+            [self loadTopDataSource];
+        }
+    }
 }
 
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView

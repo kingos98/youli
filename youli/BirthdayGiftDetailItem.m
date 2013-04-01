@@ -23,21 +23,21 @@
 @synthesize currentGiftID;
 @synthesize delegate;
 
--(id)initWithGiftInfo:(NSString *)GiftID GiftTitle:(NSString *)GiftTitle GiftDetail:(NSString *)GiftDetail ImageURL:(NSString *)ImageURL TaobaoURL:(NSString *)TaobaoURL Price:(NSString *)Price Delegate:(id<BirthdayGiftDetailDelegate>) _delegate
+-(id)initWithGiftInfo:(NSInteger)GiftID GiftTitle:(NSString *)GiftTitle GiftDetail:(NSString *)GiftDetail ImageURL:(NSString *)ImageURL TaobaoURL:(NSString *)TaobaoURL Price:(NSString *)Price Delegate:(id<BirthdayGiftDetailDelegate>) _delegate
 {
     self=[super init];
     
     if(self)
     {
-        currentGiftID=[GiftID intValue];
+        currentGiftID=GiftID;
         
         [self initView];
         
-        lblTitle.tag= [GiftID intValue];
+        lblTitle.tag= GiftID;
         
-        lblTitle.text=GiftDetail;
+        lblTitle.text=GiftTitle;
         
-        [imgPhoto setImageWithURL:[NSURL URLWithString:ImageURL] placeholderImage:[UIImage imageNamed:@"3.jpg"]];
+        [imgPhoto setImageWithURL:[NSURL URLWithString:[ImageURL stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]] placeholderImage:[UIImage imageNamed:@"3.jpg"]];
         
         lblDetail.text= GiftTitle;
         
@@ -58,8 +58,8 @@
     
     lblTitle=[[UILabel alloc] initWithFrame:CGRectMake(13, 14, 254, 21)];
     lblTitle.font=[UIFont systemFontOfSize:14];
-    lblTitle.textColor=[UIColor colorWithRed:0.9 green:0.6 blue:0.17 alpha:1];
-    lblTitle.backgroundColor=[UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.0];
+    lblTitle.textColor=[UIColor colorWithRed:229.0/255.0 green:154.0/255.0 blue:43.0/255.0 alpha:1];
+    lblTitle.backgroundColor=[UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0];
     
     imgPhoto=[[UIImageView alloc] initWithFrame:CGRectMake(7, 37, 260, 203)];
     
