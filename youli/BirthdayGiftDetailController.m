@@ -109,7 +109,7 @@
     Category *category = [[Category alloc] init];
     [category loadData];                        //load分类列表
     giftTypeItems = category.items;
-    
+
     birthdayWebViewController = [BirthdayWebViewController alloc];
 
     [self.view addSubview:categoryTableView];
@@ -168,14 +168,6 @@
 
             for(NSInteger i=0;i<giftArray.count;i++)
             {
-//                GiftID=[[giftArray objectAtIndex:i] objectAtIndex:0];
-//                strGiftTitle=[[giftArray objectAtIndex:i] objectAtIndex:2];
-//                strGiftDetail=[[giftArray objectAtIndex:i] objectAtIndex:3];
-//                strImageURL=[[giftArray objectAtIndex:i] objectAtIndex:4];
-//                strTaobaoURL=[[giftArray objectAtIndex:i] objectAtIndex:5];
-//                Price=[[giftArray objectAtIndex:i] objectAtIndex:6];
-                
-//                BirthdayGiftModel *birthdayGiftModel=(BirthdayGiftModel *)[giftArray objectAtIndex:i];
                 BirthdayGiftModel *birthdayGiftModel=[giftArray objectAtIndex:i];
                 GiftID=birthdayGiftModel.giftid;
                 strGiftTitle=birthdayGiftModel.title;
@@ -309,6 +301,7 @@ int k=0;        //giftDetailScrollView位移值
 //    
 //    [mainView addSubview:webView];
 
+    
     if(![birthdayWebViewController.webUrl isEqualToString:webaddress])
     {
         birthdayWebViewController.isChangeUrl=YES;

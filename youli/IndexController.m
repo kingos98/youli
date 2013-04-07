@@ -43,7 +43,7 @@
     
     UIScrollView *mainScrollView;                   //主图片加载ScrollView
     UIImageView *imgGiftScrollView;                 //mainScrollView底图
-//    UIImageView *splashView;                        //欢迎图片
+    
     UIImageView *tabBarBgView;                      //下方导航条底图
     UIButton *tabBarLeftButton;                     //分类按钮
     UIButton *tabBarBoxButton;                      //最近生日的朋友/节日按钮
@@ -91,27 +91,27 @@
     
     templateForIphone4=[[NSArray alloc]initWithObjects:
                         [[NSArray alloc] initWithObjects:
-                         [NSArray arrayWithObjects:@"4",@"4",@"205",@"100",@"small",nil],
+                         [NSArray arrayWithObjects:@"4",@"4",@"205",@"100",@"heng",nil],
                          [NSArray arrayWithObjects:@"214",@"4",@"100",@"100",@"small",nil],
                          [NSArray arrayWithObjects:@"4",@"109",@"100",@"100",@"small",nil],
                          [NSArray arrayWithObjects:@"109",@"109",@"205",@"205",@"big",nil],
-                         [NSArray arrayWithObjects:@"4",@"213",@"100",@"205",@"small",nil],
+                         [NSArray arrayWithObjects:@"4",@"213",@"100",@"205",@"shu",nil],
                          [NSArray arrayWithObjects:@"109",@"317",@"100",@"100",@"small",nil],
                          [NSArray arrayWithObjects:@"214",@"317",@"100",@"100",@"small",nil],nil],
                         
                         [[NSArray alloc] initWithObjects:
                          [NSArray arrayWithObjects:@"4",@"4",@"100",@"100",@"small",nil],
-                         [NSArray arrayWithObjects:@"109",@"4",@"205",@"100",@"small",nil],
+                         [NSArray arrayWithObjects:@"109",@"4",@"205",@"100",@"heng",nil],
                          [NSArray arrayWithObjects:@"4",@"109",@"205",@"205",@"small",nil],
                          [NSArray arrayWithObjects:@"216",@"109",@"100",@"100",@"big",nil],
                          [NSArray arrayWithObjects:@"216",@"213",@"100",@"100",@"small",nil],
                          [NSArray arrayWithObjects:@"4",@"317",@"100",@"100",@"small",nil],
-                         [NSArray arrayWithObjects:@"109",@"317",@"205",@"100",@"small",nil],nil],
+                         [NSArray arrayWithObjects:@"109",@"317",@"205",@"100",@"heng",nil],nil],
                         
                         [[NSArray alloc] initWithObjects:
-                         [NSArray arrayWithObjects:@"4",@"4",@"100",@"205",@"small",nil],
+                         [NSArray arrayWithObjects:@"4",@"4",@"100",@"205",@"shu",nil],
                          [NSArray arrayWithObjects:@"109",@"4",@"205",@"205",@"small",nil],
-                         [NSArray arrayWithObjects:@"4",@"214",@"205",@"100",@"small",nil],
+                         [NSArray arrayWithObjects:@"4",@"214",@"205",@"100",@"heng",nil],
                          [NSArray arrayWithObjects:@"214",@"214",@"100",@"100",@"big",nil],
                          [NSArray arrayWithObjects:@"4",@"317",@"100",@"100",@"small",nil],
                          [NSArray arrayWithObjects:@"109",@"317",@"100",@"100",@"small",nil],
@@ -247,7 +247,6 @@
     pageImage=[[UIImageView alloc]initWithFrame:CGRectMake(320, 0, 320, kHEIGHT-20)];
     pageImage.image=[UIImage imageNamed:@"welcome2.png"];
     [pageScroll addSubview:pageImage];
-
 
     pageImage=[[UIImageView alloc]initWithFrame:CGRectMake(640, 0, 320, kHEIGHT-20)];
     pageImage.image=[UIImage imageNamed:@"welcome3.png"];

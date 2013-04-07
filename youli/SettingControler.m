@@ -12,6 +12,9 @@
 #import "SettingCell.h"
 #import "QuartzCore/CALayer.h"
 #import "LoginController.h"
+#import "GuideController.h"
+#import "AdviceController.h"
+#import "Account.h"
 
 @interface SettingControler ()
 {
@@ -113,6 +116,26 @@
     return  [nameSec count];
 }
 
+//设置分组头部样式
+-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    UIView *customTitleView = [ [UIView alloc] initWithFrame:CGRectMake(10, 0, 300, 44)];
+ 
+    NSString *sectionTitle = [self tableView:tableView titleForHeaderInSection:section];
+    
+    UILabel *titleLabel = [ [UILabel alloc] initWithFrame:CGRectMake(10, 0, 300, 34)];
+    
+    titleLabel.text = sectionTitle;
+    
+    titleLabel.textColor = [UIColor colorWithRed:119.0/255.0 green:116.0/255.0 blue:110.0/255.0 alpha:1];
+    
+    titleLabel.backgroundColor = [UIColor clearColor];
+    
+    [customTitleView addSubview:titleLabel];
+    
+    return customTitleView;
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     //获得所在分区的行数
@@ -131,12 +154,23 @@
         }
     }
     
-    if(((SettingModel *)[nameSec objectAtIndex:row]).menuName!=@"清除缓存")
+    
+    SettingModel *tmpModel=((SettingModel *)[nameSec objectAtIndex:row]);
+    
+    if(tmpModel.menuName!=@"清除缓存")
     {
         NSString *CellIdentifier = @"Cell";
         SettingCell *cell = [[SettingCell alloc] initCell:CellIdentifier];
-        cell.settingModel=[nameSec objectAtIndex:row];
         
+        //判断该用户是否有登录新浪微博
+
+        if((tmpModel.menuName==@"新浪微博") && [[Account getInstance] isLoggedIn])
+        {
+            tmpModel.menuName=@"退出新浪微博";
+        }
+
+//        cell.settingModel=[nameSec objectAtIndex:row];
+        cell.settingModel=tmpModel;
         
         UILongPressGestureRecognizer *longPressGR=[[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(cellLongTap:)];
         longPressGR.minimumPressDuration = 0.1;
@@ -177,18 +211,48 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-//    SettingCell *cell=(SettingCell *)[tableView cellForRowAtIndexPath:indexPath];
-//    if((cell.lblName.text!=@"接收通知") && (cell.lblName.text!=@"清除缓存"))
-//    {
-//        [cell setBackgroundColor:[UIColor lightTextColor]];
-//    }
     SettingCell *cell=(SettingCell *)[tableView cellForRowAtIndexPath:indexPath];
+    
+    [cell setBackgroundColor:[UIColor colorWithRed:(253.0/255.0) green:(253.0/255.0) blue:(251.0/255.0) alpha:1]];
+    
     if(cell.lblName.text==@"新浪微博")
     {
-        LoginController *loginController=[LoginController alloc];
-        [self.navigationController pushViewController:loginController animated:YES];
+//        LoginController *loginController=[LoginController alloc];
+//        [self.navigationController pushViewController:loginController animated:YES];
+
+        LoginController *loginController = [[LoginController alloc] init];
+        [self.navigationController pushViewController:loginController animated:NO];
+
+//        cell.lblName.text=@"退出新浪微博";
+        return;
     }
-}
+    else if (cell.lblName.text==@"退出新浪微博")
+    {
+        [[Account getInstance] removeAuthData];
+        cell.lblName.text=@"新浪微博";
+        return;
+    }
+    
+    if(cell.lblName.text==@"新手指引")
+    {
+        GuideController *guideController=[GuideController alloc];
+        [self.navigationController pushViewController:guideController animated:YES];
+        return;
+    }
+
+    if(cell.lblName.text==@"意见反馈")
+    {
+        AdviceController *adviceController=[AdviceController alloc];
+        [self.navigationController pushViewController:adviceController animated:YES];
+        return;        
+    }
+    
+    if(cell.lblName.text==@"给我评分")
+    {
+//       [[UIApplication sharedApplication] openURL: [NSURL URLWithString:@"itms-apps://ax.itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&id=477935039"]];
+    }
+    
+  }
 
 -(void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath
 {

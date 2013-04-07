@@ -55,9 +55,6 @@
     lblName.textAlignment = UITextAlignmentLeft;
     lblName.backgroundColor = [UIColor clearColor];
 
-//    UISwitch *noticeSwitch=[[UISwitch alloc]initWithFrame:CGRectMake(195, 7, 94, 27)];
-//    [noticeSwitch addTarget:self action:@selector(switchAction:) forControlEvents:UIControlEventValueChanged];
-
     TTSwitch *squareThumbSwitch = [[TTSwitch alloc] initWithFrame:CGRectMake(214, 8, 76, 28)];
     squareThumbSwitch.trackImage = [UIImage imageNamed:@"square-switch-track"];
     squareThumbSwitch.overlayImage = [UIImage imageNamed:@"square-switch-overlay"];
@@ -101,7 +98,6 @@
     
     imgArrow=[[UIImageView alloc]initWithFrame:CGRectMake(281, 15, 10, 17)];
     [imgArrow setImage:[UIImage imageNamed:@"setting_arrow.png"]];
-    
     
     UIImageView *imgIcon;
     if(menuItem.menuName==@"新浪微博")

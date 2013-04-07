@@ -17,18 +17,18 @@
 
 - (void)loadData{
     NSArray *array = [[NSArray alloc] initWithObjects:
-                      [NSArray arrayWithObjects:@"分享设置",@"新浪微博",nil],
+                      [NSArray arrayWithObjects:@"分享",@"新浪微博",nil],
 //                      [NSArray arrayWithObjects:@"分享设置",@"腾讯微博",nil],
 //                      [NSArray arrayWithObjects:@"分享设置",@"人人网",nil],
 //                      [NSArray arrayWithObjects:@"分享设置",@"QQ空间",nil],
-                      [NSArray arrayWithObjects:@"通知设置",@"接收通知",nil],
-                      [NSArray arrayWithObjects:@"其它设置",@"应用推荐",nil],
-                      [NSArray arrayWithObjects:@"其它设置",@"新手指引",nil],                      
-                      [NSArray arrayWithObjects:@"其它设置",@"给我评分",nil],
-                      [NSArray arrayWithObjects:@"其它设置",@"意见反馈",nil],
-                      [NSArray arrayWithObjects:@"其它设置",@"新版本检测",nil],
-                      [NSArray arrayWithObjects:@"其它设置",@"关于",nil],
-                      [NSArray arrayWithObjects:@"清除缓存的数据和图片",@"清除缓存",nil],                      
+                      [NSArray arrayWithObjects:@"通知",@"接收通知",nil],
+//                      [NSArray arrayWithObjects:@"其它设置",@"应用推荐",nil],
+                      [NSArray arrayWithObjects:@"关于",@"新手指引",nil],
+//                      [NSArray arrayWithObjects:@"关于",@"给我评分",nil],
+                      [NSArray arrayWithObjects:@"关于",@"意见反馈",nil],
+
+                      [NSArray arrayWithObjects:@"清除缓存的数据和图片",@"清除缓存",nil],
+                      
                       nil];
     
     
@@ -41,7 +41,7 @@
         [self.items addObject:ettingModel];
     }
     
-    self.keyItems=[[NSArray alloc] initWithObjects:@"分享设置",@"通知设置",@"其它设置",@"清除缓存的数据和图片",nil];
+    self.keyItems=[[NSArray alloc] initWithObjects:@"分享",@"通知",@"关于",@"清除缓存的数据和图片",nil];
 
 }
 @end
