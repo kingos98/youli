@@ -20,7 +20,6 @@
 
 + (BirthdayGiftModel *)getInstance;
 -(void)AddPhotoInfoToDB:(NSInteger)PhotoID tmpPhotoTitle:(NSString *)tmpPhotoTitle photodetail:(NSString*)tmpPhotoDetail photourl:(NSString *)tmpPhotoURL Price:(NSInteger)GiftPrice TaobaoUrl:(NSString *)TaobaoUrl IsFromIndexPage:(bool) isFromIndex;
-- (BirthdayGiftModel *)getInstance;
 - (BirthdayGiftModel *)getGiftDetail:(NSInteger) GiftID IsFromIndexPage:(bool) isFromIndex;
 - (void)cleanGiftList:(bool) isFromIndex;
 - (NSMutableArray *)getGiftDetailList:(NSInteger)PhotoType IsFromIndexPage:(bool) isFromIndex;

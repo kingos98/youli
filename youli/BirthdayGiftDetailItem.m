@@ -12,10 +12,6 @@
 #import "CollectBirthdayGiftModel.h"
 #import "AppDelegate.h"
 
-@interface BirthdayGiftDetailItem ()
-
-@end
-
 @implementation BirthdayGiftDetailItem
 
 @synthesize taobaoURL;

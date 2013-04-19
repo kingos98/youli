@@ -21,14 +21,6 @@
 @synthesize webUrl;
 @synthesize isChangeUrl;
 
--(id)init:(NSString *)strUrl
-{
-    NSURL *url =[NSURL URLWithString:strUrl];
-    NSURLRequest *request =[NSURLRequest requestWithURL:url];
-//    webView.scrollView.pagingEnabled=YES;
-    [webView loadRequest:request];
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];

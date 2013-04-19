@@ -59,8 +59,11 @@
     UIView *refreshFooterView;                      //动态加载图片等待通知视图
     UILabel *refreshLabel;                          //等待提示标签
     UIActivityIndicatorView *refreshSpinner;        //等待图标
+    
     NSString *textPull;                             //下拉加载前提示
     NSString *textLoading;                          //下拉加载时提示
+    BOOL isLastPage;                                //是否最后一页
+    NSString *textLastPage;                         //最后一页提示
 
     BirthdayGiftController *birthdayGiftController; //按分类展示的礼物ViewController
     PersonalController *personalController;         //好友ViewController
@@ -152,6 +155,7 @@
     [mainScrollView setContentSize:CGSizeMake(size.width, kHEIGHT-20)];
 
     isLoading = YES;
+    isLastPage = NO;
 
     [self loadDataSource];
     
@@ -264,6 +268,7 @@
 {
     textPull    = @"上拉刷新...";
     textLoading = @"正在加载...";
+    textLastPage= @"没有更多的礼物了...";
 }
 
 - (void)showCategoryViewPressed
@@ -278,6 +283,28 @@
     {
         [self showIndexCategoryView];
     }
+    
+    [UIView commitAnimations];
+}
+
+-(void)showIndexCategoryView
+{
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationDuration:0.3];
+    CGPoint point=mainScrollView.center;
+    CGPoint pointBgView=tabBarBgView.center;
+    CGPoint pointLeftButton=tabBarLeftButton.center;
+    CGPoint pointBoxButton=tabBarBoxButton.center;
+    CGPoint pointRightButton=tabBarRightButton.center;
+    
+    mainScrollView.center=CGPointMake(point.x+212,point.y);
+    imgGiftScrollView.center=CGPointMake(point.x+212,point.y);
+    tabBarBgView.center=CGPointMake(pointBgView.x+212,pointBgView.y);
+    tabBarLeftButton.center=CGPointMake(pointLeftButton.x+212,pointLeftButton.y);
+    tabBarBoxButton.center=CGPointMake(pointBoxButton.x+212,pointBoxButton.y);
+    tabBarRightButton.center=CGPointMake(pointRightButton.x+212,pointRightButton.y);
+    
+    isPopCategoryView = true;
     
     [UIView commitAnimations];
 }
@@ -302,28 +329,6 @@
     tabBarRightButton.center=CGPointMake(pointRightButton.x-212,pointRightButton.y);
 
     isPopCategoryView = false;
-    
-    [UIView commitAnimations];
-}
-
--(void)showIndexCategoryView
-{
-    [UIView beginAnimations:nil context:NULL];
-    [UIView setAnimationDuration:0.3];
-    CGPoint point=mainScrollView.center;
-    CGPoint pointBgView=tabBarBgView.center;
-    CGPoint pointLeftButton=tabBarLeftButton.center;
-    CGPoint pointBoxButton=tabBarBoxButton.center;
-    CGPoint pointRightButton=tabBarRightButton.center;
-    
-    mainScrollView.center=CGPointMake(point.x+212,point.y);
-    imgGiftScrollView.center=CGPointMake(point.x+212,point.y);
-    tabBarBgView.center=CGPointMake(pointBgView.x+212,pointBgView.y);
-    tabBarLeftButton.center=CGPointMake(pointLeftButton.x+212,pointLeftButton.y);
-    tabBarBoxButton.center=CGPointMake(pointBoxButton.x+212,pointBoxButton.y);
-    tabBarRightButton.center=CGPointMake(pointRightButton.x+212,pointRightButton.y);
-    
-    isPopCategoryView = true;
     
     [UIView commitAnimations];
 }
@@ -439,16 +444,28 @@
         if(items.count==0)
         {
             [self stopLoading];
+
+            //当没有礼物时重设提示label frame
+            CGRect frame=refreshLabel.frame;
+            frame.origin.x=0;
+            frame.size.width=320;
+            refreshLabel.frame=frame;
+            refreshLabel.textAlignment=NSTextAlignmentCenter;
+            refreshLabel.text = textLastPage;
+
             return ;
         }
         
         for (int i=0; i<21; i++) {
             if(items.count<=i)
             {
+                //如果不足21条数据，将从首页前 N 项添加到末页中
+                [self fillOtherData:i];
                 break;
             }
 
             NSDictionary *item = [items objectAtIndex:i];
+            
             NSString *strPhotoURL=[NSString stringWithFormat:@"http://yourgift.sinaapp.com/media/img/gift/%@",[item objectForKey:@"imageUrl"]];
             NSURL *URL=[NSURL URLWithString:[strPhotoURL stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
             
@@ -505,6 +522,100 @@
     }];
     [operation start];
 }
+
+//当下拉加载数据，最后一页不满21条数据，将从首页前 N 项添加到末页中，N 表示21减去最后一页所显示的数据量
+-(void)fillOtherData:(NSInteger) currentIndex
+{
+    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:@"http://yourgift.sinaapp.com/index/list/1/"]];
+    
+    AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request
+                                                                                        success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON)
+    {
+        items = [JSON objectForKey:@"items"];
+        
+        if(items.count==0)
+        {
+            refreshLabel.text = textLastPage;
+            [self stopLoading];
+            return ;
+        }
+        
+        for (int i=0; i<21-currentIndex; i++)
+        {
+            if(items.count<=i)
+            {
+                break;
+            }
+            
+            NSDictionary *item = [items objectAtIndex:i];
+            
+            NSString *strPhotoURL=[NSString stringWithFormat:@"http://yourgift.sinaapp.com/media/img/gift/%@",[item objectForKey:@"imageUrl"]];
+            NSURL *URL=[NSURL URLWithString:[strPhotoURL stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+            
+            NSString *x = [[templateForIphone4 objectAtIndex:i+currentIndex] objectAtIndex:0];
+            NSString *y = [[templateForIphone4 objectAtIndex:i+currentIndex] objectAtIndex:1];
+            NSString *width = [[templateForIphone4 objectAtIndex:i+currentIndex] objectAtIndex:2];
+            NSString *height = [[templateForIphone4 objectAtIndex:i+currentIndex] objectAtIndex:3];
+            
+            UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake([x intValue],
+                                                                                   [y intValue] + birthdayGiftControllerHeight,
+                                                                                   [width intValue],
+                                                                                   [height intValue])];
+            
+            imageView.layer.shadowColor=[UIColor colorWithRed:0.27 green:0.2 blue:0.05 alpha:.6].CGColor;
+            imageView.layer.shadowOffset = CGSizeMake(2, 2);
+            imageView.layer.borderColor=[UIColor whiteColor].CGColor;
+            imageView.layer.borderWidth=2;
+            imageView.layer.shadowOpacity=1;
+            imageView.layer.shadowRadius=.6;
+            
+            imageView.contentMode=UIViewContentModeScaleAspectFill;
+            [imageView setClipsToBounds:YES];
+            imageView.backgroundColor=[UIColor whiteColor];
+            [imageView setImageWithURL:URL placeholderImage:[UIImage imageNamed:@"3.jpg"]];
+            
+            imageView.tag=[[item objectForKey:@"id"] intValue];
+            UITapGestureRecognizer *photoTap=[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapPhoto:)];
+            [imageView setUserInteractionEnabled:YES];
+            [imageView addGestureRecognizer:photoTap];
+            
+            [mainScrollView addSubview:imageView];
+            
+            imageView = nil;
+
+            if(((i+currentIndex)>0)&&((i+currentIndex)%7==6))
+            {
+                birthdayGiftControllerHeight+=418;      //每load一屏自动加418；
+            }
+
+        }
+        
+        if(mainScrollView.contentSize.height<birthdayGiftControllerHeight)
+        {
+            //mainScrollView的高度应包括loading块
+            [mainScrollView setContentSize:CGSizeMake(mainScrollView.frame.size.width, birthdayGiftControllerHeight+REFRESH_HEADER_HEIGHT)];
+        }
+        
+        [self stopLoading];
+        
+        isLastPage=YES;
+        
+        //当没有礼物时重设提示label frame        
+        CGRect frame=refreshLabel.frame;
+        frame.origin.x=0;
+        frame.size.width=320;
+        refreshLabel.frame=frame;
+        refreshLabel.textAlignment=NSTextAlignmentCenter;
+        refreshLabel.text = textLastPage;
+
+        
+    }failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+        NSLog(@"error: %@", error);
+    }];
+    [operation start];
+    
+}
+
 
 -(void)putAllUIViewDownMove:(NSInteger)height
 {
@@ -581,9 +692,7 @@
 - (void)stopLoadingComplete:(NSString *)animationID finished:(NSNumber *)finished context:(void *)context {
     
     refreshLabel.text = textPull;
-    
     [refreshFooterView setFrame:CGRectMake(0, mainScrollView.contentSize.height-REFRESH_HEADER_HEIGHT, 320, 0)];
-    
     [refreshSpinner stopAnimating];
 }
 
@@ -685,7 +794,7 @@
     {
         return;
     }
-    
+        
     CGPoint pt =scrollView.contentOffset;
 
     if(downPoint.y==0)
@@ -708,6 +817,11 @@
 
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
+    if (isLastPage)
+    {
+        return;
+    }
+    
     if(scrollView==pageScroll)
     {
         if(scrollView.contentOffset.x==3*320)
@@ -756,7 +870,6 @@
     {
         [birthdayDelegate sendGiftID:[(UIGestureRecognizer *)sender view].tag IsFromIndexPage:YES];
     }
-
     
     [self.navigationController pushViewController:birthdayGiftDetailController animated:YES];
 }

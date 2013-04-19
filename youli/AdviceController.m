@@ -57,6 +57,7 @@
     [self.view addSubview:imgGiftScrollView];    
     [self.view addSubview:imgTitle];
     [self.view addSubview:btnReturn];
+    [self.view addSubview:lblGiftTypeTitle];
     [self.view addSubview:btnSend];
     [self.view addSubview:txtAdvice];
 }
