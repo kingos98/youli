@@ -11,6 +11,7 @@
 #import "Birthday.h"
 #import "LocalNotificationsUtils.h"
 #import "TTSwitch.h"
+#import "Account.h"
 
 @implementation SettingCell
 {
@@ -103,7 +104,17 @@
     if(menuItem.menuName==@"新浪微博")
     {
         imgIcon=[[UIImageView alloc]initWithFrame:CGRectMake(10, 8, 24, 26)];
-        imgIcon.image=[UIImage imageNamed:@"sina_on.png"];
+        
+        if([[Account getInstance] isLoggedIn])
+        {
+            imgIcon.image=[UIImage imageNamed:@"sina_on.png"];
+        }
+        else
+        {
+            imgIcon.image=[UIImage imageNamed:@"sina_off.png"];
+        }
+
+
         [self.contentView addSubview:imgIcon];
         [lblName setFrame:CGRectMake(44, 12, 200, 21)];
     }

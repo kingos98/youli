@@ -19,6 +19,7 @@
 @synthesize dateLabel;
 @synthesize countDownLabel;
 @synthesize typeLabel;
+@synthesize constellation;
 
 - (id)initCell:(NSString *)reuseIdentifier{
     self = [super initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier];
@@ -32,6 +33,7 @@
 - (void)setBirthday:(Birthday *)birthday {
     if(birthday!=nil)
     {
+        [self addConstellation:birthday];
         [self addCellBg:birthday];
         [self addPhoto];
         [self addNameLabel:birthday];
@@ -40,6 +42,14 @@
         [self addTypeLabel:birthday];
     }
 }
+
+-(void)addConstellation:(Birthday *)birthday
+{
+    constellation=[[UILabel alloc] initWithFrame:CGRectMake(8, 3, 304, 60)];
+    constellation.text=birthday.constellation;
+    [self.contentView addSubview:constellation];
+}
+
 
 - (void)addPhoto{
     UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(14,8,50,50)];
@@ -95,7 +105,7 @@
     
     if([birthday.countDown intValue]>0)
     {
-        countDownLabel = [[UILabel alloc] initWithFrame:CGRectMake(252, 28, 40, 25)];
+        countDownLabel = [[UILabel alloc] initWithFrame:CGRectMake(235, 28,60, 25)];
         countDownLabel.text = birthday.countDown;
         countDownLabel.font = [UIFont fontWithName:@"Helvetica" size:30];
         countDownLabel.textColor = [UIColor colorWithRed:0.30 green:0.30 blue:0.30 alpha:1];

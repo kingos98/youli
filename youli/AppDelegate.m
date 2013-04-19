@@ -15,6 +15,8 @@
 #import "SinaWeibo.h"
 #import "LocalNotificationsUtils.h"
 
+
+
 @implementation AppDelegate 
 
 @synthesize sinaweibo;
@@ -24,6 +26,7 @@
 {
    	self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     IndexController *indexController = [[IndexController alloc] init];
+    
     self.navigationController = [[UINavigationController alloc] initWithRootViewController:indexController];
 	self.window.rootViewController = self.navigationController;
 	[self.window makeKeyAndVisible];

@@ -11,6 +11,7 @@
 #import "FriendMethod.h"
 #import "LocalNotificationsUtils.h"
 #import "AppDelegate.h"
+#import "Friend.h"
 
 @implementation Birthday
 
@@ -19,44 +20,33 @@
 @synthesize date;
 @synthesize type;
 @synthesize countDown;
+@synthesize constellation;
 
 
 - (void)loadData:(NSString *)SearchName
 {
-//    NSArray *array = [[NSArray alloc] initWithObjects:
-//             [NSArray arrayWithObjects:@"圣诞节",@"2012年12月25日 星期一",@"节日",nil],
-//             [NSArray arrayWithObjects:@"元旦",@"2013年1月1日 星期二",@"节日",nil],
-//             [NSArray arrayWithObjects:@"春节",@"2013年2月1日 星期四",@"节日",nil],
-//             [NSArray arrayWithObjects:@"情人节",@"2013年2月14日 星期天",@"节日",nil],
-//             [NSArray arrayWithObjects:@"元宵",@"2013年2月15日 星期一",@"节日",nil],
-//             [NSArray arrayWithObjects:@"妇女节",@"2013年3月8日 星期五",@"节日",nil],
-//             [NSArray arrayWithObjects:@"白色情人节",@"2013年3月14日 星期六",@"节日",nil],
-//          nil];
-//    
-//    self.items = [NSMutableArray arrayWithCapacity:7];
-//    
-//    for (int i=0; i<7; i++) {
-//        Birthday *birthday = [Birthday alloc];
-//        birthday.name = [[array objectAtIndex:i] objectAtIndex:0];
-//        [self.items addObject:birthday];
-//    }
     self.items=[[NSMutableArray alloc]init];
     
     FriendMethod *friendMethod=[[FriendMethod alloc]init];
     NSMutableArray *friendArray=[friendMethod getFriendList:SearchName];
-
+    
     FestivalMethod *festivalMethod=[[FestivalMethod alloc]init];
     NSMutableArray *festivalArray=[festivalMethod getTopSixFestivalList:SearchName];
 
     Birthday *birthday;
     
+    
+    
     if(friendArray.count>0)
     {
         NSString *strCompareDate;
         
-        if([[[friendArray objectAtIndex:0]objectAtIndex:1] intValue] <=[[[festivalArray objectAtIndex:0]objectAtIndex:1] intValue])
+//        if([[[friendArray objectAtIndex:0]objectAtIndex:1] intValue] <=[[[festivalArray objectAtIndex:0]objectAtIndex:1] intValue])
+        Friend *tmpFriend=(Friend *)[friendArray objectAtIndex:0];
+        if([tmpFriend.birthdayDate intValue] <=[[[festivalArray objectAtIndex:0]objectAtIndex:1] intValue])
         {
-            strCompareDate=[[friendArray objectAtIndex:0]objectAtIndex:1];
+//            strCompareDate=[[friendArray objectAtIndex:0]objectAtIndex:1];
+            strCompareDate=tmpFriend.birthdayDate;
         }
         else
         {
@@ -69,13 +59,15 @@
         NSInteger festivalIndex=0;
         
         //获取最近的生日或节日
-        if([[[friendArray objectAtIndex:0]objectAtIndex:1] intValue]<=[[[festivalArray objectAtIndex:0]objectAtIndex:1]intValue])
+        tmpFriend=(Friend *)[friendArray objectAtIndex:0];
+        if([tmpFriend.birthdayDate intValue] <=[[[festivalArray objectAtIndex:0]objectAtIndex:1] intValue])
         {
             birthday=[Birthday alloc];
-            birthday.name=[[friendArray objectAtIndex:0]objectAtIndex:0];
-            birthday.date=[self getDataFromString:[[friendArray objectAtIndex:0]objectAtIndex:1]];
+            birthday.name=tmpFriend.name;
+            birthday.date=tmpFriend.birthdayDate;
             birthday.type=@"生日";
-            birthday.countDown=[self getCountDownDayFromNow:[[friendArray objectAtIndex:0]objectAtIndex:1]];
+            birthday.countDown=[self getCountDownDayFromNow:tmpFriend.birthdayDate];
+            birthday.constellation=tmpFriend.constellation;
             friendIndex++;
         }
         else
@@ -85,6 +77,7 @@
             birthday.date=[self getDataFromString:[[festivalArray objectAtIndex:0]objectAtIndex:1]];
             birthday.type=@"节日";
             birthday.countDown=[self getCountDownDayFromNow:[[festivalArray objectAtIndex:0]objectAtIndex:1]];
+            birthday.constellation=@"";
             festivalIndex++;
         }
         [self.items addObject:birthday];
@@ -95,13 +88,16 @@
             {
                 if(festivalArray.count>festivalIndex)
                 {
-                    if([[[friendArray objectAtIndex:friendIndex]objectAtIndex:1] intValue]<=[[[festivalArray objectAtIndex:festivalIndex]objectAtIndex:1]intValue])
+                    tmpFriend=(Friend *)[friendArray objectAtIndex:friendIndex];
+
+                    if([tmpFriend.birthdayDate intValue]<=[[[festivalArray objectAtIndex:festivalIndex]objectAtIndex:1]intValue])
                     {
                         birthday=[Birthday alloc];
-                        birthday.name=[[friendArray objectAtIndex:friendIndex]objectAtIndex:0];
-                        birthday.date=[self getDataFromString:[[friendArray objectAtIndex:friendIndex]objectAtIndex:1]];
+                        birthday.name=tmpFriend.name;
+                        birthday.date=tmpFriend.birthdayDate;
                         birthday.type=@"生日";
-                        birthday.countDown=[self getCountDownDayFromNow:[[friendArray objectAtIndex:friendIndex]objectAtIndex:1]];
+                        birthday.countDown=[self getCountDownDayFromNow:tmpFriend.birthdayDate];
+                        birthday.constellation=tmpFriend.constellation;
                         friendIndex++;
                     }
                     else
@@ -111,16 +107,18 @@
                         birthday.date=[self getDataFromString:[[festivalArray objectAtIndex:festivalIndex]objectAtIndex:1]];
                         birthday.type=@"节日";
                         birthday.countDown=[self getCountDownDayFromNow:[[festivalArray objectAtIndex:festivalIndex]objectAtIndex:1]];
+                        birthday.constellation=@"";
                         festivalIndex++;
                     }
                 }
                 else
                 {
                     birthday=[Birthday alloc];
-                    birthday.name=[[friendArray objectAtIndex:friendIndex]objectAtIndex:0];
-                    birthday.date=[self getDataFromString:[[friendArray objectAtIndex:friendIndex]objectAtIndex:1]];
+                    birthday.name=tmpFriend.name;
+                    birthday.date=tmpFriend.birthdayDate;
                     birthday.type=@"生日";
-                    birthday.countDown=[self getCountDownDayFromNow:[[friendArray objectAtIndex:friendIndex]objectAtIndex:1]];
+                    birthday.countDown=[self getCountDownDayFromNow:tmpFriend.birthdayDate];
+                    birthday.constellation=tmpFriend.constellation;
                     friendIndex++;
                 }
             }
@@ -131,6 +129,7 @@
                 birthday.date=[self getDataFromString:[[festivalArray objectAtIndex:festivalIndex]objectAtIndex:1]];
                 birthday.type=@"节日";
                 birthday.countDown=[self getCountDownDayFromNow:[[festivalArray objectAtIndex:festivalIndex]objectAtIndex:1]];
+                birthday.constellation=@"";
                 festivalIndex++;
             }
             
@@ -241,6 +240,7 @@
     comp=[calendar components:NSDayCalendarUnit fromDate:[NSDate date] toDate:tmpDate options:0];
     
     NSString *strReturnDay=[NSString stringWithFormat:@"%d",comp.day+1];
+
     return  strReturnDay;
 }
 
@@ -261,10 +261,14 @@
         NSTimeInterval sevenDayAgo=0-7*24*60*60;        //设置7天前生日时间
         NSTimeInterval threeDayAgo=0-3*24*60*60;        //设置3天前生日时间
         
+        Friend *friend;
         for (int i=0; i<friendArray.count; i++)
         {
-            strname=[[friendArray objectAtIndex:i] objectAtIndex:0];
-            datebirthday=[self changeDatetimeFromString:[[friendArray objectAtIndex:i] objectAtIndex:1]];
+            friend=(Friend *)[friendArray objectAtIndex:i];
+//            strname=[[friendArray objectAtIndex:i] objectAtIndex:0];
+            strname=friend.name;
+//            datebirthday=[self changeDatetimeFromString:[[friendArray objectAtIndex:i] objectAtIndex:1]];
+            datebirthday=[self changeDatetimeFromString:friend.birthdayDate];
 
             //设置7天后通知提示
             comp=[calendar components:NSDayCalendarUnit|NSMonthCalendarUnit|NSYearCalendarUnit fromDate:[datebirthday dateByAddingTimeInterval:sevenDayAgo]];

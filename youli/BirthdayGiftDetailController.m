@@ -21,6 +21,7 @@
 #import "YouliDelegate.h"
 #import "BirthdayGiftModel.h"
 #import "BirthdayWebViewController.h"
+#import "SettingControler.h"
 
 @interface BirthdayGiftDetailController ()
 {
@@ -53,10 +54,10 @@
     giftDetailScrollView.delegate=self;
 }
 
--(void)viewDidAppear:(BOOL)animated
-{
-    [self showGiftListByGiftType:1];
-}
+//-(void)viewDidAppear:(BOOL)animated
+//{
+//    [self showGiftListByGiftType:1];
+//}
 
 - (void)didReceiveMemoryWarning
 {
@@ -90,22 +91,15 @@
     [btnShare addTarget:self action:@selector(shareClick) forControlEvents:UIControlEventTouchUpInside];
 
 
-    giftDetailScrollView=[[UIScrollView alloc]initWithFrame:CGRectMake(0, 44, 320, 370)];
-//    giftDetailScrollView.pagingEnabled=true;
+    giftDetailScrollView=[[UIScrollView alloc]initWithFrame:CGRectMake(0, 44, 320, kHEIGHT-100)];
     [giftDetailScrollView setShowsHorizontalScrollIndicator:false];
-
     
-    if(!iPhone5)
-    {
-        categoryTableView = [[CategoryTableView alloc] initWithFrame:CGRectMake(0, 0, 212, 460)];
-    }
-    else
-    {
-        categoryTableView = [[CategoryTableView alloc] initWithFrame:CGRectMake(0, 0, 212, 548)];
-    }
-    
+    categoryTableView = [[CategoryTableView alloc] initWithFrame:CGRectMake(0, 0, 212, kHEIGHT-20)];    
     categoryTableView.dataSource=self;
     categoryTableView.delegate=self;
+    UITapGestureRecognizer *photoTap=[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(setttingClick:)];
+    [categoryTableView.imgSetting addGestureRecognizer:photoTap];
+
     Category *category = [[Category alloc] init];
     [category loadData];                        //load分类列表
     giftTypeItems = category.items;
@@ -123,8 +117,14 @@
 
 - (void)returnClick
 {
-    [self.navigationController popViewControllerAnimated:YES];
-//    [self.navigationController popToRootViewControllerAnimated:YES];
+    if(self.isPopCategoryView)
+    {
+        [self hideCategoryView];
+    }
+    else
+    {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
 }
 
 - (void)shareClick
@@ -147,11 +147,11 @@
 }
 
 #pragma mark - BirthdayGiftDetailControllerDelegate
--(void)showGiftListByGiftType:(NSInteger)GiftType
+-(void)showGiftListByGiftType:(NSInteger)GiftType IsFromIndexPage:(bool) isFromIndex
 {
 //    NSMutableArray *giftArray=[fmdataOper getGiftDetailList:GiftType];
     
-    NSMutableArray *giftArray=[BirthdayGiftModel getGiftDetailList:GiftType];
+    NSMutableArray *giftArray=[[BirthdayGiftModel getInstance] getGiftDetailList:GiftType IsFromIndexPage:isFromIndex];
     
     if(giftArray!=nil)
     {
@@ -178,7 +178,7 @@
                 
                 birthdayGiftDetailItem=[[BirthdayGiftDetailItem alloc]initWithGiftInfo:GiftID GiftTitle:strGiftTitle GiftDetail:strGiftDetail ImageURL:strImageURL TaobaoURL:strTaobaoURL Price:Price Delegate:self];
                 
-                birthdayGiftDetailItem.frame=CGRectMake(21 + i+iGiftScrollViewWidth, 14, 277, 353);
+                birthdayGiftDetailItem.frame=CGRectMake(21 + i+iGiftScrollViewWidth, 14, 277, kHEIGHT - 127);
                 
                 [giftDetailScrollView addSubview:birthdayGiftDetailItem];
                 
@@ -192,11 +192,11 @@
     }
 }
 
--(void)sendGiftID:(NSInteger)GiftID
+-(void)sendGiftID:(NSInteger)GiftID IsFromIndexPage:(bool) isFromIndex
 {
 //    NSInteger index=[fmdataOper getSelectedGiftIndex:GiftID];
     
-    NSInteger index=[BirthdayGiftModel getSelectedGiftIndex:GiftID];
+    NSInteger index=[[BirthdayGiftModel getInstance] getSelectedGiftIndex:GiftID IsFromIndexPage:isFromIndex];
     
 //    k=k+(276+14)*index;
     k=(276+14)*index;
@@ -205,9 +205,7 @@
 
 #pragma mark - Scrollview Delegate
 int start;
-
 int end;
-
 int k=0;        //giftDetailScrollView位移值
 
 -(void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
@@ -292,16 +290,6 @@ int k=0;        //giftDetailScrollView位移值
 #pragma mark - BirthdayGiftDetailDelegate delegate
 -(void)showGiftInWebview:(NSString *)webaddress
 {
-//    webView=[[UIWebView alloc] initWithFrame:CGRectMake(0, 0, 360, 480)];
-//    NSLog(@"webaddress:%@",webaddress);
-    
-//    NSURL *url =[NSURL URLWithString:webaddress];
-//    NSURLRequest *request =[NSURLRequest requestWithURL:url];
-//    [webView loadRequest:request];
-//    
-//    [mainView addSubview:webView];
-
-    
     if(![birthdayWebViewController.webUrl isEqualToString:webaddress])
     {
         birthdayWebViewController.isChangeUrl=YES;
@@ -310,4 +298,13 @@ int k=0;        //giftDetailScrollView位移值
     
     [self.navigationController pushViewController:birthdayWebViewController animated:YES];
 }
+
+#pragma mark - Setting GestureRecognizer
+-(void) setttingClick:(UITapGestureRecognizer*) sender
+{
+    [self hideCategoryView];
+    SettingControler *settingControler=[[SettingControler alloc]init];
+    [self.navigationController pushViewController:settingControler animated:YES];
+}
+
 @end

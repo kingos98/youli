@@ -15,6 +15,4 @@
 @end
 
 @interface BirthdayGiftDetailController : BaseController<UIScrollViewDelegate,UITableViewDelegate,UITableViewDataSource, BirthdayGiftDetailControllerDelegate,BirthdayGiftDetailDelegate>
-
--(void)sendGiftID:(NSInteger)GiftID;
 @end

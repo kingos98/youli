@@ -7,6 +7,7 @@
 //
 
 #define TABLEBIRTHDAYGIFT           @"birthdaygift"
+#define TABLEBIRTHDAYGIFTFROMINDEX  @"birthdaygiftfromindex"
 #define TABLECOLLECTBIRTHDAYGIFT    @"collectbirthdaygift"
 #define TABLEFESTIVALLISTDATE       @"FestivalListDate"
 #define TABLEFRIENDINFO             @"FriendInfo"
@@ -46,11 +47,44 @@ static BirthdayGiftModel *instance=nil;
 }
 
 
-+ (BirthdayGiftModel *)getGiftDetail:(NSInteger) GiftID
+#pragma mark - Data Oper
+-(void)AddPhotoInfoToDB:(NSInteger)PhotoID tmpPhotoTitle:(NSString *)tmpPhotoTitle photodetail:(NSString*)tmpPhotoDetail photourl:(NSString *)tmpPhotoURL Price:(NSInteger)GiftPrice TaobaoUrl:(NSString *)TaobaoUrl IsFromIndexPage:(bool) isFromIndex
+{
+    
+    NSString *sql;
+    if(isFromIndex)
+    {
+        sql= [NSString stringWithFormat:
+              @"INSERT INTO %@ (%@,%@,%@,%@,%@,%@,%@) VALUES (%d,%d,'%@','%@','%@','%@',%d)",
+              TABLEBIRTHDAYGIFTFROMINDEX,GIFTID, GIFTTYPE, GIFTTITLE, GIFTDETAIL,GIFTIMAGEURL,GIFTTAOBAOURL,GIFTPRICE ,PhotoID,1,
+              tmpPhotoTitle, tmpPhotoDetail,tmpPhotoURL,TaobaoUrl,GiftPrice];
+    }
+    else
+    {
+        sql= [NSString stringWithFormat:
+              @"INSERT INTO %@ (%@,%@,%@,%@,%@,%@,%@) VALUES (%d,%d,'%@','%@','%@','%@',%d)",
+              TABLEBIRTHDAYGIFT,GIFTID, GIFTTYPE, GIFTTITLE, GIFTDETAIL,GIFTIMAGEURL,GIFTTAOBAOURL,GIFTPRICE ,PhotoID,1,
+              tmpPhotoTitle, tmpPhotoDetail,tmpPhotoURL,TaobaoUrl,GiftPrice];
+    }
+    
+    [DbUtils ExecSql:sql];
+}
+
+- (BirthdayGiftModel *)getGiftDetail:(NSInteger) GiftID IsFromIndexPage:(bool) isFromIndex
 {
     if([DbUtils getInstance].fmDatabase.open)
     {
-        NSString *strSql= [NSString stringWithFormat:@"select * from %@ where %@=%d",TABLEBIRTHDAYGIFT,GIFTID,GiftID];
+        NSString *strSql;
+        if(isFromIndex)
+        {
+            strSql= [NSString stringWithFormat:@"select * from %@ where %@=%d",TABLEBIRTHDAYGIFTFROMINDEX,GIFTID,GiftID];
+        
+        }
+        else
+        {
+            strSql= [NSString stringWithFormat:@"select * from %@ where %@=%d",TABLEBIRTHDAYGIFT,GIFTID,GiftID];
+        }
+        
         
         FMResultSet *rs=[[DbUtils getInstance].fmDatabase executeQuery:strSql];
         
@@ -78,14 +112,22 @@ static BirthdayGiftModel *instance=nil;
 }
 
 //每次启动该APP就自动清空birthday list
-+ (void)cleanGiftList
+- (void)cleanGiftList:(bool) isFromIndex
 {
-    NSString *strSql=[NSString stringWithFormat:@"delete from %@",TABLEBIRTHDAYGIFT];
+    NSString *strSql;
+    if (isFromIndex)
+    {
+        strSql=[NSString stringWithFormat:@"delete from %@",TABLEBIRTHDAYGIFTFROMINDEX];
+    }
+    else
+    {
+        strSql=[NSString stringWithFormat:@"delete from %@",TABLEBIRTHDAYGIFT];
+    }
     [DbUtils ExecSql:strSql];
 }
 
 //获取礼物信息列表
-+ (NSMutableArray *)getGiftDetailList:(NSInteger)PhotoType
+- (NSMutableArray *)getGiftDetailList:(NSInteger)PhotoType IsFromIndexPage:(bool) isFromIndex
 {
     if(![DbUtils getInstance].fmDatabase.open)
     {
@@ -94,7 +136,16 @@ static BirthdayGiftModel *instance=nil;
     
     NSMutableArray *GiftArray=[[NSMutableArray alloc] init];
 
-    NSString *strSql=[NSString stringWithFormat:@"select * from %@ where %@=%d",TABLEBIRTHDAYGIFT,GIFTTYPE,PhotoType];
+    NSString *strSql;
+    if(isFromIndex)
+    {
+        strSql=[NSString stringWithFormat:@"select * from %@ where %@=%d",TABLEBIRTHDAYGIFTFROMINDEX,GIFTTYPE,PhotoType];
+    }
+    else
+    {
+        strSql=[NSString stringWithFormat:@"select * from %@ where %@=%d",TABLEBIRTHDAYGIFT,GIFTTYPE,PhotoType];
+    }
+
     
     FMResultSet *rs=[[DbUtils getInstance].fmDatabase executeQuery:strSql];
 
@@ -120,7 +171,7 @@ static BirthdayGiftModel *instance=nil;
 }
 
 //获取当前选中的礼物所在位置
-+(NSInteger)getSelectedGiftIndex:(NSInteger)GiftID
+- (NSInteger)getSelectedGiftIndex:(NSInteger)GiftID IsFromIndexPage:(bool) isFromIndex
 {
     if(![[DbUtils getInstance].fmDatabase open])
     {
@@ -129,8 +180,15 @@ static BirthdayGiftModel *instance=nil;
     
     NSInteger index=0;
     
-    FMResultSet *rs=[[DbUtils getInstance].fmDatabase executeQuery:[NSString stringWithFormat: @"select %@ from %@",GIFTID,TABLEBIRTHDAYGIFT]];
-
+    FMResultSet *rs;
+    if(isFromIndex)
+    {
+        rs=[[DbUtils getInstance].fmDatabase executeQuery:[NSString stringWithFormat: @"select %@ from %@",GIFTID,TABLEBIRTHDAYGIFTFROMINDEX]];
+    }
+    else
+    {
+        rs=[[DbUtils getInstance].fmDatabase executeQuery:[NSString stringWithFormat: @"select %@ from %@",GIFTID,TABLEBIRTHDAYGIFT]];
+    }
     
     while ([rs next]) {
         if([rs intForColumn:GIFTID]==GiftID)

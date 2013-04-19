@@ -44,6 +44,9 @@
  */
 @interface UIImageView (WebCache) <SDWebImageManagerDelegate>
 
+//@property (nonatomic, strong, readwrite) id imgSize;
+
+
 /**
  * Set the imageView `image` with an `url`.
  *
@@ -63,6 +66,7 @@
  * @see setImageWithURL:placeholderImage:options:
  */
 - (void)setImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder;
+
 
 /**
  * Set the imageView `image` with an `url`, placeholder and custom options.

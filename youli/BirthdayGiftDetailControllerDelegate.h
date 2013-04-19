@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 
 @protocol BirthdayGiftDetailControllerDelegate <NSObject>
--(void)showGiftListByGiftType:(NSInteger) GiftType;
--(void)sendGiftID:(NSInteger) GiftID;
+//-(void)showGiftListByGiftType:(NSInteger) GiftType;
+-(void)showGiftListByGiftType:(NSInteger)GiftType IsFromIndexPage:(bool) isFromIndex;
+-(void)sendGiftID:(NSInteger) GiftID IsFromIndexPage:(bool) isFromIndex;
 @end

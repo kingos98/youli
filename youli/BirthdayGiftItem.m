@@ -28,8 +28,9 @@
         imgBackground.image=[UIImage imageNamed:@"gift_bg.png"];
         
         imgGiftPhoto=[[UIImageView alloc]initWithFrame:CGRectMake(11, 11, 281, 206)];
-//        NSURL *url=[NSURL URLWithString:PhotoURL];
         NSURL *url=[NSURL URLWithString:[PhotoURL stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+        imgGiftPhoto.contentMode=UIViewContentModeScaleAspectFill;
+        [imgGiftPhoto setClipsToBounds:YES];
         [imgGiftPhoto setImageWithURL:url placeholderImage:[UIImage imageNamed:@"3.jpg"]];
         [imgGiftPhoto.layer setBorderColor:[[UIColor colorWithRed:.84 green:.84 blue:.84 alpha:1] CGColor]];
         [imgGiftPhoto.layer setBorderWidth:1];

@@ -6,7 +6,7 @@
 //
 //
 
-#define TABLENAME   @"ExecSql"
+#define TABLENAME   @"birthdaygift"
 #define GIFTID      @"giftid"
 #define GIFTTYPE    @"gifttype"
 #define TITLE       @"title"
@@ -27,7 +27,8 @@
 @interface AssignBirthdayController ()
 {
     @private
-    int iGiftDisplayCount;            //当前显示的礼品数量
+    int iPageCount;                   //当前分页数，默认为1    
+//    int iGiftDisplayCount;            //当前显示的礼品数量
     int iGiftScrollViewHeight;        //当前礼品scrollview的高度
     
     NSString *strOldGiftType;
@@ -206,47 +207,53 @@
 
 - (void)loadDataSource{
     [indicator startAnimating];
-//    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:@"http://imgur.com/gallery.json"]];
-    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:@"http://yourgift.sinaapp.com/"]];
+    
+    NSString *strUrl=[[NSString stringWithFormat:@"http://yourgift.sinaapp.com/priceTag/0/10000/%@/%d/",strNewGiftType,iPageCount] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:strUrl]];
+    
+    NSLog(@"url location:%@",[NSString stringWithFormat:@"http://yourgift.sinaapp.com/priceTag/0/10000/%@/%d/",strNewGiftType,iPageCount]);
 
     AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request
-                                                                                        success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
-//                                                                                            self.items = [JSON objectForKey:@"data"];
-                                                                                            self.items = [JSON objectForKey:@"items"];
-                                                                                            for (int i=iGiftDisplayCount; i<iGiftDisplayCount+10; i++) {                                                                                                NSDictionary *item = [self.items objectAtIndex:i];
-                                                                                                
-                                                                                                NSString *strPhotoURL=[NSString stringWithFormat:@"http://yourgift.sinaapp.com/media/img/gift/%@",[item objectForKey:@"imageUrl"]];
-                                                                                                
-                                                                                                birthdayGiftItem=[[BirthdayGiftItem alloc]initWithUrl:strPhotoURL GiftTitle:[item objectForKey:@"name"] Price:[[item objectForKey:@"price"] intValue]];
-                                                                                                
-                                                                                                birthdayGiftItem.tag=[[item objectForKey:@"id"] intValue];
-                                                                                                
-                                                                                                UITapGestureRecognizer *photoTap=[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapPhoto:)];
-                                                                                                [birthdayGiftItem setUserInteractionEnabled:YES];
-                                                                                                [birthdayGiftItem addGestureRecognizer:photoTap];
-                                                                                                
-                                                                                                birthdayGiftItem.frame=CGRectMake(8, iGiftScrollViewHeight, 308, 270);
-                                                                                                
-                                                                                                CGSize size = giftScrollView.frame.size;
-//                                                                                                [giftScrollView setContentSize:CGSizeMake(size.width, size.height +iGiftScrollViewHeight)];
-                                                                                                [giftScrollView setContentSize:CGSizeMake(size.width, iGiftScrollViewHeight+284)];
-                                                                                                
-                                                                                                [self.giftScrollView addSubview:birthdayGiftItem];
-                                                                                                
-                                                                                                iGiftScrollViewHeight+=284;
-
-                                                                                                //把搜索的数据保存到sqlite
-                                                                                                [self AddPhotoInfoToDB:[[item objectForKey:@"id"] intValue] tmpPhotoTitle:[item objectForKey:@"name"] photodetail:[item objectForKey:@"name"] photourl:strPhotoURL];
-                                                                                                
-                                                                                                //                                                                                                NSLog([item objectForKey:@"title"]);
-                                                                                            }
-                                                                                            [indicator stopAnimating];
-                                                                                        }failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
-                                                                                            NSLog(@"error: %@", error);
-                                                                                        }];
+                                                                                        success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON)
+    {
+        self.items = [JSON objectForKey:@"items"];
+        
+        for (int i=0; i<items.count; i++) {                                                                                                NSDictionary *item = [self.items objectAtIndex:i];
+            
+            NSString *strPhotoURL=[NSString stringWithFormat:@"http://yourgift.sinaapp.com/media/img/gift/%@",[item objectForKey:@"imageUrl"]];
+            
+            birthdayGiftItem=[[BirthdayGiftItem alloc]initWithUrl:strPhotoURL GiftTitle:[item objectForKey:@"name"] Price:[[item objectForKey:@"price"] intValue]];
+            
+            birthdayGiftItem.tag=[[item objectForKey:@"id"] intValue];
+            
+            UITapGestureRecognizer *photoTap=[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapPhoto:)];
+            [birthdayGiftItem setUserInteractionEnabled:YES];
+            [birthdayGiftItem addGestureRecognizer:photoTap];
+            
+            birthdayGiftItem.frame=CGRectMake(8, iGiftScrollViewHeight, 308, 270);
+            
+            CGSize size = giftScrollView.frame.size;
+            //                                                                                                [giftScrollView setContentSize:CGSizeMake(size.width, size.height +iGiftScrollViewHeight)];
+            [giftScrollView setContentSize:CGSizeMake(size.width, iGiftScrollViewHeight+284)];
+            
+            [self.giftScrollView addSubview:birthdayGiftItem];
+            
+            iGiftScrollViewHeight+=284;
+            
+            //把搜索的数据保存到sqlite
+            [self AddPhotoInfoToDB:[[item objectForKey:@"id"] intValue] tmpPhotoTitle:[item objectForKey:@"name"] photodetail:[item objectForKey:@"name"] photourl:strPhotoURL];
+            
+            //                                                                                                NSLog([item objectForKey:@"title"]);
+        }
+        [indicator stopAnimating];
+        
+    }failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+        NSLog(@"error: %@", error);
+    }];
+    
     [operation start];
     
-    iGiftDisplayCount+=10;
+//    iGiftDisplayCount+=10;
 }
 
 - (void)priceSliderChange
@@ -273,11 +280,10 @@
 -(void)clearGiftScrollView
 {
     for(UIView *view in giftScrollView.subviews)
-    {        
+    {
         [view removeFromSuperview];
     }
     
-    iGiftDisplayCount=0;
     iGiftScrollViewHeight=0;
     
     if(!iPhone5)
@@ -301,6 +307,8 @@
     
     if(strOldGiftType!=strNewGiftType)
     {
+        iPageCount=1;
+        
         [self clearGiftScrollView];
 
         [self loadDataSource];
@@ -346,7 +354,7 @@
 {
 //    NSLog([NSString stringWithFormat:@"%d",[(UIGestureRecognizer *)sender view].tag]);
     
-    [self.birthdayGiftDetailController sendGiftID:[(UIGestureRecognizer *)sender view].tag];
+    [self.birthdayGiftDetailController sendGiftID:[(UIGestureRecognizer *)sender view].tag IsFromIndexPage:NO];
     [self.navigationController pushViewController:birthdayGiftDetailController animated:YES];
     
 }

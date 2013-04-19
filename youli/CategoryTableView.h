@@ -11,5 +11,6 @@
 
 @interface CategoryTableView : UITableView<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic, strong) Category *category;
+@property(nonatomic,strong)UIImageView *imgSetting;
 @end
 

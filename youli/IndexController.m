@@ -26,6 +26,9 @@
 #import "LoginController.h"
 #import "Account.h"
 #import "SettingControler.h"
+#import "BirthdayGiftModel.h"
+#import "BirthdayGiftDetailController.h"
+#import "BirthdayGiftDetailControllerDelegate.h"
 
 @interface IndexController ()
 {
@@ -34,8 +37,9 @@
     BOOL isTopLoading;                              //上拉是否正在加载图片
     BOOL isLoading;                                 //是否正在加载图片
 
+    NSInteger iPageCount;                           //当前分页数，默认为1
     NSInteger birthdayGiftControllerHeight;         //记录当前birthdayGiftController高度
-    NSInteger birthdayCurrentIndex;                 //记录当前birthday图片的序列，每load一次自动加7
+//    NSInteger birthdayCurrentIndex;                 //记录当前birthday图片的序列，每load一次自动加7
     NSMutableArray *items;                          //加载图片使用的临时数组
     NSMutableArray *giftTypeItems;                  //记录分类内容的数组
     
@@ -64,15 +68,17 @@
     BirthdayController *birthdayController;         //最近生日的朋友/节日ViewController    
     CategoryTableView *categoryTableView;           //分类组件
     SettingControler *settingControler;             //系统设置
+    BirthdayGiftDetailController *birthdayGiftDetailController;                          //礼物详细信息ViewController
     
     UIScrollView *pageScroll;                       //引导页
     UIImageView *pageImage;                         //引导页包含的图片
     
     id<YouliDelegate> delegate;                     //指向BirthdayGiftController的委托
+    id<BirthdayGiftDetailControllerDelegate> birthdayDelegate;                          //指向BirthdayGiftDetailController的委托
     
 	CGPoint downPoint;                              //上拉
     
-    NSInteger currentTemplateIndex;                 //当前使用的显示模板序号
+//    NSInteger currentTemplateIndex;                 //当前使用的显示模板序号
 }
 @end
 
@@ -83,43 +89,42 @@
 {
     [super viewDidLoad];
     
+    [[BirthdayGiftModel getInstance] cleanGiftList:YES];
+
     //检查是否存在节日日期
     FestivalMethod *festivalMethod=[[FestivalMethod alloc]init];
     [festivalMethod checkFestivalIsExist];
     
-    currentTemplateIndex=0;
-    
+    iPageCount=1;
+
     templateForIphone4=[[NSArray alloc]initWithObjects:
-                        [[NSArray alloc] initWithObjects:
                          [NSArray arrayWithObjects:@"4",@"4",@"205",@"100",@"heng",nil],
                          [NSArray arrayWithObjects:@"214",@"4",@"100",@"100",@"small",nil],
-                         [NSArray arrayWithObjects:@"4",@"109",@"100",@"100",@"small",nil],
-                         [NSArray arrayWithObjects:@"109",@"109",@"205",@"205",@"big",nil],
+                         [NSArray arrayWithObjects:@"4",@"109",@"100",@"99",@"small",nil],
+                         [NSArray arrayWithObjects:@"109",@"109",@"205",@"203",@"big",nil],
                          [NSArray arrayWithObjects:@"4",@"213",@"100",@"205",@"shu",nil],
                          [NSArray arrayWithObjects:@"109",@"317",@"100",@"100",@"small",nil],
-                         [NSArray arrayWithObjects:@"214",@"317",@"100",@"100",@"small",nil],nil],
+                         [NSArray arrayWithObjects:@"214",@"317",@"100",@"100",@"small",nil],
                         
-                        [[NSArray alloc] initWithObjects:
                          [NSArray arrayWithObjects:@"4",@"4",@"100",@"100",@"small",nil],
                          [NSArray arrayWithObjects:@"109",@"4",@"205",@"100",@"heng",nil],
-                         [NSArray arrayWithObjects:@"4",@"109",@"205",@"205",@"small",nil],
-                         [NSArray arrayWithObjects:@"216",@"109",@"100",@"100",@"big",nil],
-                         [NSArray arrayWithObjects:@"216",@"213",@"100",@"100",@"small",nil],
+                         [NSArray arrayWithObjects:@"4",@"109",@"207",@"203",@"small",nil],
+                         [NSArray arrayWithObjects:@"216",@"109",@"100",@"99",@"big",nil],
+                         [NSArray arrayWithObjects:@"216",@"213",@"100",@"99",@"small",nil],
                          [NSArray arrayWithObjects:@"4",@"317",@"100",@"100",@"small",nil],
-                         [NSArray arrayWithObjects:@"109",@"317",@"205",@"100",@"heng",nil],nil],
+                         [NSArray arrayWithObjects:@"109",@"317",@"205",@"100",@"heng",nil],
                         
-                        [[NSArray alloc] initWithObjects:
                          [NSArray arrayWithObjects:@"4",@"4",@"100",@"205",@"shu",nil],
                          [NSArray arrayWithObjects:@"109",@"4",@"205",@"205",@"small",nil],
-                         [NSArray arrayWithObjects:@"4",@"214",@"205",@"100",@"heng",nil],
-                         [NSArray arrayWithObjects:@"214",@"214",@"100",@"100",@"big",nil],
+                         [NSArray arrayWithObjects:@"4",@"214",@"205",@"98",@"heng",nil],
+                         [NSArray arrayWithObjects:@"214",@"214",@"100",@"98",@"big",nil],
                          [NSArray arrayWithObjects:@"4",@"317",@"100",@"100",@"small",nil],
                          [NSArray arrayWithObjects:@"109",@"317",@"100",@"100",@"small",nil],
-                         [NSArray arrayWithObjects:@"214",@"317",@"100",@"100",@"small",nil],nil],
-
+                         [NSArray arrayWithObjects:@"214",@"317",@"100",@"100",@"small",nil],                        
                         nil
                         ];
 
+    
     //用iphone5尺寸,如果是iphone4会隐藏下面多余的部分
     imgGiftScrollView=[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 548)];
     imgGiftScrollView.image=[UIImage imageNamed:@"bg2_iphone5.png"];
@@ -142,16 +147,13 @@
     imgSetting.image=[UIImage imageNamed:@"setting.png"];
     UITapGestureRecognizer *photoTap=[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(setttingClick:)];
     [imgSetting addGestureRecognizer:photoTap];
-
     
     CGSize size = mainScrollView.frame.size;
     [mainScrollView setContentSize:CGSizeMake(size.width, kHEIGHT-20)];
 
     isLoading = YES;
-    for(int i=0;i<2;i++)
-    {
-        [self loadDataSource];
-    }
+
+    [self loadDataSource];
     
     tabBarBgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, kHEIGHT-58, 320, 38)];
     [tabBarBgView setImage:[UIImage imageNamed:@"tabbar_bg.png"]];
@@ -165,7 +167,7 @@
     
     tabBarBoxButton = [UIButton buttonWithType:UIButtonTypeCustom];
     UIImage *tabBarBoxImage = [[UIImage imageNamed:@"tabbar_box.png"] stretchableImageWithLeftCapWidth:0 topCapHeight:0];
-    tabBarBoxButton.frame = CGRectMake(120, kHEIGHT-66, 78, 45);
+    tabBarBoxButton.frame = CGRectMake(120, kHEIGHT-65, 78, 45);
     [tabBarBoxButton setBackgroundImage:tabBarBoxImage forState:UIControlStateNormal];
     [tabBarBoxButton addTarget:self action:@selector(birthdayButtonPressed) forControlEvents:UIControlEventTouchUpInside];
     
@@ -193,11 +195,14 @@
     UIPanGestureRecognizer *mainViewPan=[[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(handleMainPan:)];
     [self.view addGestureRecognizer: mainViewPan];
     
-    birthdayGiftController=[[BirthdayGiftController alloc]init];
     personalController=[[PersonalController alloc] init];
     birthdayController=[[BirthdayController alloc] init];
     
+    birthdayGiftController=[[BirthdayGiftController alloc]init];
     delegate=birthdayGiftController;
+    
+    birthdayGiftDetailController =[[BirthdayGiftDetailController alloc]init];
+    birthdayDelegate=birthdayGiftDetailController;
     
     if(![LocalNotificationsUtils checkIsExistLocalNotificationWithActivityName:@"birthday"])
     {
@@ -360,15 +365,16 @@
                 [self putAllUIViewDownMove:418];
                 
                 for (int i=0; i<7; i++) {
-                    NSDictionary *item = [items objectAtIndex:i+birthdayCurrentIndex];
-                                                                                                
+                    NSDictionary *item = [items objectAtIndex:i];
+                    
                     NSURL *URL = [NSURL URLWithString:[NSString stringWithFormat:@"http://imgur.com/%@%@",[item objectForKey:@"hash"], [item objectForKey:@"ext"]]];
                                                                                                 
-                    NSString *x = [[[templateForIphone4 objectAtIndex:currentTemplateIndex] objectAtIndex:i] objectAtIndex:0];
-                    NSString *y = [[[templateForIphone4 objectAtIndex:currentTemplateIndex] objectAtIndex:i] objectAtIndex:1];
-                    NSString *width = [[[templateForIphone4 objectAtIndex:currentTemplateIndex] objectAtIndex:i] objectAtIndex:2];
-                    NSString *height = [[[templateForIphone4 objectAtIndex:currentTemplateIndex] objectAtIndex:i] objectAtIndex:3];
+                    NSString *x = [[templateForIphone4 objectAtIndex:i] objectAtIndex:0];
+                    NSString *y = [[templateForIphone4 objectAtIndex:i] objectAtIndex:1];
+                    NSString *width = [[templateForIphone4 objectAtIndex:i] objectAtIndex:2];
+                    NSString *height = [[templateForIphone4 objectAtIndex:i] objectAtIndex:3];
 
+                    
                     UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake([x intValue],[y intValue]+REFRESH_HEADER_HEIGHT,[width intValue],[height intValue])];
                     imageView.layer.shadowColor=[UIColor colorWithRed:0.27 green:0.2 blue:0.05 alpha:.6].CGColor;
                     imageView.layer.shadowOffset = CGSizeMake(2, 2);
@@ -376,12 +382,23 @@
                     imageView.layer.borderWidth=2;
                     imageView.layer.shadowOpacity=1;
                     imageView.layer.shadowRadius=.6;
+                    
+                    imageView.backgroundColor=[UIColor whiteColor];
                                                                                                 
                     [imageView setImageWithURL:URL placeholderImage:[UIImage imageNamed:@"3.jpg"]];
-                                                                                                
+                    
+                    imageView.tag=[[item objectForKey:@"score"] intValue];
+                    UITapGestureRecognizer *photoTap=[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapPhoto:)];
+                    [imageView setUserInteractionEnabled:YES];
+                    [imageView addGestureRecognizer:photoTap];
+                    
                     [mainScrollView addSubview:imageView];
                                                                                                 
                     imageView = nil;
+                    
+                    //把搜索的数据保存到sqlite
+                    [[BirthdayGiftModel getInstance]  AddPhotoInfoToDB:[[item objectForKey:@"id"] intValue] tmpPhotoTitle:[item objectForKey:@"name"] photodetail:[item objectForKey:@"name"] photourl:[URL absoluteString] Price:[[item objectForKey:@"price"] intValue] TaobaoUrl:[item objectForKey:@"url"] IsFromIndexPage:YES];
+
                 }
                                                                                             
                 birthdayGiftControllerHeight+=418;      //每load一屏自动加418；
@@ -400,16 +417,7 @@
                 [UIView commitAnimations];
                 
                 isTopLoading=NO;
-                birthdayCurrentIndex+=7;                //每load一屏自动加7；
                 
-                
-                //每加载一次,currentTemplateIndex自加1,目前只有3组模板，当currentTemplateIndex加到第3组时，将currentTemplateIndex设为0
-                currentTemplateIndex++;
-                if(currentTemplateIndex==3)
-                {
-                    currentTemplateIndex=0;
-                }
-                    
     }failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
         NSLog(@"error: %@", error);
     }];
@@ -419,80 +427,84 @@
 //下拉加载数据
 - (void)loadDataSource
 {
-//    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:@"http://imgur.com/gallery.json"]];
-    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:@"http://yourgift.sinaapp.com/"]];
+    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://yourgift.sinaapp.com/index/list/%d/",iPageCount]]];
+    
+    iPageCount++;
     
     AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request
     success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
-//        items = [JSON objectForKey:@"data"];
+
         items = [JSON objectForKey:@"items"];
         
-        for (int i=0; i<7; i++) {
-            if(items.count>i+birthdayCurrentIndex)
-            {
-                NSDictionary *item = [items objectAtIndex:i+birthdayCurrentIndex];
-                
-                //            NSURL *URL = [NSURL URLWithString:[NSString stringWithFormat:@"http://imgur.com/%@%@",[item objectForKey:@"hash"], [item objectForKey:@"ext"]]];
-                
-                NSString *strTempImageName=[item objectForKey:@"imageUrl"];
-                NSURL *URL = [NSURL URLWithString:[NSString stringWithFormat:@"http://yourgift.sinaapp.com/media/img/gift/%@",
-                                                   [strTempImageName stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]];
-                
-                NSString *x = [[[templateForIphone4 objectAtIndex:currentTemplateIndex] objectAtIndex:i] objectAtIndex:0];
-                NSString *y = [[[templateForIphone4 objectAtIndex:currentTemplateIndex] objectAtIndex:i] objectAtIndex:1];
-                NSString *width = [[[templateForIphone4 objectAtIndex:currentTemplateIndex] objectAtIndex:i] objectAtIndex:2];
-                NSString *height = [[[templateForIphone4 objectAtIndex:currentTemplateIndex] objectAtIndex:i] objectAtIndex:3];
-                UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake([x intValue],
-                                                                                       [y intValue] + birthdayGiftControllerHeight,
-                                                                                       [width intValue],
-                                                                                       [height intValue])];
-                
-                imageView.layer.shadowColor=[UIColor colorWithRed:0.27 green:0.2 blue:0.05 alpha:.6].CGColor;
-                imageView.layer.shadowOffset = CGSizeMake(2, 2);
-                imageView.layer.borderColor=[UIColor whiteColor].CGColor;
-                imageView.layer.borderWidth=2;
-                imageView.layer.shadowOpacity=1;
-                imageView.layer.shadowRadius=.6;
-                
-                [imageView setImageWithURL:URL placeholderImage:[UIImage imageNamed:@"3.jpg"]];
-                
-                [mainScrollView addSubview:imageView];
-                
-                imageView = nil;
-            }
-            else
-            {
-                NSLog(@"Max Count!");
-                return ;
-            }
+        if(items.count==0)
+        {
+            [self stopLoading];
+            return ;
         }
         
-        birthdayGiftControllerHeight+=418;      //每load一屏自动加418；
+        for (int i=0; i<21; i++) {
+            if(items.count<=i)
+            {
+                break;
+            }
+
+            NSDictionary *item = [items objectAtIndex:i];
+            NSString *strPhotoURL=[NSString stringWithFormat:@"http://yourgift.sinaapp.com/media/img/gift/%@",[item objectForKey:@"imageUrl"]];
+            NSURL *URL=[NSURL URLWithString:[strPhotoURL stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+            
+            NSString *x = [[templateForIphone4 objectAtIndex:i] objectAtIndex:0];
+            NSString *y = [[templateForIphone4 objectAtIndex:i] objectAtIndex:1];
+            NSString *width = [[templateForIphone4 objectAtIndex:i] objectAtIndex:2];
+            NSString *height = [[templateForIphone4 objectAtIndex:i] objectAtIndex:3];
+
+            UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake([x intValue],
+                                                                                   [y intValue] + birthdayGiftControllerHeight,
+                                                                                   [width intValue],
+                                                                                   [height intValue])];
+            
+            imageView.layer.shadowColor=[UIColor colorWithRed:0.27 green:0.2 blue:0.05 alpha:.6].CGColor;
+            imageView.layer.shadowOffset = CGSizeMake(2, 2);
+            imageView.layer.borderColor=[UIColor whiteColor].CGColor;
+            imageView.layer.borderWidth=2;
+            imageView.layer.shadowOpacity=1;
+            imageView.layer.shadowRadius=.6;
+            
+            imageView.contentMode=UIViewContentModeScaleAspectFill;
+            [imageView setClipsToBounds:YES];
+            imageView.backgroundColor=[UIColor whiteColor];
+            [imageView setImageWithURL:URL placeholderImage:[UIImage imageNamed:@"3.jpg"]];
+            
+            imageView.tag=[[item objectForKey:@"id"] intValue];
+            UITapGestureRecognizer *photoTap=[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapPhoto:)];
+            [imageView setUserInteractionEnabled:YES];
+            [imageView addGestureRecognizer:photoTap];
+            
+            [mainScrollView addSubview:imageView];
+            
+            imageView = nil;
+            
+            //把搜索的数据保存到sqlite
+            [[BirthdayGiftModel getInstance]  AddPhotoInfoToDB:[[item objectForKey:@"id"] intValue] tmpPhotoTitle:[item objectForKey:@"name"] photodetail:[item objectForKey:@"name"] photourl:strPhotoURL Price:[[item objectForKey:@"price"] intValue] TaobaoUrl:[item objectForKey:@"url"] IsFromIndexPage:YES];
+
+            if((i>0)&&(i%7==6))
+            {
+                birthdayGiftControllerHeight+=418;      //每load一屏自动加418；
+            }
+        }
         
         if(mainScrollView.contentSize.height<birthdayGiftControllerHeight)
         {
             //mainScrollView的高度应包括loading块
             [mainScrollView setContentSize:CGSizeMake(mainScrollView.frame.size.width, birthdayGiftControllerHeight+REFRESH_HEADER_HEIGHT)];
         }
-
-        birthdayCurrentIndex+=7;                //每load一屏自动加7；
         
         [self stopLoading];
-        
-
-        //每加载一次,currentTemplateIndex自加1,目前只有3组模板，当currentTemplateIndex加到第3组时，将currentTemplateIndex设为0
-        currentTemplateIndex++;
-        if(currentTemplateIndex==3)
-        {
-            currentTemplateIndex=0;
-        }
         
     }failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
          NSLog(@"error: %@", error);
     }];
     [operation start];
 }
-
 
 -(void)putAllUIViewDownMove:(NSInteger)height
 {
@@ -584,7 +596,6 @@
     [refreshTopView addSubview:refreshTopSpinner];
     
     [refreshTopView setHidden:NO];
-//    [self.view addSubview:refreshTopView];
     [mainScrollView addSubview:refreshTopView];
 }
 
@@ -682,19 +693,14 @@
         if (downPoint.y > pt.y)
         {
             [self putAllUIViewDownMove:REFRESH_HEADER_HEIGHT];
-            
             [self addPullToRefreshHeader];
             
             [UIView beginAnimations:nil context:NULL];
-            
             [UIView setAnimationDuration:0.3];
-
             [UIView commitAnimations];
 
             [refreshTopSpinner startAnimating];
-            
             isTopLoading=YES;
-            
             [self loadTopDataSource];
         }
     }
@@ -733,8 +739,27 @@
 #pragma mark - Setting GestureRecognizer
 -(void) setttingClick:(UITapGestureRecognizer*) sender
 {
+    [self hideIndexCategoryView];
     settingControler=[[SettingControler alloc]init];
     [self.navigationController pushViewController:settingControler animated:YES];
 }
+
+#pragma mark - GestureRecognizer
+-(void) tapPhoto:(UITapGestureRecognizer*) sender
+{
+    if ([birthdayDelegate respondsToSelector:@selector(showGiftListByGiftType:IsFromIndexPage:)])
+    {
+        [birthdayDelegate showGiftListByGiftType:1 IsFromIndexPage:YES];
+    }
+
+    if([birthdayDelegate respondsToSelector:@selector(sendGiftID: IsFromIndexPage:)])
+    {
+        [birthdayDelegate sendGiftID:[(UIGestureRecognizer *)sender view].tag IsFromIndexPage:YES];
+    }
+
+    
+    [self.navigationController pushViewController:birthdayGiftDetailController animated:YES];
+}
+
 
 @end

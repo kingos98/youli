@@ -18,11 +18,12 @@
 @property (nonatomic,strong) NSString *taobaourl;
 @property NSInteger price;
 
-
 + (BirthdayGiftModel *)getInstance;
-+ (BirthdayGiftModel *)getGiftDetail:(NSInteger) GiftID;
-+ (void)cleanGiftList;
-+ (NSMutableArray *)getGiftDetailList:(NSInteger)PhotoType;
-+ (NSInteger)getSelectedGiftIndex:(NSInteger)GiftID;
+-(void)AddPhotoInfoToDB:(NSInteger)PhotoID tmpPhotoTitle:(NSString *)tmpPhotoTitle photodetail:(NSString*)tmpPhotoDetail photourl:(NSString *)tmpPhotoURL Price:(NSInteger)GiftPrice TaobaoUrl:(NSString *)TaobaoUrl IsFromIndexPage:(bool) isFromIndex;
+- (BirthdayGiftModel *)getInstance;
+- (BirthdayGiftModel *)getGiftDetail:(NSInteger) GiftID IsFromIndexPage:(bool) isFromIndex;
+- (void)cleanGiftList:(bool) isFromIndex;
+- (NSMutableArray *)getGiftDetailList:(NSInteger)PhotoType IsFromIndexPage:(bool) isFromIndex;
+- (NSInteger)getSelectedGiftIndex:(NSInteger)GiftID IsFromIndexPage:(bool) isFromIndex;
 
 @end

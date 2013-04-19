@@ -16,6 +16,7 @@
 @property(nonatomic,strong) UILabel *dateLabel;
 @property(nonatomic,strong) UILabel *countDownLabel;
 @property(nonatomic,strong) UILabel *typeLabel;
+@property(nonatomic,strong) UILabel *constellation;
 
 - (id)initCell:(NSString *)reuseIdentifier;
 

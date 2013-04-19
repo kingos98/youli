@@ -7,7 +7,6 @@
 //
 
 #import "BirthdayController.h"
-#import "BirthdayCell.h"
 #import "BirthdayCellNew.h"
 #import "Birthday.h"
 #import "AppDelegate.h"
@@ -79,15 +78,9 @@
     
 //    UIImageView *tableBgView = [[UIImageView alloc] initWithFrame:CGRectMake(0,44,320,416)];
 //    [tableBgView setImage:[UIImage imageNamed:@"birthday_bg@2x.png"]];
-
-    if(!iPhone5)
-    {
-        birthdayTableView = [[UITableView alloc] initWithFrame:CGRectMake(0,44,320,416)];
-    }
-    else
-    {
-        birthdayTableView = [[UITableView alloc] initWithFrame:CGRectMake(0,44,320,504)];
-    }
+    
+    birthdayTableView = [[UITableView alloc] initWithFrame:CGRectMake(0,44,320,kHEIGHT-64)];
+    
     [birthdayTableView setDelegate:self];
     [birthdayTableView setDataSource:self];
     [birthdayTableView setBackgroundColor:[UIColor clearColor]];
@@ -109,8 +102,16 @@
 #pragma mark - UITableViewDelegate Methods
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    BirthdayCell *cell = (BirthdayCell*)[self.birthdayTableView cellForRowAtIndexPath:indexPath];
-    [self.delegate sendGiftTypeTitle:cell.nameLabel.text];
+    BirthdayCellNew *cell = (BirthdayCellNew*)[self.birthdayTableView cellForRowAtIndexPath:indexPath];
+    if(cell.constellation.text.length>0)
+    {
+        [self.delegate sendGiftTypeTitle:cell.constellation.text];        
+    }
+    else
+    {
+        [self.delegate sendGiftTypeTitle:cell.nameLabel.text];
+    }
+
     [self.navigationController pushViewController:self.assignBirthdayController animated:YES];
 }
 
@@ -133,7 +134,6 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"CellIdentifier";
-//    BirthdayCell *cell = [[BirthdayCell alloc] initCell:CellIdentifier];
     BirthdayCellNew *cell=[[BirthdayCellNew alloc] initCell: CellIdentifier];
     if(items.count>0)
     {

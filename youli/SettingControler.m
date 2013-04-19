@@ -16,6 +16,7 @@
 #import "AdviceController.h"
 #import "Account.h"
 
+
 @interface SettingControler ()
 {
     UITableView *settingTableView;
@@ -37,7 +38,7 @@
     UIImageView *imgGiftScrollView=[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 548)];
     imgGiftScrollView.image=[UIImage imageNamed:@"bg2_iphone5.png"];
     
-    UILabel *lblGiftTypeTitle=[[UILabel alloc] initWithFrame:CGRectMake(130, -8, 68, 61)];
+    UILabel *lblGiftTypeTitle=[[UILabel alloc] initWithFrame:CGRectMake(140, -8, 68, 61)];
     lblGiftTypeTitle.backgroundColor=[UIColor colorWithHue:0 saturation:0 brightness:0 alpha:0];
     lblGiftTypeTitle.font=[UIFont fontWithName:@"System" size:17.0f];
     lblGiftTypeTitle.text=@"设置";
@@ -48,7 +49,7 @@
     [btnReturn addTarget:self action:@selector(returnClick) forControlEvents:UIControlEventTouchUpInside];
 
     
-    settingTableView=[[UITableView alloc] initWithFrame:CGRectMake(0, 44, kWIDTH, kHEIGHT-20-44) style:UITableViewStyleGrouped];
+    settingTableView=[[UITableView alloc] initWithFrame:CGRectMake(0, 44, 320, kHEIGHT-64) style:UITableViewStyleGrouped];
     settingTableView.delegate=self;
     settingTableView.dataSource=self;
     
@@ -81,7 +82,7 @@
 
 - (void)returnClick
 {
-    [self.navigationController popViewControllerAnimated:NO];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 #pragma mark-
@@ -120,19 +121,12 @@
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
     UIView *customTitleView = [ [UIView alloc] initWithFrame:CGRectMake(10, 0, 300, 44)];
- 
     NSString *sectionTitle = [self tableView:tableView titleForHeaderInSection:section];
-    
     UILabel *titleLabel = [ [UILabel alloc] initWithFrame:CGRectMake(10, 0, 300, 34)];
-    
     titleLabel.text = sectionTitle;
-    
     titleLabel.textColor = [UIColor colorWithRed:119.0/255.0 green:116.0/255.0 blue:110.0/255.0 alpha:1];
-    
     titleLabel.backgroundColor = [UIColor clearColor];
-    
     [customTitleView addSubview:titleLabel];
-    
     return customTitleView;
 }
 
@@ -154,9 +148,7 @@
         }
     }
     
-    
     SettingModel *tmpModel=((SettingModel *)[nameSec objectAtIndex:row]);
-    
     if(tmpModel.menuName!=@"清除缓存")
     {
         NSString *CellIdentifier = @"Cell";
@@ -169,7 +161,6 @@
             tmpModel.menuName=@"退出新浪微博";
         }
 
-//        cell.settingModel=[nameSec objectAtIndex:row];
         cell.settingModel=tmpModel;
         
         UILongPressGestureRecognizer *longPressGR=[[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(cellLongTap:)];
@@ -193,7 +184,8 @@
         UITableViewCell *cell=[[UITableViewCell alloc]init];
         
         UIButton *btnCleanCache=[[UIButton alloc]initWithFrame:CGRectMake(0, 0, 302, 45)];
-        [btnCleanCache setBackgroundImage:[UIImage imageNamed:@"cleancache_unclick"] forState:UIControlStateNormal];
+//        [btnCleanCache setBackgroundImage:[UIImage imageNamed:@"cleancache_unclick"] forState:UIControlStateNormal];
+        [btnCleanCache setImage:[UIImage imageNamed:@"cleancache_unclick"] forState:UIControlStateNormal];
         [btnCleanCache setImage:[UIImage imageNamed:@"cleancache_click"] forState:UIControlStateHighlighted];
         [btnCleanCache addTarget:self action:@selector(btnCleanCacheClick:) forControlEvents:UIControlEventTouchUpInside];
         [cell.contentView addSubview:btnCleanCache];
@@ -217,11 +209,8 @@
     
     if(cell.lblName.text==@"新浪微博")
     {
-//        LoginController *loginController=[LoginController alloc];
-//        [self.navigationController pushViewController:loginController animated:YES];
-
         LoginController *loginController = [[LoginController alloc] init];
-        [self.navigationController pushViewController:loginController animated:NO];
+        [self.navigationController pushViewController:loginController animated:YES];
 
 //        cell.lblName.text=@"退出新浪微博";
         return;
@@ -251,7 +240,6 @@
     {
 //       [[UIApplication sharedApplication] openURL: [NSURL URLWithString:@"itms-apps://ax.itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&id=477935039"]];
     }
-    
   }
 
 -(void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath

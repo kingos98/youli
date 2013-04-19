@@ -25,10 +25,12 @@
 #import "CategoryCell.h"
 #import "BirthdayGiftModel.h"
 #import "DbUtils.h"
+#import "SettingControler.h"
 
 @interface BirthdayGiftController ()
 {
     @private
+    int iPageCount;                                                                     //当前分页数，默认为1
     int iGiftDisplayCount;                                                              //当前显示的礼品数量
     int iGiftScrollViewHeight;                                                          //当前礼品scrollview的高度
     
@@ -43,7 +45,7 @@
     BirthdayGiftItem *birthdayGiftItem;                                                 //单个礼物组件
     NMRangeSlider *priceSlider;                                                         //价钱区间组件
     
-//    id<BirthdayGiftDetailControllerDelegate> birthdayGiftDetailControllerDelegate;      //指向BirthdayGiftController的委托
+    id<BirthdayGiftDetailControllerDelegate> birthdayDelegate;                          //指向BirthdayGiftController的委托
     
     UIScrollView *giftScrollView;                                                       //礼物ScrollVie
     UIScrollView *constellationScrollView;                                              //星座ScrollVie
@@ -57,12 +59,18 @@
     
     UILabel *lowerPrice;                                                                //价格区间标签
     UILabel *upperPrice;                                                                //价格区间标签
+    UIButton *btnPriceConfirm;                                                          //按价格查询确认按钮
     UILabel *lblGiftTypeTitle;                                                          //礼物种类标签
     
     
     UIActivityIndicatorView *indicator;                                                 //等待图标
     
     BirthdayGiftDetailController *birthdayGiftDetailController;                         //礼物详细信息ViewController
+    
+    NSInteger searchType;                                                               //当前查询的类型 1:全部  2:星座  3:价格
+    NSString *currentSelectConstellation;                                               //当前选中的星座
+    NSInteger lowPrice;                                                                 //选中的最低价格
+    NSInteger highPrice;                                                                //选中的最高价格
 }
 
 @end
@@ -89,20 +97,18 @@
                          @"pisces.png",
                          nil];
 
-    [BirthdayGiftModel cleanGiftList];
+    birthdayGiftDetailController=[[BirthdayGiftDetailController alloc]init];
+    birthdayDelegate=birthdayGiftDetailController;
     
     [self initView];
-    
     [self initConstellation];
-    
     [self initPriceSlider];
-        
-    
-//    birthdayGiftDetailController=[[BirthdayGiftDetailController alloc]init];
-//    birthdayGiftDetailControllerDelegate=birthdayGiftDetailController;
     
     strOldGiftType=nil;
     strNewGiftType=nil;
+    
+    lowPrice=0;
+    highPrice=10000;
 }
 
 -(void) viewDidAppear:(BOOL)animated
@@ -143,6 +149,7 @@
     lblGiftTypeTitle.shadowOffset=CGSizeMake(0, 1);
     lblGiftTypeTitle.text=@"生日礼物";
     lblGiftTypeTitle.textAlignment=NSTextAlignmentCenter;
+    
 //    //获取选中的礼品分类名称(第一次运行BirthdayGiftController传递的GiftTypeTitle)
 //    NSUserDefaults *mydefault = [NSUserDefaults standardUserDefaults];
 //    self.lblGiftTypeTitle.text=[mydefault objectForKey:@"giftTypeTitle"];
@@ -155,15 +162,8 @@
     [btnPrice setBackgroundImage:[UIImage imageNamed:@"gift_btn_push_down.png"] forState:UIControlStateNormal];
     [btnPrice addTarget:self action:@selector(showPrice:) forControlEvents:UIControlEventTouchUpInside];
 
-    if(!iPhone5)
-    {
-        giftScrollView=[[UIScrollView alloc]initWithFrame:CGRectMake(0, 90, 320, 350)];
-    }
-    else
-    {
-        giftScrollView=[[UIScrollView alloc]initWithFrame:CGRectMake(0, 90, 320, 438)];
-    }
-    
+    giftScrollView=[[UIScrollView alloc]initWithFrame:CGRectMake(0, 90, 320, kHEIGHT-130)];
+
     imgConstellation=[[UIImageView alloc] initWithFrame:CGRectMake(0, 81, 320, 61)];
     imgConstellation.image=[UIImage imageNamed:@"birthday_gift_constellation_select.png"];
     [imgConstellation setHidden:YES];
@@ -181,28 +181,30 @@
     lowerPrice.text=@"￥ 0";
     [lowerPrice setHidden:YES];
     
-    upperPrice=[[UILabel alloc]initWithFrame:CGRectMake(269, 90, 52, 21)];
+//    upperPrice=[[UILabel alloc]initWithFrame:CGRectMake(269, 90, 52, 21)];
+    upperPrice=[[UILabel alloc]initWithFrame:CGRectMake(229, 90, 52, 21)];
     upperPrice.backgroundColor=[UIColor colorWithHue:0 saturation:0 brightness:0 alpha:0];
     upperPrice.font=[UIFont fontWithName:@"Helvetica" size:13.0f];
     upperPrice.text=@"￥ 500+";
     [upperPrice setHidden:YES];
     
+    btnPriceConfirm=[[UIButton alloc]initWithFrame:CGRectMake(281, 89, 40, 43)];
+    [btnPriceConfirm setBackgroundImage:[UIImage imageNamed:@"price_confirm.png"] forState:UIControlStateNormal];
+    [btnPriceConfirm setBackgroundImage:[UIImage imageNamed:@"price_confirm.png"] forState:UIControlStateHighlighted];
+    [btnPriceConfirm addTarget:self action:@selector(priceConfirmClick) forControlEvents:UIControlEventTouchUpInside];
+    [btnPriceConfirm setHidden:YES];
+
     btnReturn=[[UIButton alloc]initWithFrame:CGRectMake(5, 7, 50, 30)];
     [btnReturn setBackgroundImage:[UIImage imageNamed:@"return_unclick.png"] forState:UIControlStateNormal];
     [btnReturn setImage:[UIImage imageNamed:@"return_click.png"] forState:UIControlStateHighlighted];
     [btnReturn addTarget:self action:@selector(returnClick) forControlEvents:UIControlEventTouchUpInside];
 
-    if(!iPhone5)
-    {
-        categoryTableView = [[CategoryTableView alloc] initWithFrame:CGRectMake(0, 0, 212, 460)];
-    }
-    else
-    {
-        categoryTableView = [[CategoryTableView alloc] initWithFrame:CGRectMake(0, 0, 212, 548)];
-    }
-    
+    categoryTableView = [[CategoryTableView alloc] initWithFrame:CGRectMake(0, 0, 212, kHEIGHT-20)];
     categoryTableView.dataSource=self;
     categoryTableView.delegate=self;
+    UITapGestureRecognizer *photoTap=[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(setttingClick:)];
+    [categoryTableView.imgSetting addGestureRecognizer:photoTap];
+
     Category *category = [[Category alloc] init];
     [category loadData];                        //load分类列表
     giftTypeItems = category.items;
@@ -210,8 +212,10 @@
     indicator = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(285, 10, 25, 25)];
     indicator.color=[UIColor scrollViewTexturedBackgroundColor];
     indicator.hidesWhenStopped=YES;
+
     
     [self.view addSubview:categoryTableView];
+//    [self.view addSubview:imgSetting];
     [mainView addSubview:imgTitle];
     [mainView addSubview:imgGiftScrollView];
     [mainView addSubview:imgSelectorBG];
@@ -224,6 +228,7 @@
     [mainView addSubview:imgPrice];
     [mainView addSubview:lowerPrice];
     [mainView addSubview:upperPrice];
+    [mainView addSubview:btnPriceConfirm];
     [mainView addSubview:btnReturn];
     [mainView addSubview:indicator];
 
@@ -248,7 +253,8 @@
 -(void)initPriceSlider
 {
     priceSlider=[[NMRangeSlider alloc] init];
-    priceSlider.frame=CGRectMake(16, 106, 285, 35);
+//    priceSlider.frame=CGRectMake(16, 106, 285, 35);
+    priceSlider.frame=CGRectMake(16, 106, 245, 35);
     
     UIImage* image = nil;
     image = [UIImage imageNamed:@"slider-yellow-track"];
@@ -264,6 +270,8 @@
     priceSlider.minimumRange=100;
     
     [priceSlider addTarget:self action:@selector(priceSliderChange) forControlEvents:UIControlEventValueChanged];
+
+
     [priceSlider setHidden:YES];
 
     [mainView addSubview:priceSlider];
@@ -303,45 +311,170 @@
 - (void)loadDataSource{
     [indicator startAnimating];
 //    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:@"http://imgur.com/gallery.json"]];
-    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:@"http://yourgift.sinaapp.com/"]];
+    
+    NSURLRequest *request;
+    if(strNewGiftType!=@"")
+    {
+        //参数带有中文，需要转换成utf-8解释
+        NSString *strUrl=[[NSString stringWithFormat:@"http://yourgift.sinaapp.com/type/%@/%d",[strNewGiftType substringToIndex:2],iPageCount] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        request = [NSURLRequest requestWithURL:[NSURL URLWithString:strUrl]];
+        
+        iPageCount++;
+    }
+    else
+    {
+        request = [NSURLRequest requestWithURL:[NSURL URLWithString:@"http://yourgift.sinaapp.com/"]];
+    }
 
     AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request
-                                                                                        success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
-                                                                                            items = [JSON objectForKey:@"items"];
-                                                                                            for (int i=iGiftDisplayCount; i<iGiftDisplayCount+10; i++) {
-                                                                                                
-                                                                                                NSDictionary *item = [items objectAtIndex:i];
-                                                                                                
-//                                                                                                NSString *strPhotoURL=[NSString stringWithFormat:@"http://imgur.com/%@%@",[item objectForKey:@"hash"], [item objectForKey:@"ext"]];
-                                                                                                NSString *strPhotoURL=[NSString stringWithFormat:@"http://yourgift.sinaapp.com/media/img/gift/%@",[item objectForKey:@"imageUrl"]];
-                                                                                                
-                                                                                                birthdayGiftItem=[[BirthdayGiftItem alloc]initWithUrl:strPhotoURL GiftTitle:[item objectForKey:@"name"] Price:[[item objectForKey:@"price"] intValue]];
-                                                                                                
-                                                                                                birthdayGiftItem.tag=[[item objectForKey:@"id"] intValue];
+                                                                                        success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON)
+    {
+        items = [JSON objectForKey:@"items"];
+        
+        for (int i=0; i<items.count; i++)
+        {
+            
+            NSDictionary *item = [items objectAtIndex:i];
+            
+            NSString *strPhotoURL=[NSString stringWithFormat:@"http://yourgift.sinaapp.com/media/img/gift/%@",[item objectForKey:@"imageUrl"]];
+            
+            birthdayGiftItem=[[BirthdayGiftItem alloc]initWithUrl:strPhotoURL GiftTitle:[item objectForKey:@"name"] Price:[[item objectForKey:@"price"] intValue]];
+            
+            birthdayGiftItem.tag=[[item objectForKey:@"id"] intValue];
+            
+            UITapGestureRecognizer *photoTap=[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapPhoto:)];
+            [birthdayGiftItem setUserInteractionEnabled:YES];
+            [birthdayGiftItem addGestureRecognizer:photoTap];
+            
+            birthdayGiftItem.frame=CGRectMake(8, iGiftScrollViewHeight, 308, 270);
+            
+            CGSize size = giftScrollView.frame.size;
+            
+            [giftScrollView setContentSize:CGSizeMake(size.width, iGiftScrollViewHeight+284)];
+            
+            [giftScrollView addSubview:birthdayGiftItem];
+            
+            iGiftScrollViewHeight+=284;
+            
+            //把搜索的数据保存到sqlite
+            [[BirthdayGiftModel getInstance]  AddPhotoInfoToDB:[[item objectForKey:@"id"] intValue] tmpPhotoTitle:[item objectForKey:@"name"] photodetail:[item objectForKey:@"name"] photourl:strPhotoURL Price:[[item objectForKey:@"price"] intValue] TaobaoUrl:[item objectForKey:@"url"] IsFromIndexPage:NO];
+        }
+        [indicator stopAnimating];
+        
+        iGiftDisplayCount+=10;
+    }failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+        NSLog(@"error: %@", error);
+    }];
+    [operation start];
+}
 
-                                                                                                UITapGestureRecognizer *photoTap=[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapPhoto:)];
-                                                                                                [birthdayGiftItem setUserInteractionEnabled:YES];
-                                                                                                [birthdayGiftItem addGestureRecognizer:photoTap];
 
-                                                                                                birthdayGiftItem.frame=CGRectMake(8, iGiftScrollViewHeight, 308, 270);
-                                                                                                
-                                                                                                CGSize size = giftScrollView.frame.size;
-             
-                                                                                                [giftScrollView setContentSize:CGSizeMake(size.width, iGiftScrollViewHeight+284)];
-                                                                                                
-                                                                                                [giftScrollView addSubview:birthdayGiftItem];
-                                                                                                
-                                                                                                iGiftScrollViewHeight+=284;
-                                                                                                
-                                                                                                //把搜索的数据保存到sqlite
-                                                                                                [self AddPhotoInfoToDB:[[item objectForKey:@"id"] intValue] tmpPhotoTitle:[item objectForKey:@"name"] photodetail:[item objectForKey:@"name"] photourl:strPhotoURL Price:[[item objectForKey:@"price"] intValue] TaobaoUrl:[item objectForKey:@"url"]];
-                                                                                            }
-                                                                                                                                                                                        [indicator stopAnimating];
-                                                                                            
-                                                                                            iGiftDisplayCount+=10;                                                                                            
-                                                                                        }failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
-                                                                                            NSLog(@"error: %@", error);
-                                                                                        }];
+- (void)loadDataSourceByConstellation:(NSString *)constellationName
+{
+    currentSelectConstellation=constellationName;
+    
+    [indicator startAnimating];
+    
+    NSURLRequest *request;
+
+    //参数带有中文，需要转换成utf-8解释
+    NSString *strUrl=[[NSString stringWithFormat:@"http://yourgift.sinaapp.com/tag/%@/%d",constellationName,iPageCount] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    request = [NSURLRequest requestWithURL:[NSURL URLWithString:strUrl]];
+    
+    iPageCount++;
+
+    AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request
+                                                                                        success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON)
+    {
+        items = [JSON objectForKey:@"items"];
+        for (int i=0; i<items.count; i++)
+        {
+            NSDictionary *item = [items objectAtIndex:i];
+            
+            NSString *strPhotoURL=[NSString stringWithFormat:@"http://yourgift.sinaapp.com/media/img/gift/%@",[item objectForKey:@"imageUrl"]];
+            
+            birthdayGiftItem=[[BirthdayGiftItem alloc]initWithUrl:strPhotoURL GiftTitle:[item objectForKey:@"name"] Price:[[item objectForKey:@"price"] intValue]];
+            
+            birthdayGiftItem.tag=[[item objectForKey:@"id"] intValue];
+            
+            UITapGestureRecognizer *photoTap=[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapPhoto:)];
+            [birthdayGiftItem setUserInteractionEnabled:YES];
+            [birthdayGiftItem addGestureRecognizer:photoTap];
+            
+            birthdayGiftItem.frame=CGRectMake(8, iGiftScrollViewHeight, 308, 270);
+            
+            CGSize size = giftScrollView.frame.size;
+            
+            [giftScrollView setContentSize:CGSizeMake(size.width, iGiftScrollViewHeight+284)];
+            
+            [giftScrollView addSubview:birthdayGiftItem];
+            
+            iGiftScrollViewHeight+=284;
+            
+            //把搜索的数据保存到sqlite
+            [[BirthdayGiftModel getInstance]  AddPhotoInfoToDB:[[item objectForKey:@"id"] intValue] tmpPhotoTitle:[item objectForKey:@"name"] photodetail:[item objectForKey:@"name"] photourl:strPhotoURL Price:[[item objectForKey:@"price"] intValue] TaobaoUrl:[item objectForKey:@"url"] IsFromIndexPage:NO];
+        }
+        [indicator stopAnimating];
+        
+        iGiftDisplayCount+=10;
+    }failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+        NSLog(@"error: %@", error);
+    }];
+    [operation start];
+}
+
+- (void)loadDataSourceByPrice
+{
+    
+    [indicator startAnimating];
+    
+    NSURLRequest *request;
+    
+    //参数带有中文，需要转换成utf-8解释
+    NSString *strUrl=[NSString stringWithFormat:@"http://yourgift.sinaapp.com/price/%d/%d/%d/",lowPrice,highPrice,iPageCount];
+    NSLog(@"price url:%@",strUrl);
+    
+    request = [NSURLRequest requestWithURL:[NSURL URLWithString:strUrl]];
+    
+    iPageCount++;
+    
+    AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request
+                                                                                        success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON)
+                                         {
+                                             items = [JSON objectForKey:@"items"];
+                                             for (int i=0; i<items.count; i++)
+                                             {
+                                                 NSDictionary *item = [items objectAtIndex:i];
+                                                 
+                                                 NSString *strPhotoURL=[NSString stringWithFormat:@"http://yourgift.sinaapp.com/media/img/gift/%@",[item objectForKey:@"imageUrl"]];
+                                                 
+                                                 birthdayGiftItem=[[BirthdayGiftItem alloc]initWithUrl:strPhotoURL GiftTitle:[item objectForKey:@"name"] Price:[[item objectForKey:@"price"] intValue]];
+                                                 
+                                                 birthdayGiftItem.tag=[[item objectForKey:@"id"] intValue];
+                                                 
+                                                 UITapGestureRecognizer *photoTap=[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapPhoto:)];
+                                                 [birthdayGiftItem setUserInteractionEnabled:YES];
+                                                 [birthdayGiftItem addGestureRecognizer:photoTap];
+                                                 
+                                                 birthdayGiftItem.frame=CGRectMake(8, iGiftScrollViewHeight, 308, 270);
+                                                 
+                                                 CGSize size = giftScrollView.frame.size;
+                                                 
+                                                 [giftScrollView setContentSize:CGSizeMake(size.width, iGiftScrollViewHeight+284)];
+                                                 
+                                                 [giftScrollView addSubview:birthdayGiftItem];
+                                                 
+                                                 iGiftScrollViewHeight+=284;
+                                                 
+                                                 //把搜索的数据保存到sqlite
+                                                 [[BirthdayGiftModel getInstance]  AddPhotoInfoToDB:[[item objectForKey:@"id"] intValue] tmpPhotoTitle:[item objectForKey:@"name"] photodetail:[item objectForKey:@"name"] photourl:strPhotoURL Price:[[item objectForKey:@"price"] intValue] TaobaoUrl:[item objectForKey:@"url"] IsFromIndexPage:NO];
+                                             }
+                                             [indicator stopAnimating];
+                                             
+                                             iGiftDisplayCount+=10;
+                                         }failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+                                             NSLog(@"error: %@", error);
+                                         }];
     [operation start];
 }
 
@@ -358,6 +491,50 @@
     }
     
     [sender setBackgroundColor:[UIColor colorWithRed:.8 green:.8 blue:.8 alpha:1]];
+
+    searchType=2;
+    
+    [self clearGiftScrollView];
+    switch (sender.tag) {
+        case 0:
+            [self loadDataSourceByConstellation:@"白羊"];
+            break;
+        case 1:
+            [self loadDataSourceByConstellation:@"多牛"];
+            break;
+        case 2:
+            [self loadDataSourceByConstellation:@"双子"];
+            break;
+        case 3:
+            [self loadDataSourceByConstellation:@"巨蟹"];
+            break;
+        case 4:
+            [self loadDataSourceByConstellation:@"狮子"];
+            break;
+        case 5:
+            [self loadDataSourceByConstellation:@"处女"];
+            break;
+        case 6:
+            [self loadDataSourceByConstellation:@"天秤"];
+            break;
+        case 7:
+            [self loadDataSourceByConstellation:@"天蝎"];
+            break;
+        case 8:
+            [self loadDataSourceByConstellation:@"射手"];
+            break;
+        case 9:
+            [self loadDataSourceByConstellation:@"魔蝎"];
+            break;
+        case 10:
+            [self loadDataSourceByConstellation:@"水瓶"];
+            break;
+        case 11:
+            [self loadDataSourceByConstellation:@"双鱼"];
+            break;
+        default:
+            break;
+    }
 }
 
 - (IBAction)showConstellation:(id)sender
@@ -397,6 +574,7 @@
         
         [lowerPrice setHidden:NO];
         [upperPrice setHidden:NO];
+        [btnPriceConfirm setHidden:NO];
         btnPrice.tag=1;
     }
     else
@@ -406,6 +584,7 @@
         
         [lowerPrice setHidden:YES];
         [upperPrice setHidden:YES];
+        [btnPriceConfirm setHidden:YES];
         
         btnPrice.tag=0;
     }
@@ -440,7 +619,17 @@
     }
 }
 
-- (void) updateSliderLabels
+-(void)priceConfirmClick
+{
+    searchType=3;
+
+    [self clearGiftScrollView];
+    [self loadDataSourceByPrice];
+    
+    [self showPrice:btnPrice];
+}
+
+- (void)priceSliderChange
 {
     NSString * strMoneySymble=@"￥ ";
     
@@ -448,16 +637,19 @@
     lowerCenter.x = (priceSlider.lowerCenter.x + priceSlider.frame.origin.x);
     lowerCenter.y = (priceSlider.center.y - 20.0f);
     lowerPrice.text = [strMoneySymble stringByAppendingString:[NSString stringWithFormat:@"%d", (int)priceSlider.lowerValue]];
+    lowPrice=(int)priceSlider.lowerValue;
     
     CGPoint upperCenter;
     upperCenter.x = (priceSlider.upperCenter.x + priceSlider.frame.origin.x);
     upperCenter.y = (priceSlider.center.y - 20.0f);
     upperPrice.text = [strMoneySymble stringByAppendingString:[NSString stringWithFormat:@"%d", (int)priceSlider.upperValue]];
-}
+    highPrice=(int)priceSlider.upperValue;
 
-- (void)priceSliderChange
-{
-    [self updateSliderLabels];
+    if((int)priceSlider.upperValue==500)
+    {
+        upperPrice.text =[upperPrice.text stringByAppendingString:@"+"];
+        highPrice=10000;
+    }
 }
 
 //清空scrollview里面的内容
@@ -468,31 +660,24 @@
         [view removeFromSuperview];
     }
     
+    iPageCount=1;
     iGiftDisplayCount=0;
     iGiftScrollViewHeight=0;
+    [[BirthdayGiftModel getInstance] cleanGiftList:NO];
     
-    if(!iPhone5)
-    {
-        giftScrollView.frame=CGRectMake(0, 90, 320, 350);
-    }
-    else
-    {
-        giftScrollView.frame=CGRectMake(0, 90, 320, 438);
-    }
-    
+    giftScrollView.frame=CGRectMake(0, 90, 320, kHEIGHT-130);
     [giftScrollView setContentOffset:CGPointMake(0, 0) animated:YES];
 }
 
 -(void) sendGiftTypeTitle:(NSString *)GiftTypeTitle
 {
-    lblGiftTypeTitle.text=GiftTypeTitle;
-    
+    searchType=1;
     strNewGiftType=GiftTypeTitle;
+    lblGiftTypeTitle.text=GiftTypeTitle;
     
     if(strOldGiftType!=strNewGiftType)
     {
         [self clearGiftScrollView];
-        
         [self loadDataSource];
         
         strOldGiftType=strNewGiftType;
@@ -516,7 +701,20 @@
     
     if(currentOffset==maximumOffset)
     {
-        [self loadDataSource];      //当滚到最底时自动更新内容
+        switch (searchType) {
+            case 1:
+                [self loadDataSource];
+                break;
+            case 2:
+                [self loadDataSourceByConstellation:currentSelectConstellation];
+                break;
+            case 3:
+                [self loadDataSourceByPrice];
+                break;
+            default:
+                break;
+        }
+//        [self loadDataSource];      //当滚到最底时自动更新内容
     }
 }
 
@@ -534,8 +732,20 @@
 #pragma mark - GestureRecognizer
 -(void) tapPhoto:(UITapGestureRecognizer*) sender
 {        
-    birthdayGiftDetailController=[[BirthdayGiftDetailController alloc] init];
-    [birthdayGiftDetailController sendGiftID:[(UIGestureRecognizer *)sender view].tag];
+//    birthdayGiftDetailController=[[BirthdayGiftDetailController alloc] init];
+//    [birthdayGiftDetailController showGiftListByGiftType:1 IsFromIndexPage:YES];
+    
+    if ([birthdayDelegate respondsToSelector:@selector(showGiftListByGiftType:IsFromIndexPage:)])
+    {
+        [birthdayDelegate showGiftListByGiftType:1 IsFromIndexPage:NO];
+    }
+
+//    [birthdayGiftDetailController sendGiftID:[(UIGestureRecognizer *)sender view].tag IsFromIndexPage:NO];
+    
+    if([birthdayDelegate respondsToSelector:@selector(sendGiftID: IsFromIndexPage:)])
+    {
+        [birthdayDelegate sendGiftID:[(UIGestureRecognizer *)sender view].tag IsFromIndexPage:NO];
+    }
 
     [self.navigationController pushViewController:birthdayGiftDetailController animated:YES];
 }
@@ -597,5 +807,13 @@
     CategoryCell *cell = (CategoryCell*)[categoryTableView cellForRowAtIndexPath:indexPath];
     cell.labelImage.image = [UIImage imageNamed:@"unselected.png"];
     cell.nextImage.image = [UIImage imageNamed:@"pointerunselect.png"];
+}
+
+#pragma mark - Setting GestureRecognizer
+-(void) setttingClick:(UITapGestureRecognizer*) sender
+{
+    [self hideCategoryView];
+    SettingControler *settingControler=[[SettingControler alloc]init];
+    [self.navigationController pushViewController:settingControler animated:YES];
 }
 @end

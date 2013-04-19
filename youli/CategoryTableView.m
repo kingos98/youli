@@ -11,12 +11,14 @@
 #import "Category.h"
 #import "AppDelegate.h"
 
+
 @implementation CategoryTableView{
 @private
     NSArray *items;
 }
 
 @synthesize category;
+@synthesize imgSetting;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -25,7 +27,16 @@
     self.backgroundView=[self backgroundView];
     self.backgroundColor=[UIColor clearColor];
     self.separatorStyle = UITableViewCellSeparatorStyleNone;
-    self.scrollEnabled=false;    
+    self.scrollEnabled=false;
+    
+    
+    //添加设置图片按钮
+    imgSetting=[[UIImageView alloc] initWithFrame:CGRectMake(0, kHEIGHT-54, 213, 34)];
+    imgSetting.userInteractionEnabled=YES;
+    imgSetting.image=[UIImage imageNamed:@"setting.png"];
+    
+    [self addSubview:imgSetting];
+    
     return self;
 }
 
