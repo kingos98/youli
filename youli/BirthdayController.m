@@ -19,7 +19,7 @@
 @synthesize birthday;
 @synthesize delegate;
 @synthesize birthdayTableView;
-@synthesize assignBirthdayController;
+@synthesize birthdayGiftController;
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -40,8 +40,8 @@
     [birthday loadData:nil];
     items = birthday.items;
 
-    self.assignBirthdayController=[[AssignBirthdayController alloc]init];
-    self.delegate=self.assignBirthdayController;
+    self.birthdayGiftController=[[BirthdayGiftController alloc]init];
+    self.delegate=self.birthdayGiftController;
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -76,17 +76,12 @@
     [segment addSubview: bgImage];
     //--->背景图片
     
-//    UIImageView *tableBgView = [[UIImageView alloc] initWithFrame:CGRectMake(0,44,320,416)];
-//    [tableBgView setImage:[UIImage imageNamed:@"birthday_bg@2x.png"]];
-    
     birthdayTableView = [[UITableView alloc] initWithFrame:CGRectMake(0,44,320,kHEIGHT-64)];
     
     [birthdayTableView setDelegate:self];
     [birthdayTableView setDataSource:self];
     [birthdayTableView setBackgroundColor:[UIColor clearColor]];
     [birthdayTableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
-//    [birthdayTableView setBackgroundView:tableBgView];
-//    birthdayTableView.scrollEnabled=false;
     
     [self.view addSubview:mainBgView];
     [self.view addSubview:imgTitle];
@@ -105,14 +100,14 @@
     BirthdayCellNew *cell = (BirthdayCellNew*)[self.birthdayTableView cellForRowAtIndexPath:indexPath];
     if(cell.constellation.text.length>0)
     {
-        [self.delegate sendGiftTypeTitle:cell.constellation.text];        
+        [self.delegate sendGiftTagTitle:cell.constellation.text];
     }
     else
     {
-        [self.delegate sendGiftTypeTitle:cell.nameLabel.text];
+        [self.delegate sendGiftTagTitle:cell.nameLabel.text];
     }
 
-    [self.navigationController pushViewController:self.assignBirthdayController animated:YES];
+    [self.navigationController pushViewController:self.birthdayGiftController animated:YES];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath

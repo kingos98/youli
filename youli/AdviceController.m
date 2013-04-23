@@ -8,10 +8,11 @@
 
 #import "AdviceController.h"
 #import <QuartzCore/QuartzCore.h> 
-
+#import "PlaceHolderTextView.h"
 @interface AdviceController ()
 {
-    UITextView *txtAdvice;
+//    UITextView *txtAdvice;
+    PlaceHolderTextView *txtAdvice;    
 }
 @end
 
@@ -49,6 +50,8 @@
     txtAdvice.showsVerticalScrollIndicator=YES;
     txtAdvice.showsHorizontalScrollIndicator=NO;
     txtAdvice.layer.cornerRadius=8;
+    txtAdvice.placeholder=@"请输入意见";
+    txtAdvice.placeholderColor=[UIColor grayColor];
 
 //    txtAdvice.layer.cornerRadius = 8;
 //    txtAdvice.scrollEnabled = YES;

@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "Birthday.h"
 #import "YouliDelegate.h"
-#import "AssignBirthdayController.h"
+#import "BirthdayGiftController.h"
 
 @interface BirthdayController : UIViewController<UITableViewDelegate, UITableViewDataSource,UISearchBarDelegate>{
     NSMutableArray *data;
@@ -19,7 +19,7 @@
 
 @property (nonatomic, strong) Birthday *birthday;
 
-@property(nonatomic,strong)AssignBirthdayController *assignBirthdayController;
+@property(nonatomic,strong)BirthdayGiftController *birthdayGiftController;
 
 @property(nonatomic,strong)id<YouliDelegate> delegate;
 

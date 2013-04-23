@@ -271,7 +271,7 @@ int k=0;        //giftDetailScrollView位移值
     delegate=birthdayGiftController;
     
     CategoryCell *cell = (CategoryCell*)[categoryTableView cellForRowAtIndexPath:indexPath];
-    [delegate sendGiftTypeTitle:cell.nameLabel.text];
+    [delegate sendGiftTypeTitle:cell.nameLabel.text IsFromIndexPage:YES];
     [self.navigationController pushViewController:birthdayGiftController animated:YES];
 
     cell.labelImage.image = [UIImage imageNamed:@"selected.png"];

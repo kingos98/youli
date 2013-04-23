@@ -251,7 +251,7 @@
     {
         CategoryCell *cell = (CategoryCell*)[categoryTableView cellForRowAtIndexPath:indexPath];
 
-        [delegate sendGiftTypeTitle:cell.nameLabel.text];
+        [delegate sendGiftTypeTitle:cell.nameLabel.text IsFromIndexPage:NO];
         
         [self.navigationController pushViewController:birthdayGiftController animated:YES];
         

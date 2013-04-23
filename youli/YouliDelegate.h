@@ -10,7 +10,8 @@
 #import <UIKit/UIKit.h>
 
 @protocol YouliDelegate <NSObject>
--(void)sendGiftTypeTitle:(NSString *) GiftTypeTitle;
+-(void)sendGiftTypeTitle:(NSString *) GiftTypeTitle IsFromIndexPage:(BOOL) isFromIndexPage;
+-(void)sendGiftTagTitle:(NSString *) TagTitle;
 -(void)changeGiftListByType:(int) GiftType;
 @end
 

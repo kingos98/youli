@@ -65,7 +65,7 @@
     BOOL isLastPage;                                //是否最后一页
     NSString *textLastPage;                         //最后一页提示
 
-    BirthdayGiftController *birthdayGiftController; //按分类展示的礼物ViewController
+    BirthdayGiftController *birthdayGiftController; //按分类展示的礼物ViewController(生日礼物)
     PersonalController *personalController;         //好友ViewController
     LoginController *loginController;               //微博登录ViewController
     BirthdayController *birthdayController;         //最近生日的朋友/节日ViewController    
@@ -80,8 +80,6 @@
     id<BirthdayGiftDetailControllerDelegate> birthdayDelegate;                          //指向BirthdayGiftDetailController的委托
     
 	CGPoint downPoint;                              //上拉
-    
-//    NSInteger currentTemplateIndex;                 //当前使用的显示模板序号
 }
 @end
 
@@ -203,7 +201,6 @@
     birthdayController=[[BirthdayController alloc] init];
     
     birthdayGiftController=[[BirthdayGiftController alloc]init];
-    delegate=birthdayGiftController;
     
     birthdayGiftDetailController =[[BirthdayGiftDetailController alloc]init];
     birthdayDelegate=birthdayGiftDetailController;
@@ -764,11 +761,11 @@
     //第一次运行BirthdayGiftController传递的GiftTypeTitle
     //    NSUserDefaults *mydefault = [NSUserDefaults standardUserDefaults];
     //    [mydefault setObject:cell.nameLabel.text forKey:@"giftTypeTitle"];
-    
-    [delegate sendGiftTypeTitle:cell.nameLabel.text];
-    
+
+    delegate=birthdayGiftController;
+    [delegate sendGiftTypeTitle:cell.nameLabel.text IsFromIndexPage:YES];
     [self.navigationController pushViewController:birthdayGiftController animated:YES];
-    
+
     cell.labelImage.image = [UIImage imageNamed:@"selected.png"];
     cell.nextImage.image = [UIImage imageNamed:@"pointerselect.png"];
     
