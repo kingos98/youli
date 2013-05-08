@@ -15,6 +15,7 @@
 #import "GuideController.h"
 #import "AdviceController.h"
 #import "Account.h"
+#import "AboutController.h"
 
 
 @interface SettingControler ()
@@ -229,10 +230,10 @@
         return;
     }
 
-    if(cell.lblName.text==@"意见反馈")
+    if(cell.lblName.text==@"关于有礼")
     {
-        AdviceController *adviceController=[AdviceController alloc];
-        [self.navigationController pushViewController:adviceController animated:YES];
+        AboutController *aboutController=[AboutController alloc];
+        [self.navigationController pushViewController:aboutController animated:YES];
         return;        
     }
     

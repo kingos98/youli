@@ -19,7 +19,7 @@
     FMDatabaseOper *dbOper=[[FMDatabaseOper alloc]init];
     NSMutableArray *friendInDBArray=[dbOper getFriendList:FriendName];
     
-    Friend *friend;
+    Friend *friend=friend=[Friend alloc];
 
     if(friendInDBArray.count>0)
     {
@@ -27,34 +27,19 @@
         unsigned unitFlags = NSYearCalendarUnit | NSMonthCalendarUnit |  NSDayCalendarUnit;
         NSDateComponents *comp=[calendar components:unitFlags fromDate:[NSDate date]];
         
-//        NSArray *singleFriendInfo=nil;
-        
-        for (int i=0; i<friendInDBArray.count; i++) {
-            friend=[Friend alloc];
-            
-//            singleFriendInfo=[[NSArray alloc] initWithObjects:[[friendInDBArray objectAtIndex:i]objectAtIndex:0],
-//                              [NSString stringWithFormat:@"%d%@",comp.year,[[friendInDBArray objectAtIndex:i]objectAtIndex:1]],
-//                              [[friendInDBArray objectAtIndex:i]objectAtIndex:2],
-//                              nil];
+        for (int i=0; i<friendInDBArray.count; i++)
+        {
             friend.name=[[friendInDBArray objectAtIndex:i]objectAtIndex:0];
             friend.birthdayDate=[NSString stringWithFormat:@"%d%@",comp.year,[[friendInDBArray objectAtIndex:i]objectAtIndex:1]];
             friend.constellation=[[friendInDBArray objectAtIndex:i]objectAtIndex:2];
-            
             [friendBirthdayArray addObject:friend];
         }
         
-        for (int i=0; i<friendInDBArray.count; i++) {
-//            singleFriendInfo=[[NSArray alloc] initWithObjects:
-//                              [[friendInDBArray objectAtIndex:i]objectAtIndex:0],
-//                              [NSString stringWithFormat:@"%d%@",comp.year+1,[[friendInDBArray objectAtIndex:i]objectAtIndex:1]],
-//                              [[friendInDBArray objectAtIndex:i]objectAtIndex:2],
-//                              nil];
-//            [friendBirthdayArray addObject:singleFriendInfo];
-        
+        for (int i=0; i<friendInDBArray.count; i++)
+        {
             friend.name=[[friendInDBArray objectAtIndex:i]objectAtIndex:0];
             friend.birthdayDate=[NSString stringWithFormat:@"%d%@",comp.year+1,[[friendInDBArray objectAtIndex:i]objectAtIndex:1]];
             friend.constellation=[[friendInDBArray objectAtIndex:i]objectAtIndex:2];
-            
             [friendBirthdayArray addObject:friend];
         }
     }

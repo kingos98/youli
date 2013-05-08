@@ -10,7 +10,6 @@
 #import "FriendCell.h"
 #import "SubTableCell.h"
 #import "UIFolderTableView.h"
-#import "Friend.h"
 #import "AppDelegate.h"
 
 @interface FriendAddController ()<UIFolderTableViewDelegate>
@@ -28,6 +27,7 @@
     
     UIImageView *mainBgView = [[UIImageView alloc] initWithFrame:CGRectMake(0,0,320,548)];
     [mainBgView setImage:[UIImage imageNamed:@"bg.png"]];
+    
     //返回导航条
     UIImageView *imgTitle = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
     imgTitle.image = [UIImage imageNamed:@"head.jpg"];
@@ -37,7 +37,8 @@
     [btnReturn addTarget:self action:@selector(returnClick:) forControlEvents:UIControlEventTouchUpInside];
     
 	self.friendTable = [[UIFolderTableView alloc] initWithFrame:CGRectMake(0, 44, 320, 380)];
-    if(iPhone5){
+    if(iPhone5)
+    {
         self.friendTable.frame = CGRectMake(0, 44, 320, 468);
     }
     [self.friendTable setDelegate:self];
@@ -49,11 +50,12 @@
     [mainView addSubview:btnReturn];
     [mainView addSubview:self.friendTable];
     
-    [Friend loadFriend:^(NSArray *friends, NSError *error) {
+    [[Friend getInstance] loadFriend:^(NSArray *friends, NSError *error) {
         if (error) {
             [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil) message:[error localizedDescription] delegate:nil cancelButtonTitle:nil otherButtonTitles:NSLocalizedString(@"OK", nil), nil] show];
         } else {
             self.items = friends;
+            
             [self.friendTable reloadData];
         }
     }];
@@ -72,8 +74,9 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"CellIdentifier";
-    FriendCell *cell = [[FriendCell alloc] initCell:CellIdentifier];
-    if (self.items.count>0) {
+    FriendCell *cell = [[FriendCell alloc] initCell:CellIdentifier delegate:self];
+    if (self.items.count>0)
+    {
         cell.friend =  [self.items objectAtIndex:indexPath.row];
     }
     return cell;
@@ -106,7 +109,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 24;
+    return self.items.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -117,6 +120,12 @@
 -(CGFloat)tableView:(UIFolderTableView *)tableView xForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return 37;
+}
+
+#pragma mark - AddFriendDelegate Methods
+-(void)addNewFriend:(Friend *)newFriend
+{
+    [[Friend getInstance] addFriend:newFriend];
 }
 
 @end

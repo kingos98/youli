@@ -733,7 +733,6 @@
         
         strOldGiftType=strNewGiftType;
     }
-    
 }
 
 -(void)sendGiftTagTitle:(NSString *)TagTitle

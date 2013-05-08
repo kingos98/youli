@@ -215,7 +215,7 @@ int k=0;        //giftDetailScrollView位移值
 
 -(void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
 {
-    end = scrollView.contentOffset.x;
+    end = scrollView.contentOffset.x;    
 }
 
 -(void)scrollViewWillBeginDecelerating:(UIScrollView *)scrollView
@@ -231,7 +231,8 @@ int k=0;        //giftDetailScrollView位移值
             [scrollView setContentOffset:CGPointMake(k, 0) animated:YES];
         }
     }
-    else {
+    else
+    {
         if(k>0)
         {
             k=k-276-14;

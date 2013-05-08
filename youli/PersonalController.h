@@ -18,16 +18,13 @@
     NSDictionary *friendDic;
 }
 
-@property(nonatomic,retain)NSMutableArray *items;
 @property(strong,nonatomic)FriendInfoController *friendInfoController;
 @property(strong,nonatomic)UIButton *friendButton;
 @property(strong,nonatomic)UIButton *collectButton;
-@property(strong,nonatomic)UIButton *cartButton;
+@property(strong,nonatomic)UIButton *strangerButton;
 @property(strong,nonatomic)UIButton *editButton;
-@property(strong,nonatomic)UIButton *messageButton;
 @property(strong,nonatomic)NSMutableArray *messageArray;
 @property(strong,nonatomic)SubTableCell *subTableCell;
 @property(strong,nonatomic)UIScrollView *collectView;
-@property(strong,nonatomic)UIScrollView *cartView;
 
 @end

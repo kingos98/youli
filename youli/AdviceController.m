@@ -45,12 +45,12 @@
     [btnSend setBackgroundImage:[UIImage imageNamed:@"send_click.png"] forState:UIControlStateHighlighted];
     [btnSend addTarget:self action:@selector(sendClick) forControlEvents:UIControlEventTouchUpInside];
     
-    txtAdvice=[[UITextView alloc]initWithFrame:CGRectMake(10, 54, 300, 180)];
+    txtAdvice=[[PlaceHolderTextView alloc]initWithFrame:CGRectMake(10, 54, 300, 180)];
     txtAdvice.backgroundColor = [UIColor whiteColor];
     txtAdvice.showsVerticalScrollIndicator=YES;
     txtAdvice.showsHorizontalScrollIndicator=NO;
     txtAdvice.layer.cornerRadius=8;
-    txtAdvice.placeholder=@"请输入意见";
+    txtAdvice.placeholder=@"请输入您的宝贵意见";
     txtAdvice.placeholderColor=[UIColor grayColor];
 
 //    txtAdvice.layer.cornerRadius = 8;

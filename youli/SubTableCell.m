@@ -11,6 +11,9 @@
 #import "ConstellationUtils.h"
 
 @implementation SubTableCell
+@synthesize selectedMonth;
+@synthesize selectedDay;
+@synthesize selectedConstellation;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -43,6 +46,24 @@
         self.selectedDay = @"1日";
         [self addSubview:self.constellationSelector];
         
+        UIImageView *imgSubCellMonthSelect=[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"sub_cell_select.png"]];
+        if (frame.origin.x==10)
+        {
+            imgSubCellMonthSelect.frame=CGRectMake(0, 91, 170, 38);
+        }
+        else
+        {
+            imgSubCellMonthSelect.frame=CGRectMake(0, 91, 181, 38);
+        }
+        [self addSubview:imgSubCellMonthSelect];
+        
+//        UIImageView *imgSubCellDaySelect=[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"sub_cell_select.png"]];
+//        imgSubCellDaySelect.frame=CGRectMake(88, 91, 90, 38);
+//        [self addSubview:imgSubCellDaySelect];        
+        
+        self.constellationSelector.selectedValue = [ConstellationUtils getAstroWithMonth:1 andDay:1];
+        self.selectedConstellation = self.constellationSelector.selectedValue;
+        [self.constellationSelector scrollToTheSelectedCell];
     }
     return self;
 }
@@ -73,8 +94,10 @@
     NSRange dayRange = [self.selectedDay rangeOfString:@"日"];
     NSInteger month = [[self.selectedMonth substringToIndex:monthRange.location] integerValue];
     NSInteger day = [[self.selectedDay substringToIndex:dayRange.location] integerValue];
+    
     self.constellationSelector.selectedValue = [ConstellationUtils getAstroWithMonth:month andDay:day];
     self.selectedConstellation = self.constellationSelector.selectedValue;
+    
     [self.constellationSelector scrollToTheSelectedCell];    
 }
 

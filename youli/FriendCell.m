@@ -14,25 +14,31 @@
 
 @private
 __strong Friend *_friend;
+    
+    id<AddFriendDelegate> delegate;
 }
 
 @synthesize friend = _friend;
+@synthesize currentFriend;
 
-- (id)initCell:(NSString *)reuseIdentifier{
+- (id)initCell:(NSString *)reuseIdentifier delegate:(id<AddFriendDelegate>)_delegate
+{
     self = [super initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier];
     if (self) {
         UIView *cellbgView = [[UIView alloc] initWithFrame:self.frame];
         cellbgView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"friend_cell_bg.png"]];
         self.backgroundView = cellbgView;
         self.selectionStyle = UITableViewCellSelectionStyleNone;
+        delegate=_delegate;
         [self addButton];
     }
     return self;
 }
 
-- (void)setFriend:(Friend *)friend {
+- (void)setFriend:(Friend *)friend {    
     [self addPhoto:friend];
     [self addNameLabel:friend];
+    currentFriend=friend;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
@@ -42,7 +48,8 @@ __strong Friend *_friend;
 
 - (void)addPhoto:(Friend *)friend{
     UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(10,4,28,28)];
-    if (friend) {
+    if (friend)
+    {
         if (friend.profileUrl) {
             NSURL *URL = [NSURL URLWithString:friend.profileUrl];
             [imageView setImageWithURL:URL];
@@ -66,7 +73,15 @@ __strong Friend *_friend;
     addButton.frame = CGRectMake(260,7,50,23);
     UIImage *addImage = [[UIImage imageNamed:@"add1.png"] stretchableImageWithLeftCapWidth:0 topCapHeight:0];
     [addButton setBackgroundImage:addImage forState:UIControlStateNormal];
+    [addButton addTarget:self action:@selector(addFriendPressed) forControlEvents:UIControlEventTouchUpInside];
     [self.contentView addSubview:addButton];
 }
 
+- (void)addFriendPressed
+{    
+    if ([delegate respondsToSelector:@selector(addNewFriend:)])
+    {
+        [delegate performSelector:@selector(addNewFriend:) withObject:self.currentFriend];
+    }
+}
 @end

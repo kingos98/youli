@@ -25,7 +25,7 @@
 //                      [NSArray arrayWithObjects:@"其它设置",@"应用推荐",nil],
                       [NSArray arrayWithObjects:@"关于",@"新手指引",nil],
 //                      [NSArray arrayWithObjects:@"关于",@"给我评分",nil],
-                      [NSArray arrayWithObjects:@"关于",@"意见反馈",nil],
+                      [NSArray arrayWithObjects:@"关于",@"关于有礼",nil],
 
                       [NSArray arrayWithObjects:@"清除缓存的数据和图片",@"清除缓存",nil],
                       

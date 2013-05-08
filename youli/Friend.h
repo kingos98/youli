@@ -14,16 +14,20 @@
 }
 
 @property NSInteger friendID;
+@property(nonatomic,strong)NSString *webId;
 @property(nonatomic,strong)NSString *name;
 @property(nonatomic,strong)NSString *birthdayDate;
 @property(nonatomic,strong)NSString *constellation;
 @property(nonatomic,strong)NSString *localImageUrl;
 @property(nonatomic,strong)NSString *profileUrl;
+@property(nonatomic,strong)NSDate *lastUpdateTime;
 @property NSInteger type;
 @property BOOL isAdd;
 
-+ (void)loadFriend:(void (^)(NSArray *friends, NSError *error))block;
-+ (NSMutableArray *)findByIsAdd;
-- (void)save;
++ (Friend *)getInstance;
+-(void)checkIsAdd:(Friend *)friend;
+- (void)loadFriend:(void (^)(NSArray *friends, NSError *error))block;
+- (NSMutableArray *)findByIsAdd;
+- (void)addFriend:(Friend *)friend;
 
 @end

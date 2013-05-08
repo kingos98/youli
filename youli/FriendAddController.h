@@ -12,8 +12,13 @@
 #import "SinaWeibo.h"
 #import "SinaWeiboRequest.h"
 #import "SubTableCell.h"
+#import "Friend.h"
 
-@interface FriendAddController : BaseController<UITableViewDelegate, UITableViewDataSource>
+@protocol AddFriendDelegate <NSObject>
+-(void)addNewFriend:(Friend *)newFriend;
+@end
+
+@interface FriendAddController : BaseController<UITableViewDelegate, UITableViewDataSource,AddFriendDelegate>
 
 @property(strong, nonatomic)NSArray *items;
 @property(strong, nonatomic)UIFolderTableView *friendTable;

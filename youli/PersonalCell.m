@@ -20,9 +20,9 @@
 - (id)initCell:(NSString *)reuseIdentifier{
     self = [super initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier];
     if (self) {
-        UIView *cellbgView = [[UIView alloc] initWithFrame:self.frame];
-        cellbgView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"personal_cell_bg.png"]];
-        self.backgroundView = cellbgView;
+//        UIView *cellbgView = [[UIView alloc] initWithFrame:self.frame];
+//        cellbgView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"personal_cell_bg.png"]];
+//        self.backgroundView = cellbgView;
         self.selectionStyle = UITableViewCellSelectionStyleNone;
         [self addButton];
     }

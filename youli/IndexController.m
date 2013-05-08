@@ -205,6 +205,7 @@
     birthdayGiftDetailController =[[BirthdayGiftDetailController alloc]init];
     birthdayDelegate=birthdayGiftDetailController;
     
+    //判断生日提醒信息
     if(![LocalNotificationsUtils checkIsExistLocalNotificationWithActivityName:@"birthday"])
     {
         Birthday *birthday=[[Birthday alloc]init];
@@ -787,29 +788,29 @@
 
 -(void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
 {
-    if(isTopLoading)
-    {
-        return;
-    }
-        
-    CGPoint pt =scrollView.contentOffset;
-
-    if(downPoint.y==0)
-    {
-        if (downPoint.y > pt.y)
-        {
-            [self putAllUIViewDownMove:REFRESH_HEADER_HEIGHT];
-            [self addPullToRefreshHeader];
-            
-            [UIView beginAnimations:nil context:NULL];
-            [UIView setAnimationDuration:0.3];
-            [UIView commitAnimations];
-
-            [refreshTopSpinner startAnimating];
-            isTopLoading=YES;
-            [self loadTopDataSource];
-        }
-    }
+//    if(isTopLoading)
+//    {
+//        return;
+//    }
+//        
+//    CGPoint pt =scrollView.contentOffset;
+//
+//    if(downPoint.y==0)
+//    {
+//        if (downPoint.y > pt.y)
+//        {
+//            [self putAllUIViewDownMove:REFRESH_HEADER_HEIGHT];
+//            [self addPullToRefreshHeader];
+//            
+//            [UIView beginAnimations:nil context:NULL];
+//            [UIView setAnimationDuration:0.3];
+//            [UIView commitAnimations];
+//
+//            [refreshTopSpinner startAnimating];
+//            isTopLoading=YES;
+//            [self loadTopDataSource];
+//        }
+//    }
 }
 
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView
